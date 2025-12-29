@@ -1,6 +1,6 @@
-import Banner from "./_components/Banner";
-import HowBokliWorks from "./_components/HowBokliWorks";
-import TrustedCompanies from "./_components/TrustedCompanies";
+import Banner from "./_components/home/Banner";
+import HowBokliWorks from "./_components/home/HowBokliWorks";
+import TrustedCompanies from "./_components/home/TrustedCompanies";
 type Props = {
   bgSrc?: string; // "/images/banner_bg.png"
 };

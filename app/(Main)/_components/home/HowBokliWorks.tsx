@@ -33,7 +33,7 @@ const steps: Step[] = [
 export default function HowBokliWorks() {
   return (
     <section className="w-full bg-white">
-      <div className="container mx-auto px-4 pb-16 md:pb-24">
+      <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl md:text-[48px] font-semibold text-slate-900">

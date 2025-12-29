@@ -1,92 +1,3 @@
-// "use client";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-// import { ArrowUpRight, ChevronDown } from "lucide-react";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { useState } from "react";
-
-// export default function Navbar() {
-//   const [language, setLanguage] = useState<"EN" | "AR">("EN");
-//   return (
-//     <div className="container w-full mx-auto">
-//       <header className="px-4 md:px-6 py-5">
-//         <div className="flex items-center justify-between">
-//           {/* ✅ Left Logo */}
-//           <Link href="/" className="flex items-center gap-2 cursor-pointer">
-//             <div className="flex items-center justify-center">
-//               <Image
-//                 src="/images/image 259.png"
-//                 alt="Logo"
-//                 width={100}
-//                 height={100}
-//                 className="object-contain"
-//               />
-//             </div>
-//           </Link>
-
-//           {/* ✅ Center Nav */}
-//           <nav className="hidden md:flex items-center gap-8 text-[18px] font-medium text-slate-700">
-//             <Link href="/" className="hover:text-slate-900 transition">
-//               Home
-//             </Link>
-//             <Link href="/services" className="hover:text-slate-900 transition">
-//               Services
-//             </Link>
-//             <Link href="/faqs" className="hover:text-slate-900 transition">
-//               FAQs
-//             </Link>
-//             <Link href="/pricing" className="hover:text-slate-900 transition">
-//               Pricing
-//             </Link>
-//           </nav>
-
-//           {/* ✅ Right Buttons */}
-//           <div className="flex items-center gap-4">
-//             {/* ✅ Language Dropdown */}
-//             <DropdownMenu>
-//               <DropdownMenuTrigger asChild>
-//                 <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[18px] text-slate-700 hover:bg-slate-100 transition cursor-pointer">
-//                   <span>{language}</span>
-//                   <span className="text-[18px]">
-//                     {language === "EN" ? "🇬🇧" : "🇸🇦"}
-//                   </span>
-//                   <ChevronDown size={14} />
-//                 </button>
-//               </DropdownMenuTrigger>
-
-//               <DropdownMenuContent align="end" className="w-32">
-//                 <DropdownMenuItem
-//                   onClick={() => setLanguage("EN")}
-//                   className="cursor-pointer flex items-center gap-2"
-//                 >
-//                   🇬🇧 English
-//                 </DropdownMenuItem>
-//                 <DropdownMenuItem
-//                   onClick={() => setLanguage("AR")}
-//                   className="cursor-pointer flex items-center gap-2"
-//                 >
-//                   🇸🇦 Arabic
-//                 </DropdownMenuItem>
-//               </DropdownMenuContent>
-//             </DropdownMenu>
-
-//             {/* ✅ Start Free Button */}
-//             <Button className="rounded-xl px-5 py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
-//               Start Free <ArrowUpRight size={18} className="font-semibold" />
-//             </Button>
-//           </div>
-//         </div>
-//       </header>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -183,7 +94,7 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* Start Free Button */}
-            <Button className="rounded-xl px-5 py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
+            <Button className="rounded-md px-3! py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
               Start Free <ArrowUpRight size={18} className="font-semibold" />
             </Button>
           </div>

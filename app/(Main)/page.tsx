@@ -1,11 +1,22 @@
+import Banner from "./_components/Banner";
+type Props = {
+  bgSrc?: string; // "/images/banner_bg.png"
+};
 /** @format */
-export default function HomePage() {
+export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-bold">Welcome to Home</h1>
-      <p className="text-gray-600">
-        This page uses the MainLayout automatically.
-      </p>
+    <section>
+      <div
+        className="relative w-full flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${bgSrc})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <Banner />
+      </div>
     </section>
   );
 }

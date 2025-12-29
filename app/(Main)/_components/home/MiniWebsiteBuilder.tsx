@@ -109,7 +109,7 @@ export default function MiniWebsiteBuilder() {
 
             {/* CTA */}
             <div className="mt-10">
-              <Button className="h-12 rounded-lg px-6 text-white font-semibold cursor-pointer bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90">
+              <Button className="w-fit rounded-lg px-5 text-[16px] py-6 text-white font-semibold cursor-pointer bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
                 Explore Customization{" "}
                 <ArrowUpRight size={18} className="ml-2" />
               </Button>

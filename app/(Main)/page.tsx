@@ -1,4 +1,5 @@
 import Banner from "./_components/home/Banner";
+import CustomerRecommended from "./_components/home/CustomerRecommended";
 import HowBokliWorks from "./_components/home/HowBokliWorks";
 import KeyFeatures from "./_components/home/KeyFeatures";
 import MiniWebsiteBuilder from "./_components/home/MiniWebsiteBuilder";
@@ -27,6 +28,7 @@ export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
       <YourProjects />
       <KeyFeatures />
       <MiniWebsiteBuilder />
+      <CustomerRecommended />
     </section>
   );
 }

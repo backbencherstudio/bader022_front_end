@@ -63,7 +63,7 @@ export default function KeyFeatures() {
             </p>
           </div>
 
-          <Button className="w-fit rounded-lg px-5 text-[16px] py-6 text-white font-semibold cursor-pointer bg-linear-to-r from-indigo-500 to-blue-500 hover:opacity-90">
+          <Button className="w-fit rounded-lg px-5 text-[16px] py-6 text-white font-semibold cursor-pointer bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
             Try For Free <ArrowUpRight size={18} className="ml-2" />
           </Button>
         </div>

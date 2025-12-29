@@ -1,4 +1,5 @@
 import Banner from "./_components/Banner";
+import HowBokliWorks from "./_components/HowBokliWorks";
 import TrustedCompanies from "./_components/TrustedCompanies";
 type Props = {
   bgSrc?: string; // "/images/banner_bg.png"
@@ -19,6 +20,7 @@ export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
         <Banner />
       </div>
       <TrustedCompanies />
+      <HowBokliWorks />
     </section>
   );
 }

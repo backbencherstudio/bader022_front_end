@@ -17,7 +17,7 @@ export default function TrustedCompanies() {
     // Infinite scrolling ticker of images
     <div className="flex justify-center items-center my-12 w-full">
       <div className="relative w-full overflow-hidden">
-        <p className="text-xl mt-6 text-center text-[#4A4C56]">
+        <p className="text-xl mt-4 text-center text-[#4A4C56]">
           Trusted By 100+ Popular Company
         </p>
         <motion.div

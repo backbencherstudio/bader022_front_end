@@ -13,8 +13,6 @@ export default function MainLayout({
       {/* <Navbar /> */}
       {/* Main Content */}
       <main className="flex-1">{children}</main>
-      {/* Footer */}
-      Footer
     </div>
   );
 }

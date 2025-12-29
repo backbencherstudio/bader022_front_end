@@ -1,6 +1,6 @@
 /** @format */
 
-import Navbar from "./_components/Navbar";
+import Navbar from "./_components/home/Navbar";
 
 export default function MainLayout({
   children,
@@ -10,11 +10,9 @@ export default function MainLayout({
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-      <Navbar />
+      {/* <Navbar /> */}
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-6">{children}</main>
-      {/* Footer */}
-      Footer
+      <main className="flex-1">{children}</main>
     </div>
   );
 }

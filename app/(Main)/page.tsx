@@ -1,6 +1,7 @@
 import Banner from "./_components/home/Banner";
 import HowBokliWorks from "./_components/home/HowBokliWorks";
 import KeyFeatures from "./_components/home/KeyFeatures";
+import MiniWebsiteBuilder from "./_components/home/MiniWebsiteBuilder";
 import TrustedCompanies from "./_components/home/TrustedCompanies";
 import YourProjects from "./_components/home/YourProjects";
 type Props = {
@@ -25,6 +26,7 @@ export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
       <HowBokliWorks />
       <YourProjects />
       <KeyFeatures />
+      <MiniWebsiteBuilder />
     </section>
   );
 }

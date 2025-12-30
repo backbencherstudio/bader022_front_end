@@ -32,12 +32,12 @@ export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
       <HowBokliWorks />
       <YourProjects />
       <KeyFeatures />
-      <MiniWebsiteBuilder />
-      <CustomerRecommended />
-      <GrowYourBusiness />
       <ChooseThePerfectPlan />
       <WhyChooseBokli />
+      <MiniWebsiteBuilder />
+      <CustomerRecommended />
       <FrequentlyAskedQuestions />
+      <GrowYourBusiness />
     </section>
   );
 }

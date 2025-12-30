@@ -21,7 +21,7 @@ export default function GrowYourBusiness({
       <section className="relative container">
         <div className="relative z-10 container mx-auto px-4 py-16 md:py-20">
           <div className="mx-auto text-center">
-            <h1 className="text-[28px] leading-tight text-white md:text-[44px] xl:text-[60px] md:leading-[1.2] font-bold text-slate-900">
+            <h1 className="text-[28px] leading-tight text-white md:text-[44px] xl:text-[60px] md:leading-[1.2] font-bold">
               Simplify Appointments and
               <br className="hidden md:block" />
               Grow your Business Instantly.{" "}

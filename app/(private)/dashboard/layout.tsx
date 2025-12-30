@@ -8,11 +8,6 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="">
-      {/* Sidebar
-      <Sidebar />
-      {/* {Topbar} */}
-      {/* Main Content */}
-      {/* <main className="">{children}</main> */}
       <div>
         <Sidebar />
         <TopBar />

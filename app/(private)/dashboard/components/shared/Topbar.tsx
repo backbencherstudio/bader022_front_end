@@ -1,4 +1,130 @@
+// "use client";
+// import { Sun, Moon, Edit, BellDot } from "lucide-react";
+// import {
+//   Dialog,
+//   DialogTrigger,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogDescription,
+// } from "@/components/ui/dialog";
+// import { useState } from "react";
+// import Image from "next/image";
+// import { useTheme } from "next-themes";
+
+// export default function TopBar() {
+//   const [isDarkMode, setIsDarkMode] = useState(true);
+//   const { setTheme } = useTheme();
+
+//   const toggleTheme = () => {
+//     setIsDarkMode(!isDarkMode);
+//     setTheme(!isDarkMode ? "light" : "dark");
+//   };
+
+//   return (
+//     <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] bg-white/10 backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
+//       {/* Left Side */}
+//       <div className=" pl-10 hidden lg:block lg:pl-70 flex-1">
+//         <p className="text-xl font-semibold text-black">
+//           Welcome back, Carlota!
+//         </p>
+//         <p className="text-sm">
+//           Your booking page is live and ready to accept bookings
+//         </p>
+//       </div>
+
+//       {/* Right Side */}
+//       <div className="flex items-center gap-3">
+//         {/* Theme Toggle Icons */}
+//         <button
+//           className="p-2.5 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition"
+//           onClick={toggleTheme}
+//           aria-label="Toggle Theme"
+//         >
+//           {isDarkMode ? (
+//             <Sun className="w-5.5 h-5.5 text-black" />
+//           ) : (
+//             <Moon className="w-5.5 h-5.5 text-black" />
+//           )}
+//         </button>
+
+//         {/* Notification Icon */}
+//         <button
+//           className="p-2.5 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition"
+//           aria-label="Notifications"
+//         >
+//           <BellDot className="w-5.5 h-5.5 text-black" />
+//         </button>
+
+//         {/* Visit Website Button */}
+//         <button className="bg-[#262626] hidden sm:block text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition">
+//           Visit Website
+//         </button>
+//         {/* Profile Icon and User Name */}
+//         <Dialog>
+//           <DialogTrigger asChild>
+//             <button
+//               className="flex items-center cursor-pointer gap-2 p-3 rounded-full hover:bg-white/10 transition"
+//               aria-label="Profile"
+//             >
+//               <Image
+//                 src={"/images/user1.png"}
+//                 alt="User"
+//                 width={48}
+//                 height={48}
+//                 className="w-12 h-12 rounded-full"
+//               />
+//               <div className="text-left">
+//                 <p className="text-black font-semibold">Carlota Monteiro</p>
+//                 <p className="text-black text-[12px]">calota22@gmail.com</p>
+//               </div>
+//             </button>
+//           </DialogTrigger>
+
+//           {/* User Profile Dialog */}
+//           <DialogContent className="p-6 rounded-md w-100">
+//             <DialogHeader>
+//               <DialogTitle className="flex justify-between items-center mt-6">
+//                 <h2> Carlota Monteiro</h2>
+//                 <button className="bg-[#262626] text-[12px] block sm:hidden text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition">
+//                   Visit Website
+//                 </button>
+//               </DialogTitle>
+//               <DialogDescription>
+//                 You can edit your profile information or settings here.
+//               </DialogDescription>
+//             </DialogHeader>
+//             <div className="flex items-start justify-between gap-4">
+//               <div className="flex items-center gap-4">
+//                 <Image
+//                   src={"/images/user1.png"}
+//                   alt="User"
+//                   width={48}
+//                   height={48}
+//                   className="w-12 h-12 rounded-full"
+//                 />
+
+//                 <div className="text-left">
+//                   <p className="text-black font-semibold">Carlota Monteiro</p>
+//                   <p className="text-black text-[12px]">calota22@gmail.com</p>
+//                 </div>
+//               </div>
+//               <div>
+//                 <button className="flex items-center gap-2">
+//                   <Edit className="w-4 h-4" />
+//                   Edit Profile
+//                 </button>
+//               </div>
+//             </div>
+//           </DialogContent>
+//         </Dialog>
+//       </div>
+//     </header>
+//   );
+// }
+
 "use client";
+
 import { Sun, Moon, Edit, BellDot } from "lucide-react";
 import {
   Dialog,
@@ -13,22 +139,22 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 export default function TopBar() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const { setTheme } = useTheme();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
-    setTheme(isDarkMode ? "light" : "dark");
+    setTheme(!isDarkMode ? "light" : "dark");
   };
 
   return (
-    <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] bg-white/10 backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
+    <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] bg-white/10 dark:bg-black backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
       {/* Left Side */}
-      <div className=" pl-10 hidden lg:block lg:pl-70 flex-1">
-        <p className="text-xl font-semibold text-black">
+      <div className="pl-10 hidden lg:block lg:pl-70 flex-1">
+        <p className="text-xl font-semibold mb-1 text-black dark:text-white">
           Welcome back, Carlota!
         </p>
-        <p className="text-sm">
+        <p className="text-sm text-black dark:text-gray-300">
           Your booking page is live and ready to accept bookings
         </p>
       </div>
@@ -37,34 +163,35 @@ export default function TopBar() {
       <div className="flex items-center gap-3">
         {/* Theme Toggle Icons */}
         <button
-          className="p-2.5 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition"
+          className="p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition"
           onClick={toggleTheme}
           aria-label="Toggle Theme"
         >
           {isDarkMode ? (
-            <Sun className="w-5.5 h-5.5 text-black" />
+            <Sun className="w-5.5 h-5.5 text-black dark:text-white" />
           ) : (
-            <Moon className="w-5.5 h-5.5 text-black" />
+            <Moon className="w-5.5 h-5.5 text-black dark:text-white" />
           )}
         </button>
 
         {/* Notification Icon */}
         <button
-          className="p-2.5 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition"
+          className="p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition"
           aria-label="Notifications"
         >
-          <BellDot className="w-5.5 h-5.5 text-black" />
+          <BellDot className="w-5.5 h-5.5 text-black dark:text-white" />
         </button>
 
         {/* Visit Website Button */}
-        <button className="bg-[#262626] hidden sm:block text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition">
+        <button className="bg-[#262626] hidden sm:block text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition cursor-pointer dark:bg-gray-700 hover:dark:bg-gray-600">
           Visit Website
         </button>
+
         {/* Profile Icon and User Name */}
         <Dialog>
           <DialogTrigger asChild>
             <button
-              className="flex items-center cursor-pointer gap-2 p-3 rounded-full hover:bg-white/10 transition"
+              className="flex items-center cursor-pointer gap-2 p-3 rounded-full transition"
               aria-label="Profile"
             >
               <Image
@@ -75,22 +202,26 @@ export default function TopBar() {
                 className="w-12 h-12 rounded-full"
               />
               <div className="text-left">
-                <p className="text-black font-semibold">Carlota Monteiro</p>
-                <p className="text-black text-[12px]">calota22@gmail.com</p>
+                <p className="text-black dark:text-white font-semibold">
+                  Carlota Monteiro
+                </p>
+                <p className="text-black dark:text-gray-300 text-[12px]">
+                  calota22@gmail.com
+                </p>
               </div>
             </button>
           </DialogTrigger>
 
           {/* User Profile Dialog */}
-          <DialogContent className="p-6 rounded-md w-100">
+          <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center mt-6">
-                <h2> Carlota Monteiro</h2>
-                <button className="bg-[#262626] text-[12px] block sm:hidden text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition">
+                <h2 className="text-black dark:text-white">Carlota Monteiro</h2>
+                <button className="text-[14px] block sm:hidden text-white rounded-full py-2 px-4 cursor-pointer transition underline">
                   Visit Website
                 </button>
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-black dark:text-gray-300">
                 You can edit your profile information or settings here.
               </DialogDescription>
             </DialogHeader>
@@ -103,14 +234,17 @@ export default function TopBar() {
                   height={48}
                   className="w-12 h-12 rounded-full"
                 />
-
                 <div className="text-left">
-                  <p className="text-black font-semibold">Carlota Monteiro</p>
-                  <p className="text-black text-[12px]">calota22@gmail.com</p>
+                  <p className="text-black dark:text-white font-semibold">
+                    Carlota Monteiro
+                  </p>
+                  <p className="text-black dark:text-gray-300 text-[12px]">
+                    calota22@gmail.com
+                  </p>
                 </div>
               </div>
               <div>
-                <button className="flex items-center gap-2">
+                <button className="flex items-center gap-2 text-blue-500 dark:text-blue-300">
                   <Edit className="w-4 h-4" />
                   Edit Profile
                 </button>

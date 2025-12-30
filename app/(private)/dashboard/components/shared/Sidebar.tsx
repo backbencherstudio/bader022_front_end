@@ -43,7 +43,7 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
   return (
     <>
       {/* Header / Logo */}
-      <div className=" bg-white gap-3 px-4 py-5 border-b border-white/10">
+      <div className="bg-white dark:bg-black gap-3 px-4 py-5 border-b border-white/10 dark:border-[#555]">
         <Image
           src={"/images/image 259.png"}
           alt="Logo"
@@ -52,10 +52,10 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
           className="rounded-xl"
           priority
         />
-        <p className="text-[16px] mt-1.5 text-[#4A4C56] font-medium">
+        <p className="text-[16px] mt-1.5 text-[#4A4C56] dark:text-white font-medium">
           Car wash
         </p>
-        <Button className="text-[11px] uppercase bg-black mt-1.5 text-white">
+        <Button className="text-[11px] uppercase bg-black mt-1.5 text-white dark:bg-gray-700">
           premium
         </Button>
       </div>
@@ -71,11 +71,11 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
               key={item.href}
               href={item.href}
               className={[
-                "group flex items-center gap-3 px-4 py-3 rounded-xl transition",
+                "group flex items-center gap-3 px-4 py-3 mt-6 rounded-xl transition",
                 "focus:outline-none focus:ring-2 focus:ring-white/30",
                 active
-                  ? "bg-black text-white"
-                  : "text-black hover:text-white hover:bg-black",
+                  ? "bg-black text-white dark:bg-gray-800 dark:text-white"
+                  : "text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700",
               ].join(" ")}
               aria-current={active ? "page" : undefined}
             >
@@ -98,7 +98,7 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
       </nav>
 
       {/* Footer */}
-      <div className="mt-auto px-6 py-4 text-xs text-white/60 border-t border-white/10">
+      <div className="mt-auto px-6 py-4 text-xs text-white/60 border-t border-white/10 dark:border-[#555]">
         © {new Date().getFullYear()} Your Brand
       </div>
     </>
@@ -115,15 +115,15 @@ export default function Sidebar() {
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
-            className="fixed left-4 top-5.5 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80"
+            className="fixed left-4 top-5.5 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80 dark:bg-gray-600 dark:hover:bg-gray-500 cursor-pointer dark:text-white"
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] overflow-hidden"
+            className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] dark:border-[#555] overflow-hidden"
           >
-            <div className="flex min-h-screen flex-col">
+            <div className="flex min-h-screen bg-white dark:bg-black flex-col">
               <SidebarInner pathname={pathname} />
             </div>
           </SheetContent>
@@ -131,10 +131,7 @@ export default function Sidebar() {
       </div>
 
       {/* Desktop: Original fixed sidebar (unchanged UI) */}
-      <aside
-        className="hidden lg:flex w-70 fixed min-h-screen border-r border-[#E9E9E9]
-                    top-0 flex-col z-50"
-      >
+      <aside className="hidden lg:flex w-70 fixed min-h-screen border-r border-[#E9E9E9] dark:border-[#555] top-0 flex-col z-50">
         <SidebarInner pathname={pathname} />
       </aside>
     </>

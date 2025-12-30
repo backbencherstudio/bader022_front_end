@@ -7,23 +7,8 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { TData } from "../../page";
 
-const data = [
-  { name: "Jan", revenue: 450 },
-  { name: "Feb", revenue: 300 },
-  { name: "Mar", revenue: 150 },
-  { name: "Apr", revenue: 300 },
-  { name: "May", revenue: 150 },
-  { name: "Jun", revenue: 300 },
-  { name: "Jul", revenue: 500 },
-  { name: "Aug", revenue: 300 },
-  { name: "Sep", revenue: 150 },
-  { name: "Oct", revenue: 300 },
-  { name: "Nov", revenue: 150 },
-  { name: "Dec", revenue: 500 },
-];
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomBar = (props: any) => {
   const { x, y, width, height } = props;
   const barRadius = 8;
@@ -52,7 +37,7 @@ const CustomBar = (props: any) => {
   );
 };
 
-export default function RevenueChart() {
+export default function RevenueChart({ data }: { data: TData[] }) {
   return (
     <BarChart
       style={{

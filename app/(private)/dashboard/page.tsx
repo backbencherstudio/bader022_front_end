@@ -1,9 +1,38 @@
 "use client";
-import React from "react";
 import StatCard from "./components/dashboard/StateCard";
 import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
 import RevenueChart from "./components/dashboard/RevenueChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ChartsTabs from "./components/dashboard/RevenueChart";
+
+export type TData = {
+  name: string;
+  revenue: number;
+};
+
+const monthlyData: TData[] = [
+  { name: "Jan", revenue: 450 },
+  { name: "Feb", revenue: 300 },
+  { name: "Mar", revenue: 150 },
+  { name: "Apr", revenue: 300 },
+  { name: "May", revenue: 150 },
+  { name: "Jun", revenue: 300 },
+  { name: "Jul", revenue: 500 },
+  { name: "Aug", revenue: 300 },
+  { name: "Sep", revenue: 150 },
+  { name: "Oct", revenue: 300 },
+  { name: "Nov", revenue: 150 },
+  { name: "Dec", revenue: 500 },
+];
+const weeklyData: TData[] = [
+  { name: "Sat", revenue: 150 },
+  { name: "Sun", revenue: 300 },
+  { name: "Mon", revenue: 150 },
+  { name: "Tue", revenue: 250 },
+  { name: "Wed", revenue: 150 },
+  { name: "Thu", revenue: 300 },
+  { name: "Fri", revenue: 500 },
+];
 export default function DashboardPage() {
   return (
     <div>
@@ -19,21 +48,21 @@ export default function DashboardPage() {
         {/* Revenue Chart */}
         <div className="w-full rounded-xl border border-gray-200 bg-white p-4 pl-0 shadow-sm">
           <div className="pl-4 pt-2 pb-4 w-full">
-            <Tabs defaultValue="account">
+            <Tabs defaultValue="monthly">
               <div className="flex justify-between">
                 <p className="text-sm font-medium text-[#444950]">
                   Revenue Statistics
                 </p>
-                <TabsList className="p-2">
+                <TabsList className="h-14 p-2">
                   <TabsTrigger value="weekly">Weekly</TabsTrigger>
                   <TabsTrigger value="monthly">Monthly</TabsTrigger>
                 </TabsList>
               </div>
               <TabsContent value="weekly">
-                <RevenueChart />
+                <ChartsTabs data={weeklyData} />
               </TabsContent>
               <TabsContent value="monthly">
-                <RevenueChart />
+                <ChartsTabs data={monthlyData} />
               </TabsContent>
             </Tabs>
           </div>

@@ -9,17 +9,21 @@ interface IStatCard {
 
 const StatCard: React.FC<IStatCard> = ({ title, value, Icon }) => {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm flex flex-col justify-between">
+    <div className="rounded-xl bg-white dark:bg-gray-700 border border-gray-200 p-5 shadow-sm flex flex-col justify-between">
       {/* Top Section */}
       <div className="flex justify-between items-center gap-2">
-        <h3 className="font-medium text-[#111927] text-[18px]">{title}</h3>
+        <h3 className="font-medium text-black dark:text-white text-[18px]">
+          {title}
+        </h3>
         <div className="p-2 rounded-full bg-indigo-50 text-black">
           <Icon />
         </div>
       </div>
 
       <div className="flex justify-between pt-6">
-        <div className="text-3xl font-semibold text-black">{value}</div>
+        <div className="text-3xl font-semibold text-black dark:text-white">
+          {value}
+        </div>
       </div>
     </div>
   );

@@ -10,8 +10,8 @@ export default function MainLayout({
     <div className="flex min-h-screen flex-col">
       {/* Main Content */}
       <main className="flex-1">{children}</main>
-      <Footer />
       {/* Footer */}
+      <Footer />
     </div>
   );
 }

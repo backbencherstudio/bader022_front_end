@@ -11,9 +11,6 @@ import {
   PenSquare,
   Menu,
 } from "lucide-react";
-import logo from "@/public/Logo.png";
-
-// shadcn
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 type NavItem = {
@@ -45,9 +42,9 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
   return (
     <>
       {/* Header / Logo */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
+      <div className="flex bg-white items-center gap-3 px-6 py-5 border-b border-white/10">
         <Image
-          src={logo}
+          src={"/images/image 259.png"}
           alt="Logo"
           width={156}
           height={156}
@@ -117,7 +114,7 @@ export default function Sidebar() {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="p-0 w-[280px] bg-foreground border-r border-[#E9E9E9] overflow-hidden"
+            className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] overflow-hidden"
           >
             <div className="flex min-h-screen flex-col">
               <SidebarInner pathname={pathname} />
@@ -128,7 +125,7 @@ export default function Sidebar() {
 
       {/* Desktop: Original fixed sidebar (unchanged UI) */}
       <aside
-        className="hidden lg:flex w-[280px] fixed min-h-screen bg-foreground border-r border-[#E9E9E9]
+        className="hidden lg:flex w-70 fixed min-h-screen border-r border-[#E9E9E9]
                     top-0 flex-col z-50"
       >
         <SidebarInner pathname={pathname} />

@@ -79,12 +79,10 @@ export default function ServicesPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All Services");
   const [open, setOpen] = useState(false);
-  // const [openModal, setOpenModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedService, setSelectedService] = useState<any>(null);
 
-  // unique categories
   const categories = [
     "All Services",
     ...Array.from(new Set(services.map((s) => s.category))),
@@ -94,27 +92,21 @@ export default function ServicesPage() {
     const matchesSearch = service.title
       .toLowerCase()
       .includes(search.toLowerCase());
-
     const matchesFilter =
       filter === "All Services" || service.category === filter;
-
     return matchesSearch && matchesFilter;
   });
-
-  // const handleAddService = (data: any) => {
-  //   console.log("==========New Service:", data);
-  // };
 
   const handleSubmitService = (data: any) => {
     if (mode === "add") {
       console.log("Add Service:", data);
     } else {
-      console.log("Edit Service:", data); // includes id
+      console.log("Edit Service:", data);
     }
   };
 
   return (
-    <section className="p-6 space-y-6">
+    <section className="p-6 space-y-6 text-gray-900 dark:text-gray-100">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-semibold">Services</h2>
@@ -122,11 +114,11 @@ export default function ServicesPage() {
         <div className="flex items-center gap-3">
           {/* Search */}
           <div className="relative">
-            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300" />
             <input
               type="text"
               placeholder="Search anything"
-              className="pl-10 pr-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="pl-10 pr-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -138,7 +130,7 @@ export default function ServicesPage() {
               setSelectedService(null);
               setOpenModal(true);
             }}
-            className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
+            className="bg-gray-900 dark:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
           >
             Add Service
           </button>
@@ -148,11 +140,11 @@ export default function ServicesPage() {
       {/* Filter */}
       <div className="relative w-fit">
         <div className="flex items-center gap-3 text-sm">
-          <span className="text-gray-500">Filter by:</span>
+          <span className="text-gray-500 dark:text-gray-400">Filter by:</span>
 
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 border px-4 py-2 rounded-lg bg-white"
+            className="flex items-center gap-2 border px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           >
             {filter}
             <FiChevronDown />
@@ -161,7 +153,7 @@ export default function ServicesPage() {
 
         {/* Dropdown */}
         {open && (
-          <div className="absolute mt-2 w-40 bg-white border rounded-lg shadow-md z-10">
+          <div className="absolute mt-2 w-40 bg-white dark:bg-gray-700 border rounded-lg shadow-md z-10">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -169,8 +161,10 @@ export default function ServicesPage() {
                   setFilter(cat);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
-                  filter === cat ? "font-semibold bg-gray-50" : ""
+                className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 ${
+                  filter === cat
+                    ? "font-semibold bg-gray-50 dark:bg-gray-600"
+                    : ""
                 }`}
               >
                 {cat}
@@ -185,7 +179,7 @@ export default function ServicesPage() {
         {filteredServices.map((service) => (
           <div
             key={service.id}
-            className="bg-white rounded-2xl shadow-sm border overflow-hidden"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
           >
             <div className="relative h-48">
               <Image
@@ -197,33 +191,35 @@ export default function ServicesPage() {
             </div>
 
             <div className="p-5 space-y-3">
-              <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-1">
                   <FiClock />
                   {service.duration}
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {service.price} SAR
                 </span>
               </div>
 
               <h3 className="font-semibold">{service.title}</h3>
-              <p className="text-sm text-gray-500">{service.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {service.description}
+              </p>
 
               <div className="flex gap-3 pt-3">
                 <button
                   onClick={() => {
                     setMode("edit");
-                    setSelectedService(service); // pass service by id
+                    setSelectedService(service);
                     setOpenModal(true);
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-lg text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-gray-900 dark:bg-blue-600 text-white py-2 rounded-lg text-sm"
                 >
                   <FiEdit />
                   Edit
                 </button>
 
-                <button className="flex-1 flex items-center justify-center gap-2 border text-red-500 py-2 rounded-lg text-sm">
+                <button className="flex-1 flex items-center justify-center gap-2 border text-red-500 dark:text-red-400 py-2 rounded-lg text-sm">
                   <FiTrash2 />
                   Delete
                 </button>
@@ -232,12 +228,6 @@ export default function ServicesPage() {
           </div>
         ))}
       </div>
-
-      {/* <AddServiceModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onSubmitService={handleAddService}
-      /> */}
 
       <ServiceModal
         open={openModal}

@@ -70,15 +70,17 @@ export default function StaffPage() {
     if (mode === "add") {
       console.log("Add Staff:", data);
     } else {
-      console.log("Edit Staff:", data); // contains id
+      console.log("Edit Staff:", data);
     }
   };
 
   return (
-    <section className="p-6 space-y-6">
+    <section className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h2 className="text-xl font-semibold">All Staff</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          All Staff
+        </h2>
 
         <div className="flex items-center gap-3">
           {/* Search */}
@@ -89,7 +91,15 @@ export default function StaffPage() {
               placeholder="Search anything"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="
+                pl-10 pr-4 py-2 rounded-lg
+                bg-white dark:bg-gray-800
+                border border-gray-200 dark:border-gray-700
+                text-gray-900 dark:text-gray-100
+                placeholder-gray-400
+                focus:outline-none focus:ring-2
+                focus:ring-gray-300 dark:focus:ring-gray-700
+              "
             />
           </div>
 
@@ -99,7 +109,13 @@ export default function StaffPage() {
               setSelectedStaff(null);
               setOpenModal(true);
             }}
-            className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
+            className="
+              bg-gray-900 dark:bg-white
+              text-white dark:text-gray-900
+              px-4 py-2 rounded-lg
+              text-sm font-medium
+              hover:opacity-90
+            "
           >
             Add New Staff
           </button>
@@ -111,7 +127,12 @@ export default function StaffPage() {
         {filteredStaff.map((staff) => (
           <div
             key={staff.id}
-            className="bg-white rounded-2xl border shadow-sm p-5 flex flex-col justify-between"
+            className="
+              bg-white dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+              rounded-2xl shadow-sm
+              p-5 flex flex-col justify-between
+            "
           >
             {/* Top */}
             <div className="flex gap-4">
@@ -124,14 +145,16 @@ export default function StaffPage() {
               />
 
               <div className="flex-1">
-                <h3 className="font-semibold">{staff.name}</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                  {staff.name}
+                </h3>
 
                 <div className="flex gap-2 mt-1 text-xs">
                   <span
                     className={`px-2 py-1 rounded-md ${
                       staff.role === "Admin"
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-gray-100 text-gray-700"
+                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
+                        : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
                     }`}
                   >
                     {staff.role}
@@ -140,8 +163,8 @@ export default function StaffPage() {
                   <span
                     className={`px-2 py-1 rounded-md ${
                       staff.status === "Active"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-gray-100 text-gray-500"
+                        ? "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400"
+                        : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
                     }`}
                   >
                     {staff.status}
@@ -152,19 +175,25 @@ export default function StaffPage() {
 
             {/* Assigned Services */}
             <div className="mt-4">
-              <p className="text-sm text-gray-500 mb-2">Assigned Services:</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                Assigned Services:
+              </p>
 
               <div className="flex flex-wrap gap-2">
                 {staff.services.slice(0, 2).map((service) => (
                   <span
                     key={service}
-                    className="px-3 py-1 text-xs rounded-md bg-gray-100"
+                    className="
+                      px-3 py-1 text-xs rounded-md
+                      bg-gray-100 dark:bg-gray-700
+                      text-gray-700 dark:text-gray-300
+                    "
                   >
                     {service}
                   </span>
                 ))}
                 {staff.services.length > 2 && (
-                  <span className="px-3 py-1 text-xs rounded-md bg-gray-100">
+                  <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                     +{staff.services.length - 2} more
                   </span>
                 )}
@@ -176,14 +205,21 @@ export default function StaffPage() {
               <button
                 className={`flex-1 py-2 rounded-lg text-sm font-medium ${
                   staff.status === "Active"
-                    ? "bg-green-50 text-green-600"
-                    : "bg-red-50 text-red-600"
+                    ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                    : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
                 }`}
               >
                 {staff.status === "Active" ? "Deactivate" : "Activate"}
               </button>
 
-              <button className="p-2 border rounded-lg text-red-500 cursor-pointer">
+              <button
+                className="
+                  p-2 rounded-lg
+                  border border-gray-200 dark:border-gray-700
+                  text-red-500
+                  hover:bg-red-50 dark:hover:bg-red-900/20
+                "
+              >
                 <FiTrash2 />
               </button>
 
@@ -193,7 +229,12 @@ export default function StaffPage() {
                   setSelectedStaff(staff);
                   setOpenModal(true);
                 }}
-                className="p-2 border rounded-lg cursor-pointer"
+                className="
+                  p-2 rounded-lg
+                  border border-gray-200 dark:border-gray-700
+                  text-gray-700 dark:text-gray-300
+                  hover:bg-gray-100 dark:hover:bg-gray-700
+                "
               >
                 <FiEdit />
               </button>

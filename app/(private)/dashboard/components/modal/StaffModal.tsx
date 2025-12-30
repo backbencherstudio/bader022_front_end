@@ -83,15 +83,19 @@ export default function StaffModal({
     onSubmitStaff({ ...initialData, ...data });
     onClose();
   };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="bg-white w-full max-w-lg rounded-xl shadow-lg">
+      <div className="bg-white dark:bg-gray-800 w-full max-w-lg rounded-xl shadow-lg">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50 rounded-t-xl">
-          <h3 className="font-semibold text-lg">
+        <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50 dark:bg-gray-900 rounded-t-xl">
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
             {mode === "add" ? "Add Staff Member" : "Edit Staff Member"}
           </h3>
-          <button onClick={onClose}>
+          <button
+            onClick={onClose}
+            className="text-gray-700 dark:text-gray-300"
+          >
             <FiX size={20} />
           </button>
         </div>
@@ -101,23 +105,23 @@ export default function StaffModal({
           {/* Name + Role */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 {...register("name", { required: true })}
                 placeholder="Sarah Jones"
-                className="mt-1 w-full border rounded-lg px-4 py-2"
+                className="mt-1 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Role <span className="text-red-500">*</span>
               </label>
               <select
                 {...register("role", { required: true })}
-                className="mt-1 w-full border rounded-lg px-4 py-2 bg-white"
+                className="mt-1 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               >
                 <option value="Staff">Staff</option>
                 <option value="Admin">Admin</option>
@@ -127,7 +131,7 @@ export default function StaffModal({
 
           {/* Assigned Services */}
           <div>
-            <label className="text-sm font-medium">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Assigned Services <span className="text-red-500">*</span>
             </label>
 
@@ -135,7 +139,7 @@ export default function StaffModal({
               <select
                 value={serviceInput}
                 onChange={(e) => addService(e.target.value)}
-                className="flex-1 border rounded-lg px-4 py-2 bg-white"
+                className="flex-1 border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               >
                 <option value="">Select service</option>
                 {AVAILABLE_SERVICES.map((service) => (
@@ -151,7 +155,7 @@ export default function StaffModal({
               {services.map((service) => (
                 <span
                   key={service}
-                  className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 rounded-lg"
+                  className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg"
                 >
                   {service}
                   <button type="button" onClick={() => removeService(service)}>
@@ -164,11 +168,15 @@ export default function StaffModal({
 
           {/* Image Upload */}
           <div>
-            <label className="text-sm font-medium">Image</label>
-            <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer hover:bg-gray-50">
-              <FiImage size={28} className="text-gray-400" />
-              <span className="text-sm font-medium mt-2">Click to upload</span>
-              <span className="text-xs text-gray-400">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Image
+            </label>
+            <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+              <FiImage size={28} className="text-gray-400 dark:text-gray-300" />
+              <span className="text-sm font-medium mt-2 text-gray-700 dark:text-gray-200">
+                Click to upload
+              </span>
+              <span className="text-xs text-gray-400 dark:text-gray-300">
                 JPG or PNG (max 3MB)
               </span>
               <input type="file" className="hidden" />
@@ -180,13 +188,13 @@ export default function StaffModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-gray-100"
+              className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-gray-900 text-white cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-gray-900 dark:bg-blue-600 text-white cursor-pointer"
             >
               {mode === "add" ? "Add Staff" : "Update Staff"}
             </button>

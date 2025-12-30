@@ -1,11 +1,10 @@
 import React from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
-import { PiArrowCircleUpRight } from "react-icons/pi";
 
 export default function ChooseThePerfectPlan() {
   return (
-    <div className="bg-white">
+    <div>
       <div className="container mx-auto py-20">
         <div className="flex flex-col items-center gap-5 py-10">
           <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold">

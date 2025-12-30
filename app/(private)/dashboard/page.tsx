@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import RevenueChart from "./components/dashboard/RevenueChart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function DashboardPage() {
   return (
     <div>
@@ -23,49 +24,25 @@ export default function DashboardPage() {
       <div className="flex lg:flex-row flex-col justify-between gap-4">
         {/* Revenue Chart */}
         <div className="w-full rounded-xl border border-gray-200 bg-white p-4 pl-0 shadow-sm">
-          <div className="pl-4 pt-2 pb-4 flex justify-between items-center">
-            <div>
-              <p className="text-sm font-medium text-[#444950]">
-                Revenue Statistics
-              </p>
-              <div className="flex gap-2 items-center my-3">
-                <h1 className="text-xl text-[#151C24] lg:text-2xl pt-1.5 font-bold">
-                  $500k
-                </h1>
-                <span className="flex items-center gap-2 w-20 border border-[#4CAF50] mt-1 px-2 py-0.5 rounded-full bg-[#f6fcf7]">
-                  <span className="text-sm text-[#4CAF50]">10 %</span>
-                  <TrendingUp className="text-[#4CAF50] w-5" />
-                </span>
+          <div className="pl-4 pt-2 pb-4 w-full">
+            <Tabs defaultValue="account">
+              <div className="flex justify-between">
+                <p className="text-sm font-medium text-[#444950]">
+                  Revenue Statistics
+                </p>
+                <TabsList className="p-2">
+                  <TabsTrigger value="weekly">Weekly</TabsTrigger>
+                  <TabsTrigger value="monthly">Monthly</TabsTrigger>
+                </TabsList>
               </div>
-            </div>
-            <button className="rounded-lg px-5 py-2.5 text-[#727a80] flex gap-1 border-2 border-gray-200">
-              Year <ChevronDown />
-            </button>
+              <TabsContent value="weekly">
+                <RevenueChart />
+              </TabsContent>
+              <TabsContent value="monthly">
+                <RevenueChart />
+              </TabsContent>
+            </Tabs>
           </div>
-          <RevenueChart />
-        </div>
-        {/* Subscriber statics chart */}
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 pl-0 shadow-sm">
-          <div className="pl-4 pt-2 pb-4 flex justify-between items-center">
-            <div>
-              <p className="text-sm font-medium text-[#444950]">
-                Total Subscriber
-              </p>
-              <div className="flex gap-2 items-center my-3">
-                <h1 className="text-xl text-[#151C24] lg:text-2xl pt-1.5 font-bold">
-                  100
-                </h1>
-                <span className="flex items-center gap-2 w-20 border border-[#4CAF50] mt-1 px-2 py-0.5 rounded-full bg-[#f6fcf7]">
-                  <span className="text-sm text-[#4CAF50]">10 %</span>
-                  <TrendingUp className="text-[#4CAF50] w-5" />
-                </span>
-              </div>
-            </div>
-            <button className="rounded-lg px-5 py-2.5 text-[#727a80] flex gap-1 border-2 border-gray-200">
-              Year <ChevronDown />
-            </button>
-          </div>
-          {/* <SubscriberStaticsChart /> */}
         </div>
       </div>
       <div className="pt-4 md:pt-5 lg:pt-6">{/* <RecentOrder /> */}</div>

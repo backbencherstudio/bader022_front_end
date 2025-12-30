@@ -55,7 +55,7 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
         <p className="text-[16px] mt-1.5 text-[#4A4C56] font-medium">
           Car wash
         </p>
-        <Button className="text-[12px] uppercase bg-black mt-1.5 text-white">
+        <Button className="text-[11px] uppercase bg-black mt-1.5 text-white">
           premium
         </Button>
       </div>

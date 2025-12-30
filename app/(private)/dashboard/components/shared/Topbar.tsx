@@ -7,17 +7,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function TopBar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { setTheme } = useTheme();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+    setTheme(isDarkMode ? "light" : "dark");
   };
 
   return (

@@ -12,6 +12,7 @@ import {
   Menu,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 type NavItem = {
   label: string;
@@ -22,35 +23,41 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   {
     label: "Dashboard",
-    href: "/user/dashboard",
+    href: "/dashboard",
     icon: (p) => <LayoutDashboard {...p} />,
   },
   {
     label: "Manage Booking",
-    href: "/user/manage-booking",
+    href: "/manage-booking",
     icon: (p) => <ClipboardList {...p} />,
   },
   {
     label: "Schedule Calendar",
-    href: "/user/schedule-calender",
+    href: "/schedule-calender",
     icon: (p) => <CalendarClock {...p} />,
   },
-  { label: "Blog", href: "/user/blog", icon: (p) => <PenSquare {...p} /> },
+  { label: "Blog", href: "/blog", icon: (p) => <PenSquare {...p} /> },
 ];
 
 function SidebarInner({ pathname }: { pathname: string | null }) {
   return (
     <>
       {/* Header / Logo */}
-      <div className="flex bg-white items-center gap-3 px-6 py-5 border-b border-white/10">
+      <div className=" bg-white gap-3 px-4 py-5 border-b border-white/10">
         <Image
           src={"/images/image 259.png"}
           alt="Logo"
-          width={156}
-          height={156}
+          width={100}
+          height={100}
           className="rounded-xl"
           priority
         />
+        <p className="text-[16px] mt-1.5 text-[#4A4C56] font-medium">
+          Car wash
+        </p>
+        <Button className="text-[12px] uppercase bg-black mt-1.5 text-white">
+          premium
+        </Button>
       </div>
 
       {/* Nav */}
@@ -67,8 +74,8 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
                 "group flex items-center gap-3 px-4 py-3 rounded-xl transition",
                 "focus:outline-none focus:ring-2 focus:ring-white/30",
                 active
-                  ? "bg-[#1141CB1A] text-[#1141CB]"
-                  : "text-black/80 hover:text-[#1141CB] hover:bg-[#1141CB1A]",
+                  ? "bg-black text-white"
+                  : "text-black hover:text-white hover:bg-black",
               ].join(" ")}
               aria-current={active ? "page" : undefined}
             >
@@ -108,7 +115,7 @@ export default function Sidebar() {
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
-            className="fixed left-4 top-4 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80"
+            className="fixed left-4 top-5.5 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80"
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>

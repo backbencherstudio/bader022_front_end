@@ -109,6 +109,11 @@ export default function CustomerRecommended() {
     setPage((p) => Math.min(p, Math.max(0, pages.length - 1)));
   }, [pages.length]);
 
+  // Early return to prevent cascading renders
+  if (page >= pages.length && pages.length > 0) {
+    setPage(Math.max(0, pages.length - 1));
+  }
+
   // auto slide
   useEffect(() => {
     const id = setInterval(() => {
@@ -151,7 +156,7 @@ export default function CustomerRecommended() {
                 {pages[page]?.map((t) => (
                   <div
                     key={t.name}
-                    className="rounded-xl bg-linear-to-b from-[#faf4f4] to-[#e1e5fa] px-6 py-8 md:py-10"
+                    className="rounded-xl bg-linear-to-br from-blue-50 via-white to-blue-200 px-6 py-8 md:py-10"
                   >
                     {/* stars */}
                     <div className="flex items-center gap-1 text-blue-600">

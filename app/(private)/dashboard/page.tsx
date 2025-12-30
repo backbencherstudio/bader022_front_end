@@ -1,13 +1,7 @@
 "use client";
 import React from "react";
 import StatCard from "./components/dashboard/StateCard";
-import {
-  Calendar,
-  ChevronDown,
-  CircleDollarSign,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
 import RevenueChart from "./components/dashboard/RevenueChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function DashboardPage() {

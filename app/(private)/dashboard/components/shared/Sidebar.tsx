@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   ClipboardList,
-  CalendarClock,
   PenSquare,
   Menu,
+  Handbag,
+  Users,
+  Globe,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -32,9 +34,19 @@ const NAV_ITEMS: NavItem[] = [
     icon: (p) => <ClipboardList {...p} />,
   },
   {
-    label: "Schedule Calendar",
-    href: "/schedule-calender",
-    icon: (p) => <CalendarClock {...p} />,
+    label: "Services",
+    href: "/dashboard/services",
+    icon: (p) => <Handbag {...p} />,
+  },
+  {
+    label: "Staff",
+    href: "/dashboard/staff",
+    icon: (p) => <Users {...p} />,
+  },
+  {
+    label: "Mini-Site",
+    href: "/dashboard/mini-site",
+    icon: (p) => <Globe {...p} />,
   },
   { label: "Blog", href: "/blog", icon: (p) => <PenSquare {...p} /> },
 ];
@@ -63,8 +75,7 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
       {/* Nav */}
       <nav className="p-4 pt-0 space-y-2">
         {NAV_ITEMS.map((item) => {
-          const active =
-            pathname === item.href || pathname?.startsWith(item.href + "/");
+          const active = pathname === item.href;
 
           return (
             <Link

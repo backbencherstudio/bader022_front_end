@@ -8,6 +8,8 @@ import {
   FiClock,
   FiChevronDown,
 } from "react-icons/fi";
+import AddServiceModal from "../components/modal/AddServiceModal";
+import ServiceModal from "../components/modal/ServiceModal";
 
 /* ------------------ DATA ------------------ */
 export const services = [
@@ -77,6 +79,10 @@ export default function ServicesPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All Services");
   const [open, setOpen] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [mode, setMode] = useState<"add" | "edit">("add");
+  const [selectedService, setSelectedService] = useState<any>(null);
 
   // unique categories
   const categories = [
@@ -94,6 +100,18 @@ export default function ServicesPage() {
 
     return matchesSearch && matchesFilter;
   });
+
+  // const handleAddService = (data: any) => {
+  //   console.log("==========New Service:", data);
+  // };
+
+  const handleSubmitService = (data: any) => {
+    if (mode === "add") {
+      console.log("Add Service:", data);
+    } else {
+      console.log("Edit Service:", data); // includes id
+    }
+  };
 
   return (
     <section className="p-6 space-y-6">
@@ -114,7 +132,14 @@ export default function ServicesPage() {
             />
           </div>
 
-          <button className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium">
+          <button
+            onClick={() => {
+              setMode("add");
+              setSelectedService(null);
+              setOpenModal(true);
+            }}
+            className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
+          >
             Add Service
           </button>
         </div>
@@ -186,7 +211,14 @@ export default function ServicesPage() {
               <p className="text-sm text-gray-500">{service.description}</p>
 
               <div className="flex gap-3 pt-3">
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-lg text-sm">
+                <button
+                  onClick={() => {
+                    setMode("edit");
+                    setSelectedService(service); // pass service by id
+                    setOpenModal(true);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-lg text-sm"
+                >
                   <FiEdit />
                   Edit
                 </button>
@@ -200,6 +232,20 @@ export default function ServicesPage() {
           </div>
         ))}
       </div>
+
+      {/* <AddServiceModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onSubmitService={handleAddService}
+      /> */}
+
+      <ServiceModal
+        open={openModal}
+        mode={mode}
+        initialData={selectedService}
+        onClose={() => setOpenModal(false)}
+        onSubmitService={handleSubmitService}
+      />
     </section>
   );
 }

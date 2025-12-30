@@ -16,7 +16,7 @@ type Props = {
 /** @format */
 export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
   return (
-    <section className="">
+    <section>
       <div
         className="relative w-full flex items-center justify-center overflow-hidden"
         style={{

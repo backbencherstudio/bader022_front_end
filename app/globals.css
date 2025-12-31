@@ -123,3 +123,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Example CSS to apply for dark mode */
+.dark-mode .recharts-cartesian-grid {
+  stroke: #444;
+}
+
+.dark-mode .recharts-axis-tick {
+  fill: #fff;
+}
+
+.dark-mode .recharts-tooltip-wrapper {
+  background-color: #333;
+  color: #fff;
+}

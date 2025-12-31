@@ -5,11 +5,11 @@ import WhyChooseBokli from "./_components/home/WhyChooseBokli";
 import Banner from "./_components/home/Banner";
 import CustomerRecommended from "./_components/home/CustomerRecommended";
 import GrowYourBusiness from "./_components/home/GrowYourBusiness";
-import HowBokliWorks from "./_components/home/HowBokliWorks";
 import KeyFeatures from "./_components/home/KeyFeatures";
 import MiniWebsiteBuilder from "./_components/home/MiniWebsiteBuilder";
 import TrustedCompanies from "./_components/home/TrustedCompanies";
 import YourProjects from "./_components/home/YourProjects";
+import HowBokliWorks from "./_components/home/HowBokliWorks";
 type Props = {
   bgSrc?: string; // "/images/banner_bg.png"
 };

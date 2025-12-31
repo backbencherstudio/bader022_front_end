@@ -1,0 +1,338 @@
+{
+  "Nav": {
+    "home": "Home",
+    "services": "Services",
+    "faqs": "FAQs",
+    "pricing": "Pricing",
+    "button": "Start Free"
+  },
+  "Banner": {
+    "titleLine1": "Smart Booking Management For",
+    "titleLine2": "Modern Service Businesses",
+    "subtitleLine1": "All-in-one platform for managing services, staff, branches, bookings, payments, and",
+    "subtitleLine2": "customer data — with your own branded mini-website.",
+    "primaryBtn": "Get started for free",
+    "secondaryBtn": "Try Bokli for Free"
+  },
+  "TrustedCompaniesStateMent": {
+    "title": "Trusted By 100+ Popular Company"
+  },
+  "HowItWorks": {
+    "title": "How Bokli Works",
+    "subtitle": "Manage appointments, staff schedules, services, and customer interactions seamlessly through Bokli's intelligent, automated booking system.",
+    "steps": [
+      {
+        "step": "Step 1",
+        "title": "Create Your Business Account",
+        "desc": "Sign up, add your business details, and instantly get your branded booking mini-website."
+      },
+      {
+        "step": "Step 2",
+        "title": "Add Services, Staff & Branches",
+        "desc": "Set up your services, assign staff, and (if premium) manage multiple branches."
+      },
+      {
+        "step": "Step 3",
+        "title": "Start Accepting Bookings",
+        "desc": "Share your booking link anywhere and receive appointments directly — with optional online payments."
+      }
+    ]
+  },
+  "ProjectSelector": {
+    "title": "What is Your Project?",
+    "subtitleLine1": "Describe your project so Bokli can personalize your booking",
+    "subtitleLine2": "system, services, staff, and workflow instantly.",
+    "items": [
+      { "id": "salon", "label": "Salon", "img": "/images/service1.png" },
+      {
+        "id": "sports",
+        "label": "Sports Academy",
+        "img": "/images/service2.png"
+      },
+      { "id": "home", "label": "Home Service", "img": "/images/service3.png" },
+      {
+        "id": "consulting",
+        "label": "Consulting Office",
+        "img": "/images/service4.png"
+      },
+      {
+        "id": "workspaces",
+        "label": "Work-spaces",
+        "img": "/images/service5.png"
+      },
+      {
+        "id": "spa",
+        "label": "Personal Care & Spa",
+        "img": "/images/service6.png"
+      },
+      {
+        "id": "nursery",
+        "label": "Children's nursery",
+        "img": "/images/service7.png"
+      },
+      { "id": "photo", "label": "Photography", "img": "/images/service8.png" }
+    ]
+  },
+  "KeyFeatures": {
+    "title": "Key Features",
+    "subtitle": "Explore powerful features designed to simplify bookings, manage staff, track performance, and grow your business faster.",
+    "button": "Try For Free",
+    "features": [
+      {
+        "title": "Merchant Dashboard",
+        "desc": "Design a modern, data-driven Merchant Dashboard with a clean, minimalistic layout",
+        "img": "/images/feature1.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Staff Management",
+        "desc": "A comprehensive module designed to streamline team oversight with a modern, intuitive interface",
+        "img": "/images/feature2.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Smart Booking Scheduler",
+        "desc": "Built for efficiency and clarity, it helps businesses optimize operations while providing users",
+        "img": "/images/feature3.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Mini-Website Builder",
+        "desc": "A compact yet powerful platform designed to help anyone create stunning, responsive websites in minutes",
+        "img": "/images/feature4.png",
+        "colSpan": "md:col-span-6"
+      },
+      {
+        "title": "Payment Integration",
+        "desc": "Design a seamless, secure, and user-friendly payment interface that supports multiple payment methods",
+        "img": "/images/feature5.png",
+        "colSpan": "md:col-span-6"
+      }
+    ]
+  },
+  "Pricing": {
+    "title": "Choose The Perfect Plan",
+    "subtitle": "Select the right plan designed to support your growth, streamline bookings, and unlock advanced features when needed.",
+    "billing": {
+      "monthly": "Monthly",
+      "annual": "Annual (save over 20%)"
+    },
+    "plans": {
+      "basic": {
+        "name": "Basic Plan",
+        "desc": "Start with essential tools to manage bookings, services, and customers efficiently—perfect for growing small businesses.",
+        "priceMonthly": "Free",
+        "priceAnnual": "Free",
+        "cta": "Try For Free",
+        "features": [
+          "Create only 1 Staff",
+          "Mini-site locked",
+          "Limited features",
+          "Basic analytics",
+          "Limited customization"
+        ]
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "desc": "Unlock advanced booking features, multiple branches, customization tools, and powerful analytics to scale your business effortlessly.",
+        "priceMonthly": "209 SAR",
+        "priceAnnual": "199 SAR",
+        "cta": "Upgrade Premium",
+        "features": [
+          "Create Unlimited Staff",
+          "Mini-site enabled",
+          "Additional features",
+          "Advanced analytics",
+          "Unlimited customization"
+        ]
+      }
+    }
+  },
+  "WhyChooseBokli": {
+    "title": "Why Choose Bokli?",
+    "subtitle": "Bokli simplifies bookings, boosts efficiency, and helps businesses deliver a seamless customer experience with zero hassle.",
+    "items": [
+      {
+        "id": 1,
+        "title": "Lightning Fast Setup",
+        "description": "Go from sign-up to live booking page in minutes.",
+        "icon": "/icons/Icon.png"
+      },
+      {
+        "id": 2,
+        "title": "Professional Design",
+        "description": "Modern, clean interface that impresses customers and reflects your brand.",
+        "icon": "/icons/Icon1.png"
+      },
+      {
+        "id": 3,
+        "title": "Scalable Architecture",
+        "description": "Designed to support thousands of merchants smoothly.",
+        "icon": "/icons/Icon2.png"
+      },
+      {
+        "id": 4,
+        "title": "Secure Payments",
+        "description": "Fully integrated with trusted payment gateways.",
+        "icon": "/icons/Icon3.png"
+      },
+      {
+        "id": 5,
+        "title": "All-in-One Control",
+        "description": "Manage services, staff, bookings, and customer data from one platform.",
+        "icon": "/icons/Icon4.png"
+      },
+      {
+        "id": 6,
+        "title": "Perfect for All Businesses",
+        "description": "Salons, spas, clinics, tutors, garages, fitness trainers, and more.",
+        "icon": "/icons/Icon5.png"
+      }
+    ]
+  },
+  "MiniWebsiteBuilder": {
+    "title": "Mini-Website Builder",
+    "subtitle": "Make your online presence truly yours with powerful customization options that give you complete control over your brand.",
+    "topOptions": [
+      "Logo & colors",
+      "Hero banner",
+      "About section",
+      "Service layout"
+    ],
+    "additionalTitle": "Additional Features:",
+    "extraLeft": ["Staff section", "Layout Customization"],
+    "extraRight": ["Service Booking", "Social links"],
+    "cta": "Explore Customization",
+    "preview": {
+      "titleLine1": "Elevate Your Look With",
+      "titleLine2": "Bespoke Hair Care & Expert",
+      "desc": "Experience a new level of confidence with hair care designed uniquely to you. Premium treatments, expert guidance, and results you’ll notice.",
+      "button": "About Us"
+    }
+  },
+  "Testimonials": {
+    "title": "Our Customers Recommend You",
+    "subtitle": "Our users love Bokli for its simplicity, speed, and powerful features that transform daily business operations completely.",
+    "items": [
+      {
+        "quote": "“Bokli transformed our salon operations. Bookings are seamless, staff management is easy, and customers love our new mini-website experience!”",
+        "name": "Al-Qahtani",
+        "title": "CEO & Founder, ExpressoSoft",
+        "avatar": "/images/user1.png"
+      },
+      {
+        "quote": "“Since using Bokli, our appointment scheduling is effortless. Analytics help us improve services, and customers consistently return for bookings.”",
+        "name": "Talal Al-Hujaili",
+        "title": "CEO, Sparkle",
+        "avatar": "/images/user2.png"
+      },
+      {
+        "quote": "“Managing multiple branches was a challenge before Bokli. Now everything is centralized, simple, and our team is more productive than ever.”",
+        "name": "Al-Harithii",
+        "title": "Founder, Softvance",
+        "avatar": "/images/user3.png"
+      }
+    ]
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find quick answers to common questions and learn how Bokli helps simplify booking management for your business.",
+    "items": [
+      {
+        "q": "Can I start for free?",
+        "a": "Yes. You can create your account, set up your services, and start accepting bookings with the free plan. You can upgrade anytime."
+      },
+      {
+        "q": "Can I accept payments online?",
+        "a": "Yes. Bokli supports online payments through integrated payment gateways (available in premium plans depending on your region)."
+      },
+      {
+        "q": "Can I link my mini-website to my own domain?",
+        "a": "Yes. You can connect your custom domain to your Bokli mini-website so customers can book through your branded URL."
+      },
+      {
+        "q": "Will Bokli work for my shop or local business?",
+        "a": "Absolutely. Bokli works for salons, clinics, tutors, workshops, fitness centers, and any business that takes bookings."
+      },
+      {
+        "q": "Do customers need an account?",
+        "a": "No. Customers can book instantly without creating an account. You still get full customer information for follow-ups."
+      },
+      {
+        "q": "Can I add multiple branches?",
+        "a": "Yes. Multi-branch support is available in premium plans, allowing you to manage staff and schedules across locations."
+      },
+      {
+        "q": "What do I need to get started?",
+        "a": "Just sign up, add your services and working hours, and share your booking link. Bokli handles the rest automatically."
+      },
+      {
+        "q": "Can I manage everything from my mobile phone?",
+        "a": "Yes. Bokli is fully responsive and works smoothly on mobile, so you can manage bookings, staff, and payments anytime."
+      }
+    ]
+  },
+  "GrowBusiness": {
+    "titleLine1": "Simplify Appointments and",
+    "titleLine2": "Grow your Business Instantly.",
+    "subtitleLine1": "Try Bokli’s easy booking system instantly and explore essential",
+    "subtitleLine2": "features built to support your business from day one.",
+    "button": "Start Accepting Bookings Today"
+  },
+  "Footer": {
+    "brandDesc": "Smart booking management for modern service businesses.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "features": "Features",
+      "faqs": "FAQs",
+      "pricing": "Pricing",
+      "contact": "Contact us"
+    },
+    "areasServed": {
+      "title": "Areas served",
+      "one": "Subscription Management System",
+      "two": "Booking Management System",
+      "three": "Nursery management system",
+      "four": "Car wash management system",
+      "terms": "Terms & Conditions"
+    },
+    "contact": {
+      "title": "Contact us",
+      "desc": "Do you have questions about Bokli or need help getting started?",
+      "phone": "+48 (0) 3165-83887",
+      "email": "Bokli@gmail.com",
+      "address": "23 Main Street, NY, USA"
+    },
+    "copyright": "All Rights Reserved.",
+    "terms": "Terms & Conditions"
+  },
+  "FeatureComparison": {
+    "title": "Detailed Feature Comparison",
+    "subtitleLine1": "Manage appointments, staff schedules, services, and customer",
+    "subtitleLine2": "interactions seamlessly through Bokli's intelligent, automated booking system.",
+    "columns": {
+      "feature": "Features",
+      "free": "Free Plan",
+      "premium": "Premium Plan"
+    },
+    "rows": [
+      { "feature": "Online booking", "free": "✔", "premium": "✔" },
+      {
+        "feature": "Number of staff",
+        "free": "1 Staff",
+        "premium": "Unlimited"
+      },
+      { "feature": "Multiple branches", "free": "✘", "premium": "✔" },
+      {
+        "feature": "Booking reminders",
+        "free": "Manual reminder sending",
+        "premium": "Auto reminders"
+      },
+      { "feature": "Mini-site access", "free": "✘", "premium": "✔" },
+      { "feature": "Email notifications", "free": "✘", "premium": "✔" },
+      { "feature": "Basic analytics", "free": "✘", "premium": "✔" },
+      { "feature": "Advanced reports", "free": "✘", "premium": "✔" }
+    ]
+  }
+}

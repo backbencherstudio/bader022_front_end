@@ -2,7 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 const tickerImages = [
   "/images/company1.png",
@@ -13,12 +14,13 @@ const tickerImages = [
   "/images/company6.png",
 ];
 export default function TrustedCompanies() {
+  const { t } = useI18n();
   return (
     // Infinite scrolling ticker of images
     <div className="flex justify-center items-center my-12 w-full">
       <div className="relative w-full overflow-hidden">
         <p className="text-xl mt-4 text-center text-[#4A4C56]">
-          Trusted By 100+ Popular Company
+          {t("TrustedCompaniesStateMent.title")}
         </p>
         <motion.div
           className="flex gap-6"

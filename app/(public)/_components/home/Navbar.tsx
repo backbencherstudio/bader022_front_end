@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,74 +11,77 @@ import {
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-type Lang = "EN" | "AR";
-
-const LANGS: Record<Lang, { label: string; flag: string }> = {
-  EN: { label: "English", flag: "/images/english_flag.png" }, // or .png
-  AR: { label: "Arabic", flag: "/images/arabic_flag.png" },
+const LANGS = {
+  en: { label: "English", flag: "/images/english_flag.png" },
+  ar: { label: "Arabic", flag: "/images/arabic_flag.png" },
 };
 
 export default function Navbar() {
-  const [language, setLanguage] = useState<Lang>("EN");
+  const { locale, setLocale, t } = useI18n();
 
   return (
     <div className="container w-full mx-auto">
       <header className="px-4 md:px-6 py-5">
-        <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center justify-between ${
+            locale === "en" ? "" : "flex-row-reverse"
+          }`}
+        >
           {/* Left Logo */}
           <Link href="/" className="flex items-center gap-2 cursor-pointer">
-            <div className="flex items-center justify-center">
-              <Image
-                src="/images/image 259.png"
-                alt="Logo"
-                width={100}
-                height={100}
-                className="object-contain"
-              />
-            </div>
+            <Image
+              src="/images/image 259.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="object-contain"
+            />
           </Link>
 
           {/* Center Nav */}
           <nav className="hidden md:flex items-center gap-8 text-[18px] font-medium text-slate-700">
             <Link href="/" className="hover:text-slate-900 transition">
-              Home
+              {t("Nav.home")}
             </Link>
             <Link href="/services" className="hover:text-slate-900 transition">
-              Services
+              {t("Nav.services")}
             </Link>
             <Link href="/faqs" className="hover:text-slate-900 transition">
-              FAQs
+              {t("Nav.faqs")}
             </Link>
             <Link href="/pricing" className="hover:text-slate-900 transition">
-              Pricing
+              {t("Nav.pricing")}
             </Link>
           </nav>
 
           {/* Right Buttons */}
-          <div className="flex items-center gap-4">
+          <div
+            className={`flex items-center gap-4 ${
+              locale === "en" ? "" : "flex-row-reverse"
+            }`}
+          >
             {/* Language Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[18px] text-slate-700 hover:bg-slate-100 transition cursor-pointer">
                   <Image
-                    src={LANGS[language].flag}
-                    alt={`${LANGS[language].label} flag`}
+                    src={LANGS[locale].flag}
+                    alt={`${LANGS[locale].label} flag`}
                     width={23}
                     height={23}
                     className="rounded-sm"
                   />
-                  <span>{language}</span>
+                  <span className="uppercase">{locale}</span>
                   <ChevronDown size={14} />
                 </button>
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end" className="w-40">
-                {(Object.keys(LANGS) as Lang[]).map((key) => (
+                {(Object.keys(LANGS) as Array<"en" | "ar">).map((key) => (
                   <DropdownMenuItem
                     key={key}
-                    onClick={() => setLanguage(key)}
+                    onClick={() => setLocale(key)}
                     className="cursor-pointer flex items-center gap-2"
                   >
                     <Image
@@ -94,8 +98,14 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* Start Free Button */}
-            <Button className="rounded-md px-3! py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
-              Start Free <ArrowUpRight size={18} className="font-semibold" />
+            <Button className="rounded-md px-3 py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
+              {t("Nav.button")}{" "}
+              <ArrowUpRight
+                size={18}
+                className={`font-semibold ${
+                  locale === "ar" ? "rotate-270" : ""
+                }`}
+              />
             </Button>
           </div>
         </div>

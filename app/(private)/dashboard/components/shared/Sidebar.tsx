@@ -28,11 +28,11 @@ const NAV_ITEMS: NavItem[] = [
     href: "/dashboard",
     icon: (p) => <LayoutDashboard {...p} />,
   },
-  {
-    label: "Manage Booking",
-    href: "/manage-booking",
-    icon: (p) => <ClipboardList {...p} />,
-  },
+  // {
+  //   label: "Manage Booking",
+  //   href: "/manage-booking",
+  //   icon: (p) => <ClipboardList {...p} />,
+  // },
   {
     label: "Services",
     href: "/dashboard/services",
@@ -48,7 +48,6 @@ const NAV_ITEMS: NavItem[] = [
     href: "/dashboard/mini-site",
     icon: (p) => <Globe {...p} />,
   },
-  { label: "Blog", href: "/blog", icon: (p) => <PenSquare {...p} /> },
 ];
 
 function SidebarInner({ pathname }: { pathname: string | null }) {

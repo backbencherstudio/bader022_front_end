@@ -1,51 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type ProjectItem = {
   id: string;
   label: string;
-  img: string; // public path
+  img: string;
 };
 
-const items: ProjectItem[] = [
-  { id: "salon", label: "Salon", img: "/images/service1.png" },
-  {
-    id: "sports",
-    label: "Sports Academy",
-    img: "/images/service2.png",
-  },
-  { id: "home", label: "Home Service", img: "/images/service3.png" },
-  {
-    id: "consulting",
-    label: "Consulting Office",
-    img: "/images/service4.png",
-  },
-  {
-    id: "workspaces",
-    label: "Work-spaces",
-    img: "/images/service5.png",
-  },
-  {
-    id: "spa",
-    label: "Personal Care & Spa",
-    img: "/images/service6.png",
-  },
-  {
-    id: "nursery",
-    label: "Children's nursery",
-    img: "/images/service7.png",
-  },
-  {
-    id: "photo",
-    label: "Photography",
-    img: "/images/service8.png",
-  },
-];
-
 export default function ProjectSelectorImages() {
+  const { t } = useI18n();
   const [selected, setSelected] = useState<string>("");
+
+  const items = useMemo(() => {
+    const value = t("ProjectSelector.items");
+    return Array.isArray(value) ? (value as ProjectItem[]) : [];
+  }, [t]);
 
   return (
     <section className="w-full bg-white">
@@ -53,16 +25,18 @@ export default function ProjectSelectorImages() {
         {/* Heading */}
         <div className="mx-auto text-center pb-4 md:pb-6">
           <h2 className="text-3xl md:text-5xl font-semibold text-slate-900 pb-4">
-            What is Your Project?
+            {t("ProjectSelector.title")}
           </h2>
+
           <p className="mt-3 text-[16px] leading-relaxed text-slate-600">
-            Describe your project so Bokli can personalize your booking <br />
-            system, services, staff, and workflow instantly.
+            {t("ProjectSelector.subtitleLine1")}
+            <br className="hidden md:block" />
+            {t("ProjectSelector.subtitleLine2")}
           </p>
         </div>
 
         {/* Grid */}
-        <div className="mx-auto mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mx-auto mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {items.map((item) => {
             const active = selected === item.id;
 

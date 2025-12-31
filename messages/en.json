@@ -1,0 +1,11 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Nav": {
+    "home": "Home",
+    "services": "Services",
+    "faqs": "FAQs",
+    "pricing": "Pricing"
+  }
+}

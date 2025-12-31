@@ -13,5 +13,101 @@
     "subtitleLine2": "customer data — with your own branded mini-website.",
     "primaryBtn": "Get started for free",
     "secondaryBtn": "Try Bokli for Free"
+  },
+  "TrustedCompaniesStateMent": {
+    "title": "Trusted By 100+ Popular Company"
+  },
+  "HowItWorks": {
+    "title": "How Bokli Works",
+    "subtitle": "Manage appointments, staff schedules, services, and customer interactions seamlessly through Bokli's intelligent, automated booking system.",
+    "steps": [
+      {
+        "step": "Step 1",
+        "title": "Create Your Business Account",
+        "desc": "Sign up, add your business details, and instantly get your branded booking mini-website."
+      },
+      {
+        "step": "Step 2",
+        "title": "Add Services, Staff & Branches",
+        "desc": "Set up your services, assign staff, and (if premium) manage multiple branches."
+      },
+      {
+        "step": "Step 3",
+        "title": "Start Accepting Bookings",
+        "desc": "Share your booking link anywhere and receive appointments directly — with optional online payments."
+      }
+    ]
+  },
+  "ProjectSelector": {
+    "title": "What is Your Project?",
+    "subtitleLine1": "Describe your project so Bokli can personalize your booking",
+    "subtitleLine2": "system, services, staff, and workflow instantly.",
+    "items": [
+      { "id": "salon", "label": "Salon", "img": "/images/service1.png" },
+      {
+        "id": "sports",
+        "label": "Sports Academy",
+        "img": "/images/service2.png"
+      },
+      { "id": "home", "label": "Home Service", "img": "/images/service3.png" },
+      {
+        "id": "consulting",
+        "label": "Consulting Office",
+        "img": "/images/service4.png"
+      },
+      {
+        "id": "workspaces",
+        "label": "Work-spaces",
+        "img": "/images/service5.png"
+      },
+      {
+        "id": "spa",
+        "label": "Personal Care & Spa",
+        "img": "/images/service6.png"
+      },
+      {
+        "id": "nursery",
+        "label": "Children's nursery",
+        "img": "/images/service7.png"
+      },
+      { "id": "photo", "label": "Photography", "img": "/images/service8.png" }
+    ]
+  },
+  "KeyFeatures": {
+    "title": "Key Features",
+    "subtitle": "Explore powerful features designed to simplify bookings, manage staff, track performance, and grow your business faster.",
+    "button": "Try For Free",
+    "features": [
+      {
+        "title": "Merchant Dashboard",
+        "desc": "Design a modern, data-driven Merchant Dashboard with a clean, minimalistic layout",
+        "img": "/images/feature1.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Staff Management",
+        "desc": "A comprehensive module designed to streamline team oversight with a modern, intuitive interface",
+        "img": "/images/feature2.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Smart Booking Scheduler",
+        "desc": "Built for efficiency and clarity, it helps businesses optimize operations while providing users",
+        "img": "/images/feature3.png",
+        "colSpan": "md:col-span-4"
+      },
+      {
+        "title": "Mini-Website Builder",
+        "desc": "A compact yet powerful platform designed to help anyone create stunning, responsive websites in minutes",
+        "img": "/images/feature4.png",
+        "colSpan": "md:col-span-6"
+      },
+      {
+        "title": "Payment Integration",
+        "desc": "Design a seamless, secure, and user-friendly payment interface that supports multiple payment methods",
+        "img": "/images/feature5.png",
+        "colSpan": "md:col-span-6"
+      }
+    ]
   }
 }

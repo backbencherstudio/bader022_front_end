@@ -30,7 +30,7 @@ function getValueByPath(obj: any, path: string) {
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
     const stored = localStorage.getItem("locale") as Locale | null;
-    return (stored === "en" || stored === "ar") ? stored : "en";
+    return stored === "en" || stored === "ar" ? stored : "en";
   });
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const t = useMemo(() => {
     return (path: string) => {
       const value = getValueByPath(MESSAGE_MAP[locale], path);
-      return typeof value === "string" ? value : path;
+      return value ?? path;
     };
   }, [locale]);
 

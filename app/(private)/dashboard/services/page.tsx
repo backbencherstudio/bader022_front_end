@@ -106,7 +106,7 @@ export default function ServicesPage() {
   };
 
   return (
-    <section className="p-6 space-y-6 text-gray-900 dark:text-gray-100">
+    <section className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-semibold">Services</h2>

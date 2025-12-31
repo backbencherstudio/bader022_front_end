@@ -1,7 +1,6 @@
 "use client";
 import StatCard from "./components/dashboard/StateCard";
 import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
-import RevenueChart from "./components/dashboard/RevenueChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChartsTabs from "./components/dashboard/RevenueChart";
 

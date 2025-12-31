@@ -3,6 +3,10 @@ import StatCard from "./components/dashboard/StateCard";
 import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChartsTabs from "./components/dashboard/RevenueChart";
+import {
+  Appointment,
+  TodaysAppointments,
+} from "./components/dashboard/TodaysAppoinments";
 
 export type TData = {
   name: string;
@@ -32,6 +36,13 @@ const weeklyData: TData[] = [
   { name: "Thu", revenue: 300 },
   { name: "Fri", revenue: 500 },
 ];
+
+const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
+  id: String(i),
+  datetimeLabel: "Feb 1t 2024, 10:30 AM",
+  customerName: "Sarah Johnson",
+  serviceName: "Haircut & Styling",
+}));
 export default function DashboardPage() {
   return (
     <div>
@@ -66,6 +77,7 @@ export default function DashboardPage() {
             </Tabs>
           </div>
         </div>
+        <TodaysAppointments items={appointments} />
       </div>
       <div className="pt-4 md:pt-5 lg:pt-6">{/* <RecentOrder /> */}</div>
     </div>

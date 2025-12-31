@@ -108,7 +108,7 @@ export default function ChooseThePerfectPlan() {
                 <button className="bg-white px-6 py-3 rounded-md font-semibold text-gray-900 flex gap-3 items-center cursor-pointer">
                   {basic?.cta}
                   <MdArrowOutward
-                    className={locale === "ar" ? "rotate-180" : ""}
+                    className={locale === "ar" ? "rotate-270" : ""}
                   />
                 </button>
               </div>
@@ -141,7 +141,7 @@ export default function ChooseThePerfectPlan() {
               <button className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 cursor-pointer">
                 {premium?.cta}
                 <MdArrowOutward
-                  className={locale === "ar" ? "rotate-180" : ""}
+                  className={locale === "ar" ? "rotate-270" : ""}
                 />
               </button>
             </div>

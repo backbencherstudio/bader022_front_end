@@ -209,5 +209,102 @@
       "desc": "Experience a new level of confidence with hair care designed uniquely to you. Premium treatments, expert guidance, and results you’ll notice.",
       "button": "About Us"
     }
+  },
+  "Testimonials": {
+    "title": "Our Customers Recommend You",
+    "subtitle": "Our users love Bokli for its simplicity, speed, and powerful features that transform daily business operations completely.",
+    "items": [
+      {
+        "quote": "“Bokli transformed our salon operations. Bookings are seamless, staff management is easy, and customers love our new mini-website experience!”",
+        "name": "Al-Qahtani",
+        "title": "CEO & Founder, ExpressoSoft",
+        "avatar": "/images/user1.png"
+      },
+      {
+        "quote": "“Since using Bokli, our appointment scheduling is effortless. Analytics help us improve services, and customers consistently return for bookings.”",
+        "name": "Talal Al-Hujaili",
+        "title": "CEO, Sparkle",
+        "avatar": "/images/user2.png"
+      },
+      {
+        "quote": "“Managing multiple branches was a challenge before Bokli. Now everything is centralized, simple, and our team is more productive than ever.”",
+        "name": "Al-Harithii",
+        "title": "Founder, Softvance",
+        "avatar": "/images/user3.png"
+      }
+    ]
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find quick answers to common questions and learn how Bokli helps simplify booking management for your business.",
+    "items": [
+      {
+        "q": "Can I start for free?",
+        "a": "Yes. You can create your account, set up your services, and start accepting bookings with the free plan. You can upgrade anytime."
+      },
+      {
+        "q": "Can I accept payments online?",
+        "a": "Yes. Bokli supports online payments through integrated payment gateways (available in premium plans depending on your region)."
+      },
+      {
+        "q": "Can I link my mini-website to my own domain?",
+        "a": "Yes. You can connect your custom domain to your Bokli mini-website so customers can book through your branded URL."
+      },
+      {
+        "q": "Will Bokli work for my shop or local business?",
+        "a": "Absolutely. Bokli works for salons, clinics, tutors, workshops, fitness centers, and any business that takes bookings."
+      },
+      {
+        "q": "Do customers need an account?",
+        "a": "No. Customers can book instantly without creating an account. You still get full customer information for follow-ups."
+      },
+      {
+        "q": "Can I add multiple branches?",
+        "a": "Yes. Multi-branch support is available in premium plans, allowing you to manage staff and schedules across locations."
+      },
+      {
+        "q": "What do I need to get started?",
+        "a": "Just sign up, add your services and working hours, and share your booking link. Bokli handles the rest automatically."
+      },
+      {
+        "q": "Can I manage everything from my mobile phone?",
+        "a": "Yes. Bokli is fully responsive and works smoothly on mobile, so you can manage bookings, staff, and payments anytime."
+      }
+    ]
+  },
+  "GrowBusiness": {
+    "titleLine1": "Simplify Appointments and",
+    "titleLine2": "Grow your Business Instantly.",
+    "subtitleLine1": "Try Bokli’s easy booking system instantly and explore essential",
+    "subtitleLine2": "features built to support your business from day one.",
+    "button": "Start Accepting Bookings Today"
+  },
+  "Footer": {
+    "brandDesc": "Smart booking management for modern service businesses.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "features": "Features",
+      "faqs": "FAQs",
+      "pricing": "Pricing",
+      "contact": "Contact us"
+    },
+    "areasServed": {
+      "title": "Areas served",
+      "one": "Subscription Management System",
+      "two": "Booking Management System",
+      "three": "Nursery management system",
+      "four": "Car wash management system",
+      "terms": "Terms & Conditions"
+    },
+    "contact": {
+      "title": "Contact us",
+      "desc": "Do you have questions about Bokli or need help getting started?",
+      "phone": "+48 (0) 3165-83887",
+      "email": "Bokli@gmail.com",
+      "address": "23 Main Street, NY, USA"
+    },
+    "copyright": "All Rights Reserved.",
+    "terms": "Terms & Conditions"
   }
 }

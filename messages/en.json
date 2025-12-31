@@ -109,5 +109,105 @@
         "colSpan": "md:col-span-6"
       }
     ]
+  },
+  "Pricing": {
+    "title": "Choose The Perfect Plan",
+    "subtitle": "Select the right plan designed to support your growth, streamline bookings, and unlock advanced features when needed.",
+    "billing": {
+      "monthly": "Monthly",
+      "annual": "Annual (save over 20%)"
+    },
+    "plans": {
+      "basic": {
+        "name": "Basic Plan",
+        "desc": "Start with essential tools to manage bookings, services, and customers efficiently—perfect for growing small businesses.",
+        "priceMonthly": "Free",
+        "priceAnnual": "Free",
+        "cta": "Try For Free",
+        "features": [
+          "Create only 1 Staff",
+          "Mini-site locked",
+          "Limited features",
+          "Basic analytics",
+          "Limited customization"
+        ]
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "desc": "Unlock advanced booking features, multiple branches, customization tools, and powerful analytics to scale your business effortlessly.",
+        "priceMonthly": "209 SAR",
+        "priceAnnual": "199 SAR",
+        "cta": "Upgrade Premium",
+        "features": [
+          "Create Unlimited Staff",
+          "Mini-site enabled",
+          "Additional features",
+          "Advanced analytics",
+          "Unlimited customization"
+        ]
+      }
+    }
+  },
+  "WhyChooseBokli": {
+    "title": "Why Choose Bokli?",
+    "subtitle": "Bokli simplifies bookings, boosts efficiency, and helps businesses deliver a seamless customer experience with zero hassle.",
+    "items": [
+      {
+        "id": 1,
+        "title": "Lightning Fast Setup",
+        "description": "Go from sign-up to live booking page in minutes.",
+        "icon": "/icons/Icon.png"
+      },
+      {
+        "id": 2,
+        "title": "Professional Design",
+        "description": "Modern, clean interface that impresses customers and reflects your brand.",
+        "icon": "/icons/Icon1.png"
+      },
+      {
+        "id": 3,
+        "title": "Scalable Architecture",
+        "description": "Designed to support thousands of merchants smoothly.",
+        "icon": "/icons/Icon2.png"
+      },
+      {
+        "id": 4,
+        "title": "Secure Payments",
+        "description": "Fully integrated with trusted payment gateways.",
+        "icon": "/icons/Icon3.png"
+      },
+      {
+        "id": 5,
+        "title": "All-in-One Control",
+        "description": "Manage services, staff, bookings, and customer data from one platform.",
+        "icon": "/icons/Icon4.png"
+      },
+      {
+        "id": 6,
+        "title": "Perfect for All Businesses",
+        "description": "Salons, spas, clinics, tutors, garages, fitness trainers, and more.",
+        "icon": "/icons/Icon5.png"
+      }
+    ]
+  },
+  "MiniWebsiteBuilder": {
+    "title": "Mini-Website Builder",
+    "subtitle": "Make your online presence truly yours with powerful customization options that give you complete control over your brand.",
+    "topOptions": [
+      "Logo & colors",
+      "Hero banner",
+      "About section",
+      "Service layout"
+    ],
+    "additionalTitle": "Additional Features:",
+    "extraLeft": ["Staff section", "Layout Customization"],
+    "extraRight": ["Service Booking", "Social links"],
+    "cta": "Explore Customization",
+    "preview": {
+      "titleLine1": "Elevate Your Look With",
+      "titleLine2": "Bespoke Hair Care & Expert",
+      "desc": "Experience a new level of confidence with hair care designed uniquely to you. Premium treatments, expert guidance, and results you’ll notice.",
+      "button": "About Us"
+    }
   }
 }

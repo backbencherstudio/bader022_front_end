@@ -306,5 +306,33 @@
     },
     "copyright": "All Rights Reserved.",
     "terms": "Terms & Conditions"
+  },
+  "FeatureComparison": {
+    "title": "Detailed Feature Comparison",
+    "subtitleLine1": "Manage appointments, staff schedules, services, and customer",
+    "subtitleLine2": "interactions seamlessly through Bokli's intelligent, automated booking system.",
+    "columns": {
+      "feature": "Features",
+      "free": "Free Plan",
+      "premium": "Premium Plan"
+    },
+    "rows": [
+      { "feature": "Online booking", "free": "✔", "premium": "✔" },
+      {
+        "feature": "Number of staff",
+        "free": "1 Staff",
+        "premium": "Unlimited"
+      },
+      { "feature": "Multiple branches", "free": "✘", "premium": "✔" },
+      {
+        "feature": "Booking reminders",
+        "free": "Manual reminder sending",
+        "premium": "Auto reminders"
+      },
+      { "feature": "Mini-site access", "free": "✘", "premium": "✔" },
+      { "feature": "Email notifications", "free": "✘", "premium": "✔" },
+      { "feature": "Basic analytics", "free": "✘", "premium": "✔" },
+      { "feature": "Advanced reports", "free": "✘", "premium": "✔" }
+    ]
   }
 }

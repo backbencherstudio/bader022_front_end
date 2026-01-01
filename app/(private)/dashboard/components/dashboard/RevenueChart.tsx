@@ -8,6 +8,7 @@ import {
   Legend,
 } from "recharts";
 import { TData } from "../../page";
+import { useTheme } from "next-themes";
 
 const CustomBar = (props: any) => {
   const { x, y, width, height } = props;
@@ -38,6 +39,7 @@ const CustomBar = (props: any) => {
 };
 
 export default function RevenueChart({ data }: { data: TData[] }) {
+  const { theme } = useTheme();
   return (
     <BarChart
       style={{
@@ -45,6 +47,10 @@ export default function RevenueChart({ data }: { data: TData[] }) {
         maxWidth: "700px",
         maxHeight: "70vh",
         aspectRatio: 1.618,
+        backgroundColor: theme === "dark" ? "#333" : "#fff",
+        borderRadius: "4px",
+        margin: "4px",
+        padding: "6px",
       }}
       responsive
       data={data}

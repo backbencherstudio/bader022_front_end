@@ -71,13 +71,13 @@ export function RecentTransactionsCard({
       ].join(" ")}
     >
       <CardHeader className="pb-5">
-        <div className="flex items-center justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <CardTitle className="text-xl font-semibold">
             Recent Transactions
           </CardTitle>
 
           <div className="flex items-center gap-4">
-            <div className="relative w-90">
+            <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search anything"
@@ -88,7 +88,7 @@ export function RecentTransactionsCard({
             <Button
               type="button"
               onClick={onViewAll}
-              className="h-12 rounded-xl bg-slate-900 px-6 text-white hover:bg-slate-900/90"
+              className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer px-6 text-white"
             >
               View All
             </Button>
@@ -98,51 +98,52 @@ export function RecentTransactionsCard({
 
       <CardContent className="pb-8">
         <div className="mb-6 flex flex-wrap items-center gap-4">
-          <div className="mr-2 text-base text-black">Filter by:</div>
+          <div className="mr-2 text-base font-semibold">Filter by:</div>
+          <div className="flex flex-wrap gap-2">
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="All Dates" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Dates</SelectItem>
+                <SelectItem value="7d">Last 7 days</SelectItem>
+                <SelectItem value="30d">Last 30 days</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <Select>
-            <SelectTrigger className="text-black!">
-              <SelectValue placeholder="All Dates" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Dates</SelectItem>
-              <SelectItem value="7d">Last 7 days</SelectItem>
-              <SelectItem value="30d">Last 30 days</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="All Services" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Services</SelectItem>
+                <SelectItem value="hair">Hair Treatment</SelectItem>
+                <SelectItem value="beard">Beard Trim</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <Select>
-            <SelectTrigger className="text-black!">
-              <SelectValue placeholder="All Services" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Services</SelectItem>
-              <SelectItem value="hair">Hair Treatment</SelectItem>
-              <SelectItem value="beard">Beard Trim</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="All Staff" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Staff</SelectItem>
+                <SelectItem value="a">Staff A</SelectItem>
+                <SelectItem value="b">Staff B</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <Select>
-            <SelectTrigger className="text-black!">
-              <SelectValue placeholder="All Staff" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Staff</SelectItem>
-              <SelectItem value="a">Staff A</SelectItem>
-              <SelectItem value="b">Staff B</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select>
-            <SelectTrigger className="text-black!">
-              <SelectValue placeholder="All Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="cancel">Cancel</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="cancel">Cancel</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-muted/40">

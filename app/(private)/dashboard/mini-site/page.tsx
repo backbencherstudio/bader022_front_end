@@ -51,6 +51,15 @@ export default function LandingPageBuilder() {
     ctaButton: "Book Now",
     ctaImage: "/cta.jpg",
   });
+
+  const [aboutData, setAboutData] = useState({
+    aboutTitle: "",
+    aboutDescription: "",
+    aboutImage: "",
+    backgroundColor: "#ffffff",
+    padding: 5,
+  });
+
   const [socialLinks, setSocialLinks] = useState([{ icon: "", url: "" }]);
   const [showPoweredBy, setShowPoweredBy] = useState(true);
 
@@ -72,6 +81,63 @@ export default function LandingPageBuilder() {
     setSocialLinks(socialLinks.filter((_, i) => i !== index));
   };
 
+  // why Choose Us
+
+  const [whyChooseUsData, setWhyChooseUsData] = useState({
+    whyChooseUsTitle: "",
+    whyChooseUsSubtitle: "",
+    backgroundColor: "#ffffff",
+    featureCards: [
+      {
+        image: null as string | null,
+        title: "",
+        description: "",
+      },
+    ],
+  });
+
+  const addFeatureCard = () => {
+    setWhyChooseUsData((prev) => ({
+      ...prev,
+      featureCards: [
+        ...prev.featureCards,
+        { image: "", title: "", description: "" },
+      ],
+    }));
+  };
+
+  const updateFeatureCard = (
+    index: number,
+    field: "image" | "title" | "description",
+    value: string
+  ) => {
+    setWhyChooseUsData((prev) => {
+      const updated = [...prev.featureCards];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, featureCards: updated };
+    });
+  };
+
+  const removeFeatureCard = (index: number) => {
+    setWhyChooseUsData((prev) => ({
+      ...prev,
+      featureCards: prev.featureCards.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleFeatureImageUpload = (index: number, file: File | null) => {
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    console.log("====================================");
+    console.log(imageUrl);
+    console.log("====================================");
+    updateFeatureCard(index, "image", imageUrl);
+  };
+
+  console.log("====================================");
+  console.log(whyChooseUsData);
+  console.log("====================================");
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] h-screen dark:bg-gray-900">
       {/* ================= LEFT: INPUT PANEL ================= */}
@@ -856,12 +922,125 @@ export default function LandingPageBuilder() {
                   >
                     <span className="font-medium">About Section</span>
                   </AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <p>
-                      Our flagship product combines cutting-edge technology with
-                      sleek design. Built with premium materials, it offers
-                      unparalleled performance and reliability.
-                    </p>
+                  <AccordionContent className="flex flex-col gap-4 text-balance p-2">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        About Title
+                      </label>
+                      <input
+                        className="w-full border p-2 rounded dark:bg-gray-700"
+                        value={aboutData.aboutTitle}
+                        onChange={(e) =>
+                          setAboutData({
+                            ...aboutData,
+                            aboutTitle: e.target.value,
+                          })
+                        }
+                        placeholder="About Title"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        About Description
+                      </label>
+                      <textarea
+                        className="w-full border p-2 rounded dark:bg-gray-700"
+                        value={aboutData.aboutDescription}
+                        onChange={(e) =>
+                          setAboutData({
+                            ...aboutData,
+                            aboutDescription: e.target.value,
+                          })
+                        }
+                        placeholder="Description"
+                      />
+                    </div>
+
+                    {/* HERO IMAGE INPUT */}
+                    <input
+                      className="w-full border p-2 rounded dark:bg-gray-700"
+                      value={aboutData.aboutImage}
+                      onChange={(e) =>
+                        setAboutData({
+                          ...aboutData,
+                          aboutImage: e.target.value,
+                        })
+                      }
+                      placeholder="Hero image URL"
+                    />
+
+                    {/* Image */}
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        About Image{" "}
+                      </label>
+
+                      <label
+                        className="
+                                    mt-2 flex flex-col items-center justify-center
+                                    border-2 border-dashed rounded-lg py-8 cursor-pointer
+                                    border-gray-300 dark:border-gray-700
+                                    bg-gray-50 dark:bg-gray-800
+                                    hover:bg-gray-100 dark:hover:bg-gray-700
+                                  "
+                      >
+                        <FiImage size={26} className="text-gray-400" />
+                        <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+                          Click to upload
+                        </span>
+                        <input type="file" className="hidden" />
+                      </label>
+                    </div>
+                    <div>
+                      <label className="text-sm">Background Color</label>
+
+                      <div className="grid grid-cols-2 gap-5">
+                        {/* Background Color */}
+                        <input
+                          type="color"
+                          value={aboutData.backgroundColor}
+                          onChange={(e) =>
+                            setAboutData({
+                              ...aboutData,
+                              backgroundColor: e.target.value,
+                            })
+                          }
+                          className="cursor-pointer rounded-md h-12 w-full"
+                          // style={{ backgroundColor: data.primaryBtnColor }}
+                        />
+                        {/* Color Hex Input */}
+                        <input
+                          value={data.primaryBtnColor}
+                          onChange={(e) =>
+                            setData({
+                              ...data,
+                              primaryBtnColor: e.target.value,
+                            })
+                          }
+                          className="dark:bg-white dark:text-black rounded-md p-3 w-full"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium flex justify-between">
+                        Padding: <span>{aboutData.padding}px</span>
+                      </label>
+
+                      <input
+                        type="range"
+                        min={16}
+                        max={96}
+                        step={1}
+                        value={aboutData.padding}
+                        onChange={(e) =>
+                          setAboutData({
+                            ...aboutData,
+                            padding: Number(e.target.value),
+                          })
+                        }
+                        className="w-full mt-2 cursor-pointer"
+                      />
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -886,12 +1065,148 @@ export default function LandingPageBuilder() {
                   >
                     <span className="font-medium">Why Choose Us</span>
                   </AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-4 text-balance">
-                    <p>
-                      Our flagship product combines cutting-edge technology with
-                      sleek design. Built with premium materials, it offers
-                      unparalleled performance and reliability.
-                    </p>
+                  <AccordionContent className="flex flex-col gap-4 text-balance p-2">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Section Title
+                      </label>
+                      <input
+                        className="w-full border p-2 rounded dark:bg-gray-700"
+                        value={whyChooseUsData.whyChooseUsTitle}
+                        onChange={(e) =>
+                          setWhyChooseUsData({
+                            ...whyChooseUsData,
+                            whyChooseUsTitle: e.target.value,
+                          })
+                        }
+                        placeholder="Enter title..."
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Section Subtitle
+                      </label>
+                      <input
+                        className="w-full border p-2 rounded dark:bg-gray-700"
+                        value={whyChooseUsData.whyChooseUsSubtitle}
+                        onChange={(e) =>
+                          setWhyChooseUsData({
+                            ...whyChooseUsData,
+                            whyChooseUsSubtitle: e.target.value,
+                          })
+                        }
+                        placeholder="Enter Sub title..."
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-medium">Feature Cards</h3>
+
+                        <button
+                          onClick={addFeatureCard}
+                          className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-900 text-white dark:bg-white dark:text-black"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {whyChooseUsData.featureCards.map((item, index) => (
+                        <div
+                          key={index}
+                          className="space-y-3 border rounded-lg p-3"
+                        >
+                          <div className="flex justify-between items-center">
+                            <h3 className="text-sm font-medium">
+                              Feature {index + 1}
+                            </h3>
+                            {whyChooseUsData.featureCards.length > 1 && (
+                              <button
+                                onClick={() => removeFeatureCard(index)}
+                                className="text-red-500 text-sm"
+                              >
+                                ✕
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Image Upload */}
+                          <label
+                            className="mt-2 flex flex-col items-center justify-center
+      border-2 border-dashed rounded-lg py-6 cursor-pointer
+      border-gray-300 dark:border-gray-700
+      bg-gray-50 dark:bg-gray-800"
+                          >
+                            <FiImage size={26} className="text-gray-400" />
+                            <span className="text-sm mt-2">
+                              Click to upload
+                            </span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) =>
+                                handleFeatureImageUpload(
+                                  index,
+                                  e.target.files?.[0] || null
+                                )
+                              }
+                            />
+                          </label>
+                          <input
+                            className="w-full border p-2 rounded dark:bg-gray-700"
+                            value={item.title}
+                            onChange={(e) =>
+                              updateFeatureCard(index, "title", e.target.value)
+                            }
+                            placeholder="Title"
+                          />
+
+                          <textarea
+                            className="w-full border p-2 rounded dark:bg-gray-700"
+                            value={item.description}
+                            onChange={(e) =>
+                              updateFeatureCard(
+                                index,
+                                "description",
+                                e.target.value
+                              )
+                            }
+                            placeholder="Description"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <label className="text-sm">Background Color</label>
+
+                      <div className="grid grid-cols-2 gap-5">
+                        {/* Background Color */}
+                        <input
+                          type="color"
+                          value={aboutData.backgroundColor}
+                          onChange={(e) =>
+                            setAboutData({
+                              ...aboutData,
+                              backgroundColor: e.target.value,
+                            })
+                          }
+                          className="cursor-pointer rounded-md h-12 w-full"
+                          // style={{ backgroundColor: data.primaryBtnColor }}
+                        />
+                        {/* Color Hex Input */}
+                        <input
+                          value={data.primaryBtnColor}
+                          onChange={(e) =>
+                            setAboutData({
+                              ...aboutData,
+                              backgroundColor: e.target.value,
+                            })
+                          }
+                          className="dark:bg-white dark:text-black rounded-md p-3 w-full"
+                        />
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -988,6 +1303,83 @@ export default function LandingPageBuilder() {
           </div>
         </section>
 
+        {/* About Section */}
+        {aboutData?.aboutTitle && (
+          <section className="py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              {/* Image */}
+              {aboutData?.aboutImage && (
+                <div className="relative w-full h-[320px] rounded-xl overflow-hidden">
+                  <Image
+                    src={aboutData?.aboutImage || "/images/aboutus.png"}
+                    alt="About Us"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              )}
+
+              {/* Content */}
+              <div>
+                <h3 className="text-2xl md:text-3xl font-semibold mb-4">
+                  {aboutData.aboutTitle}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {aboutData.aboutDescription}
+                </p>
+                <button className="px-6 py-3 bg-linear-to-r from-[#7153FF] to-[#3CB3FF] text-white rounded-md font-medium">
+                  About Us
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Why Choose Us */}
+        <section
+          style={{ backgroundColor: whyChooseUsData.backgroundColor }}
+          className="py-16"
+        >
+          <div className="container mx-auto px-4">
+            {/* Title */}
+            <h3 className="text-center text-4xl font-semibold mb-3">
+              {whyChooseUsData.whyChooseUsTitle}
+            </h3>
+
+            {/* Subtitle */}
+            <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+              {whyChooseUsData.whyChooseUsSubtitle}
+            </p>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {whyChooseUsData.featureCards.map((item, index) => (
+                <div
+                  key={index}
+                  className="card flex flex-col items-center text-center gap-4 p-6 rounded-xl bg-white shadow-sm"
+                >
+                  {item.image && (
+                    <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100">
+                      <Image
+                        src="/icons/WhyChooseUs.png"
+                        alt={item.title || "Feature icon"}
+                        width={28}
+                        height={28}
+                      />
+                    </div>
+                  )}
+
+                  {/* Content */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         {/* SERVICES */}
         <section className="p-16 grid grid-cols-1 md:grid-cols-3 gap-6">
           {data.services.map((s, i) => (
@@ -1015,7 +1407,6 @@ export default function LandingPageBuilder() {
         {/* CTA */}
         <section className="relative h-[320px]">
           <Image src={data.ctaImage} alt="CTA" fill className="object-cover" />
-
           <div className="relative z-10 text-center p-20">
             <h2 className="text-3xl font-bold">{data.ctaTitle}</h2>
             <p className="mt-3">{data.ctaSubtitle}</p>

@@ -1,14 +1,16 @@
 "use client";
-import StatCard from "./components/dashboard/StateCard";
-import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ChartsTabs from "./components/dashboard/RevenueChart";
+import StatCard from "../components/dashboard/StateCard";
 import {
-  Appointment,
-  TodaysAppointments,
-} from "./components/dashboard/TodaysAppoinments";
-import RecentTransactions from "./components/dashboard/RecentTransactions";
-import QuickActionsComponents from "./components/dashboard/QuickActions";
+  Calendar,
+  CircleDollarSign,
+  Scissors,
+  User,
+  UserCheck,
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RecentTransactions from "../components/dashboard/RecentTransactions";
+import RevenueChart from "../components/dashboard/RevenueChart";
+import NewVSReturningCusChart from "../components/analytics/NewVSReturningCusChart";
 
 export type TData = {
   name: string;
@@ -39,13 +41,7 @@ const weeklyData: TData[] = [
   { name: "Fri", revenue: 500 },
 ];
 
-const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
-  id: String(i),
-  datetimeLabel: "Feb 1t 2024, 10:30 AM",
-  customerName: "Sarah Johnson",
-  serviceName: "Haircut & Styling",
-}));
-export default function DashboardPage() {
+export default function page() {
   return (
     <div>
       {/* Charts */}
@@ -55,15 +51,16 @@ export default function DashboardPage() {
           <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <StatCard
               title="Revenue"
-              value={"109 SAR"}
+              value={"$12450"}
               Icon={CircleDollarSign}
             />
             <StatCard title="Total Bookings" value={248} Icon={Calendar} />
-            <StatCard title="Appointments" value={34} Icon={TrendingUp} />
-            <StatCard title="Total Customers" value={186} Icon={Users} />
+            <StatCard title="New Customers" value={34} Icon={User} />
+            <StatCard title="Returning Customers" value={86} Icon={UserCheck} />
+            <StatCard title="Top Service" value={"Haircut"} Icon={Scissors} />
           </div>
-          <div className="rounded-xl border border-gray-200 p-4 pl-0 shadow-sm">
-            <div className="pl-4 pt-2 pb-4 w-full">
+          <div className="flex flex-col gap-4 lg:flex-row ">
+            <div className="pl-4 pt-2 pb-4 rounded-xl w-full border border-gray-200 p-4 shadow-sm">
               <Tabs defaultValue="monthly">
                 <div className="flex justify-between">
                   <p className="text-xl font-semibold text-[#444950]">
@@ -75,24 +72,21 @@ export default function DashboardPage() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <ChartsTabs data={weeklyData} />
+                  <RevenueChart data={weeklyData} />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <ChartsTabs data={monthlyData} />
+                  <RevenueChart data={monthlyData} />
                 </TabsContent>
               </Tabs>
             </div>
+            <div className="rounded-xl lg:w-2/4 w-full border border-gray-200 p-4 pl-0 shadow-sm">
+              <NewVSReturningCusChart />
+            </div>
           </div>
         </div>
-        <TodaysAppointments items={appointments} />
       </div>
-      <div className="pt-4 flex xl:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
-        <div className="w-full">
-          <RecentTransactions />
-        </div>
-        <div className="w-full xl:w-1/4">
-          <QuickActionsComponents />
-        </div>
+      <div className="pt-4 md:pt-5 gap-4 lg:pt-6">
+        <RecentTransactions />
       </div>
     </div>
   );

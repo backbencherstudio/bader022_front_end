@@ -8,9 +8,9 @@ import {
   UserCheck,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import RecentTransactions from "../components/dashboard/RecentTransactions";
 import RevenueChart from "../components/dashboard/RevenueChart";
 import NewVSReturningCusChart from "../components/analytics/NewVSReturningCusChart";
+import StaffPerformance from "../components/analytics/StaffPerformance";
 
 export type TData = {
   name: string;
@@ -86,7 +86,7 @@ export default function page() {
         </div>
       </div>
       <div className="pt-4 md:pt-5 gap-4 lg:pt-6">
-        <RecentTransactions />
+        <StaffPerformance />
       </div>
     </div>
   );

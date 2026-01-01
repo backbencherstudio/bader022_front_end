@@ -1,6 +1,4 @@
 "use client";
-
-import * as React from "react";
 import { Search } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,8 +28,8 @@ export type TransactionRow = {
   customerName: string;
   customerAvatar?: string;
   service: string;
-  amountLabel: string; // e.g. "100 SAR"
-  dateLabel: string; // e.g. "Jun 12, 2023"
+  amountLabel: string;
+  dateLabel: string;
   status: TxStatus;
 };
 
@@ -56,11 +54,6 @@ function StatusPill({ status }: { status: TxStatus }) {
     </span>
   );
 }
-
-/**
- * UI-only (no filtering/sorting/search logic).
- * Controls are present for layout parity; wire them later with real data.
- */
 export function RecentTransactionsCard({
   rows,
   className,
@@ -84,11 +77,11 @@ export function RecentTransactionsCard({
           </CardTitle>
 
           <div className="flex items-center gap-4">
-            <div className="relative w-[360px]">
+            <div className="relative w-90">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search anything"
-                className="h-12 rounded-xl border-muted/40 bg-muted/20 pl-10"
+                className="h-12 rounded-xl pl-10"
               />
             </div>
 
@@ -157,7 +150,7 @@ export function RecentTransactionsCard({
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-14 w-[280px] pl-8 text-sm font-semibold text-muted-foreground">
+                  <TableHead className="h-14 w-70 pl-8 text-sm font-semibold text-muted-foreground">
                     Customer
                   </TableHead>
                   <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
@@ -177,7 +170,7 @@ export function RecentTransactionsCard({
 
               <TableBody>
                 {rows.map((r) => (
-                  <TableRow key={r.id} className="h-[78px]">
+                  <TableRow key={r.id} className="h-19.5">
                     <TableCell className="pl-8">
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">

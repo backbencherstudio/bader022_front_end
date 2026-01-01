@@ -83,11 +83,11 @@ export default function DashboardPage() {
         </div>
         <TodaysAppointments items={appointments} />
       </div>
-      <div className="pt-4 flex md:pt-5 gap-4 lg:pt-6">
+      <div className="pt-4 flex lg:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
         <div className="w-full">
           <RecentTransactions />
         </div>
-        <div className="w-1/4">
+        <div className="w-full lg:w-1/4">
           <QuickActionsComponents />
         </div>
       </div>

@@ -58,7 +58,7 @@ export default function DashboardPage() {
       {/* Charts */}
       <div className="flex lg:flex-row flex-col justify-between gap-4">
         {/* Revenue Chart */}
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 pl-0 shadow-sm">
+        <div className="w-full rounded-xl border border-gray-200 p-4 pl-0 shadow-sm">
           <div className="pl-4 pt-2 pb-4 w-full">
             <Tabs defaultValue="monthly">
               <div className="flex justify-between">

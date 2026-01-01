@@ -7,9 +7,7 @@ import {
   Appointment,
   TodaysAppointments,
 } from "./components/dashboard/TodaysAppoinments";
-import RecentTransactions, {
-  RecentTransactionsCard,
-} from "./components/dashboard/RecentTransactions";
+import RecentTransactions from "./components/dashboard/RecentTransactions";
 import QuickActionsComponents from "./components/dashboard/QuickActions";
 
 export type TData = {
@@ -83,11 +81,11 @@ export default function DashboardPage() {
         </div>
         <TodaysAppointments items={appointments} />
       </div>
-      <div className="pt-4 flex lg:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
+      <div className="pt-4 flex xl:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
         <div className="w-full">
           <RecentTransactions />
         </div>
-        <div className="w-full lg:w-1/4">
+        <div className="w-full xl:w-1/4">
           <QuickActionsComponents />
         </div>
       </div>

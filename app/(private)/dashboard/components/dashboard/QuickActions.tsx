@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -13,9 +12,9 @@ function ActionTile({ item }: { item: QuickActionItem }) {
     <button type="button" onClick={item.onClick} className="group text-left">
       <Card
         className={[
-          "h-[96px] w-full rounded-2xl border border-muted/50 bg-background shadow-sm",
+          "h-24 w-full rounded-2xl border border-muted/50 bg-background shadow-sm",
           "transition-transform duration-150",
-          "group-hover:-translate-y-[1px] group-hover:shadow-md",
+          "group-hover:-translate-y-px group-hover:shadow-md",
         ].join(" ")}
       >
         <div className="flex h-full flex-col items-center justify-center px-4 text-center">
@@ -41,7 +40,7 @@ export function QuickActions({
 }) {
   return (
     <div className={className}>
-      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      <h3 className="text-xl font-semibold">{title}</h3>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         {items.slice(0, 4).map((item) => (
@@ -54,7 +53,7 @@ export function QuickActions({
 
 const actions: QuickActionItem[] = [
   { id: "1", label: "Add New\nService" },
-  { id: "2", label: "Add Staff\nMember" },
+  { id: "2", label: "Add Staff" },
   { id: "3", label: "Add Booking" },
   { id: "4", label: "See\nTransactions" },
 ];

@@ -39,7 +39,7 @@ export function TodaysAppointments({
 }) {
   return (
     <Card
-      className={`rounded-3xl border border-muted/40 shadow-sm ${
+      className={`px-0 w-full rounded-xl bg-white dark:bg-gray-700 border border-gray-200 lg:w-1/4 shadow-sm ${
         className ?? ""
       }`}
     >
@@ -47,10 +47,10 @@ export function TodaysAppointments({
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-2!">
         <div
           className={[
-            "relative max-h-[420px] overflow-y-auto pr-3",
+            "relative max-h-118 overflow-y-auto pr-3",
             // Webkit scrollbar styling (no plugin needed)
             "[&::-webkit-scrollbar]:w-2",
             "[&::-webkit-scrollbar-track]:bg-transparent",
@@ -60,7 +60,7 @@ export function TodaysAppointments({
           ].join(" ")}
         >
           {/* Timeline line */}
-          <div className="pointer-events-none absolute left-[11px] top-0 h-full w-px bg-muted/40" />
+          <div className="pointer-events-none absolute top-0 h-full w-px bg-muted/40" />
 
           <div className="space-y-0">
             {items.map((item, idx) => (

@@ -270,66 +270,100 @@ export default function page() {
         </div>
 
         {/* Content Card */}
-        <Card className="mt-4 p-4">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
-            <TabsContent value="calendar" className="mt-0">
-              {/* Calendar header row */}
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="text-sm font-semibold">
-                    {format(month, "MMMM yyyy")}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
-                    {format(endOfMonth(month), "MMM d, yyyy")}
-                  </div>
-                </div>
+        <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
+          <TabsContent value="calendar" className="mt-0">
+            {/* Calendar header row */}
 
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <MonthPicker value={month} onChange={setMonth} />
+            <div className="mt-4">
+              {view === "monthly" ? (
+                <>
+                  <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="text-sm font-semibold">
+                        {format(month, "MMMM yyyy")}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
+                        {format(endOfMonth(month), "MMM d, yyyy")}
+                      </div>
+                    </div>
 
-                  <div className="flex items-center rounded-lg border bg-muted/20 p-1">
-                    <Button
-                      variant={view === "monthly" ? "default" : "ghost"}
-                      size="sm"
-                      className="h-8"
-                      onClick={() => setView("monthly")}
-                    >
-                      Monthly
-                    </Button>
-                    <Button
-                      variant={view === "weekly" ? "default" : "ghost"}
-                      size="sm"
-                      className="h-8"
-                      onClick={() => setView("weekly")}
-                    >
-                      Weekly
-                    </Button>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                      <MonthPicker value={month} onChange={setMonth} />
+
+                      <div className="flex items-center rounded-lg border bg-muted/20 p-1">
+                        <Button
+                          variant={view === "monthly" ? "default" : "ghost"}
+                          size="sm"
+                          className="h-8"
+                          onClick={() => setView("monthly")}
+                        >
+                          Monthly
+                        </Button>
+                        <Button
+                          variant={view === "monthly" ? "ghost" : "default"}
+                          size="sm"
+                          className="h-8"
+                          onClick={() => setView("weekly")}
+                        >
+                          Weekly
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="mt-4">
-                {view === "monthly" ? (
                   <MonthGrid
                     month={month}
                     bookings={bookings}
                     onOpenMore={onOpenMore}
                   />
-                ) : (
-                  <WeeklyGrid monthLabel={monthLabel} />
-                )}
-              </div>
-            </TabsContent>
+                </>
+              ) : (
+                <>
+                  <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="text-sm font-semibold">
+                        {format(month, "MMMM yyyy")}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
+                        {format(endOfMonth(month), "MMM d, yyyy")}
+                      </div>
+                    </div>
 
-            {/* Keep table tab empty exactly like you requested */}
-            <TabsContent value="table" className="mt-0">
-              <>
-                <RecentTransactions />
-              </>
-            </TabsContent>
-          </Tabs>
-        </Card>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                      <MonthPicker value={month} onChange={setMonth} />
+
+                      <div className="flex items-center rounded-lg border bg-muted/20 p-1">
+                        <Button
+                          variant={view === "weekly" ? "ghost" : "default"}
+                          size="sm"
+                          className="h-8"
+                          onClick={() => setView("monthly")}
+                        >
+                          Monthly
+                        </Button>
+                        <Button
+                          variant={view === "weekly" ? "default" : "ghost"}
+                          size="sm"
+                          className="h-8"
+                          onClick={() => setView("weekly")}
+                        >
+                          Weekly
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <WeeklyGrid monthLabel={monthLabel} />
+                </>
+              )}
+            </div>
+          </TabsContent>
+
+          {/* Keep table tab empty exactly like you requested */}
+          <TabsContent value="table" className="mt-6">
+            <RecentTransactions />
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* +N More Dialog */}

@@ -30,7 +30,7 @@ export default function MonthGrid({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border">
+    <div className="overflow-hidden rounded-xl border border-t-0 rounded-t-none">
       <div className="grid grid-cols-7 border-b bg-muted/20">
         {DAYS_SHORT.map((d) => (
           <div

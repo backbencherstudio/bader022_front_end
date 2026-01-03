@@ -15,6 +15,7 @@ import {
   Settings,
   LogOut,
   SquareKanban,
+  Captions,
   Calendar,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -61,6 +62,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "Analytics",
     href: "/dashboard/analytics",
     icon: (p) => <SquareKanban {...p} />,
+  },
+  {
+    label: "Transactions",
+    href: "/dashboard/transactions",
+    icon: (p) => <Captions {...p} />,
   },
 ];
 

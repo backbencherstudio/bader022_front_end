@@ -41,7 +41,6 @@ export default function WeeklyGrid({
 
           {Array.from({ length: 7 }).map((_, i) => (
             <div key={i} className="min-h-19.5 border-l p-2">
-              {/* UI placeholder. You will render bookings mapped to time/day. */}
               {t === "07:00" && i === 0 ? (
                 <div className="space-y-2">
                   <div className="w-full rounded-md border bg-violet-100 px-2 py-1.5 text-[11px] text-violet-900">

@@ -34,7 +34,7 @@ export default function DayCell({
   return (
     <div
       className={cn(
-        "relative min-h-[118px] border-l border-t p-2",
+        "relative min-h-29.5 border-l border-t p-2",
         !isSameMonth(day, currentMonth) && "bg-muted/20",
         isToday(day) && "bg-muted/30"
       )}

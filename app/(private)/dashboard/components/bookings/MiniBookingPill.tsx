@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import { TBooking } from "../../bookings/page";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
+import Image from "next/image";
+import { Clock, Scissors } from "lucide-react";
 
 function bookingPillClass(color: NonNullable<TBooking["color"]>) {
   return color === "purple"
@@ -13,29 +15,29 @@ export default function MiniBookingPill({ booking }: { booking: TBooking }) {
   return (
     <div
       className={cn(
-        "w-full rounded-md border px-2 py-1.5 text-[11px] leading-tight",
+        "w-full rounded-md border px-2 py-1.5 text-[12px] leading-tight p-4",
         bookingPillClass(color)
       )}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-2">
         <Avatar className="h-5 w-5">
-          <AvatarImage src={booking.avatarUrl} alt={booking.customerName} />
-          <AvatarFallback className="text-[10px]">
-            {booking.customerName
-              .split(" ")
-              .slice(0, 2)
-              .map((s) => s[0])
-              .join("")}
-          </AvatarFallback>
+          <Image
+            src={"/images/staffs/staff1.png"}
+            height={16}
+            width={16}
+            alt="customer"
+          />
         </Avatar>
 
-        <div className="min-w-0 flex-1">
-          <div className="truncate font-medium">{booking.customerName}</div>
-          <div className="truncate opacity-80">{booking.service}</div>
-        </div>
+        <div className="truncate font-medium">{booking.customerName}</div>
+      </div>
+      <div className="mt-1 flex items-center gap-1">
+        <Scissors size={14} />
+        <div className="truncate opacity-80">{booking.service}</div>
       </div>
 
-      <div className="mt-1 flex items-center justify-between gap-2">
+      <div className="mt-1 flex items-center gap-1">
+        <Clock size={14} />
         <div className="truncate opacity-80">{booking.timeRange}</div>
       </div>
     </div>

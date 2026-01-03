@@ -155,14 +155,14 @@ function toDate(iso: string) {
 export default function page() {
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");
-  const [month, setMonth] = useState(() => new Date(2025, 0, 1));
+  const [month, setMonth] = useState(() => new Date(2026, 0, 1));
 
   const [filterBy, setFilterBy] =
     useState<TBookingFilters["filterBy"]>("staff");
   const [scope, setScope] = useState<TBookingFilters["scope"]>("upcoming");
   const [search, setSearch] = useState("");
 
-  const { bookings, loading, error } = useBookings({
+  const { bookings, loading } = useBookings({
     filterBy,
     scope,
     search,
@@ -195,7 +195,7 @@ export default function page() {
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-            <div className="relative w-full sm:w-[260px]">
+            <div className="relative w-full sm:w-65">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={search}
@@ -231,7 +231,7 @@ export default function page() {
           <div className="text-sm text-muted-foreground">Filter by:</div>
 
           <Select value={filterBy} onValueChange={(v) => setFilterBy(v as any)}>
-            <SelectTrigger className="h-9 w-[140px]">
+            <SelectTrigger className="h-9 w-35">
               <SelectValue placeholder="By staff" />
             </SelectTrigger>
             <SelectContent>
@@ -242,7 +242,7 @@ export default function page() {
           </Select>
 
           <Select value={scope} onValueChange={(v) => setScope(v as any)}>
-            <SelectTrigger className="h-9 w-[140px]">
+            <SelectTrigger className="h-9 w-35">
               <SelectValue placeholder="upcoming" />
             </SelectTrigger>
             <SelectContent>
@@ -252,7 +252,7 @@ export default function page() {
             </SelectContent>
           </Select>
 
-          <div className="ml-auto hidden md:flex items-center gap-2">
+          {/* <div className="ml-auto hidden md:flex items-center gap-2">
             {loading ? (
               <Badge variant="outline" className="font-normal">
                 Loading...
@@ -266,7 +266,7 @@ export default function page() {
                 {bookings.length} bookings
               </Badge>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* Content Card */}

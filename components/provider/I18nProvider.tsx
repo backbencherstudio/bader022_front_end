@@ -28,16 +28,23 @@ function getValueByPath(obj: any, path: string) {
 }
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    const stored = localStorage.getItem("locale") as Locale | null;
-    return stored === "en" || stored === "ar" ? stored : "en";
-  });
+  const [locale, setLocaleState] = useState<Locale>("en");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Load locale from localStorage only on client side
+    const stored = localStorage.getItem("locale") as Locale | null;
+    const initialLocale = stored === "en" || stored === "ar" ? stored : "en";
+    setLocaleState(initialLocale);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     localStorage.setItem("locale", locale);
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-  }, [locale]);
+  }, [locale, mounted]);
 
   const t = useMemo(() => {
     return (path: string) => {

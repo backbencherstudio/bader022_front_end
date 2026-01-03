@@ -22,7 +22,13 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -39,6 +45,8 @@ import MonthPicker from "../components/bookings/MonthPicker";
 import { useCallback, useState } from "react";
 import AllBookingHistory from "../components/bookings/AllBookingHistory";
 import AddBookingModal from "../components/bookings/AddBookingModal";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export type TBooking = {
   id: string;
@@ -377,6 +385,31 @@ export default function page() {
 
         {/* Keep table tab empty exactly like you requested */}
         <TabsContent value="table" className="mt-6">
+          <Card className="mb-6">
+            {/* First Section: Title, Description, and Toggle */}
+            <CardHeader className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-xl pb-2 font-semibold">
+                  Automated Reminders
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Set up automatic reminder notifications
+                </CardDescription>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch defaultChecked={true} id="notification_toggle" />
+              </div>
+            </CardHeader>
+
+            {/* Second Section: Border and Paragraph */}
+            <CardContent>
+              <div className="border-t-2 border-muted mb-4 pt-2" />
+              <p className="text-sm text-muted-foreground">
+                Reminders will be sent automatically 24 hours before each
+                appointment via email.
+              </p>
+            </CardContent>
+          </Card>
           <AllBookingHistory />
         </TabsContent>
       </Tabs>

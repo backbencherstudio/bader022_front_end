@@ -10,6 +10,7 @@ import { FiImage } from "react-icons/fi";
 
 export default function ServicesPreview() {
   const { servicesPreviewData, setServicesPreviewData } = useLandingPage();
+
   // why Choose Us
   const addFeatureCard = () => {
     setServicesPreviewData((prev) => ({

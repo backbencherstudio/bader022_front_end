@@ -22,7 +22,13 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -37,6 +43,10 @@ import WeeklyGrid from "../components/bookings/WeeklyGrid";
 import MonthGrid from "../components/bookings/MonthlyGrid";
 import MonthPicker from "../components/bookings/MonthPicker";
 import { useCallback, useState } from "react";
+import AllBookingHistory from "../components/bookings/AllBookingHistory";
+import AddBookingModal from "../components/bookings/AddBookingModal";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export type TBooking = {
   id: string;
@@ -161,7 +171,12 @@ export default function page() {
     useState<TBookingFilters["filterBy"]>("staff");
   const [scope, setScope] = useState<TBookingFilters["scope"]>("upcoming");
   const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleAddBooking = (data: any) => {
+    console.log("New booking data: ", data);
+    // Handle form submission (e.g., send data to backend)
+  };
   const { bookings, loading } = useBookings({
     filterBy,
     scope,
@@ -186,73 +201,84 @@ export default function page() {
   )} - ${format(endOfMonth(month), "MMM d, yyyy")}`;
 
   return (
-    <div className="w-full">
-      <div>
-        {/* Top bar */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-xl font-semibold">All Bookings History</h1>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-            <div className="relative w-full sm:w-65">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-9"
-                placeholder="Search anything"
-              />
-            </div>
-
-            <Tabs
-              value={tab}
-              onValueChange={(v) => setTab(v as any)}
-              className="w-full sm:w-auto"
-            >
-              <TabsList className="w-full sm:w-auto">
-                <TabsTrigger value="calendar" className="gap-2">
-                  <CalendarIcon className="h-4 w-4" />
-                  Calendar
-                </TabsTrigger>
-                <TabsTrigger value="table" className="gap-2">
-                  <Table2 className="h-4 w-4" />
-                  Table
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            <Button className="w-full sm:w-auto">Add Booking</Button>
-          </div>
+    <div className="w-full py-4">
+      {/* Top bar */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">All Bookings History</h1>
         </div>
 
-        {/* Filters */}
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <div className="text-sm text-muted-foreground">Filter by:</div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+          <div className="relative w-full sm:w-65">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9"
+              placeholder="Search anything"
+            />
+          </div>
 
-          <Select value={filterBy} onValueChange={(v) => setFilterBy(v as any)}>
-            <SelectTrigger className="h-9 w-35">
-              <SelectValue placeholder="By staff" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="staff">By staff</SelectItem>
-              <SelectItem value="service">By service</SelectItem>
-              <SelectItem value="customer">By customer</SelectItem>
-            </SelectContent>
-          </Select>
+          <Tabs
+            value={tab}
+            onValueChange={(v) => setTab(v as any)}
+            className="w-full sm:w-auto"
+          >
+            <TabsList className="w-full sm:w-auto">
+              <TabsTrigger value="calendar" className="gap-2 cursor-pointer">
+                <CalendarIcon className="h-4 w-4" />
+                Calendar
+              </TabsTrigger>
+              <TabsTrigger value="table" className="gap-2 cursor-pointer">
+                <Table2 className="h-4 w-4" />
+                Table
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
 
-          <Select value={scope} onValueChange={(v) => setScope(v as any)}>
-            <SelectTrigger className="h-9 w-35">
-              <SelectValue placeholder="upcoming" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="upcoming">upcoming</SelectItem>
-              <SelectItem value="past">past</SelectItem>
-              <SelectItem value="all">all</SelectItem>
-            </SelectContent>
-          </Select>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full sm:w-auto cursor-pointer"
+          >
+            Add Booking
+          </Button>
+        </div>
+      </div>
 
-          {/* <div className="ml-auto hidden md:flex items-center gap-2">
+      {/* Content Card */}
+      <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
+        <TabsContent value="calendar" className="mt-0">
+          {/* Calendar header row */}
+          {/* Filters */}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <div className="text-sm text-muted-foreground">Filter by:</div>
+
+            <Select
+              value={filterBy}
+              onValueChange={(v) => setFilterBy(v as any)}
+            >
+              <SelectTrigger className="h-9 w-35">
+                <SelectValue placeholder="By staff" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="staff">By staff</SelectItem>
+                <SelectItem value="service">By service</SelectItem>
+                <SelectItem value="customer">By customer</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={scope} onValueChange={(v) => setScope(v as any)}>
+              <SelectTrigger className="h-9 w-35">
+                <SelectValue placeholder="upcoming" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="upcoming">upcoming</SelectItem>
+                <SelectItem value="past">past</SelectItem>
+                <SelectItem value="all">all</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* <div className="ml-auto hidden md:flex items-center gap-2">
             {loading ? (
               <Badge variant="outline" className="font-normal">
                 Loading...
@@ -267,105 +293,131 @@ export default function page() {
               </Badge>
             )}
           </div> */}
-        </div>
+          </div>
 
-        {/* Content Card */}
-        <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
-          <TabsContent value="calendar" className="mt-0">
-            {/* Calendar header row */}
-
-            <div className="mt-4">
-              {view === "monthly" ? (
-                <>
-                  <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <div className="text-sm font-semibold">
-                        {format(month, "MMMM yyyy")}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
-                        {format(endOfMonth(month), "MMM d, yyyy")}
-                      </div>
+          <div className="mt-4">
+            {view === "monthly" ? (
+              <>
+                <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <div className="text-sm font-semibold">
+                      {format(month, "MMMM yyyy")}
                     </div>
-
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                      <MonthPicker value={month} onChange={setMonth} />
-
-                      <div className="flex items-center rounded-lg border bg-muted/20 p-1">
-                        <Button
-                          variant={view === "monthly" ? "default" : "ghost"}
-                          size="sm"
-                          className="h-8"
-                          onClick={() => setView("monthly")}
-                        >
-                          Monthly
-                        </Button>
-                        <Button
-                          variant={view === "monthly" ? "ghost" : "default"}
-                          size="sm"
-                          className="h-8"
-                          onClick={() => setView("weekly")}
-                        >
-                          Weekly
-                        </Button>
-                      </div>
+                    <div className="text-xs text-muted-foreground">
+                      {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
+                      {format(endOfMonth(month), "MMM d, yyyy")}
                     </div>
                   </div>
-                  <MonthGrid
-                    month={month}
-                    bookings={bookings}
-                    onOpenMore={onOpenMore}
-                  />
-                </>
-              ) : (
-                <>
-                  <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <div className="text-sm font-semibold">
-                        {format(month, "MMMM yyyy")}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
-                        {format(endOfMonth(month), "MMM d, yyyy")}
-                      </div>
-                    </div>
 
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                      <MonthPicker value={month} onChange={setMonth} />
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <MonthPicker value={month} onChange={setMonth} />
 
-                      <div className="flex items-center rounded-lg border bg-muted/20 p-1">
-                        <Button
-                          variant={view === "weekly" ? "ghost" : "default"}
-                          size="sm"
-                          className="h-8"
-                          onClick={() => setView("monthly")}
-                        >
-                          Monthly
-                        </Button>
-                        <Button
-                          variant={view === "weekly" ? "default" : "ghost"}
-                          size="sm"
-                          className="h-8"
-                          onClick={() => setView("weekly")}
-                        >
-                          Weekly
-                        </Button>
-                      </div>
+                    <div className="flex bg-gray-300 items-center rounded-lg border gap-1 p-1">
+                      <Button
+                        // variant={view === "monthly" ? "default" : "ghost"}
+                        size="sm"
+                        className="h-8 bg-white text-black hover:bg-white cursor-pointer"
+                        onClick={() => setView("monthly")}
+                      >
+                        Monthly
+                      </Button>
+                      <Button
+                        // variant={view === "monthly" ? "ghost" : "default"}
+                        size="sm"
+                        className="h-8 bg-gray-300 text-black hover:bg-white cursor-pointer"
+                        onClick={() => setView("weekly")}
+                      >
+                        Weekly
+                      </Button>
                     </div>
                   </div>
-                  <WeeklyGrid monthLabel={monthLabel} />
-                </>
-              )}
-            </div>
-          </TabsContent>
+                </div>
+                <MonthGrid
+                  month={month}
+                  bookings={bookings}
+                  onOpenMore={onOpenMore}
+                />
+              </>
+            ) : (
+              <>
+                <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <div className="text-sm font-semibold">
+                      {format(month, "MMMM yyyy")}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
+                      {format(endOfMonth(month), "MMM d, yyyy")}
+                    </div>
+                  </div>
 
-          {/* Keep table tab empty exactly like you requested */}
-          <TabsContent value="table" className="mt-6">
-            <RecentTransactions />
-          </TabsContent>
-        </Tabs>
-      </div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <MonthPicker value={month} onChange={setMonth} />
 
+                    <div className="flex items-center bg-gray-300 rounded-lg gap-1 border p-1">
+                      <Button
+                        // variant={view === "weekly" ? "ghost" : "default"}
+                        size="sm"
+                        // className="h-8"
+                        className="h-8 bg-gray-300 text-black hover:bg-white cursor-pointer"
+                        onClick={() => setView("monthly")}
+                      >
+                        Monthly
+                      </Button>
+                      <Button
+                        // variant={view === "weekly" ? "default" : "ghost"}
+                        size="sm"
+                        // className="h-8"
+                        // className="h-8 bg-white text-black hover:bg-white cursor-pointer"
+                        className="h-8 bg-white text-black hover:bg-white cursor-pointer"
+                        onClick={() => setView("weekly")}
+                      >
+                        Weekly
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <WeeklyGrid monthLabel={monthLabel} />
+              </>
+            )}
+          </div>
+        </TabsContent>
+
+        {/* Keep table tab empty exactly like you requested */}
+        <TabsContent value="table" className="mt-6">
+          <Card className="mb-6">
+            {/* First Section: Title, Description, and Toggle */}
+            <CardHeader className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-xl pb-2 font-semibold">
+                  Automated Reminders
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Set up automatic reminder notifications
+                </CardDescription>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch defaultChecked={true} id="notification_toggle" />
+              </div>
+            </CardHeader>
+
+            {/* Second Section: Border and Paragraph */}
+            <CardContent>
+              <div className="border-t-2 border-muted mb-4 pt-2" />
+              <p className="text-sm text-muted-foreground">
+                Reminders will be sent automatically 24 hours before each
+                appointment via email.
+              </p>
+            </CardContent>
+          </Card>
+          <AllBookingHistory />
+        </TabsContent>
+      </Tabs>
+      <AddBookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddBooking}
+      />
       {/* +N More Dialog */}
       {/* <MoreBookingsDialog
         open={moreOpen}

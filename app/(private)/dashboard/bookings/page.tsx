@@ -38,6 +38,7 @@ import MonthGrid from "../components/bookings/MonthlyGrid";
 import MonthPicker from "../components/bookings/MonthPicker";
 import { useCallback, useState } from "react";
 import AllBookingHistory from "../components/bookings/AllBookingHistory";
+import AddBookingModal from "../components/bookings/AddBookingModal";
 
 export type TBooking = {
   id: string;
@@ -162,7 +163,12 @@ export default function page() {
     useState<TBookingFilters["filterBy"]>("staff");
   const [scope, setScope] = useState<TBookingFilters["scope"]>("upcoming");
   const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleAddBooking = (data: any) => {
+    console.log("New booking data: ", data);
+    // Handle form submission (e.g., send data to backend)
+  };
   const { bookings, loading } = useBookings({
     filterBy,
     scope,
@@ -211,18 +217,23 @@ export default function page() {
             className="w-full sm:w-auto"
           >
             <TabsList className="w-full sm:w-auto">
-              <TabsTrigger value="calendar" className="gap-2">
+              <TabsTrigger value="calendar" className="gap-2 cursor-pointer">
                 <CalendarIcon className="h-4 w-4" />
                 Calendar
               </TabsTrigger>
-              <TabsTrigger value="table" className="gap-2">
+              <TabsTrigger value="table" className="gap-2 cursor-pointer">
                 <Table2 className="h-4 w-4" />
                 Table
               </TabsTrigger>
             </TabsList>
           </Tabs>
 
-          <Button className="w-full sm:w-auto">Add Booking</Button>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full sm:w-auto cursor-pointer"
+          >
+            Add Booking
+          </Button>
         </div>
       </div>
 
@@ -369,7 +380,11 @@ export default function page() {
           <AllBookingHistory />
         </TabsContent>
       </Tabs>
-
+      <AddBookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddBooking}
+      />
       {/* +N More Dialog */}
       {/* <MoreBookingsDialog
         open={moreOpen}

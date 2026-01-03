@@ -15,6 +15,8 @@ import {
   Settings,
   LogOut,
   SquareKanban,
+  Captions,
+  Calendar,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -30,6 +32,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "Dashboard",
     href: "/dashboard",
     icon: (p) => <LayoutDashboard {...p} />,
+  },
+  {
+    label: "Bookings",
+    href: "/dashboard/bookings",
+    icon: (p) => <Calendar {...p} />,
   },
   {
     label: "Manage Booking",
@@ -55,6 +62,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "Analytics",
     href: "/dashboard/analytics",
     icon: (p) => <SquareKanban {...p} />,
+  },
+  {
+    label: "Transactions",
+    href: "/dashboard/transactions",
+    icon: (p) => <Captions {...p} />,
   },
 ];
 

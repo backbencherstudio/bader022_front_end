@@ -58,6 +58,18 @@ type CtaBannerData = {
   padding: number;
 };
 
+type SocialLinks = {
+  icon: string | null;
+  url: string;
+};
+type FooterData = {
+  footerTitle: string;
+  footerSubTitle: string;
+  footerLogo: string;
+  footerBackground: string;
+  footerTextColor: string;
+  socialLinks: SocialLinks[];
+};
 type LandingContextType = {
   heroData: HeroData;
   setHeroData: React.Dispatch<React.SetStateAction<HeroData>>;
@@ -75,6 +87,9 @@ type LandingContextType = {
 
   ctaBannerData: CtaBannerData;
   setCtaBannerData: React.Dispatch<React.SetStateAction<CtaBannerData>>;
+
+  footerData: FooterData;
+  setFooterData: React.Dispatch<React.SetStateAction<FooterData>>;
 };
 
 /* ---------- CONTEXT ---------- */
@@ -131,6 +146,15 @@ export function LandingPageProvider({
     padding: 5,
   });
 
+  const [footerData, setFooterData] = useState<FooterData>({
+    footerTitle: "",
+    footerSubTitle: "",
+    footerLogo: "",
+    footerBackground: "",
+    footerTextColor: "",
+    socialLinks: [{ icon: null, url: "" }],
+  });
+
   return (
     <LandingPageContext.Provider
       value={{
@@ -144,6 +168,8 @@ export function LandingPageProvider({
         setServicesPreviewData,
         ctaBannerData,
         setCtaBannerData,
+        footerData,
+        setFooterData,
       }}
     >
       {children}

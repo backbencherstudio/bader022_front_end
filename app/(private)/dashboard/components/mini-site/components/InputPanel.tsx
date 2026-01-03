@@ -12,10 +12,28 @@ import AboutSection from "./inputpanel/AboutSection";
 import CTABanner from "./inputpanel/CTABanner";
 import WhyChooseUs from "./inputpanel/WhyChooseUs";
 import ServicesPreview from "./inputpanel/ServicesPreview";
+import { TfiWorld } from "react-icons/tfi";
+import Branding from "./inputpanel/globalsettings/Branding";
+import FooterSettings from "./inputpanel/globalsettings/FooterSettings";
 
 export default function InputPanel() {
   return (
     <Accordion type="single" collapsible className="w-full">
+      {/* Global Settings */}
+      <AccordionItem value="item-1">
+        <AccordionTrigger>
+          {" "}
+          <h3 className="flex gap-2 items-center text-xl">
+            <TfiWorld /> Global Settings
+          </h3>
+        </AccordionTrigger>
+        <AccordionContent className="flex flex-col gap-4 text-balance">
+          {/* Branding */}
+          <Branding />
+          {/* Footer Settings */}
+          <FooterSettings />
+        </AccordionContent>
+      </AccordionItem>
       {/* Home Page */}
       <AccordionItem value="item-2">
         <AccordionTrigger>

@@ -5,6 +5,7 @@ import Hero from "./landingpage/Hero";
 import About from "./landingpage/About";
 import CTABanner from "./landingpage/CTABanner";
 import ServicesPreview from "./landingpage/ServicesPreview";
+import Footer from "./landingpage/Footer";
 export default function LandingPage() {
   return (
     <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow m-2 p-3 rounded-md">
@@ -18,6 +19,8 @@ export default function LandingPage() {
       <ServicesPreview />
       {/* CTA */}
       <CTABanner />
+      {/* Footer  */}
+      <Footer />
     </div>
   );
 }

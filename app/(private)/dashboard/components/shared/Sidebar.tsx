@@ -6,8 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  ClipboardList,
-  PenSquare,
   Menu,
   Handbag,
   Users,
@@ -122,10 +120,18 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
       </nav>
 
       {/* Footer with Settings & Logout */}
-      <div className="mt-auto px-6 py-4 space-y-2">
+      <div className="mt-auto px-6 py-8 space-y-2">
         <Link
-          href="/settings"
-          className="group flex items-center gap-3 px-4 py-3 rounded-xl transition text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700"
+          href="/dashboard/settings"
+          className={[
+            "group flex items-center gap-3 px-4 py-3 mt-6 rounded-xl transition",
+            "focus:outline-none focus:ring-2 focus:ring-white/30",
+            pathname == "/dashboard/settings"
+              ? "bg-black text-white dark:bg-gray-800 dark:text-white"
+              : "text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700",
+          ].join(" ")}
+          aria-current={pathname == "/dashboard/settings" ? "page" : undefined}
+          // className="group flex items-center gap-3 px-4 py-3 rounded-xl transition text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700"
         >
           <Settings className="h-5 w-5" />
           <span className="text-sm font-medium">Settings</span>
@@ -148,7 +154,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile: Drawer trigger + drawer content */}
-      <div className="lg:hidden">
+      <div className="lg:hidden overflow-auto min-h-screen border border-red-800">
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
@@ -160,15 +166,16 @@ export default function Sidebar() {
             side="left"
             className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] dark:border-[#555] overflow-hidden"
           >
-            <div className="flex min-h-screen bg-white dark:bg-black flex-col">
+            <div className="bg-white dark:bg-black flex-col">
               <SidebarInner pathname={pathname} />
+              <h1 className="bg-red-800 border border-red-700-+">Hello</h1>
             </div>
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Desktop: Original fixed sidebar (unchanged UI) */}
-      <aside className="hidden lg:flex w-70 fixed min-h-screen border-r border-[#E9E9E9] dark:border-[#555] top-0 flex-col z-50">
+      <aside className="hidden lg:flex w-70 fixed min-h-screen overflow-auto border-r border-[#E9E9E9] dark:border-[#555] top-0 flex-col z-50">
         <SidebarInner pathname={pathname} />
       </aside>
     </>

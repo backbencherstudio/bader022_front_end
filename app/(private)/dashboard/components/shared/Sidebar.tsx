@@ -39,11 +39,6 @@ const NAV_ITEMS: NavItem[] = [
     icon: (p) => <Calendar {...p} />,
   },
   {
-    label: "Manage Booking",
-    href: "/manage-booking",
-    icon: (p) => <ClipboardList {...p} />,
-  },
-  {
     label: "Services",
     href: "/dashboard/services",
     icon: (p) => <Handbag {...p} />,

@@ -9,6 +9,7 @@ import { MdNotifications } from "react-icons/md";
 import BusinessSetting from "../components/settings/Bussiness";
 import NotificationSettings from "../components/settings/Notifications";
 import LanguageSettings from "../components/settings/Languages";
+import SupportSettings from "../components/settings/Support";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -293,8 +294,7 @@ function getActiveSectionContent(activeSection: string) {
     case "support":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Support</h2>
-          <p>Need help? Contact our support team here.</p>
+          <SupportSettings />
         </div>
       );
     case "account":

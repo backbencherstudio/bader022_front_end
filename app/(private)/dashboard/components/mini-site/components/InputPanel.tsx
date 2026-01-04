@@ -17,6 +17,7 @@ import Branding from "./inputpanel/globalsettings/Branding";
 import FooterSettings from "./inputpanel/globalsettings/FooterSettings";
 import ColorSystem from "./inputpanel/globalsettings/ColorSystem";
 import Typography from "./inputpanel/globalsettings/Typography";
+import LayoutSettings from "./inputpanel/globalsettings/LayoutSettings";
 
 export default function InputPanel() {
   return (
@@ -36,6 +37,8 @@ export default function InputPanel() {
           <ColorSystem />
           {/* Typography */}
           <Typography />
+          {/*Layout Settings */}
+          <LayoutSettings />
           {/* Footer Settings */}
           <FooterSettings />
         </AccordionContent>

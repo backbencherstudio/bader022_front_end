@@ -77,6 +77,10 @@ type TypographyData = {
   fontFamily?: string;
 };
 
+type LayoutSettingsData = {
+  sectionSpacing?: number;
+};
+
 type SocialLinks = {
   icon: string | null;
   url: string;
@@ -116,6 +120,11 @@ type LandingContextType = {
 
   typographyData: TypographyData;
   setTypographyData: React.Dispatch<React.SetStateAction<TypographyData>>;
+
+  layoutSettingsData: LayoutSettingsData;
+  setLayoutSettingsData: React.Dispatch<
+    React.SetStateAction<LayoutSettingsData>
+  >;
 
   footerData: FooterData;
   setFooterData: React.Dispatch<React.SetStateAction<FooterData>>;
@@ -195,6 +204,11 @@ export function LandingPageProvider({
     fontFamily: "Inter",
   });
 
+  const [layoutSettingsData, setLayoutSettingsData] =
+    useState<LayoutSettingsData>({
+      sectionSpacing: 0,
+    });
+
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
     footerSubTitle: "",
@@ -225,6 +239,8 @@ export function LandingPageProvider({
         setColorSystemData,
         typographyData,
         setTypographyData,
+        layoutSettingsData,
+        setLayoutSettingsData,
       }}
     >
       {children}

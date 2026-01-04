@@ -131,7 +131,6 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
               : "text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700",
           ].join(" ")}
           aria-current={pathname == "/dashboard/settings" ? "page" : undefined}
-          // className="group flex items-center gap-3 px-4 py-3 rounded-xl transition text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700"
         >
           <Settings className="h-5 w-5" />
           <span className="text-sm font-medium">Settings</span>
@@ -154,7 +153,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile: Drawer trigger + drawer content */}
-      <div className="lg:hidden overflow-auto min-h-screen border border-red-800">
+      <div className="lg:hidden overflow-auto">
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
@@ -164,11 +163,10 @@ export default function Sidebar() {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] dark:border-[#555] overflow-hidden"
+            className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] dark:border-[#555] overflow-auto"
           >
             <div className="bg-white dark:bg-black flex-col">
               <SidebarInner pathname={pathname} />
-              <h1 className="bg-red-800 border border-red-700-+">Hello</h1>
             </div>
           </SheetContent>
         </Sheet>

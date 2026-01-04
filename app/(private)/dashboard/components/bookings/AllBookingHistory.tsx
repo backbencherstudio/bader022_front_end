@@ -307,7 +307,7 @@ export function RecentTransactionsCard({
       </CardContent>
 
       {/* Pagination UI */}
-      <div className="flex justify-between items-center px-6 pb-4 border-t border-muted/40">
+      <div className="flex justify-between  flex-col gap-2 sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
         <div className="text-sm text-muted-foreground">
           Showing 01-12 of 400 Results
         </div>

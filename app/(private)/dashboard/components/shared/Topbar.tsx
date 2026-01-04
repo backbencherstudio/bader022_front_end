@@ -35,7 +35,7 @@ export default function TopBar() {
       </div>
 
       {/* Right Side */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Theme Toggle Icons */}
         <button
           className="p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition"
@@ -76,7 +76,7 @@ export default function TopBar() {
                 height={48}
                 className="w-12 h-12 rounded-full"
               />
-              <div className="text-left">
+              <div className="text-left sm:block hidden">
                 <p className="text-black dark:text-white font-semibold">
                   Carlota Monteiro
                 </p>

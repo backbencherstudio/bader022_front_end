@@ -149,11 +149,12 @@ export function LandingPageProvider({
   children: React.ReactNode;
 }) {
   const [heroData, setHeroData] = useState<HeroData>({
-    heroTitle: "",
-    heroSubtitle: "",
-    heroDescription: "",
-    primaryBtn: "",
-    secondaryBtn: "",
+    heroTitle: "Nourish Your Scalp for Strong, Healthy Hair Growth",
+    heroSubtitle: "Care your hair",
+    heroDescription:
+      "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential",
+    primaryBtn: "Get Started",
+    secondaryBtn: "Book A Consultation",
     heroImage: "",
     imageLeft: true,
     overlayColor: "#000000",
@@ -161,32 +162,74 @@ export function LandingPageProvider({
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
-    aboutTitle: "",
-    aboutDescription: "",
+    aboutTitle: "Elevate Your Look with Bespoke Hair Care & Expert",
+    aboutDescription:
+      "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication.",
     aboutImage: "",
-    backgroundColor: "#ffffff",
+    backgroundColor: "",
     padding: 5,
   });
 
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData>({
-    whyChooseUsTitle: "",
-    whyChooseUsSubtitle: "",
-    backgroundColor: "#ffffff",
-    featureCards: [{ image: null, title: "", description: "" }],
+    whyChooseUsTitle: "Why We’re Right Choice",
+    whyChooseUsSubtitle:
+      "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results",
+    backgroundColor: "",
+    featureCards: [
+      {
+        image: null,
+        title: "Certified Hair Experts",
+        description:
+          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
+      },
+      {
+        image: null,
+        title: "Certified Hair Experts",
+        description:
+          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
+      },
+      {
+        image: null,
+        title: "Certified Hair Experts",
+        description:
+          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
+      },
+    ],
   });
 
   const [servicesPreviewData, setServicesPreviewData] =
     useState<ServicesPreviewData>({
-      servicesPreviewTitle: "",
-      servicesPreviewSubtitle: "",
+      servicesPreviewTitle: "Customized Hair Treatments & Styling to Suit You",
+      servicesPreviewSubtitle:
+        "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health",
       serviceViewBtn: "",
       backgroundColor: "",
-      servicesCards: [{ image: null, title: "", description: "" }],
+      servicesCards: [
+        {
+          image: null,
+          title: "Hair Treatment",
+          description:
+            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
+        },
+        {
+          image: null,
+          title: "Hair Treatment",
+          description:
+            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
+        },
+        {
+          image: null,
+          title: "Hair Treatment",
+          description:
+            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
+        },
+      ],
     });
 
   const [ctaBannerData, setCtaBannerData] = useState<CtaBannerData>({
-    ctaBannerTitle: "",
-    ctaBannerSubTitle: "",
+    ctaBannerTitle: "Your Hair Deserves the Best Care",
+    ctaBannerSubTitle:
+      "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment",
     ctaBannerImage: "",
     backgroundColor: "",
     ctaBannerOverlayColor: "",
@@ -195,7 +238,7 @@ export function LandingPageProvider({
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({
     logo: "",
-    position: "left",
+    position: "center",
   });
 
   const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({

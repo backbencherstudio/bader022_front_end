@@ -9,7 +9,7 @@ export default function WhyChooseUs() {
 
   return (
     <section
-      style={{ backgroundColor: whyChooseUsData.backgroundColor || "#F3F4F6" }}
+      style={{ backgroundColor: whyChooseUsData.backgroundColor }}
       className="py-16 transition-colors"
     >
       <div className="container mx-auto px-4">
@@ -27,9 +27,8 @@ export default function WhyChooseUs() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {whyChooseUsData.featureCards.map((item, index) => (
             <div key={index}>
-              {item.image && (
-                <div
-                  className="
+              <div
+                className="
                     flex flex-col items-center text-center gap-4
                     rounded-xl p-6
                     bg-white dark:bg-gray-800
@@ -37,29 +36,28 @@ export default function WhyChooseUs() {
                     shadow-sm hover:shadow-md
                     transition
                   "
-                >
-                  {/* Icon */}
-                  <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
-                    <Image
-                      src={item.image}
-                      alt={item.title || "Feature icon"}
-                      width={28}
-                      height={28}
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-gray-600 dark:text-gray-300 line-clamp-2">
-                      {item.description}
-                    </p>
-                  </div>
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                  <Image
+                    src={item.image || "/icons/Icon.png"}
+                    alt={item.title || "Feature icon"}
+                    width={28}
+                    height={28}
+                  />
                 </div>
-              )}
+
+                {/* Content */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-gray-600 dark:text-gray-300 line-clamp-2">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>

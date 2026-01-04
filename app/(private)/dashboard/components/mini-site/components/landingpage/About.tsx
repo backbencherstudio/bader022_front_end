@@ -3,29 +3,29 @@ import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 
 export default function About() {
-  const { aboutData } = useLandingPage();
+  const { aboutData, colorSystemData } = useLandingPage();
 
   if (!aboutData?.aboutTitle) return null;
 
   return (
     <section
-      style={{ backgroundColor: aboutData.backgroundColor }}
-      className="py-16 transition-colors"
+      style={{
+        backgroundColor: aboutData.backgroundColor || "transparent",
+      }}
+      className="py-16 transition-colors dark:bg-gray-900"
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* Image */}
-          {aboutData.aboutImage && (
-            <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md">
-              <Image
-                src={aboutData.aboutImage}
-                alt="About Us"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+          <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
+            <Image
+              src={aboutData.aboutImage || "/images/mini-site/aboutus.png"}
+              alt="About Us"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
 
           {/* Content */}
           <div>
@@ -37,7 +37,16 @@ export default function About() {
               {aboutData.aboutDescription}
             </p>
 
-            <button className="px-6 py-3 bg-linear-to-r from-[#7153FF] to-[#3CB3FF] hover:opacity-90 transition text-white rounded-md font-medium">
+            <button
+              style={{
+                backgroundColor: colorSystemData.primaryColor,
+              }}
+              className="
+                px-6 py-3 rounded-md
+                text-white font-medium
+                transition hover:opacity-90
+              "
+            >
               About Us
             </button>
           </div>

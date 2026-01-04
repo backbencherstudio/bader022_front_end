@@ -8,6 +8,7 @@ import { Building, Languages, ShieldQuestionMark, User } from "lucide-react";
 import { MdNotifications } from "react-icons/md";
 import BusinessSetting from "../components/settings/Bussiness";
 import NotificationSettings from "../components/settings/Notifications";
+import LanguageSettings from "../components/settings/Languages";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -286,8 +287,7 @@ function getActiveSectionContent(activeSection: string) {
     case "language":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Language Settings</h2>
-          <p>Choose your preferred language here.</p>
+          <LanguageSettings />
         </div>
       );
     case "support":

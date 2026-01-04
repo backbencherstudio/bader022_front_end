@@ -157,7 +157,7 @@ export default function Sidebar() {
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
-            className="fixed left-4 top-5.5 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80 dark:bg-gray-600 dark:hover:bg-gray-500 cursor-pointer dark:text-white"
+            className="fixed left-3 top-5.5 z-50 inline-flex items-center justify-center rounded-md border border-[#E9E9E9] bg-white/70 backdrop-blur px-2.5 py-2 text-black/80 dark:bg-gray-600 dark:hover:bg-gray-500 cursor-pointer dark:text-white"
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>

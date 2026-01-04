@@ -66,7 +66,7 @@ export default function TopBar() {
         <Dialog>
           <DialogTrigger asChild>
             <button
-              className="flex items-center cursor-pointer gap-2 p-3 rounded-full transition"
+              className="flex items-center cursor-pointer gap-2 p-3, pl-0 rounded-full transition"
               aria-label="Profile"
             >
               <Image

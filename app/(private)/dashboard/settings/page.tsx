@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Building, Languages, ShieldQuestionMark, User } from "lucide-react";
 import { MdNotifications } from "react-icons/md";
 import BusinessSetting from "../components/settings/Bussiness";
+import NotificationSettings from "../components/settings/Notifications";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -279,8 +280,7 @@ function getActiveSectionContent(activeSection: string) {
     case "notifications":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Notification Settings</h2>
-          <p>Set up your notification preferences here.</p>
+          <NotificationSettings />
         </div>
       );
     case "language":
@@ -307,7 +307,7 @@ export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("account");
 
   return (
-    <div className="border rounded-xl">
+    <div className="border rounded-xl mt-4">
       <h1 className="text-[18px] p-4 font-semibold">
         {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Setting
       </h1>

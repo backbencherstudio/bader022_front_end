@@ -150,7 +150,7 @@ export default function NotificationSettings() {
   };
 
   return (
-    <div className="container max-w-lg mx-auto mb-4">
+    <div className="container max-w-3xl mx-auto mb-4 p-4">
       <div className=" p-5 border rounded-xl mb-4">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">
           Notification Settings

@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import { useForm, Controller } from "react-hook-form";
 
-// Default values for the modal form
 const defaultValues = {
   customerName: "",
   service: "",
@@ -254,7 +253,7 @@ export default function AddBookingModal({
           </DialogDescription>
 
           <DialogFooter>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4">
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel
               </Button>

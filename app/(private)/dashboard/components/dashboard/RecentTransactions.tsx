@@ -369,7 +369,7 @@ function StatusPill({ status }: { status: TxStatus }) {
   return (
     <span
       className={[
-        "inline-flex min-w-[132px] items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold",
+        "inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold",
         "border",
         isCompleted
           ? "border-emerald-500 bg-emerald-50 text-emerald-700"

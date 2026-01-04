@@ -6,6 +6,10 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Building, Languages, ShieldQuestionMark, User } from "lucide-react";
 import { MdNotifications } from "react-icons/md";
+import BusinessSetting from "../components/settings/Bussiness";
+import NotificationSettings from "../components/settings/Notifications";
+import LanguageSettings from "../components/settings/Languages";
+import SupportSettings from "../components/settings/Support";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -17,7 +21,7 @@ function Sidebar({
 }) {
   return (
     <div className="w-full sm:w-72 p-4 sm:block hidden">
-      <ul>
+      <ul className="flex flex-col gap-4">
         <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
@@ -105,8 +109,10 @@ function Sidebar({
 
 // Mobile Sidebar (Hamburger menu)
 function MobileSidebar({
+  activeSection,
   setActiveSection,
 }: {
+  activeSection: string;
   setActiveSection: (section: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,33 +127,58 @@ function MobileSidebar({
         Menu
       </Button>
       {isOpen && (
-        <ul className="flex flex-col gap-3 mt-4">
+        <ul className="flex flex-col gap-4 mt-4">
           <li
-            className="py-3 text-sm text-muted-foreground font-semibold cursor-pointer"
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "account"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30"
+            )}
             onClick={() => setActiveSection("account")}
           >
             Account
           </li>
           <li
-            className="py-3 text-sm text-muted-foreground font-semibold cursor-pointer"
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "business"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30"
+            )}
             onClick={() => setActiveSection("business")}
           >
             Business
           </li>
           <li
-            className="py-3 text-sm text-muted-foreground font-semibold cursor-pointer"
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "notifications"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30"
+            )}
             onClick={() => setActiveSection("notifications")}
           >
             Notifications
           </li>
           <li
-            className="py-3 text-sm text-muted-foreground font-semibold cursor-pointer"
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "language"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30"
+            )}
             onClick={() => setActiveSection("language")}
           >
             Language
           </li>
           <li
-            className="py-3 text-sm text-muted-foreground font-semibold cursor-pointer"
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "support"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30"
+            )}
             onClick={() => setActiveSection("support")}
           >
             Support
@@ -245,29 +276,25 @@ function getActiveSectionContent(activeSection: string) {
     case "business":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Business Settings</h2>
-          <p>Configure your business details here.</p>
+          <BusinessSetting />
         </div>
       );
     case "notifications":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Notification Settings</h2>
-          <p>Set up your notification preferences here.</p>
+          <NotificationSettings />
         </div>
       );
     case "language":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Language Settings</h2>
-          <p>Choose your preferred language here.</p>
+          <LanguageSettings />
         </div>
       );
     case "support":
       return (
         <div>
-          <h2 className="text-lg font-semibold">Support</h2>
-          <p>Need help? Contact our support team here.</p>
+          <SupportSettings />
         </div>
       );
     case "account":
@@ -280,14 +307,22 @@ export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("account");
 
   return (
-    <div className="flex flex-col sm:flex-row gap-8 p-8">
-      <MobileSidebar setActiveSection={setActiveSection} />
-      <Sidebar
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
-      <div className="w-full max-w-4xl">
-        {getActiveSectionContent(activeSection)}
+    <div className="border rounded-xl mt-4">
+      <h1 className="text-[18px] p-4 font-semibold">
+        {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Setting
+      </h1>
+      <div className="flex flex-col sm:flex-row">
+        <MobileSidebar
+          setActiveSection={setActiveSection}
+          activeSection={activeSection}
+        />
+        <Sidebar
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+        <div className="w-full max-w-4xl">
+          {getActiveSectionContent(activeSection)}
+        </div>
       </div>
     </div>
   );

@@ -30,28 +30,30 @@ export default function MonthGrid({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-t-0 rounded-t-none">
-      <div className="grid grid-cols-7 border-b bg-muted/20">
-        {DAYS_SHORT.map((d) => (
-          <div
-            key={d}
-            className="px-3 py-2 text-xs font-medium text-muted-foreground"
-          >
-            {d}
-          </div>
-        ))}
-      </div>
+    <div className="rounded-xl overflow-auto border border-t-0 rounded-t-none">
+      <div className="min-w-200 overflow-auto">
+        <div className="grid grid-cols-7 border-b bg-muted/20">
+          {DAYS_SHORT.map((d) => (
+            <div
+              key={d}
+              className="px-3 py-2 text-xs font-medium text-muted-foreground"
+            >
+              {d}
+            </div>
+          ))}
+        </div>
 
-      <div className="grid grid-cols-7">
-        {days.map((d) => (
-          <DayCell
-            key={d.toISOString()}
-            day={d}
-            currentMonth={month}
-            bookings={bookings}
-            onOpenMore={onOpenMore}
-          />
-        ))}
+        <div className="grid grid-cols-7">
+          {days.map((d) => (
+            <DayCell
+              key={d.toISOString()}
+              day={d}
+              currentMonth={month}
+              bookings={bookings}
+              onOpenMore={onOpenMore}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

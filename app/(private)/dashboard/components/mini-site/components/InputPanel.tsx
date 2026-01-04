@@ -15,6 +15,7 @@ import ServicesPreview from "./inputpanel/ServicesPreview";
 import { TfiWorld } from "react-icons/tfi";
 import Branding from "./inputpanel/globalsettings/Branding";
 import FooterSettings from "./inputpanel/globalsettings/FooterSettings";
+import ColorSystem from "./inputpanel/globalsettings/ColorSystem";
 
 export default function InputPanel() {
   return (
@@ -30,6 +31,8 @@ export default function InputPanel() {
         <AccordionContent className="flex flex-col gap-4 text-balance">
           {/* Branding */}
           <Branding />
+          {/* Color System */}
+          <ColorSystem />
           {/* Footer Settings */}
           <FooterSettings />
         </AccordionContent>

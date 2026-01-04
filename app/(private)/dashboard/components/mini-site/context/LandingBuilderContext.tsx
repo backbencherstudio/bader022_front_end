@@ -62,6 +62,14 @@ type BrandingData = {
   position?: "left" | "center" | "right";
 };
 
+type ColorSystemData = {
+  primaryColor?: string;
+  secondaryColor?: string;
+  headingColor?: string;
+  bodyTextColor?: string;
+  buttonColor?: string;
+};
+
 type SocialLinks = {
   icon: string | null;
   url: string;
@@ -95,6 +103,9 @@ type LandingContextType = {
   // Global Setting
   brandingData: BrandingData;
   setBrandingData: React.Dispatch<React.SetStateAction<BrandingData>>;
+
+  colorSystemData: ColorSystemData;
+  setColorSystemData: React.Dispatch<React.SetStateAction<ColorSystemData>>;
 
   footerData: FooterData;
   setFooterData: React.Dispatch<React.SetStateAction<FooterData>>;
@@ -158,6 +169,15 @@ export function LandingPageProvider({
     logo: "",
     position: "left",
   });
+
+  const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({
+    primaryColor: "#701096",
+    secondaryColor: "#235115",
+    headingColor: "#221551",
+    bodyTextColor: "#111927",
+    buttonColor: "#10239F",
+  });
+
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
     footerSubTitle: "",
@@ -184,6 +204,8 @@ export function LandingPageProvider({
         setFooterData,
         brandingData,
         setBrandingData,
+        colorSystemData,
+        setColorSystemData,
       }}
     >
       {children}

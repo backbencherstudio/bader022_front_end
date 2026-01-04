@@ -3,7 +3,7 @@ import { useLandingPage } from "../../context/LandingBuilderContext";
 import Image from "next/image";
 
 export default function Hero() {
-  const { heroData, brandingData } = useLandingPage();
+  const { heroData, brandingData, typographyData } = useLandingPage();
 
   if (!heroData.heroTitle) return null;
 
@@ -59,7 +59,17 @@ export default function Hero() {
             {heroData.heroSubtitle}
           </h3>
 
-          <h1 className="text-4xl md:text-5xl font-bold mt-2">
+          {/* <h1 className="text-4xl md:text-5xl font-bold mt-2">
+            {heroData.heroTitle}
+          </h1> */}
+
+          <h1
+            className="font-bold mt-2"
+            style={{
+              fontSize: `${typographyData.h1Size}px`,
+              fontFamily: typographyData.fontFamily,
+            }}
+          >
             {heroData.heroTitle}
           </h1>
 

@@ -70,6 +70,13 @@ type ColorSystemData = {
   buttonColor?: string;
 };
 
+type TypographyData = {
+  h1Size?: number;
+  h2Size?: number;
+  bodySize?: number;
+  fontFamily?: string;
+};
+
 type SocialLinks = {
   icon: string | null;
   url: string;
@@ -106,6 +113,9 @@ type LandingContextType = {
 
   colorSystemData: ColorSystemData;
   setColorSystemData: React.Dispatch<React.SetStateAction<ColorSystemData>>;
+
+  typographyData: TypographyData;
+  setTypographyData: React.Dispatch<React.SetStateAction<TypographyData>>;
 
   footerData: FooterData;
   setFooterData: React.Dispatch<React.SetStateAction<FooterData>>;
@@ -178,6 +188,13 @@ export function LandingPageProvider({
     buttonColor: "#10239F",
   });
 
+  const [typographyData, setTypographyData] = useState<TypographyData>({
+    h1Size: 30,
+    h2Size: 20,
+    bodySize: 12,
+    fontFamily: "Inter",
+  });
+
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
     footerSubTitle: "",
@@ -206,6 +223,8 @@ export function LandingPageProvider({
         setBrandingData,
         colorSystemData,
         setColorSystemData,
+        typographyData,
+        setTypographyData,
       }}
     >
       {children}

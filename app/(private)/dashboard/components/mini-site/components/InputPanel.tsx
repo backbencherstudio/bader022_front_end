@@ -16,6 +16,7 @@ import { TfiWorld } from "react-icons/tfi";
 import Branding from "./inputpanel/globalsettings/Branding";
 import FooterSettings from "./inputpanel/globalsettings/FooterSettings";
 import ColorSystem from "./inputpanel/globalsettings/ColorSystem";
+import Typography from "./inputpanel/globalsettings/Typography";
 
 export default function InputPanel() {
   return (
@@ -33,6 +34,8 @@ export default function InputPanel() {
           <Branding />
           {/* Color System */}
           <ColorSystem />
+          {/* Typography */}
+          <Typography />
           {/* Footer Settings */}
           <FooterSettings />
         </AccordionContent>

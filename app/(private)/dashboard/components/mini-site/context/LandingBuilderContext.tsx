@@ -82,9 +82,14 @@ type LayoutSettingsData = {
 };
 
 type SocialLinks = {
-  icon: string | null;
+  icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
   url: string;
 };
+
+type NavigationLink = { label: string; href: string };
+type SupportLink = { label: string; href: string };
+type ContactInfo = { phone?: string; email?: string; address?: string };
+
 type FooterData = {
   footerTitle: string;
   footerSubTitle: string;
@@ -92,6 +97,10 @@ type FooterData = {
   footerBackground: string;
   footerTextColor: string;
   socialLinks: SocialLinks[];
+  navigation: NavigationLink[];
+  support: SupportLink[];
+  contact: ContactInfo;
+  showPoweredBy: boolean;
 };
 type LandingContextType = {
   heroData: HeroData;
@@ -211,11 +220,35 @@ export function LandingPageProvider({
 
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
-    footerSubTitle: "",
+    footerSubTitle:
+      "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,",
     footerLogo: "",
     footerBackground: "",
     footerTextColor: "",
-    socialLinks: [{ icon: null, url: "" }],
+    socialLinks: [
+      { icon: "facebook", url: "www.facebook.com" },
+      { icon: "twitter", url: "www.twitter.com" },
+      { icon: "instagram", url: "www.instagram.com" },
+      { icon: "pinterest", url: "www.pinterest.com" },
+      { icon: "linkedin", url: "www.linkedin.com" },
+    ],
+    navigation: [
+      { label: "Home", href: "#" },
+      { label: "About Us", href: "#about" },
+      { label: "Why Choose Us", href: "#why-choose-us" },
+      { label: "Services", href: "#services" },
+    ],
+    support: [
+      { label: "Contact Us", href: "#contact-us" },
+      { label: "Privacy Policy", href: "#privace-policy" },
+      { label: "Terms & Conditions", href: "#terms-conditions" },
+    ],
+    contact: {
+      phone: "013456876294",
+      email: "barik@example.com",
+      address: "UK",
+    },
+    showPoweredBy: true,
   });
 
   return (

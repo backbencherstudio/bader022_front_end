@@ -28,37 +28,37 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   {
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/merchant/dashboard",
     icon: (p) => <LayoutDashboard {...p} />,
   },
   {
     label: "Bookings",
-    href: "/dashboard/bookings",
+    href: "/merchant/dashboard/bookings",
     icon: (p) => <Calendar {...p} />,
   },
   {
     label: "Services",
-    href: "/dashboard/services",
+    href: "/merchant/dashboard/services",
     icon: (p) => <Handbag {...p} />,
   },
   {
     label: "Staff",
-    href: "/dashboard/staff",
+    href: "/merchant/dashboard/staff",
     icon: (p) => <Users {...p} />,
   },
   {
     label: "Mini-Site",
-    href: "/dashboard/mini-site",
+    href: "/merchant/dashboard/mini-site",
     icon: (p) => <Globe {...p} />,
   },
   {
     label: "Analytics",
-    href: "/dashboard/analytics",
+    href: "/merchant/dashboard/analytics",
     icon: (p) => <SquareKanban {...p} />,
   },
   {
     label: "Transactions",
-    href: "/dashboard/transactions",
+    href: "/merchant/dashboard/transactions",
     icon: (p) => <Captions {...p} />,
   },
 ];
@@ -122,15 +122,17 @@ function SidebarInner({ pathname }: { pathname: string | null }) {
       {/* Footer with Settings & Logout */}
       <div className="mt-auto px-6 py-8 space-y-2">
         <Link
-          href="/dashboard/settings"
+          href="/merchant/dashboard/settings"
           className={[
             "group flex items-center gap-3 px-4 py-3 mt-6 rounded-xl transition",
             "focus:outline-none focus:ring-2 focus:ring-white/30",
-            pathname == "/dashboard/settings"
+            pathname == "/merchant/dashboard/settings"
               ? "bg-black text-white dark:bg-gray-800 dark:text-white"
               : "text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700",
           ].join(" ")}
-          aria-current={pathname == "/dashboard/settings" ? "page" : undefined}
+          aria-current={
+            pathname == "/merchant/dashboard/settings" ? "page" : undefined
+          }
         >
           <Settings className="h-5 w-5" />
           <span className="text-sm font-medium">Settings</span>

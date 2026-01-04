@@ -1,14 +1,7 @@
 "use client";
 
 import { format, startOfMonth, endOfMonth } from "date-fns";
-import {
-  Calendar as CalendarIcon,
-  Search,
-  Table2,
-  Users,
-  Scissors,
-  Clock,
-} from "lucide-react";
+import { Calendar as CalendarIcon, Search, Table2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,8 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -29,16 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
 import useBookings from "../hooks/useBookings";
-import RecentTransactions from "../components/dashboard/RecentTransactions";
 import WeeklyGrid from "../components/bookings/WeeklyGrid";
 import MonthGrid from "../components/bookings/MonthlyGrid";
 import MonthPicker from "../components/bookings/MonthPicker";
@@ -46,7 +28,6 @@ import { useCallback, useState } from "react";
 import AllBookingHistory from "../components/bookings/AllBookingHistory";
 import AddBookingModal from "../components/bookings/AddBookingModal";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 
 export type TBooking = {
   id: string;

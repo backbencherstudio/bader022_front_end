@@ -5,7 +5,6 @@ import {
   Info,
   HelpCircle,
   MessageCircle,
-  Paperclip,
   NotebookText,
   Lock,
 } from "lucide-react"; // Import Lucide icons

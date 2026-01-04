@@ -36,7 +36,7 @@ export default function FooterSettings() {
   const removeSocialLink = (index: number) => {
     setFooterData((prev) => ({
       ...prev,
-      featureCards: prev.socialLinks.filter((_, i) => i !== index),
+      socialLinks: prev.socialLinks.filter((_, i) => i !== index),
     }));
   };
 

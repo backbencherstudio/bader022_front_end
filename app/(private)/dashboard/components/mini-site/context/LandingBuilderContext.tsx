@@ -57,6 +57,10 @@ type CtaBannerData = {
   ctaBannerOverlayColor: string;
   padding: number;
 };
+type BrandingData = {
+  logo: string;
+  position?: "left" | "center" | "right";
+};
 
 type SocialLinks = {
   icon: string | null;
@@ -87,6 +91,10 @@ type LandingContextType = {
 
   ctaBannerData: CtaBannerData;
   setCtaBannerData: React.Dispatch<React.SetStateAction<CtaBannerData>>;
+
+  // Global Setting
+  brandingData: BrandingData;
+  setBrandingData: React.Dispatch<React.SetStateAction<BrandingData>>;
 
   footerData: FooterData;
   setFooterData: React.Dispatch<React.SetStateAction<FooterData>>;
@@ -145,7 +153,11 @@ export function LandingPageProvider({
     ctaBannerOverlayColor: "",
     padding: 5,
   });
-
+  // Global Settings
+  const [brandingData, setBrandingData] = useState<BrandingData>({
+    logo: "",
+    position: "left",
+  });
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
     footerSubTitle: "",
@@ -170,6 +182,8 @@ export function LandingPageProvider({
         setCtaBannerData,
         footerData,
         setFooterData,
+        brandingData,
+        setBrandingData,
       }}
     >
       {children}

@@ -1,61 +1,48 @@
 "use client";
-
-import AppSidebar from "../../components/AppSidebar";
-import TopBar from "./components/shared/Topbar";
+import AppSidebar from "../components/AppSidebar";
+import TopBar from "../merchant/dashboard/components/shared/Topbar";
 import {
   LayoutDashboard,
-  Handbag,
-  Users,
-  Globe,
   Settings,
   LogOut,
   SquareKanban,
-  Captions,
-  Calendar,
+  ShoppingCart,
+  CreditCard,
+  Crown,
 } from "lucide-react";
 
 const MERCHANT_NAV_ITEMS = [
   {
     label: "Dashboard",
-    href: "/merchant/dashboard",
+    href: "/admin/dashboard",
     icon: (p: any) => <LayoutDashboard {...p} />,
   },
   {
-    label: "Bookings",
-    href: "/merchant/dashboard/bookings",
-    icon: (p: any) => <Calendar {...p} />,
+    label: "Merchants",
+    href: "/admin/merchants",
+    icon: (p: any) => <ShoppingCart {...p} />,
   },
   {
-    label: "Services",
-    href: "/merchant/dashboard/services",
-    icon: (p: any) => <Handbag {...p} />,
+    label: "Payments",
+    href: "/admin/payments",
+    icon: (p: any) => <CreditCard {...p} />,
   },
   {
-    label: "Staff",
-    href: "/merchant/dashboard/staff",
-    icon: (p: any) => <Users {...p} />,
-  },
-  {
-    label: "Mini-Site",
-    href: "/merchant/dashboard/mini-site",
-    icon: (p: any) => <Globe {...p} />,
+    label: "Subscriptions",
+    href: "/admin/subscriptions",
+    icon: (p: any) => <Crown {...p} />,
   },
   {
     label: "Analytics",
-    href: "/merchant/dashboard/analytics",
+    href: "/admin/analytics",
     icon: (p: any) => <SquareKanban {...p} />,
-  },
-  {
-    label: "Transactions",
-    href: "/merchant/dashboard/transactions",
-    icon: (p: any) => <Captions {...p} />,
   },
 ];
 
 export const MERCHANT_FOOTER_ITEMS = [
   {
     label: "Settings",
-    href: "/merchant/dashboard/settings",
+    href: "/admin/settings",
     icon: (p: any) => <Settings {...p} />,
   },
   {

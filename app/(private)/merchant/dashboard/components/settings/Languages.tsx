@@ -73,7 +73,7 @@ export default function LanguageSettings() {
         </form>
       </div>
       <div>
-        <Button type="submit" className="flex ml-auto mt-4 text-white">
+        <Button type="submit" className="flex ml-auto mt-4 cursor-pointer">
           Save Change
         </Button>
       </div>

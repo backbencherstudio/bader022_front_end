@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -139,9 +140,11 @@ export default function SignUpPage() {
         {/* Footer */}
         <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
           Already have an account?{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">
-            Login
-          </span>
+          <Link href="/login">
+            <span className="text-blue-600 cursor-pointer hover:underline">
+              Login
+            </span>
+          </Link>
         </p>
       </div>
     </div>

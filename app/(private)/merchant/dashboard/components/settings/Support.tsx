@@ -107,14 +107,16 @@ export default function SupportSettings() {
             <CardContent>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <Info className="h-6 w-6 text-gray-500" />
-                  <p className="font-medium">Platform Version</p>
+                  <Info className="h-6 w-6 text-gray-500 dark:text-black" />
+                  <p className="font-medium dark:text-black">
+                    Platform Version
+                  </p>
                 </div>
                 <p className="text-sm text-gray-800">v2.5.0</p>
               </div>
-              <hr className="my-4 h-0.5 bg-gray-300" />
+              <hr className="my-4 h-0.5 bg-gray-300 " />
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center dark:text-black">
                   <p className="font-medium">Last Updated</p>
                   <p>December 15, 2025</p>
                 </div>

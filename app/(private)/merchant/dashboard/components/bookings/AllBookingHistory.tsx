@@ -217,7 +217,7 @@ export function RecentTransactionsCard({
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-muted/40">
-          <div className="overflow-x-auto">
+          <div>
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/30 hover:bg-muted/30">

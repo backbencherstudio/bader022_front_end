@@ -156,7 +156,7 @@ export function MerchantManagementCard({
         </div>
       </CardHeader>
 
-      <CardContent className="pb-8">
+      <CardContent className="mb-4">
         <div className="overflow-hidden rounded-2xl border border-muted/40">
           <div className="overflow-x-auto">
             <Table>

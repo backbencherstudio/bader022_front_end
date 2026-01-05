@@ -2,8 +2,8 @@
 import { CircleDollarSign, Crown, ShoppingCart, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
-import RevenueOverviewLineChart from "../components/RevenueOverviewLineChart";
-import MerchantManagement from "../components/MerchantManagement";
+import RevenueOverviewLineChart from "../components/dashboard/RevenueOverviewLineChart";
+import MerchantManagement from "../components/merchants/MerchantManagement";
 
 export type TData = {
   name: string;

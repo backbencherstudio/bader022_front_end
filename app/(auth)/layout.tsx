@@ -5,7 +5,7 @@ export default function AuthLayout({
 }) {
   return (
     <div>
-      <div className=" pt-17">{children}=</div>
+      <div className="">{children}=</div>
     </div>
   );
 }

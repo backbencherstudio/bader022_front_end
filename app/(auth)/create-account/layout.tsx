@@ -1,3 +1,5 @@
+import CreateAccountProvider from "./context/CreateAccount";
+
 export default function CreateAccountLayout({
   children,
 }: {
@@ -5,7 +7,7 @@ export default function CreateAccountLayout({
 }) {
   return (
     <div>
-      <div className=" pt-17">{children}=</div>
+      <CreateAccountProvider>{children}</CreateAccountProvider>
     </div>
   );
 }

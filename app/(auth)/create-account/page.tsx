@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useCreateAccount } from "./context/CreateAccount";
 import AccountCreated from "./_components/AccountCreated";
 import AddYourServices from "./_components/AddYourServices";
+import AddYourTeam from "./_components/AddYourTeam";
+import ChooseyourPlan from "./_components/ChooseyourPlan";
 
 interface CreateAccountData {
   step1: {
@@ -14,9 +16,12 @@ interface CreateAccountData {
   step2: {
     serviceName: string;
   };
+  step3: {
+    serviceName: string;
+  };
 }
 
-const steps = [1, 2, 3, 4, 5, 6];
+const steps = [1, 2, 3, 4];
 export default function CreateAccountPage() {
   const { step, setStep } = useCreateAccount();
 
@@ -29,6 +34,9 @@ export default function CreateAccountPage() {
         workingHours: [],
       },
       step2: {
+        serviceName: "",
+      },
+      step3: {
         serviceName: "",
       },
     }
@@ -74,6 +82,16 @@ export default function CreateAccountPage() {
             onPrevious={handlePrevious}
           />
         );
+      case 3:
+        return (
+          <AddYourTeam
+            data={createAccountData.step3}
+            onNext={(data) => handleNext("step3", data)}
+            onPrevious={handlePrevious}
+          />
+        );
+      case 4:
+        return <ChooseyourPlan />;
 
       default:
         return null;

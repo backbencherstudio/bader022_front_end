@@ -1,5 +1,10 @@
+import ChooseThePerfectPlan from "@/app/(public)/_components/home/ChooseThePerfectPlan";
 import React from "react";
 
 export default function ChooseyourPlan() {
-  return <div>ChooseyourPlan</div>;
+  return (
+    <div>
+      <ChooseThePerfectPlan />
+    </div>
+  );
 }

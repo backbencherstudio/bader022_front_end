@@ -25,7 +25,7 @@ interface ProviderProps {
 }
 
 export default function CreateAccountProvider({ children }: ProviderProps) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   return (
     <CreateAccountContext.Provider

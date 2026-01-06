@@ -3,21 +3,17 @@
 import Image from "next/image";
 import React from "react";
 
-type Step2Data = {
+type Step3Data = {
   serviceName: string;
 };
 
-interface Step2Props {
-  data: Step2Data;
-  onNext: (values: Step2Data) => void;
+interface Step3Props {
+  data: Step3Data;
+  onNext: (values: Step3Data) => void;
   onPrevious: () => void;
 }
 
-export default function AddYourServices({
-  data,
-  onNext,
-  onPrevious,
-}: Step2Props) {
+export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
   return (
     <div className="space-y-8">
       {/* Empty State */}
@@ -27,15 +23,15 @@ export default function AddYourServices({
         </div>
 
         <div>
-          <h3 className="font-medium text-base">No services yet</h3>
+          <h3 className="font-medium text-base">No team members yet</h3>
           <p className="text-sm text-gray-500">
-            Add your first service to get started
+            Add your first staff member to get started
           </p>
         </div>
 
         <div className="flex justify-center gap-3">
           <button className="rounded-md bg-black px-5 py-2 text-sm text-white">
-            Add Service
+            Add Staff Member
           </button>
           <button
             onClick={() => onNext(data)}
@@ -48,9 +44,9 @@ export default function AddYourServices({
 
       {/* Services Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-medium text-lg">Your Services</h3>
+        <h3 className="font-medium text-lg">Your Staff Member</h3>
         <button className="rounded-md bg-black px-4 py-2 text-sm text-white">
-          + Add Service
+          + Add Staff
         </button>
       </div>
 
@@ -138,7 +134,7 @@ export default function AddYourServices({
           onClick={() => onNext(data)}
           className="rounded-md bg-black px-6 py-2 text-sm text-white cursor-pointer"
         >
-          Continue to Staff
+          Continue to Plan Selection
         </button>
       </div>
     </div>

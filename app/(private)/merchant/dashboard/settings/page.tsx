@@ -264,7 +264,7 @@ function AccountSettingsForm() {
 
       {/* Save Change Button */}
       <div className="flex justify-end">
-        <Button className="bg-primary text-white">Save Change</Button>
+        <Button className="cursor-pointer">Save Change</Button>
       </div>
     </div>
   );

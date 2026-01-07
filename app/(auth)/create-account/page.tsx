@@ -5,6 +5,8 @@ import AccountCreated from "./_components/AccountCreated";
 import AddYourServices from "./_components/AddYourServices";
 import AddYourTeam from "./_components/AddYourTeam";
 import ChooseyourPlan from "./_components/ChooseyourPlan";
+import FinalizingYourWebsite from "./_components/FinalizingYourWebsite";
+import CompleteYourProfile from "./_components/CompliteYourProfile";
 
 interface CreateAccountData {
   step1: {
@@ -93,6 +95,12 @@ export default function CreateAccountPage() {
       case 4:
         return <ChooseyourPlan />;
 
+      case 5:
+        return <FinalizingYourWebsite />;
+
+      case 6:
+        return <CompleteYourProfile />;
+
       default:
         return null;
     }
@@ -122,35 +130,36 @@ export default function CreateAccountPage() {
       </div>
 
       {/* Progress Bars */}
-      <div className="flex gap-5 w-full">
-        {steps.map((item) => {
-          const isCompleted = item < step;
-          const isActive = item === step;
-          const isUpcoming = item > step;
+      {step <= steps.length && (
+        <div className="flex gap-5 w-full">
+          {steps.map((item) => {
+            const isCompleted = item < step;
+            const isActive = item === step;
+            const isUpcoming = item > step;
 
-          return (
-            <div key={item} className="flex-1 flex flex-col gap-2">
-              <div className="w-full h-2 rounded-full bg-[#e6e8ee] dark:bg-[#2a2d35] overflow-hidden">
-                {/* Completed */}
-                {isCompleted && (
-                  <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
-                )}
+            return (
+              <div key={item} className="flex-1 flex flex-col gap-2">
+                <div className="w-full h-2 rounded-full bg-[#e6e8ee] dark:bg-[#2a2d35] overflow-hidden">
+                  {/* Completed */}
+                  {isCompleted && (
+                    <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
+                  )}
 
-                {/* Active */}
-                {isActive && (
-                  <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
-                )}
+                  {/* Active */}
+                  {isActive && (
+                    <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
+                  )}
 
-                {/* Upcoming */}
-                {isUpcoming && (
-                  <div className="h-full w-full bg-[#f5f6f8] dark:bg-[#1e2026] rounded-full" />
-                )}
+                  {/* Upcoming */}
+                  {isUpcoming && (
+                    <div className="h-full w-full bg-[#f5f6f8] dark:bg-[#1e2026] rounded-full" />
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-
+            );
+          })}
+        </div>
+      )}
       {/* Step Component */}
       {renderStep()}
     </div>

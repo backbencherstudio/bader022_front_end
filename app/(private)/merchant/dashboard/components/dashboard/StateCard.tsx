@@ -4,10 +4,11 @@ import React from "react";
 interface IStatCard {
   title: string;
   value: string | number;
+  expired?: string;
   Icon: (props: React.ComponentProps<"svg">) => React.ReactNode;
 }
 
-const StatCard: React.FC<IStatCard> = ({ title, value, Icon }) => {
+const StatCard: React.FC<IStatCard> = ({ title, value, Icon, expired }) => {
   return (
     <div className="rounded-xl bg-white dark:bg-gray-700 border border-gray-200 p-5 shadow-sm flex flex-col justify-between">
       {/* Top Section */}
@@ -20,10 +21,11 @@ const StatCard: React.FC<IStatCard> = ({ title, value, Icon }) => {
         </div>
       </div>
 
-      <div className="flex justify-between pt-6">
+      <div className="flex justify-between pt-6 items-center">
         <div className="text-3xl font-semibold text-black dark:text-white">
           {value}
         </div>
+        {expired && <p>{expired}</p>}
       </div>
     </div>
   );

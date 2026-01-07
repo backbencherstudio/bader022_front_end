@@ -37,7 +37,7 @@ export function PaymentModal({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-130 rounded-2xl p-0 overflow-hidden">
+      <DialogContent className="rounded-2xl p-0">
         {/* Header */}
         <DialogHeader className="flex mt-5 flex-row items-center justify-between px-6 py-5 bg-muted/30">
           <DialogTitle className="text-lg font-semibold text-foreground">
@@ -54,7 +54,7 @@ export function PaymentModal({
           </div>
         </DialogHeader>
 
-        <div className="px-6 py-6 space-y-6">
+        <div className="px-6 py-6">
           {/* Success Banner */}
           <div className="flex items-start gap-3 rounded-xl border border-emerald-400 bg-emerald-50 px-4 py-4">
             <h1 className=" text-emerald-700 ">

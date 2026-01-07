@@ -19,7 +19,6 @@ export type SidebarItem = {
 type Props = {
   navItems: SidebarItem[];
   footerItems?: SidebarItem[];
-
   logoSrc?: string;
   title?: string;
   badgeText?: string;

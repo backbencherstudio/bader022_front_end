@@ -14,6 +14,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { Dialog } from "@/components/ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { EditProfileDialog } from "./ProfileEditModal";
 
 type MerchantStatus = "active" | "expired";
 
@@ -123,6 +127,7 @@ export function MerchantManagementCard({
   onView?: (row: MerchantRow) => void;
   onEdit?: (row: MerchantRow) => void;
 }) {
+  const navigate = useRouter();
   return (
     <Card
       className={[
@@ -239,19 +244,26 @@ export function MerchantManagementCard({
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
-                          onClick={() => onView?.(r)}
-                          className="h-10 w-10 rounded-xl border border-muted/40 bg-white hover:bg-muted/30 flex items-center justify-center cursor-pointer"
+                          onClick={() =>
+                            navigate.push("/admin/merchants/profile-view")
+                          }
+                          className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
                           <Eye className="h-5 w-5 text-muted-foreground" />
                         </button>
-
-                        <button
-                          type="button"
-                          onClick={() => onEdit?.(r)}
-                          className="h-10 w-10 rounded-xl border border-muted/40 bg-white hover:bg-muted/30 flex items-center justify-center cursor-pointer"
-                        >
-                          <Pencil className="h-5 w-5 text-muted-foreground" />
-                        </button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() => onEdit?.(r)}
+                              className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                            >
+                              <Pencil className="h-5 w-5 text-muted-foreground" />
+                            </button>
+                            {/* <Button variant="outline">Edit Profile</Button> */}
+                          </DialogTrigger>
+                          <EditProfileDialog />
+                        </Dialog>
                       </div>
                     </TableCell>
                   </TableRow>

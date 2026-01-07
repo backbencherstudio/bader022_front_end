@@ -8,7 +8,6 @@ import {
   FiClock,
   FiChevronDown,
 } from "react-icons/fi";
-import AddServiceModal from "../components/modal/AddServiceModal";
 import ServiceModal from "../components/modal/ServiceModal";
 
 /* ------------------ DATA ------------------ */

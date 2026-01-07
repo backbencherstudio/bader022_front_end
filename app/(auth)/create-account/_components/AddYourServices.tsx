@@ -1,7 +1,8 @@
 "use client";
 
+import ServiceModal from "@/app/(private)/merchant/dashboard/components/modal/ServiceModal";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 type Step2Data = {
   serviceName: string;
@@ -18,6 +19,18 @@ export default function AddYourServices({
   onNext,
   onPrevious,
 }: Step2Props) {
+  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [mode, setMode] = useState<"add" | "edit">("add");
+  const [selectedService, setSelectedService] = useState<any>(null);
+
+  const handleSubmitService = (data: any) => {
+    if (mode === "add") {
+      console.log("Add Service:", data);
+    } else {
+      console.log("Edit Service:", data);
+    }
+  };
   return (
     <div className="space-y-8">
       {/* Empty State */}
@@ -34,7 +47,14 @@ export default function AddYourServices({
         </div>
 
         <div className="flex justify-center gap-3">
-          <button className="rounded-md bg-black px-5 py-2 text-sm text-white">
+          <button
+            onClick={() => {
+              setMode("add");
+              setSelectedService(null);
+              setOpenModal(true);
+            }}
+            className="rounded-md bg-black px-5 py-2 text-sm text-white"
+          >
             Add Service
           </button>
           <button
@@ -49,7 +69,14 @@ export default function AddYourServices({
       {/* Services Header */}
       <div className="flex items-center justify-between">
         <h3 className="font-medium text-lg">Your Services</h3>
-        <button className="rounded-md bg-black px-4 py-2 text-sm text-white">
+        <button
+          onClick={() => {
+            setMode("add");
+            setSelectedService(null);
+            setOpenModal(true);
+          }}
+          className="rounded-md bg-black px-4 py-2 text-sm text-white"
+        >
           + Add Service
         </button>
       </div>
@@ -113,7 +140,14 @@ export default function AddYourServices({
             </p>
 
             <div className="flex gap-4 pt-2">
-              <button className="rounded-md bg-black px-6 py-2 text-sm text-white font-medium">
+              <button
+                onClick={() => {
+                  setMode("edit");
+                  // setSelectedService(service);
+                  setOpenModal(true);
+                }}
+                className="rounded-md bg-black px-6 py-2 text-sm text-white font-medium"
+              >
                 {" "}
                 Edit
               </button>
@@ -141,6 +175,14 @@ export default function AddYourServices({
           Continue to Staff
         </button>
       </div>
+
+      <ServiceModal
+        open={openModal}
+        mode={mode}
+        initialData={selectedService}
+        onClose={() => setOpenModal(false)}
+        onSubmitService={handleSubmitService}
+      />
     </div>
   );
 }

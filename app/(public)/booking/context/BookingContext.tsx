@@ -21,7 +21,7 @@ interface ProviderProps {
 }
 
 export default function BookingProvider({ children }: ProviderProps) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
 
   return (
     <BookingContext.Provider

@@ -2,6 +2,10 @@
 import React from "react";
 import { useCreateBooking } from "./context/BookingContext";
 import SelectedServicrs from "./_components/SelectedServicrs";
+import SelectDateTimeStaff from "./_components/SelectDateTimeStaff";
+import PaymentInformation from "./_components/PaymentInformation";
+import Cardinformation from "./_components/Cardinformation";
+import BookingConfirmed from "./_components/BookingConfirmed";
 
 const steps = [1, 2, 3, 4];
 export default function BookingPage() {
@@ -19,27 +23,29 @@ export default function BookingPage() {
     switch (step) {
       case 1:
         return <SelectedServicrs onNext={handleNext} />;
-      //   case 2:
-      //     return (
+      case 2:
+        return <SelectDateTimeStaff />;
+      case 3:
+        return <PaymentInformation />;
+      case 4:
+        return <Cardinformation />;
 
-      //       />
-      //     );
-      //   case 3:
-      //     return (
-      //       <AddYourTeam
-      //         data={createAccountData.step3}
-      //         onNext={(data) => handleNext("step3", data)}
-      //         onPrevious={handlePrevious}
-      //       />
-      //     );
-      //   case 4:
-      //     return <ChooseyourPlan />;
-
-      //   case 5:
-      //     return <FinalizingYourWebsite />;
-
-      //   case 6:
-      //     return <CompleteYourProfile />;
+      case 5:
+        return (
+          <BookingConfirmed
+            details={{
+              bookingId: "BOK91385",
+              service: "Haircut & Styling",
+              dateTime: "2025-11-30 10:00 AM",
+              staff: "Sara Jonson",
+              duration: "30 min",
+              totalAmount: "109 SAR",
+              paymentMethod: "Credit Card",
+            }}
+            onDownloadInvoice={() => console.log("Download")}
+            onGoToDashboard={() => console.log("Dashboard")}
+          />
+        );
 
       default:
         return null;

@@ -28,7 +28,20 @@ export default function BookingPage() {
       case 3:
         return <PaymentInformation />;
       case 4:
-        return <Cardinformation />;
+        return (
+          <Cardinformation
+            onNext={handleNext}
+            details={{
+              bookingId: "BOK91385",
+              service: "Haircut & Styling",
+              dateTime: "2025-11-30 10:00 AM",
+              staff: "Sara Jonson",
+              duration: "30 min",
+              totalAmount: "109 SAR",
+              paymentMethod: "Credit Card",
+            }}
+          />
+        );
 
       case 5:
         return (

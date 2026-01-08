@@ -12,7 +12,7 @@ export default function BookingPage() {
   const { step, setStep } = useCreateBooking();
 
   const handleNext = () => {
-    if (step < 4) setStep(step + 1);
+    if (step < 6) setStep(step + 1);
   };
 
   const handlePrevious = () => {
@@ -26,7 +26,20 @@ export default function BookingPage() {
       case 2:
         return <SelectDateTimeStaff />;
       case 3:
-        return <PaymentInformation />;
+        return (
+          <PaymentInformation
+            onNext={handleNext}
+            details={{
+              bookingId: "BOK91385",
+              service: "Haircut & Styling",
+              dateTime: "2025-11-30 10:00 AM",
+              staff: "Sara Jonson",
+              duration: "30 min",
+              totalAmount: "109 SAR",
+              paymentMethod: "Credit Card",
+            }}
+          />
+        );
       case 4:
         return (
           <Cardinformation

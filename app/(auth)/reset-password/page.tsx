@@ -108,7 +108,3 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
-
-/* ------------------ */
-/* Reusable Input    */
-/* ------------------ */

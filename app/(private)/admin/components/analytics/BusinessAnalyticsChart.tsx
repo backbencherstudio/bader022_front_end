@@ -99,7 +99,7 @@ export default function BusinessTypeAnalyticsChart() {
         </ResponsiveContainer>
       </div>
 
-      {/* ✅ Legend (Manual, same as screenshot) */}
+      {/*  Legend (Manual, same as screenshot) */}
       <div className="mt-10 space-y-4">
         {chartData.map((item, idx) => (
           <div

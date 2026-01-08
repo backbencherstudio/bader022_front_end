@@ -31,6 +31,20 @@ const monthlyRevenueData: TData[] = [
   { name: "Nov", revenue: 1500 },
   { name: "Dec", revenue: 5000 },
 ];
+const monthlyUsersData: TData[] = [
+  { name: "Jan", revenue: 4500 },
+  { name: "Feb", revenue: 500 },
+  { name: "Mar", revenue: 1500 },
+  { name: "Apr", revenue: 3000 },
+  { name: "May", revenue: 1500 },
+  { name: "Jun", revenue: 3000 },
+  { name: "Jul", revenue: 5000 },
+  { name: "Aug", revenue: 3000 },
+  { name: "Sep", revenue: 1500 },
+  { name: "Oct", revenue: 3000 },
+  { name: "Nov", revenue: 1500 },
+  { name: "Dec", revenue: 5000 },
+];
 const weeklyRevenueData: TData[] = [
   { name: "Sat", revenue: 1500 },
   { name: "Sun", revenue: 3000 },

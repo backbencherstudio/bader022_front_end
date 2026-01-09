@@ -61,7 +61,7 @@ export default function BookingViewDetailDialogue({
           <DialogTitle>View Details</DialogTitle>
           <DialogDescription>
             <div className="space-y-4">
-              <Card className="p-4 bg-gray-50 border mt-2">
+              <Card className="p-4 border mt-2">
                 <div>
                   <h3 className="font-semibold">Customer Information</h3>
                   <p className="py-1">Name: {booking.customerName}</p>
@@ -70,7 +70,7 @@ export default function BookingViewDetailDialogue({
                 </div>
               </Card>
               <div>
-                <Card className="p-4 bg-gray-50 border mt-2">
+                <Card className="p-4 border mt-2">
                   <div className="font-semibold">Booking Information</div>
                   <p>Booking ID: {booking.bookingID}</p>
                   <p>Service: {booking.service}</p>

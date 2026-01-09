@@ -15,7 +15,7 @@ export default function Step3({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Card Info */}
         <div className="lg:col-span-2 rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
             Payment
           </div>
           <div className="p-5 sm:p-6 space-y-5">
@@ -64,7 +64,7 @@ export default function Step3({
 
         {/* Booking Summary */}
         <div className="rounded-xl border border-border overflow-hidden h-fit">
-          <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
             Booking Summary
           </div>
           <div className="p-5 sm:p-6 space-y-3 text-sm">
@@ -76,10 +76,8 @@ export default function Step3({
               ["Pay:", "Credit Card"],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between gap-4">
-                <span className="text-[#637381]">{k}</span>
-                <span className="font-medium text-[#0B1220] text-right">
-                  {v}
-                </span>
+                <span>{k}</span>
+                <span className="font-medium text-right">{v}</span>
               </div>
             ))}
 

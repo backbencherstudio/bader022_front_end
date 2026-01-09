@@ -157,14 +157,11 @@ export default function PaymentHistory({
 
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search anything"
-              className="h-12 w-64 rounded-xl pl-10"
-            />
+            <Input placeholder="Search anything" className="h-12 w-64 pl-10" />
           </div>
 
           <Select>
-            <SelectTrigger className="h-12 w-44 rounded-xl">
+            <SelectTrigger className="h-12 py-6 w-44">
               <SelectValue placeholder="Package" />
             </SelectTrigger>
             <SelectContent>
@@ -175,7 +172,7 @@ export default function PaymentHistory({
           </Select>
 
           <Select>
-            <SelectTrigger className="h-12 w-44 rounded-xl">
+            <SelectTrigger className="h-12 w-44 py-6">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>

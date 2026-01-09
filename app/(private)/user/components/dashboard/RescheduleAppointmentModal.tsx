@@ -38,9 +38,9 @@ export function RescheduleAppointmentModal() {
   return (
     <DialogContent className="sm:max-w-225 p-0 overflow-hidden rounded-2xl">
       {/* Header */}
-      <DialogHeader className="flex flex-row items-start justify-between px-5 sm:px-7 py-4 sm:py-5 bg-[#F4F6F8] border-b border-border">
+      <DialogHeader className="flex flex-row items-start justify-between px-5 sm:px-7 py-4 sm:py-5 border-b border-border">
         <div>
-          <DialogTitle className="text-base sm:text-lg font-semibold text-[#0B1220]">
+          <DialogTitle className="text-base sm:text-lg font-semibold ">
             Reschedule Appointment
           </DialogTitle>
           <p className="text-xs sm:text-sm text-[#637381] mt-1">
@@ -50,11 +50,11 @@ export function RescheduleAppointmentModal() {
       </DialogHeader>
 
       {/* Body */}
-      <div className="px-5 sm:px-7 py-5 sm:py-6 bg-white w-full overflow-y-auto max-h-[calc(90vh-80px)]">
+      <div className="px-5 sm:px-7 py-5 sm:py-6 w-full overflow-y-auto max-h-[calc(90vh-80px)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
           {/* LEFT - Calendar */}
           <div className="rounded-xl border">
-            <div className="bg-[#F4F6F8] rounded-t-xl px-5 sm:px-6 py-4 text-sm font-semibold text-[#0B1220]">
+            <div className="rounded-t-xl px-5 sm:px-6 py-4 text-sm font-semibold">
               Select Date
             </div>
 
@@ -62,15 +62,13 @@ export function RescheduleAppointmentModal() {
               {/* Calendar Header */}
               <div className="flex items-center justify-between mb-5">
                 <button className="p-2 rounded-md hover:bg-black/5 transition">
-                  <ChevronLeft className="h-5 w-5 text-[#0B1220]" />
+                  <ChevronLeft className="h-5 w-5 " />
                 </button>
 
-                <p className="text-sm font-semibold text-[#0B1220]">
-                  February 2026
-                </p>
+                <p className="text-sm font-semibold ">February 2026</p>
 
                 <button className="p-2 rounded-md hover:bg-black/5 transition">
-                  <ChevronRight className="h-5 w-5 text-[#0B1220]" />
+                  <ChevronRight className="h-5 w-5 " />
                 </button>
               </div>
 
@@ -84,7 +82,7 @@ export function RescheduleAppointmentModal() {
               </div>
 
               {/* Days */}
-              <div className="grid grid-cols-7 gap-y-4 sm:gap-y-5 text-sm text-[#0B1220]">
+              <div className="grid grid-cols-7 gap-y-4 sm:gap-y-5 text-sm ">
                 {Array.from({ length: 28 }, (_, i) => i + 1).map((day) => (
                   <button
                     key={day}
@@ -92,7 +90,7 @@ export function RescheduleAppointmentModal() {
                       ${
                         day === 19
                           ? "bg-[#111827] text-white font-semibold"
-                          : "text-[#0B1220] hover:bg-black/5"
+                          : " hover:bg-black/5"
                       }
                       ${day < 8 ? "text-[#B0B7C3]" : ""}
                     `}
@@ -105,8 +103,8 @@ export function RescheduleAppointmentModal() {
           </div>
 
           {/* RIGHT - Available Times */}
-          <div className="rounded-xl border border-border bg-white overflow-hidden">
-            <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 text-sm font-semibold text-[#0B1220]">
+          <div className="rounded-xl border border-border overflow-hidden">
+            <div className=" px-5 sm:px-6 py-4 text-sm font-semibold ">
               Available Times
             </div>
 
@@ -119,7 +117,7 @@ export function RescheduleAppointmentModal() {
                     className={`h-11 rounded-lg border text-sm font-medium transition
                       ${
                         selectedTime === time
-                          ? "border-[#111827] text-[#0B1220]"
+                          ? "border-[#111827] "
                           : "border-border text-[#637381] hover:border-[#111827]/50"
                       }
                     `}
@@ -132,8 +130,8 @@ export function RescheduleAppointmentModal() {
           </div>
 
           {/* Bottom Left - Staff Select */}
-          <div className="rounded-xl border border-border bg-white overflow-hidden">
-            <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 text-sm font-semibold text-[#0B1220]">
+          <div className="rounded-xl border border-border overflow-hidden">
+            <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 text-sm font-semibold ">
               Select Staff
             </div>
 

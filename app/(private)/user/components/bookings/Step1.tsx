@@ -191,7 +191,7 @@ export default function Step1({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
         {/* ✅ Calendar */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
             Select Date
           </div>
 
@@ -207,7 +207,7 @@ export default function Step1({
 
         {/* ✅ Available Times */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
             Available Times
           </div>
 
@@ -233,7 +233,7 @@ export default function Step1({
 
         {/* ✅ Staff Select */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
             Select Staff
           </div>
 

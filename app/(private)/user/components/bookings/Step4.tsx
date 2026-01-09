@@ -6,26 +6,25 @@ export default function Step4() {
   return (
     <Card className="rounded-2xl border border-border p-4 sm:p-6">
       <div className="rounded-xl border border-border overflow-hidden">
-        <div className="bg-[#F4F6F8] px-6 py-4 font-semibold text-center text-sm">
+        <div className="bg-[#F4F6F8] dark:bg-black px-6 py-4 font-semibold text-center text-sm">
           Booking Confirmed!
         </div>
 
         <div className="p-6 sm:p-10 text-center">
-          <p className="text-sm text-[#637381]">
-            Booking ID:{" "}
-            <span className="font-semibold text-[#0B1220]">BOK91385</span>
+          <p className="text-sm">
+            Booking ID: <span className="font-semibold">BOK91385</span>
           </p>
 
           {/* Fake success icon */}
           <div className="my-8 flex items-center justify-center">
-            <div className="h-20 w-20 rounded-full bg-[#F4F6F8] flex items-center justify-center">
-              <div className="h-12 w-12 rounded-full bg-white border border-border flex items-center justify-center font-bold">
+            <div className="h-20 w-20 rounded-full bg-[#F4F6F8] dark:bg-black flex items-center justify-center">
+              <div className="h-12 w-12 rounded-full bg-white dark:bg-black border border-border flex items-center justify-center font-bold">
                 ✓
               </div>
             </div>
           </div>
 
-          <p className="text-sm text-[#637381] max-w-[520px] mx-auto leading-6">
+          <p className="text-sm max-w-[520px] mx-auto leading-6">
             Your appointment is successfully booked. A confirmation email with a
             temporary password has been sent. Use it to log in and manage your
             booking.
@@ -42,10 +41,8 @@ export default function Step4() {
               ["Pay:", "Credit Card"],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between gap-4">
-                <span className="text-[#637381]">{k}</span>
-                <span className="font-medium text-[#0B1220] text-right">
-                  {v}
-                </span>
+                <span>{k}</span>
+                <span className="font-medium text-right">{v}</span>
               </div>
             ))}
           </div>

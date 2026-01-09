@@ -29,10 +29,10 @@ export default function ProfileSection() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white p-10">
+    <div className="w-full min-h-screen bg-white dark:bg-black p-10">
       <div className="max-w-3xl mx-auto">
         {/* ✅ Title */}
-        <h2 className="text-[16px] font-medium text-[#111827] mb-8">Profile</h2>
+        <h2 className="text-[16px] font-medium mb-8">Profile</h2>
 
         {/* ✅ Profile Header */}
         <div className="flex items-start gap-2 mb-10">
@@ -58,9 +58,7 @@ export default function ProfileSection() {
 
           {/* Name & Email */}
           <div className="pt-4">
-            <h3 className="text-[22px] font-semibold text-[#111827]">
-              Abdurrahman
-            </h3>
+            <h3 className="text-[22px] font-semibold">Abdurrahman</h3>
             <p className="text-[14px] text-gray-500 mt-1">Abdurrahman@.com</p>
 
             <div className="mt-5 w-[200px] h-[1px] bg-gray-200" />
@@ -69,16 +67,12 @@ export default function ProfileSection() {
 
         {/* ✅ Information Card */}
         <Card className="rounded-xl mt-5 border border-gray-200 p-8 shadow-none">
-          <h3 className="text-[18px] font-semibold text-[#111827] mb-6">
-            Information
-          </h3>
+          <h3 className="text-[18px] font-semibold mb-6">Information</h3>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Full Name */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium text-[#111827]">
-                Full Name
-              </label>
+              <label className="text-[14px] font-medium">Full Name</label>
               <Input
                 placeholder="Enter product name"
                 className="w-full py-5 mt-2"
@@ -88,9 +82,7 @@ export default function ProfileSection() {
 
             {/* Phone Number */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium text-[#111827]">
-                Phone Number
-              </label>
+              <label className="text-[14px] font-medium">Phone Number</label>
               <Input
                 placeholder="Enter phone number"
                 className="w-full py-5 mt-2"
@@ -100,9 +92,7 @@ export default function ProfileSection() {
 
             {/* Street Address */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium text-[#111827]">
-                Street Address
-              </label>
+              <label className="text-[14px] font-medium">Street Address</label>
               <Input
                 placeholder="Street Address*"
                 className="w-full py-5 mt-2"

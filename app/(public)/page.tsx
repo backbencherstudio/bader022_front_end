@@ -11,7 +11,7 @@ import TrustedCompanies from "./_components/home/TrustedCompanies";
 import YourProjects from "./_components/home/YourProjects";
 import HowBokliWorks from "./_components/home/HowBokliWorks";
 type Props = {
-  bgSrc?: string; // "/images/banner_bg.png"
+  bgSrc?: string;
 };
 /** @format */
 export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {

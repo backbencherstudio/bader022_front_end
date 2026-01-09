@@ -70,7 +70,7 @@ export default function BookingCheckoutStepper() {
       <Stepper steps={steps} currentStep={currentStep + 1} />
 
       {/* Title */}
-      <h2 className="mt-8 text-xl sm:text-2xl font-semibold text-[#0B1220]">
+      <h2 className="mt-8 text-xl sm:text-2xl font-semibold">
         {currentStep === 0 && "Select Services"}
         {currentStep === 1 && "Select Date Time & Staff"}
         {currentStep === 2 && "Payment Information"}

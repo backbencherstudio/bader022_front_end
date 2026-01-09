@@ -32,20 +32,16 @@ export default function ChangePasswordCard() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white px-10 py-8">
+    <div className="w-full min-h-screen bg-white dark:bg-black px-10 py-8">
       <div className="max-w-3xl mx-auto">
         {/* ✅ Card */}
         <Card className="rounded-xl border border-gray-200 shadow-none p-6">
-          <h3 className="text-[18px] font-semibold text-[#111827]">
-            Change Password
-          </h3>
+          <h3 className="text-[18px] font-semibold">Change Password</h3>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Old Password */}
             <div className="space-y-8">
-              <label className="text-[14px] font-medium text-[#111827]">
-                Old Password
-              </label>
+              <label className="text-[14px] font-medium">Old Password</label>
 
               <div className="relative">
                 <Input
@@ -67,9 +63,7 @@ export default function ChangePasswordCard() {
 
             {/* New Password */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium text-[#111827]">
-                Create Password
-              </label>
+              <label className="text-[14px] font-medium">Create Password</label>
 
               <div className="relative">
                 <Input
@@ -91,7 +85,7 @@ export default function ChangePasswordCard() {
 
             {/* Confirm Password */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium text-[#111827]">
+              <label className="text-[14px] font-medium">
                 Confirm Password
               </label>
 

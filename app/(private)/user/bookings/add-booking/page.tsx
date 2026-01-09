@@ -7,6 +7,7 @@ import Step1 from "../../components/bookings/Step1";
 import Step2 from "../../components/bookings/Step2";
 import Step3 from "../../components/bookings/Step3";
 import Step4 from "../../components/bookings/Step4";
+import Step0 from "../../components/bookings/Step0";
 
 type StepperProps = {
   steps: string[];
@@ -54,16 +55,23 @@ function Stepper({ steps, currentStep }: StepperProps) {
 }
 
 export default function BookingCheckoutStepper() {
-  const steps = ["Select Date", "Payment Info", "Card Info", "Confirmed"];
-  const [currentStep, setCurrentStep] = useState(1);
+  const steps = [
+    "Select Services",
+    "Select Date",
+    "Payment Info",
+    "Card Info",
+    "Confirmed",
+  ];
+  const [currentStep, setCurrentStep] = useState(0);
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
+    <div className="w-full mx-auto py-8">
       {/* Stepper */}
-      <Stepper steps={steps} currentStep={currentStep} />
+      <Stepper steps={steps} currentStep={currentStep + 1} />
 
       {/* Title */}
       <h2 className="mt-8 text-xl sm:text-2xl font-semibold text-[#0B1220]">
+        {currentStep === 0 && "Select Services"}
         {currentStep === 1 && "Select Date Time & Staff"}
         {currentStep === 2 && "Payment Information"}
         {currentStep === 3 && "Card Information"}
@@ -72,7 +80,13 @@ export default function BookingCheckoutStepper() {
 
       {/* Step Content */}
       <div className="mt-6">
-        {currentStep === 1 && <Step1 onNext={() => setCurrentStep(2)} />}
+        {currentStep === 0 && <Step0 onNext={() => setCurrentStep(1)} />}
+        {currentStep === 1 && (
+          <Step1
+            onNext={() => setCurrentStep(2)}
+            onBack={() => setCurrentStep(0)}
+          />
+        )}
         {currentStep === 2 && (
           <Step2
             onNext={() => setCurrentStep(3)}

@@ -311,13 +311,6 @@ export default function Page() {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddBooking}
       />
-      {/* +N More Dialog */}
-      {/* <MoreBookingsDialog
-        open={moreOpen}
-        onOpenChange={setMoreOpen}
-        title={moreTitle}
-        bookings={moreBookings}
-      /> */}
     </div>
   );
 }

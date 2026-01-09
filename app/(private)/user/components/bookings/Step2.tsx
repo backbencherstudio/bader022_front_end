@@ -144,7 +144,9 @@ export default function Step2({
               </div>
             ))}
 
-            <Button className="cursor-pointer py-2">Proceed to Payment</Button>
+            <Button className="cursor-pointer py-2" onClick={onNext}>
+              Proceed to Payment
+            </Button>
           </div>
         </div>
       </div>

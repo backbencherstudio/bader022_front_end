@@ -44,10 +44,10 @@ export default function UpcomingAppointment() {
   ];
 
   return (
-    <div className="w-full bg-white p-8">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* ✅ LEFT CARD (Upcoming Appointment) */}
-        <Card className="lg:col-span-2 rounded-[18px] border border-gray-200 shadow-sm px-8 py-7">
+    <div className="my-3">
+      <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* LEFT CARD (Upcoming Appointment) */}
+        <Card className="lg:col-span-2 rounded-[18px] border border-gray-200 shadow-sm px-4 md:px-8 py-7">
           <div className="flex items-start justify-between">
             <h2 className="text-[26px] font-semibold text-[#111827]">
               Upcoming Appointment
@@ -59,12 +59,12 @@ export default function UpcomingAppointment() {
             </span>
           </div>
 
-          <h3 className="text-[20px] font-semibold text-[#111827] mt-10">
+          <h3 className="text-[20px] font-semibold text-[#111827]">
             Hair Styling & Treatment
           </h3>
 
           {/* Info List */}
-          <div className="mt-7 space-y-4 text-[18px] text-gray-600">
+          <div className="space-y-4 text-[18px] text-gray-600">
             <div className="flex items-center gap-4">
               <MapPin size={22} className="text-[#111827]" />
               Bella Beauty Salon
@@ -88,14 +88,12 @@ export default function UpcomingAppointment() {
           </div>
 
           {/* Button */}
-          <Button className="w-full mt-10 h-[70px] rounded-[14px] bg-[#0B1220] text-white font-semibold text-[18px] hover:bg-[#111827]">
-            View Details
-          </Button>
+          <Button className="cursor-pointer py-6">View Details</Button>
         </Card>
 
         {/* ✅ RIGHT CARD (Recent Activity) */}
         <Card className="rounded-[18px] border border-gray-200 shadow-sm px-7 py-7">
-          <h2 className="text-[22px] font-semibold text-[#111827] mb-6">
+          <h2 className="text-[22px] font-semibold text-[#111827]">
             Recent Activity
           </h2>
 

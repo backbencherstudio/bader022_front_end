@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Info, Lock } from "lucide-react";
-import ProfileSection from "../components/settings/ProfileSection";
-import ChangePasswordCard from "../components/settings/ChangePassword";
+import ProfileSection from "../../admin/components/settings/ProfileSection";
+import ChangePasswordCard from "../../admin/components/settings/ChangePassword";
 
 // Sidebar component with dynamic content handling
 function Sidebar({

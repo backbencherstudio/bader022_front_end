@@ -3,7 +3,7 @@ import PaymentHistory from "../../admin/components/payments/PaymentHistory";
 
 export default function page() {
   return (
-    <div>
+    <div className="mt-2">
       <PaymentHistory />
     </div>
   );

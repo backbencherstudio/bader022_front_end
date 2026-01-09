@@ -12,7 +12,7 @@ import {
 const USER_NAV_ITEMS = [
   {
     label: "Dashboard",
-    href: "/admin/dashboard",
+    href: "/user/dashboard",
     icon: (p: any) => <LayoutDashboard {...p} />,
   },
   {

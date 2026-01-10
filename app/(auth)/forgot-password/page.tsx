@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope } from "react-icons/fa";
@@ -10,9 +11,11 @@ type FormValues = {
 
 export default function ForgotPasswordPage() {
   const { register, handleSubmit } = useForm<FormValues>();
+  const router = useRouter();
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+    router.push("/merchant/dashboard");
   };
 
   return (

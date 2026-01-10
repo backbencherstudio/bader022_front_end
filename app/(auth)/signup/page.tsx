@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import {
   FaEye,
   FaEyeSlash,
@@ -23,9 +24,11 @@ type FormValues = {
 export default function SignUpPage() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+    router.push("/merchant/dashboard");
   };
 
   return (
@@ -123,11 +126,16 @@ export default function SignUpPage() {
               <input type="checkbox" {...register("remember")} />
               Remember me
             </label>
-            <button type="button" className="text-blue-600 hover:underline">
-              Forgot password?
-            </button>
+            <Link href={"/forgot-password"}>
+              {" "}
+              <button
+                type="button"
+                className="text-blue-600 hover:underline cursor-pointer"
+              >
+                Forgot password?
+              </button>
+            </Link>
           </div>
-
           {/* Submit */}
           <button
             type="submit"

@@ -253,7 +253,7 @@ function getDummyBookings(filters: TBookingFilters): TBooking[] {
     );
   }
 
-  // ✅ Scope filter (upcoming/past)
+  //  Scope filter (upcoming/past)
   const today = new Date();
 
   if (filters.scope === "upcoming") {

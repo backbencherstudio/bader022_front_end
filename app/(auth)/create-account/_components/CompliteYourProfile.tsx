@@ -19,45 +19,45 @@ export default function CompleteYourProfile({
   };
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="w-full max-w-xl text-center space-y-8">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="relative flex size-20 items-center justify-center rounded-full bg-[#0f172a]">
-            <FiCheck className="text-white text-3xl" />
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-600 dark:bg-green-500 shadow-lg">
+            <FiCheck className="text-white text-4xl" />
           </div>
         </div>
 
         {/* Text */}
         <div className="space-y-2">
-          <h1 className="text-3xl font-semibold text-[#0f172a]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
             Your Account Has Been Successfully Created!
           </h1>
-          <p className="text-gray-500">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
             Share the subscription link with your customers
           </p>
         </div>
 
         {/* Link Copy */}
-        <div className="flex items-center gap-2 rounded-lg border bg-gray-50 px-3 py-2">
+        <div className="flex flex-col sm:flex-row items-center gap-2 rounded-lg border bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 px-3 py-2 transition-colors">
           <input
             readOnly
             value={subscriptionLink}
-            className="flex-1 bg-transparent text-sm outline-none text-gray-700"
+            className="flex-1 bg-transparent text-sm sm:text-base outline-none text-gray-900 dark:text-gray-100"
           />
 
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 rounded-md bg-[#0f172a] px-4 py-2 text-sm text-white"
+            className="flex items-center justify-center gap-2 rounded-md bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
           >
             <FiCopy />
             {copied ? "Copied" : "Copy Link"}
           </button>
         </div>
 
-        {/* button */}
+        {/* Dashboard Button */}
         <Link href={"/merchant/dashboard"}>
-          <button className="mx-auto flex items-center gap-2 rounded-lg bg-[#0f172a] px-6 py-3 text-sm font-medium text-white cursor-pointer">
+          <button className="mx-auto mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-gray-100 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
             Go to the dashboard
             <FiArrowUpRight />
           </button>

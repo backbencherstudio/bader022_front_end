@@ -27,7 +27,7 @@ function Stepper({ steps, currentStep }: StepperProps) {
             {/* Circle */}
             <div
               className={cn(
-                "h-9 w-9 rounded-full flex items-center justify-center text-sm font-semibold border",
+                "h-5 w-5 p-5 rounded-full flex items-center justify-center text-sm font-semibold border",
                 isCompleted && "bg-[#111827] border-[#111827] text-white",
                 isActive && "bg-white border-[#111827] text-[#111827]",
                 !isCompleted &&

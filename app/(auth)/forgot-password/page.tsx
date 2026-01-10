@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    router.push("/merchant/dashboard");
+    router.push("/otp");
   };
 
   return (

@@ -21,6 +21,9 @@ interface CreateAccountData {
   step3: {
     serviceName: string;
   };
+  step4: {
+    serviceName: string;
+  };
 }
 
 const steps = [1, 2, 3, 4];
@@ -39,6 +42,9 @@ export default function CreateAccountPage() {
         serviceName: "",
       },
       step3: {
+        serviceName: "",
+      },
+      step4: {
         serviceName: "",
       },
     }
@@ -93,7 +99,13 @@ export default function CreateAccountPage() {
           />
         );
       case 4:
-        return <ChooseyourPlan />;
+        return (
+          <ChooseyourPlan
+            data={createAccountData.step4}
+            onNext={(data) => handleNext("step3", data)}
+            onPrevious={handlePrevious}
+          />
+        );
 
       case 5:
         return <FinalizingYourWebsite />;

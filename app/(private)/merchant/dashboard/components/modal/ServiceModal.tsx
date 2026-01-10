@@ -59,7 +59,7 @@ export default function ServiceModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto">
       <div className="w-full max-w-lg rounded-xl shadow-lg bg-white dark:bg-gray-900">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-xl">

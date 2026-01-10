@@ -85,7 +85,7 @@ export default function StaffModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 overflow-y-auto">
       <div className="bg-white dark:bg-gray-800 w-full max-w-lg rounded-xl shadow-lg">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50 dark:bg-gray-900 rounded-t-xl">

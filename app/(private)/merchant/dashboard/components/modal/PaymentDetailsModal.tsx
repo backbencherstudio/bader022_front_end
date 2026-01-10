@@ -1,15 +1,15 @@
 "use client";
 
 import { X } from "lucide-react";
-import Image from "next/image";
 import { FaApplePay, FaGooglePay } from "react-icons/fa";
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  onNext: () => void;
 };
 
-export default function PaymentDetailsModal({ open, onClose }: Props) {
+export default function PaymentDetailsModal({ open, onClose, onNext }: Props) {
   if (!open) return null;
 
   return (
@@ -124,7 +124,13 @@ export default function PaymentDetailsModal({ open, onClose }: Props) {
           >
             Cancel
           </button>
-          <button className="flex-1 rounded-lg bg-black py-2 text-sm font-medium text-white hover:bg-black/90">
+          <button
+            onClick={() => {
+              onNext();
+              onClose();
+            }}
+            className="flex-1 rounded-lg bg-black py-2 text-sm font-medium text-white hover:bg-black/90"
+          >
             Complete Setup
           </button>
         </div>

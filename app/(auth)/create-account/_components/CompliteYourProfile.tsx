@@ -1,15 +1,14 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FiCheck, FiCopy, FiArrowUpRight } from "react-icons/fi";
 
 interface CompleteYourProfileProps {
   subscriptionLink?: string;
-  onGoToDashboard?: () => void;
 }
 
 export default function CompleteYourProfile({
   subscriptionLink = "https://bokli.io/dfg",
-  onGoToDashboard,
 }: CompleteYourProfileProps) {
   const [copied, setCopied] = useState(false);
 
@@ -56,14 +55,13 @@ export default function CompleteYourProfile({
           </button>
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={onGoToDashboard}
-          className="mx-auto flex items-center gap-2 rounded-lg bg-[#0f172a] px-6 py-3 text-sm font-medium text-white"
-        >
-          Go to the dashboard
-          <FiArrowUpRight />
-        </button>
+        {/* button */}
+        <Link href={"/merchant/dashboard"}>
+          <button className="mx-auto flex items-center gap-2 rounded-lg bg-[#0f172a] px-6 py-3 text-sm font-medium text-white cursor-pointer">
+            Go to the dashboard
+            <FiArrowUpRight />
+          </button>
+        </Link>
       </div>
     </div>
   );

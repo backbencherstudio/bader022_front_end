@@ -1,6 +1,4 @@
 "use client";
-
-import PaymentDetailsModal from "@/app/(private)/merchant/dashboard/components/modal/PaymentDetailsModal";
 import { useI18n } from "@/components/provider/I18nProvider";
 import React, { useMemo, useState } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
@@ -45,8 +43,6 @@ export default function ChooseThePerfectPlan() {
 
   const premiumPrice =
     billing === "monthly" ? premium?.priceMonthly : premium?.priceAnnual;
-
-  const [open, setOpen] = useState(false);
 
   return (
     <section className="w-full">
@@ -141,10 +137,7 @@ export default function ChooseThePerfectPlan() {
                 </span>
               </p>
 
-              <button
-                onClick={() => setOpen(true)}
-                className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 cursor-pointer"
-              >
+              <button className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 cursor-pointer">
                 {premium?.cta}
                 <MdArrowOutward
                   className={locale === "ar" ? "rotate-270" : ""}
@@ -163,7 +156,6 @@ export default function ChooseThePerfectPlan() {
           </div>
         </div>
       </div>
-      <PaymentDetailsModal open={open} onClose={() => setOpen(false)} />
     </section>
   );
 }

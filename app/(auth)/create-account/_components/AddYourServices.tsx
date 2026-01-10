@@ -19,7 +19,6 @@ export default function AddYourServices({
   onNext,
   onPrevious,
 }: Step2Props) {
-  const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedService, setSelectedService] = useState<any>(null);

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
+import Link from "next/link";
 
 export default function CTABanner() {
   const { ctaBannerData, colorSystemData } = useLandingPage();
@@ -9,7 +10,7 @@ export default function CTABanner() {
 
   return (
     <section>
-      <div className="relative min-h-[260px] sm:min-h-[320px]">
+      <div className="relative min-h-[360px] sm:min-h-[320px]">
         {/* Background Image */}
         <Image
           src={
@@ -46,18 +47,20 @@ export default function CTABanner() {
             </p>
           )}
 
-          <button
-            style={{
-              backgroundColor: colorSystemData.primaryColor,
-            }}
-            className="
+          <Link href={"/user/bookings/add-booking"}>
+            <button
+              style={{
+                backgroundColor: colorSystemData.primaryColor,
+              }}
+              className="
               px-6 py-3 rounded-md
               text-white font-medium
-              transition hover:opacity-90
+              transition hover:opacity-90 cursor-pointer
             "
-          >
-            Book A Consultation
-          </button>
+            >
+              Book A Consultation
+            </button>
+          </Link>
         </div>
       </div>
     </section>

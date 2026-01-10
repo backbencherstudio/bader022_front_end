@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
+import Link from "next/link";
 
 export default function ServicesPreview() {
   const { servicesPreviewData, colorSystemData } = useLandingPage();
@@ -86,18 +87,20 @@ export default function ServicesPreview() {
                   </p>
 
                   {/* Button */}
-                  <button
-                    style={{
-                      backgroundColor: colorSystemData.primaryColor,
-                    }}
-                    className="
+                  <Link href={"/user/bookings/add-booking"}>
+                    <button
+                      style={{
+                        backgroundColor: colorSystemData.primaryColor,
+                      }}
+                      className="
                 px-5 py-2 rounded-md
                 text-white font-medium
-                transition hover:opacity-90
+                transition hover:opacity-90 cursor-pointer
               "
-                  >
-                    Book Now
-                  </button>
+                    >
+                      Book Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

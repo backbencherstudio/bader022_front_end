@@ -116,7 +116,10 @@ export default function Step0({ onNext }: { onNext: () => void }) {
               </p>
 
               <div className="flex gap-3 pt-3">
-                <Button onClick={onNext} className="cursor-pointer py-5">
+                <Button
+                  onClick={onNext}
+                  className="cursor-pointer py-5 bg-gray-400 hover:bg-black text-white"
+                >
                   Book Now
                 </Button>
               </div>

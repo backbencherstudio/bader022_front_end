@@ -1,6 +1,7 @@
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
@@ -96,28 +97,32 @@ export default function Hero() {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               {heroData.primaryBtn && (
-                <button
-                  style={{
-                    backgroundColor: colorSystemData.primaryColor,
-                  }}
-                  className="px-6 py-3 rounded-md text-white font-medium transition
-                 hover:opacity-90"
-                >
-                  {heroData.primaryBtn}
-                </button>
+                <Link href={"/user/bookings/add-booking"}>
+                  <button
+                    style={{
+                      backgroundColor: colorSystemData.primaryColor,
+                    }}
+                    className="px-6 py-3 rounded-md text-white font-medium transition
+                 hover:opacity-90 cursor-pointer"
+                  >
+                    {heroData.primaryBtn}
+                  </button>
+                </Link>
               )}
 
               {heroData.secondaryBtn && (
-                <button
-                  style={{
-                    color: colorSystemData.secondaryColor,
-                    borderColor: colorSystemData.secondaryColor,
-                  }}
-                  className="px-6 py-3 rounded-md border font-medium transition
-                 hover:text-white"
-                >
-                  {heroData.secondaryBtn}
-                </button>
+                <Link href={"/user/bookings/add-booking"}>
+                  <button
+                    style={{
+                      color: colorSystemData.secondaryColor,
+                      borderColor: colorSystemData.secondaryColor,
+                    }}
+                    className="px-6 py-3 rounded-md border font-medium transition
+                 hover:text-white cursor-pointer"
+                  >
+                    {heroData.secondaryBtn}
+                  </button>
+                </Link>
               )}
             </div>
           </div>

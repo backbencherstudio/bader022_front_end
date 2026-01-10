@@ -47,7 +47,7 @@ export const MERCHANT_FOOTER_ITEMS = [
   },
   {
     label: "Logout",
-    href: "/logout",
+    href: "/",
     icon: (p: any) => <LogOut {...p} />,
     iconClassName: "text-red-400",
   },

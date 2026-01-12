@@ -76,7 +76,7 @@ export default function Banner() {
 
           <motion.p
             variants={itemVariants}
-            className="mt-4 text-[16px] md:text-[18px] leading-relaxed"
+            className="mt-4 text-[16px] md:text-[18px] leading-relaxed text-black"
           >
             {t("Banner.subtitleLine1")}
             <br />
@@ -99,7 +99,7 @@ export default function Banner() {
 
             <Button
               variant="outline"
-              className="h-12 rounded-md text-[16px] px-4 font-semibold text-slate-700 border-indigo-400 bg-white/60 backdrop-blur hover:bg-white cursor-pointer"
+              className="h-12 rounded-md text-[16px] px-4 font-semibold text-slate-700 border-indigo-400 bg-white! hover:text-black backdrop-blur hover:bg-white cursor-pointer"
             >
               {t("Banner.secondaryBtn")}
               <ArrowUpRight

@@ -28,7 +28,7 @@ export default function FrequentlyAskedQuestions() {
       <div className="container mx-auto py-20 px-4">
         {/* Heading */}
         <div className="flex flex-col items-center gap-5 py-10 text-center">
-          <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold">
+          <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold text-black">
             {t("FAQ.title")}
           </h2>
 
@@ -52,7 +52,7 @@ export default function FrequentlyAskedQuestions() {
                 className="bg-white border border-gray-200 shadow-md rounded-md"
               >
                 <AccordionTrigger
-                  className={`mx-4 font-bold ${
+                  className={`mx-4 font-bold text-black ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >
@@ -83,7 +83,7 @@ export default function FrequentlyAskedQuestions() {
                 className="bg-white border border-gray-200 shadow-md rounded-md"
               >
                 <AccordionTrigger
-                  className={`mx-4 font-bold ${
+                  className={`mx-4 font-bold text-black ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >

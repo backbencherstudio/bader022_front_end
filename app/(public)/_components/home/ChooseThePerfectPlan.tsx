@@ -89,7 +89,7 @@ export default function ChooseThePerfectPlan() {
             ease: cubicBezier(0.25, 0.1, 0.25, 1),
           }}
         >
-          <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold">
+          <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold text-black">
             {t("Pricing.title")}
           </h2>
 
@@ -98,7 +98,7 @@ export default function ChooseThePerfectPlan() {
           </p>
 
           {/* Billing Toggle */}
-          <div className="bg-[#FAFAFA] p-2 flex items-center gap-2 rounded-full">
+          <div className="bg-[#FAFAFA] p-2 flex items-center gap-2 rounded-full ">
             {(["monthly", "annual"] as Billing[]).map((b) => (
               <button
                 key={b}
@@ -127,17 +127,19 @@ export default function ChooseThePerfectPlan() {
             className="bg-[#F9FAFB] p-5 rounded-xl transition-shadow hover:shadow-lg"
           >
             <div className="bg-white rounded-xl p-6">
-              <h3 className="text-xl font-bold">{basic?.name}</h3>
+              <h3 className="text-xl font-bold text-black">{basic?.name}</h3>
               <p className="py-3 text-slate-700">{basic?.desc}</p>
 
               <p>
-                <span className="text-4xl font-bold">{basicPrice}</span>
-                <span className="text-sm text-slate-500">
+                <span className="text-4xl font-bold text-black">
+                  {basicPrice}
+                </span>
+                <span className="text-sm text-slate-500 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
 
-              <button className="mt-5 w-full bg-white border border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center group">
+              <button className="mt-5 w-full bg-white border text-black border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center group">
                 {basic?.cta}
                 <MdArrowOutward className="transition-transform group-hover:translate-x-1" />
               </button>
@@ -175,12 +177,14 @@ export default function ChooseThePerfectPlan() {
             </div>
 
             <div className="bg-white rounded-xl p-6">
-              <h3 className="text-xl font-bold">{premium?.name}</h3>
+              <h3 className="text-xl font-bold text-black">{premium?.name}</h3>
               <p className="py-3 text-slate-700">{premium?.desc}</p>
 
               <p>
-                <span className="text-4xl font-bold">{premiumPrice}</span>
-                <span className="text-sm text-slate-500">
+                <span className="text-4xl font-bold text-black">
+                  {premiumPrice}
+                </span>
+                <span className="text-sm text-slate-500 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>

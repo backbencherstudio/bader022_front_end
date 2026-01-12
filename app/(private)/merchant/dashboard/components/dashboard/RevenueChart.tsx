@@ -11,7 +11,7 @@ import { TData } from "../../page";
 import { useTheme } from "next-themes";
 
 const CustomBar = (props: any) => {
-  const { x, y, width, height } = props;
+  const { x, y, width, height, fill } = props;
   const barRadius = 8;
 
   return (
@@ -23,7 +23,7 @@ const CustomBar = (props: any) => {
         height={height}
         rx={barRadius}
         ry={barRadius}
-        fill="#eee"
+        fill={fill}
       />
       <rect
         x={x}
@@ -32,7 +32,7 @@ const CustomBar = (props: any) => {
         height={height}
         rx={barRadius}
         ry={barRadius}
-        fill="black"
+        fill={fill}
       />
     </g>
   );
@@ -47,7 +47,7 @@ export default function RevenueChart({ data }: { data: TData[] }) {
         maxWidth: "700px",
         maxHeight: "70vh",
         aspectRatio: 1.618,
-        backgroundColor: theme === "dark" ? "#333" : "#fff",
+        backgroundColor: theme === "dark" ? "dark:bg-gray-800" : "",
         borderRadius: "4px",
         margin: "4px",
         padding: "6px",
@@ -66,7 +66,11 @@ export default function RevenueChart({ data }: { data: TData[] }) {
       <YAxis width="auto" />
       <Tooltip />
       <Legend />
-      <Bar dataKey="revenue" shape={<CustomBar />} />
+      <Bar
+        dataKey="revenue"
+        shape={<CustomBar />}
+        fill={theme === "dark" ? "#fff" : "#black"}
+      />
     </BarChart>
   );
 }

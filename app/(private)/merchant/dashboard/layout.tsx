@@ -82,7 +82,7 @@ export default function DashboardLayout({
         />
         <TopBar />
         <div className="pl-0 lg:pl-70 pt-17">
-          <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9]">
+          <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9] dark:bg-gray-900">
             {children}
           </div>
         </div>

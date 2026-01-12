@@ -23,7 +23,7 @@ export default function TopBar() {
   };
 
   return (
-    <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] bg-white/10 dark:bg-black backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
+    <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] bg-white/10 dark:bg-gray-900 backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
       {/* Left Side */}
       <div className="pl-10 hidden lg:block lg:pl-70 flex-1">
         <p className="text-xl font-semibold mb-1 text-black dark:text-white">

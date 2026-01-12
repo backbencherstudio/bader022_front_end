@@ -393,7 +393,7 @@ export function RecentTransactionsCard({
   return (
     <Card
       className={[
-        "rounded-3xl border border-muted/40 shadow-sm",
+        "rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800 ",
         className ?? "",
       ].join(" ")}
     >
@@ -466,7 +466,7 @@ export function RecentTransactionsCard({
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
+                <TableRow className="hover:bg-muted/30">
                   <TableHead className="h-14 w-70 pl-8 text-sm font-semibold text-muted-foreground">
                     Customer
                   </TableHead>

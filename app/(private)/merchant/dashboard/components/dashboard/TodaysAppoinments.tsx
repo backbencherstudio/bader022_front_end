@@ -39,9 +39,9 @@ export function TodaysAppointments({
 }) {
   return (
     <Card
-      className={`px-0 w-full rounded-xl bg-white dark:bg-gray-700 border border-gray-200 lg:w-1/4 shadow-sm ${
-        className ?? ""
-      }`}
+      className={`px-0 w-full rounded-xl bg-white dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+               lg:w-1/4 shadow-sm ${className ?? ""}`}
     >
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">{title}</CardTitle>

@@ -17,7 +17,7 @@ export default function TrustedCompanies() {
   const { t } = useI18n();
   return (
     // Infinite scrolling ticker of images
-    <div className="flex justify-center items-center my-12 w-full">
+    <div className="flex justify-center items-center bg-white py-12 w-full">
       <div className="relative w-full overflow-hidden">
         <p className="text-xl mt-4 text-center text-[#4A4C56]">
           {t("TrustedCompaniesStateMent.title")}

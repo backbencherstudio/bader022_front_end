@@ -12,7 +12,7 @@ function ActionTile({ item }: { item: QuickActionItem }) {
     <button type="button" onClick={item.onClick} className="group text-left">
       <Card
         className={[
-          "h-24 w-full rounded-2xl border border-muted/50 bg-background shadow-sm",
+          "h-24 w-full rounded-2xl bg-background shadow-sm dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ",
           "transition-transform duration-150",
           "group-hover:-translate-y-px group-hover:shadow-md",
         ].join(" ")}

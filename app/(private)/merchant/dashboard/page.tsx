@@ -62,16 +62,28 @@ export default function DashboardPage() {
             <StatCard title="Appointments" value={34} Icon={TrendingUp} />
             <StatCard title="Total Customers" value={186} Icon={Users} />
           </div>
-          <div className="rounded-xl border border-gray-200 p-4 pl-0 shadow-sm">
+          <div
+            className="rounded-xl border dark:bg-gray-800
+               border-gray-200 dark:border-gray-700
+               p-4 pl-0 shadow-sm"
+          >
             <div className="pl-4 pt-2 pb-4 w-full">
               <Tabs defaultValue="monthly">
-                <div className="flex justify-between">
-                  <p className="text-xl font-semibold text-[#444950]">
+                <div className="flex justify-between dark:text-white">
+                  <p className="text-xl font-semibold text-[#444950] dark:text-white">
                     Revenue Statistics
                   </p>
-                  <TabsList className="h-14 p-2">
-                    <TabsTrigger value="weekly">Weekly</TabsTrigger>
-                    <TabsTrigger value="monthly">Monthly</TabsTrigger>
+                  <TabsList
+                    className="h-14 p-2 dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+              rounded-2xl shadow-sm"
+                  >
+                    <TabsTrigger className="cursor-pointer" value="weekly">
+                      Weekly
+                    </TabsTrigger>
+                    <TabsTrigger className="cursor-pointer" value="monthly">
+                      Monthly
+                    </TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">

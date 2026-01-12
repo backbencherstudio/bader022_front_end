@@ -10,7 +10,11 @@ interface IStatCard {
 
 const StatCard: React.FC<IStatCard> = ({ title, value, Icon, expired }) => {
   return (
-    <div className="rounded-xl bg-white dark:bg-gray-700 border border-gray-200 p-5 shadow-sm flex flex-col justify-between">
+    <div
+      className="rounded-xl bg-white dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+               p-5 shadow-sm flex flex-col justify-between"
+    >
       {/* Top Section */}
       <div className="flex justify-between items-center gap-2">
         <h3 className="font-medium text-black dark:text-white text-[18px]">

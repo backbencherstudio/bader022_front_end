@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useMemo } from "react";
+import { motion } from "framer-motion";
 
 type Row = { feature: string; free: string; premium: string };
 
@@ -25,16 +26,26 @@ export function FeatureComparison() {
 
   return (
     <section className="container mx-auto py-16 px-4">
-      <h2 className="text-4xl md:text-5xl font-semibold text-center mb-4 text-gray-900">
-        {t("FeatureComparison.title")}
-      </h2>
+      {/* Title + Subtitle animation ONLY */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.6 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <h2 className="text-4xl md:text-5xl font-semibold mb-4 text-gray-900">
+          {t("FeatureComparison.title")}
+        </h2>
 
-      <p className="text-center mb-12 text-[16px] text-black">
-        {t("FeatureComparison.subtitleLine1")}
-        <br />
-        {t("FeatureComparison.subtitleLine2")}
-      </p>
+        <p className="text-[16px] text-black">
+          {t("FeatureComparison.subtitleLine1")}
+          <br />
+          {t("FeatureComparison.subtitleLine2")}
+        </p>
+      </motion.div>
 
+      {/* Table (UNCHANGED) */}
       <div className={isRTL ? "text-right" : ""}>
         <Table>
           <TableHeader className="bg-linear-to-r text-white text-[16px] font-semibold from-[#3CB3FF] to-[#7153FF]">

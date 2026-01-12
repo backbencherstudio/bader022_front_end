@@ -25,14 +25,14 @@ export default function SupportSettings() {
   return (
     <div className="container max-w-3xl p-4 mx-auto">
       <div className="border rounded-xl p-5">
-        <h2 className="text-2xl font-semibold mb-6 text-black">
+        <h2 className="text-2xl font-semibold mb-6 text-black dark:text-white">
           Support Settings
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Help Center Section */}
           <div className="flex gap-4 flex-col sm:flex-row">
-            <Card className="w-full">
+            <Card className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <CardHeader className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <HelpCircle className="h-6 w-6 text-blue-500" />
@@ -54,7 +54,7 @@ export default function SupportSettings() {
               </CardContent>
             </Card>
             {/* Contact Support Section */}
-            <Card className="w-full">
+            <Card className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <CardHeader className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <MessageCircle className="h-6 w-6 text-green-500" />
@@ -103,12 +103,12 @@ export default function SupportSettings() {
 
           {/* System Information Section */}
           <CardTitle>System Information</CardTitle>
-          <Card className="bg-[#e9e9ea]">
+          <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
             <CardContent>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <Info className="h-6 w-6 text-gray-500 dark:text-black" />
-                  <p className="font-medium dark:text-black">
+                  <Info className="h-6 w-6 text-gray-500 dark:text-white" />
+                  <p className="font-medium dark:text-white">
                     Platform Version
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export default function SupportSettings() {
               </div>
               <hr className="my-4 h-0.5 bg-gray-300 " />
               <div className="space-y-2">
-                <div className="flex justify-between items-center dark:text-black">
+                <div className="flex justify-between items-center dark:text-white">
                   <p className="font-medium">Last Updated</p>
                   <p>December 15, 2025</p>
                 </div>

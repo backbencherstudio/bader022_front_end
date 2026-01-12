@@ -193,7 +193,7 @@ function MobileSidebar({
 function AccountSettingsForm() {
   return (
     <div className="flex flex-col gap-8 p-6 w-full">
-      <Card>
+      <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">Information</CardTitle>
         </CardHeader>
@@ -220,7 +220,7 @@ function AccountSettingsForm() {
       </Card>
 
       {/* Change Password Section */}
-      <Card>
+      <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
             Change Password

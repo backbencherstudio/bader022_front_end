@@ -1,7 +1,6 @@
 "use client";
 
-import { cubicBezier, motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { cubicBezier, motion } from "framer-motion";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { UserPlus, Settings, CalendarDays } from "lucide-react";
 
@@ -68,6 +67,22 @@ const cardVariants = [
   },
 ];
 
+/* ------------------ TITLE VARIANT (TOP → DOWN, SCROLL BASED) ------------------ */
+const titleVariant = {
+  hidden: {
+    opacity: 0,
+    y: -48,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.0,
+      ease: cubicBezier(0.25, 0.1, 0.25, 1),
+    },
+  },
+};
+
 export default function HowBokliWorks() {
   const { t } = useI18n();
 
@@ -77,28 +92,19 @@ export default function HowBokliWorks() {
     desc: string;
   }>;
 
-  /* ------------------ Title Controls ------------------ */
-  const titleControls = useAnimationControls();
-
-  useEffect(() => {
-    titleControls.start({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.9,
-        ease: cubicBezier(0.25, 0.1, 0.25, 1),
-      },
-    });
-  }, [titleControls]);
-
   return (
     <section className="w-full bg-white py-16">
       <div className="container mx-auto px-4">
-        {/* ---------------- Title ---------------- */}
+        {/* ---------------- Title (SCROLL BASED, FROM TOP) ---------------- */}
         <motion.div
           className="mx-auto max-w-3xl text-center"
-          initial={{ opacity: 0, y: 36 }}
-          animate={titleControls}
+          variants={titleVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: false, // 🔥 scroll up & down
+            amount: 0.6, // 🔥 trigger when mostly visible
+          }}
         >
           <h2 className="text-3xl md:text-[48px] font-semibold text-slate-900">
             {t("HowItWorks.title")}
@@ -123,7 +129,7 @@ export default function HowBokliWorks() {
                 whileHover="hover"
                 viewport={{
                   once: false,
-                  amount: 0.85, // 🔥 trigger when almost fully visible
+                  amount: 0.85,
                 }}
                 className="rounded-xl border border-slate-100 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,0.04)]"
               >

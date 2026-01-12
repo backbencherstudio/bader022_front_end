@@ -98,8 +98,9 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* Start Free Button */}
-            <Button className="rounded-md px-3 py-6 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer bg-linear-to-l from-[#6366F1] to-[#3B82F6]">
-              {t("Nav.button")}{" "}
+            <Button className="rounded-md px-3 py-6 bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer ">
+              {/* bg-linear-to-l from-[#7153FF] to-[#3CB3FF] */}
+              {t("Nav.button")}
               <ArrowUpRight
                 size={18}
                 className={`font-semibold ${

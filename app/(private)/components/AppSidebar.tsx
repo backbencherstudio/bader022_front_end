@@ -75,14 +75,14 @@ function SidebarInner({
   return (
     <>
       {/* Header */}
-      <div className="bg-white dark:bg-black gap-3 px-4 py-5 border-b border-white/10 dark:border-[#555]">
+      <div className="bg-white dark:bg-gray-900 gap-3 px-4 py-5 border-b border-white/10 dark:border-[#555]">
         {logoSrc && (
           <Image
             src={logoSrc}
             alt="Logo"
             width={100}
             height={100}
-            className="rounded-xl"
+            className="rounded dark:bg-gray-300"
             priority
           />
         )}
@@ -130,7 +130,7 @@ export default function AppSidebar(props: Props) {
   return (
     <>
       {/* Mobile */}
-      <div className="lg:hidden overflow-auto">
+      <div className="lg:hidden overflow-auto dark:bg-gray-900">
         <Sheet>
           <SheetTrigger
             aria-label="Open menu"
@@ -143,7 +143,7 @@ export default function AppSidebar(props: Props) {
             side="left"
             className="p-0 w-70 bg-foreground border-r border-[#E9E9E9] dark:border-[#555] overflow-auto"
           >
-            <div className="bg-white dark:bg-black flex-col">
+            <div className="bg-white dark:bg-gray-900 flex-col">
               <SidebarInner {...props} pathname={pathname} />
             </div>
           </SheetContent>
@@ -151,7 +151,7 @@ export default function AppSidebar(props: Props) {
       </div>
 
       {/* Desktop */}
-      <aside className="hidden lg:flex w-70 fixed min-h-screen overflow-auto border-r border-[#E9E9E9] dark:border-[#555] top-0 flex-col z-50">
+      <aside className="hidden dark:bg-gray-900 lg:flex w-70 fixed min-h-screen overflow-auto border-r border-[#E9E9E9] dark:border-[#555] top-0 flex-col z-50">
         <SidebarInner {...props} pathname={pathname} />
       </aside>
     </>

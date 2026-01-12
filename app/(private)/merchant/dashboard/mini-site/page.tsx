@@ -47,9 +47,9 @@ export default function page() {
         </div>
 
         {/* CONTENT */}
-        <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] h-screen">
+        <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-3 h-screen">
           {/* LEFT: INPUT PANEL */}
-          <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow m-2 p-3 rounded-md">
+          <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow my-3 p-3 rounded-md">
             <InputPanel />
           </div>
 

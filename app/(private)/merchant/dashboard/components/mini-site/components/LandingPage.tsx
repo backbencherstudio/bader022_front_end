@@ -8,7 +8,7 @@ import ServicesPreview from "./landingpage/ServicesPreview";
 import Footer from "./landingpage/Footer";
 export default function LandingPage() {
   return (
-    <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow m-2 p-3 rounded-md">
+    <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow my-3 p-3 rounded-md">
       {/* HERO */}
       <Hero />
       {/* About Section */}

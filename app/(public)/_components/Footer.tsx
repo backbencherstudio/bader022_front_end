@@ -3,6 +3,7 @@
 import { useI18n } from "@/components/provider/I18nProvider";
 import Link from "next/link";
 import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,7 +12,13 @@ export default function Footer() {
   const isRTL = locale === "ar";
 
   return (
-    <footer className="bg-linear-to-br from-blue-50 via-white to-blue-200">
+    <motion.footer
+      className="bg-linear-to-br from-blue-50 via-white to-blue-200"
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.4 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       <div className="container mx-auto px-4 py-16">
         {/* Top section */}
         <div
@@ -33,32 +40,20 @@ export default function Footer() {
             </p>
 
             <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
-              <Link
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full transition cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
+              <Link href="https://instagram.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
                   <FaInstagram />
                 </div>
               </Link>
 
-              <Link
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full transition cursor-pointer bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white">
+              <Link href="https://x.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
                   <FaXTwitter />
                 </div>
               </Link>
 
-              <Link
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full transition cursor-pointer bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white">
+              <Link href="https://youtube.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
                   <FaYoutube />
                 </div>
               </Link>
@@ -115,12 +110,12 @@ export default function Footer() {
             © {currentYear} Bokli. {t("Footer.copyright")}
           </span>
 
-          <Link href="/terms" className="hover:text-blue-600">
+          <Link href="/terms" className="hover:text-blue-600 transition">
             {t("Footer.terms")}
           </Link>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 

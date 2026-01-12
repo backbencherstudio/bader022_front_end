@@ -49,10 +49,10 @@ export default function FrequentlyAskedQuestions() {
               <AccordionItem
                 key={idx}
                 value={`left-${idx}`}
-                className="bg-white border border-gray-200 shadow-md rounded-md"
+                className="bg-white border border-gray-200 rounded-md"
               >
                 <AccordionTrigger
-                  className={`mx-4 font-bold ${
+                  className={`mx-4 text-xl font-bold ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >
@@ -60,7 +60,7 @@ export default function FrequentlyAskedQuestions() {
                 </AccordionTrigger>
 
                 <AccordionContent
-                  className={`flex flex-col gap-4 text-balance mx-4 text-slate-600 ${
+                  className={`flex flex-col gap-4 mx-4 text-sm ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >
@@ -80,10 +80,10 @@ export default function FrequentlyAskedQuestions() {
               <AccordionItem
                 key={idx}
                 value={`right-${idx}`}
-                className="bg-white border border-gray-200 shadow-md rounded-md"
+                className="bg-white border border-gray-200 rounded-md"
               >
                 <AccordionTrigger
-                  className={`mx-4 font-bold ${
+                  className={`mx-4 text-xl font-bold ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >
@@ -91,7 +91,7 @@ export default function FrequentlyAskedQuestions() {
                 </AccordionTrigger>
 
                 <AccordionContent
-                  className={`flex flex-col gap-4 text-balance mx-4 text-slate-600 ${
+                  className={`flex flex-col gap-4 mx-4 text-sm ${
                     locale === "ar" ? "text-right" : ""
                   }`}
                 >

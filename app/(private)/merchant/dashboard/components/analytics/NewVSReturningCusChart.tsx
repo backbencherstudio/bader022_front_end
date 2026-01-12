@@ -25,7 +25,7 @@ export default function NewVSReturningCusChart() {
           padding: "4px",
         }}
       >
-        <h1 className="px-4 font-semibold text-xl text-[#444950]">
+        <h1 className="px-4 font-semibold text-xl text-[#444950] dark:text-white">
           New VS Returning
         </h1>
         <PieChart

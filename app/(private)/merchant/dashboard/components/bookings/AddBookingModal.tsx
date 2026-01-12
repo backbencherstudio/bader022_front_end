@@ -51,7 +51,10 @@ export default function AddBookingModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-md">
+      <DialogContent
+        className="w-full max-w-md dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700"
+      >
         <DialogHeader>
           <DialogTitle>Add New Booking</DialogTitle>
         </DialogHeader>

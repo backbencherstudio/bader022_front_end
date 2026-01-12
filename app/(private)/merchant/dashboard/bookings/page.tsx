@@ -117,7 +117,11 @@ export default function Page() {
             onValueChange={(v) => setTab(v as any)}
             className="w-full sm:w-auto"
           >
-            <TabsList className="w-full sm:w-auto">
+            <TabsList
+              className="w-full sm:w-auto  dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+               p-5 shadow-sm"
+            >
               <TabsTrigger value="calendar" className="gap-2 cursor-pointer">
                 <CalendarIcon className="h-4 w-4" />
                 Calendar
@@ -277,8 +281,12 @@ export default function Page() {
         </TabsContent>
 
         {/* Keep table tab empty exactly like you requested */}
-        <TabsContent value="table" className="mt-6">
-          <Card className="mb-6">
+        <TabsContent value="table" className="mt-6 ">
+          <Card
+            className="mb-6  dark:bg-gray-800
+              border border-gray-200 dark:border-gray-700
+               p-5 shadow-sm"
+          >
             {/* First Section: Title, Description, and Toggle */}
             <CardHeader className="flex justify-between items-center">
               <div>

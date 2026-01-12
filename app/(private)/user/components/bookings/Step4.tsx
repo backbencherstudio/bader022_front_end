@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Step4() {
   return (
-    <Card className="rounded-2xl border border-border p-4 sm:p-6">
+    <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="rounded-xl border border-border overflow-hidden">
-        <div className="bg-[#F4F6F8] dark:bg-black px-6 py-4 font-semibold text-center text-sm">
+        <div className="bg-[#F4F6F8] dark:bg-gray-900 px-6 py-4 font-semibold text-center text-sm">
           Booking Confirmed!
         </div>
 
@@ -17,7 +17,7 @@ export default function Step4() {
 
           {/* Fake success icon */}
           <div className="my-8 flex items-center justify-center">
-            <div className="h-20 w-20 rounded-full bg-[#F4F6F8] dark:bg-black flex items-center justify-center">
+            <div className="h-20 w-20 rounded-full bg-[#F4F6F8] dark:bg-gray-900 flex items-center justify-center">
               <div className="h-12 w-12 rounded-full bg-white dark:bg-black border border-border flex items-center justify-center font-bold">
                 ✓
               </div>

@@ -126,7 +126,7 @@ export function RecentTransactionsCard({
   return (
     <Card
       className={[
-        "rounded-3xl border border-muted/40 shadow-sm",
+        "rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm",
         className ?? "",
       ].join(" ")}
     >

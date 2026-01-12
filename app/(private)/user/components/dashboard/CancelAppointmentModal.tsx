@@ -8,7 +8,7 @@ import {
 
 export function CancelAppointmentModal() {
   return (
-    <DialogContent className="p-0 overflow-auto rounded-2xl">
+    <DialogContent className="p-0 overflow-auto rounded-2xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       {/* Header */}
       <DialogHeader className="flex flex-row items-center justify-between px-6 py-4 border-b border-border">
         <DialogTitle className="text-base font-semibold">

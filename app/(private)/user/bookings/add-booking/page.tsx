@@ -28,8 +28,10 @@ function Stepper({ steps, currentStep }: StepperProps) {
             <div
               className={cn(
                 "h-5 w-5 p-5 rounded-full flex items-center justify-center text-sm font-semibold border",
-                isCompleted && "bg-[#111827] border-[#111827] text-white",
-                isActive && "bg-white border-[#111827] text-[#111827]",
+                isCompleted &&
+                  "bg-[#111827] dark:bg-green-800 border-[#111827] dark:border-[#016630] text-white",
+                isActive &&
+                  "bg-white border-[#111827] dark:border-[#016630] text-[#111827]",
                 !isCompleted &&
                   !isActive &&
                   "bg-[#F4F6F8] border-border text-[#637381]"
@@ -43,7 +45,9 @@ function Stepper({ steps, currentStep }: StepperProps) {
               <div
                 className={cn(
                   "h-[3px] w-full mx-2 sm:mx-3 rounded-full",
-                  stepNumber < currentStep ? "bg-[#111827]" : "bg-border"
+                  stepNumber < currentStep
+                    ? "bg-[#111827] dark:bg-green-800"
+                    : "bg-border"
                 )}
               />
             )}

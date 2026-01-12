@@ -36,7 +36,7 @@ export function RescheduleAppointmentModal() {
   ];
 
   return (
-    <DialogContent className="sm:max-w-225 p-0 overflow-hidden rounded-2xl">
+    <DialogContent className="sm:max-w-225 p-0 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       {/* Header */}
       <DialogHeader className="flex flex-row items-start justify-between px-5 sm:px-7 py-4 sm:py-5 border-b border-border">
         <div>
@@ -131,7 +131,7 @@ export function RescheduleAppointmentModal() {
 
           {/* Bottom Left - Staff Select */}
           <div className="rounded-xl border border-border overflow-hidden">
-            <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 text-sm font-semibold ">
+            <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 text-sm font-semibold ">
               Select Staff
             </div>
 

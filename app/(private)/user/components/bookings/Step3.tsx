@@ -11,11 +11,11 @@ export default function Step3({
   onBack: () => void;
 }) {
   return (
-    <Card className="rounded-2xl border border-border p-4 sm:p-6">
+    <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Card Info */}
         <div className="lg:col-span-2 rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Payment
           </div>
           <div className="p-5 sm:p-6 space-y-5">
@@ -64,7 +64,7 @@ export default function Step3({
 
         {/* Booking Summary */}
         <div className="rounded-xl border border-border overflow-hidden h-fit">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Booking Summary
           </div>
           <div className="p-5 sm:p-6 space-y-3 text-sm">

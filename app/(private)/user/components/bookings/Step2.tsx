@@ -22,13 +22,13 @@ export default function Step2({
   const [method, setMethod] = useState("card");
 
   return (
-    <Card className="rounded-2xl border border-border p-4 sm:p-6">
+    <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Customer Details + Payment method */}
         <div className="lg:col-span-2 space-y-6">
           {/* Customer Details */}
           <div className="rounded-xl border border-border overflow-hidden">
-            <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+            <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
               Customer Details
             </div>
             <div className="p-5 sm:p-6 space-y-5">
@@ -76,7 +76,7 @@ export default function Step2({
 
           {/* Payment Method */}
           <div className="rounded-xl border border-border overflow-hidden">
-            <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+            <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
               Payment Method
             </div>
 
@@ -88,7 +88,7 @@ export default function Step2({
                   className={cn(
                     "w-full flex items-center gap-3 rounded-lg border px-4 py-4 text-sm font-medium text-left transition",
                     method === m.id
-                      ? "border-[#111827] bg-[#F9FAFB] dark:bg-gray-700"
+                      ? "border-[#111827] bg-[#F9FAFB] dark:bg-gray-900"
                       : "border-border hover:border-[#111827]/40"
                   )}
                 >
@@ -125,7 +125,7 @@ export default function Step2({
 
         {/* Booking Summary */}
         <div className="rounded-xl border border-border overflow-hidden h-fit">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Booking Summary
           </div>
           <div className="p-5 sm:p-6 space-y-3 text-sm">

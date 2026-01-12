@@ -53,7 +53,7 @@ export default function UpcomingAppointment() {
     <div className="my-3">
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* LEFT CARD */}
-        <Card className="lg:col-span-2 rounded-[18px] border border-gray-200 shadow-sm px-4 md:px-8 py-7">
+        <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <div className="flex items-start justify-between">
             <h2 className="text-[26px] font-semibold text-black dark:text-white">
               Upcoming Appointment
@@ -86,7 +86,7 @@ export default function UpcomingAppointment() {
             </div>
           </div>
 
-          {/* ✅ View Order Button */}
+          {/* View Order Button */}
           <Button
             className="cursor-pointer py-5 mt-6"
             onClick={() => setOrderOpen(true)}
@@ -96,7 +96,7 @@ export default function UpcomingAppointment() {
         </Card>
 
         {/* RIGHT CARD */}
-        <Card className="rounded-[18px] border border-gray-200 shadow-sm px-7 py-7">
+        <Card className="rounded-[18px] px-7 py-7  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <h2 className="text-[22px] font-semibold text-black dark:text-white">
             Recent Activity
           </h2>
@@ -119,7 +119,7 @@ export default function UpcomingAppointment() {
         </Card>
       </div>
 
-      {/* ✅ Order Details Dialog */}
+      {/*  Order Details Dialog */}
       <Dialog open={orderOpen} onOpenChange={setOrderOpen}>
         <OrderDetailsDialog
           onReschedule={() => {
@@ -133,12 +133,12 @@ export default function UpcomingAppointment() {
         />
       </Dialog>
 
-      {/* ✅ Reschedule Dialog */}
+      {/*  Reschedule Dialog */}
       <Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
         <RescheduleAppointmentModal />
       </Dialog>
 
-      {/* ✅ Cancel Dialog */}
+      {/* Cancel Dialog */}
       <Dialog open={cancelOpen} onOpenChange={setCancelOpen}>
         <CancelAppointmentModal />
       </Dialog>

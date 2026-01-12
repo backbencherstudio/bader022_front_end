@@ -187,11 +187,11 @@ export default function Step1({
   ];
 
   return (
-    <Card className="rounded-2xl border border-border p-4 sm:p-6">
+    <Card className="rounded-2xl p-4 sm:p-6  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
-        {/* ✅ Calendar */}
+        {/*  Calendar */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Select Date
           </div>
 
@@ -200,14 +200,14 @@ export default function Step1({
               mode="single"
               selected={date}
               onSelect={setDate}
-              className="rounded-md border-0 w-full"
+              className="rounded-md border-0 w-full border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm "
             />
           </div>
         </div>
 
-        {/* ✅ Available Times */}
+        {/*  Available Times */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Available Times
           </div>
 
@@ -231,9 +231,9 @@ export default function Step1({
           </div>
         </div>
 
-        {/* ✅ Staff Select */}
+        {/*  Staff Select */}
         <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-black px-5 sm:px-6 py-4 font-semibold text-sm">
+          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
             Select Staff
           </div>
 
@@ -253,7 +253,7 @@ export default function Step1({
           </div>
         </div>
 
-        {/* ✅ CTA */}
+        {/*  CTA */}
         <div className="flex items-end gap-4">
           <Button
             variant="outline"

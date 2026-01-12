@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import {
   LineChart,
   Line,
@@ -26,6 +27,9 @@ export default function RevenueOverviewLineChart({
   height = 280,
   maxValue = 5000,
 }: Props) {
+  const { theme } = useTheme();
+
+  const lineColor = theme === "dark" ? "#ffffff" : "#1f2937";
   return (
     <div className="w-full">
       <ResponsiveContainer width="100%" height={height}>
@@ -43,7 +47,7 @@ export default function RevenueOverviewLineChart({
           <Line
             type="monotone"
             dataKey="revenue"
-            stroke="#111"
+            stroke={lineColor}
             strokeWidth={2}
             dot={{ r: 3 }}
             activeDot={{ r: 6 }}

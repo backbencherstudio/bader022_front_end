@@ -77,13 +77,13 @@ export default function page() {
       </div>
       {/* charts */}
       <div className="flex flex-col gap-4 lg:flex-row ">
-        <div className="pl-4 pt-2 pb-4 rounded-xl w-full border border-gray-200 p-4 shadow-sm">
+        <div className="pl-4 pt-2 pb-4 rounded-xl w-full p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <Tabs defaultValue="monthly">
             <div className="flex justify-between mt-5">
-              <p className="text-xl font-semibold text-[#444950]">
+              <p className="text-xl font-semibold text-[#444950] dark:text-white">
                 Revenue Overview
               </p>
-              <TabsList className="h-14 p-2">
+              <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
                 <TabsTrigger value="weekly">Weekly</TabsTrigger>
                 <TabsTrigger value="monthly">Monthly</TabsTrigger>
               </TabsList>
@@ -96,12 +96,12 @@ export default function page() {
             </TabsContent>
           </Tabs>
         </div>
-        <div className="rounded-xl lg:w-2/4 w-full border border-gray-200 p-4 pl-0 shadow-sm">
+        <div className="rounded-xl lg:w-2/4 w-full p-4 pl-0 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <BusinessTypeAnalyticsChart />
         </div>
       </div>
       <div className="mt-5">
-        <Card>
+        <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <CardHeader className="flex items-center justify-between mt-5">
             <h1 className="text-xl font-medium">Subscription Analytics</h1>
             <Select defaultValue="2026">

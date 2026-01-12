@@ -103,10 +103,10 @@ function StatusPill({ status }: { status: PackageStatus }) {
 export default function Packages() {
   return (
     <div>
-      <div className="w-full border border-gray-200 rounded-xl p-4">
+      <div className="w-full rounded-xl p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <Tabs defaultValue="active_subscription">
           <div className="flex justify-between">
-            <TabsList className="h-14 p-2">
+            <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <TabsTrigger value="packages">Packages</TabsTrigger>
               <TabsTrigger value="active_subscription">
                 Active Subscription

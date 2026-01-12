@@ -29,12 +29,12 @@ export default function ProfileSection() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-black p-10">
+    <div className="w-full min-h-screen bg-white p-10 dark:bg-gray-900 ">
       <div className="max-w-3xl mx-auto">
-        {/* ✅ Title */}
+        {/*  Title */}
         <h2 className="text-[16px] font-medium mb-8">Profile</h2>
 
-        {/* ✅ Profile Header */}
+        {/*  Profile Header */}
         <div className="flex items-start gap-2 mb-10">
           {/* Avatar + Pencil */}
           <div className="relative rounded-full">
@@ -65,8 +65,8 @@ export default function ProfileSection() {
           </div>
         </div>
 
-        {/* ✅ Information Card */}
-        <Card className="rounded-xl mt-5 border border-gray-200 p-8 shadow-none">
+        {/*  Information Card */}
+        <Card className="rounded-xl mt-5 p-8 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <h3 className="text-[18px] font-semibold mb-6">Information</h3>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -100,7 +100,7 @@ export default function ProfileSection() {
               />
             </div>
 
-            {/* ✅ Save Button */}
+            {/*  Save Button */}
             <div className="flex justify-end pt-6">
               <Button type="submit" className="cursor-pointer">
                 Save Change

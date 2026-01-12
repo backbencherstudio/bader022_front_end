@@ -143,7 +143,7 @@ export default function PaymentHistory({
   };
 
   return (
-    <Card className="rounded-3xl border border-muted/40 shadow-sm">
+    <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Payment History</CardTitle>
       </CardHeader>

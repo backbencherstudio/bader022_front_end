@@ -32,10 +32,10 @@ export default function ChangePasswordCard() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-black px-10 py-8">
+    <div className="w-full min-h-screen bg-white px-10 py-8  dark:bg-gray-900">
       <div className="max-w-3xl mx-auto">
-        {/* ✅ Card */}
-        <Card className="rounded-xl border border-gray-200 shadow-none p-6">
+        {/*  Card */}
+        <Card className="rounded-xl p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <h3 className="text-[18px] font-semibold">Change Password</h3>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -107,18 +107,17 @@ export default function ChangePasswordCard() {
               </div>
             </div>
           </form>
+          {/* Button outside card, bottom right */}
+          <div className="flex justify-end mt-8">
+            <Button
+              type="submit"
+              onClick={form.handleSubmit(onSubmit)}
+              className="cursor-pointer"
+            >
+              Save Change
+            </Button>
+          </div>
         </Card>
-
-        {/* ✅ Button outside card, bottom right */}
-        <div className="flex justify-end mt-8">
-          <Button
-            type="submit"
-            onClick={form.handleSubmit(onSubmit)}
-            className="cursor-pointer"
-          >
-            Save Change
-          </Button>
-        </div>
       </div>
     </div>
   );

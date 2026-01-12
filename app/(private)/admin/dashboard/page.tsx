@@ -47,14 +47,14 @@ export default function DashboardPage() {
           <StatCard title="Basic Users" value={40} Icon={Users} />
         </div>
         {/* Revenue overview charts */}
-        <div className="rounded-xl border border-gray-200 p-4 pl-0 shadow-sm">
+        <div className="rounded-xl p-4 pl-0 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <div className="pl-4 pt-2 pb-4 w-full">
             <Tabs defaultValue="monthly">
               <div className="flex justify-between">
-                <p className="text-xl font-semibold text-[#444950]">
+                <p className="text-xl font-semibold text-[#444950] dark:text-white">
                   Revenue Statistics
                 </p>
-                <TabsList className="h-14 p-2">
+                <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
                   <TabsTrigger value="weekly">Weekly</TabsTrigger>
                   <TabsTrigger value="monthly">Monthly</TabsTrigger>
                 </TabsList>
@@ -69,7 +69,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 ">
         <MerchantManagement />
       </div>
     </div>

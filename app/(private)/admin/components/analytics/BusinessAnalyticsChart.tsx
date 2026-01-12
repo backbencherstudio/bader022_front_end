@@ -48,11 +48,11 @@ const renderSliceLabel = ({
 
 export default function BusinessTypeAnalyticsChart() {
   return (
-    <div className="w-full max-w-md bg-white p-4">
-      {/* ✅ Title */}
+    <div className="w-full max-w-md bg-white p-4 dark:bg-gray-800">
+      {/*  Title */}
       <h2 className="text-xl font-medium mb-6">Business Type Analytics</h2>
 
-      {/* ✅ Chart Container */}
+      {/*  Chart Container */}
       <div className="w-full h-[320px] flex justify-center items-center">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -71,7 +71,7 @@ export default function BusinessTypeAnalyticsChart() {
               ))}
             </Pie>
 
-            {/* ✅ Center Text */}
+            {/*  Center Text */}
             <text
               x="50%"
               y="47%"

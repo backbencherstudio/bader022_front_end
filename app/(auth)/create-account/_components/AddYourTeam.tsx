@@ -30,14 +30,28 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
   return (
     <div className="space-y-8">
       {/* Empty State */}
-      <div className="border border-dashed rounded-xl p-10 text-center space-y-4">
-        <div className="mx-auto flex size-10 items-center justify-center rounded-full border">
+      <div
+        className="
+      border border-dashed rounded-xl p-10 text-center space-y-4
+      bg-white dark:bg-gray-900
+      border-gray-300 dark:border-gray-700
+    "
+      >
+        <div
+          className="
+        mx-auto flex size-10 items-center justify-center rounded-full border
+        border-gray-300 dark:border-gray-600
+        text-gray-700 dark:text-gray-300
+      "
+        >
           +
         </div>
 
         <div>
-          <h3 className="font-medium text-base">No team members yet</h3>
-          <p className="text-sm text-gray-500">
+          <h3 className="font-medium text-base text-gray-900 dark:text-white">
+            No team members yet
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Add your first staff member to get started
           </p>
         </div>
@@ -49,44 +63,52 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
               setSelectedStaff(null);
               setOpenModal(true);
             }}
-            className="rounded-md bg-black px-5 py-2 text-sm text-white"
+            className="rounded-md bg-black dark:bg-blue-600 px-5 py-2 text-sm text-white hover:opacity-90"
           >
             Add Staff Member
           </button>
+
           <button
             onClick={() => onNext(data)}
-            className="rounded-md border px-5 py-2 text-sm"
+            className="
+          rounded-md border px-5 py-2 text-sm
+          text-gray-700 dark:text-gray-300
+          border-gray-300 dark:border-gray-600
+          hover:bg-gray-100 dark:hover:bg-gray-800
+        "
           >
             Skip for Now
           </button>
         </div>
       </div>
 
-      {/* Services Header */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-medium text-lg">Your Staff Member</h3>
+        <h3 className="font-medium text-lg text-gray-900 dark:text-white">
+          Your Staff Members
+        </h3>
         <button
           onClick={() => {
             setMode("add");
             setSelectedStaff(null);
             setOpenModal(true);
           }}
-          className="rounded-md bg-black px-4 py-2 text-sm text-white"
+          className="rounded-md bg-black dark:bg-blue-600 px-4 py-2 text-sm text-white hover:opacity-90"
         >
           + Add Staff
         </button>
       </div>
 
-      {/* Service Cards */}
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card */}
         <div
           className="
-                    bg-white dark:bg-gray-800
-                    border border-gray-200 dark:border-gray-700
-                    rounded-2xl shadow-sm
-                    p-5 flex flex-col justify-between
-                  "
+        bg-white dark:bg-gray-900
+        border border-gray-200 dark:border-gray-700
+        rounded-2xl shadow-sm
+        p-5 flex flex-col justify-between
+      "
         >
           {/* Top */}
           <div className="flex gap-4">
@@ -99,23 +121,15 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
             />
 
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="font-semibold text-gray-900 dark:text-white">
                 John Smith
               </h3>
 
               <div className="flex gap-2 mt-1 text-xs">
-                <span
-                  className={`px-2 py-1 rounded-md bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400
-                        
-                    }`}
-                >
+                <span className="px-2 py-1 rounded-md bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400">
                   Admin
                 </span>
-                <span
-                  className={`px-2 py-1 rounded-md bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400
-                       
-                    }`}
-                >
+                <span className="px-2 py-1 rounded-md bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
                   Inactive
                 </span>
               </div>
@@ -129,22 +143,10 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
             </p>
 
             <div className="flex flex-wrap gap-2">
-              <span
-                className="
-                            px-3 py-1 text-xs rounded-md
-                            bg-gray-100 dark:bg-gray-700
-                            text-gray-700 dark:text-gray-300
-                          "
-              >
+              <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 Haircut & Styling
               </span>
-              <span
-                className="
-                            px-3 py-1 text-xs rounded-md
-                            bg-gray-100 dark:bg-gray-700
-                            text-gray-700 dark:text-gray-300
-                          "
-              >
+              <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 Hair Coloring
               </span>
             </div>
@@ -152,49 +154,33 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
 
           {/* Actions */}
           <div className="mt-5 flex items-center gap-3">
-            <button
-              className={`flex-1 py-2 rounded-lg text-sm font-medium 
-                          bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400
-                      }`}
-            >
+            <button className="flex-1 py-2 rounded-lg text-sm font-medium bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400">
               Deactivate
             </button>
 
-            <button
-              className="
-                        p-2 rounded-lg
-                        border border-gray-200 dark:border-gray-700
-                        text-red-500
-                        hover:bg-red-50 dark:hover:bg-red-900/20
-                      "
-            >
+            <button className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
               <FiTrash2 />
             </button>
 
             <button
               onClick={() => {
                 setMode("edit");
-                // setSelectedStaff(staff);
                 setOpenModal(true);
               }}
-              className="
-                        p-2 rounded-lg
-                        border border-gray-200 dark:border-gray-700
-                        text-gray-700 dark:text-gray-300
-                        hover:bg-gray-100 dark:hover:bg-gray-700
-                      "
+              className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <FiEdit />
             </button>
           </div>
         </div>
+        {/* Card */}
         <div
           className="
-                    bg-white dark:bg-gray-800
-                    border border-gray-200 dark:border-gray-700
-                    rounded-2xl shadow-sm
-                    p-5 flex flex-col justify-between
-                  "
+        bg-white dark:bg-gray-900
+        border border-gray-200 dark:border-gray-700
+        rounded-2xl shadow-sm
+        p-5 flex flex-col justify-between
+      "
         >
           {/* Top */}
           <div className="flex gap-4">
@@ -207,24 +193,16 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
             />
 
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="font-semibold text-gray-900 dark:text-white">
                 John Smith
               </h3>
 
               <div className="flex gap-2 mt-1 text-xs">
-                <span
-                  className={`px-2 py-1 rounded-md bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400
-                        
-                    }`}
-                >
+                <span className="px-2 py-1 rounded-md bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400">
                   Admin
                 </span>
-                <span
-                  className={`px-2 py-1 rounded-md bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400
-                       
-                    }`}
-                >
-                  Active
+                <span className="px-2 py-1 rounded-md bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                  Inactive
                 </span>
               </div>
             </div>
@@ -237,51 +215,31 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
             </p>
 
             <div className="flex flex-wrap gap-2">
-              <span
-                className="
-                            px-3 py-1 text-xs rounded-md
-                            bg-gray-100 dark:bg-gray-700
-                            text-gray-700 dark:text-gray-300
-                          "
-              >
+              <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 Haircut & Styling
+              </span>
+              <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                Hair Coloring
               </span>
             </div>
           </div>
 
           {/* Actions */}
           <div className="mt-5 flex items-center gap-3">
-            <button
-              className={`flex-1 py-2 rounded-lg text-sm font-medium 
-                          bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400
-                      }`}
-            >
+            <button className="flex-1 py-2 rounded-lg text-sm font-medium bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400">
               Deactivate
             </button>
 
-            <button
-              className="
-                        p-2 rounded-lg
-                        border border-gray-200 dark:border-gray-700
-                        text-red-500
-                        hover:bg-red-50 dark:hover:bg-red-900/20
-                      "
-            >
+            <button className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
               <FiTrash2 />
             </button>
 
             <button
               onClick={() => {
                 setMode("edit");
-                // setSelectedStaff(staff);
                 setOpenModal(true);
               }}
-              className="
-                        p-2 rounded-lg
-                        border border-gray-200 dark:border-gray-700
-                        text-gray-700 dark:text-gray-300
-                        hover:bg-gray-100 dark:hover:bg-gray-700
-                      "
+              className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <FiEdit />
             </button>
@@ -289,18 +247,23 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
         </div>
       </div>
 
-      {/* Footer Actions */}
+      {/* Footer */}
       <div className="flex justify-between pt-6">
         <button
           onClick={onPrevious}
-          className="rounded-md border px-6 py-2 text-sm cursor-pointer"
+          className="
+        rounded-md border px-6 py-2 text-sm
+        text-gray-700 dark:text-gray-300
+        border-gray-300 dark:border-gray-600
+        hover:bg-gray-100 dark:hover:bg-gray-800
+      "
         >
           Back
         </button>
 
         <button
           onClick={() => onNext(data)}
-          className="rounded-md bg-black px-6 py-2 text-sm text-white cursor-pointer"
+          className="rounded-md bg-black dark:bg-blue-600 px-6 py-2 text-sm text-white hover:opacity-90"
         >
           Continue to Plan Selection
         </button>

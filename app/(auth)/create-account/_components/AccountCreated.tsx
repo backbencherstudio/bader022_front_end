@@ -160,7 +160,7 @@ export default function AccountCreated({ data, onNext }: Step1Props) {
       {/* Submit */}
       <button
         type="submit"
-        className="w-full rounded-lg bg-black py-3 text-sm font-medium text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+        className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
       >
         Continue to Services
       </button>

@@ -119,27 +119,31 @@ export default function CreateAccountPage() {
   };
 
   return (
-    <div className="space-y-5 border border-[#dfe1e7] dark:border-[#2a2d35] rounded-xl p-5 pr-14 h-fit bg-white dark:bg-[#121318]">
+    <div className="space-y-5 p-5 pr-14 h-fit container mx-auto">
       {/* Dynamic Step Title */}
-      <div className="flex flex-col gap-2 border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">
-        <h1 className="capitalize font-inter font-medium text-2xl leading-5 tracking-[0.01em] text-black dark:text-white">
-          {step === 1 && " Complete your Profile"}
-          {step === 2 && " Add Your  Services"}
-          {step === 3 && "Add Your Team"}
-          {step === 4 && "Choose Your Plan"}
-        </h1>
+      {step <= 4 ? (
+        <div className="flex flex-col gap-2 border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">
+          <h1 className="capitalize font-inter font-medium text-2xl leading-5 tracking-[0.01em] text-black dark:text-white">
+            {step === 1 && " Complete your Profile"}
+            {step === 2 && " Add Your  Services"}
+            {step === 3 && "Add Your Team"}
+            {step === 4 && "Choose Your Plan"}
+          </h1>
 
-        <p className="font-inter font-normal text-base leading-6 tracking-[0.01em] text-[#777980] dark:text-[#a1a4ad]">
-          {step === 1 &&
-            `Step ${step} of ${steps.length} - Set up Your Business profile`}
-          {step === 2 &&
-            `Step ${step} of ${steps.length} - Define the Services Your Offer`}
-          {step === 3 &&
-            `Step ${step} of ${steps.length} - Define the Services Your Offer`}
-          {step === 4 &&
-            `Step ${step} of ${steps.length} - Select the plan that fits your business`}
-        </p>
-      </div>
+          <p className="font-inter font-normal text-base leading-6 tracking-[0.01em] text-[#777980] dark:text-[#a1a4ad]">
+            {step === 1 &&
+              `Step ${step} of ${steps.length} - Set up Your Business profile`}
+            {step === 2 &&
+              `Step ${step} of ${steps.length} - Define the Services Your Offer`}
+            {step === 3 &&
+              `Step ${step} of ${steps.length} - Define the Services Your Offer`}
+            {step === 4 &&
+              `Step ${step} of ${steps.length} - Select the plan that fits your business`}
+          </p>
+        </div>
+      ) : (
+        ""
+      )}
 
       {/* Progress Bars */}
       {step <= steps.length && (
@@ -154,12 +158,12 @@ export default function CreateAccountPage() {
                 <div className="w-full h-2 rounded-full bg-[#e6e8ee] dark:bg-[#2a2d35] overflow-hidden">
                   {/* Completed */}
                   {isCompleted && (
-                    <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
+                    <div className="h-full w-full bg-black dark:bg-blue-600 rounded-full" />
                   )}
 
                   {/* Active */}
                   {isActive && (
-                    <div className="h-full w-full bg-green-500 dark:bg-green-400 rounded-full" />
+                    <div className="h-full w-full bg-black dark:bg-blue-600 rounded-full" />
                   )}
 
                   {/* Upcoming */}

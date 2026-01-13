@@ -19,11 +19,11 @@ export default function CompleteYourProfile({
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-12 bg-gray-50 dark:bg-gray-900 transition-colors">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <div className="w-full max-w-xl text-center space-y-8">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-600 dark:bg-green-500 shadow-lg">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-black dark:bg-blue-600 shadow-lg">
             <FiCheck className="text-white text-4xl" />
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function CompleteYourProfile({
 
           <button
             onClick={handleCopy}
-            className="flex items-center justify-center gap-2 rounded-md bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
+            className="flex items-center justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
           >
             <FiCopy />
             {copied ? "Copied" : "Copy Link"}
@@ -57,7 +57,7 @@ export default function CompleteYourProfile({
 
         {/* Dashboard Button */}
         <Link href={"/merchant/dashboard"}>
-          <button className="mx-auto mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-gray-100 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
+          <button className="mx-auto mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-blue-600 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
             Go to the dashboard
             <FiArrowUpRight />
           </button>

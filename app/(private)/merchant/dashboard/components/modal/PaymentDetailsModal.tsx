@@ -135,7 +135,7 @@ export default function PaymentDetailsModal({ open, onClose, onNext }: Props) {
               onNext();
               onClose();
             }}
-            className="flex-1 rounded-lg bg-black py-2 text-sm font-medium text-white hover:bg-black/90 dark:bg-white dark:text-black"
+            className="flex-1 rounded-lg bg-black py-2 text-sm font-medium text-white hover:bg-black/90 dark:bg-blue-600 dark:text-black"
           >
             Complete Setup
           </button>

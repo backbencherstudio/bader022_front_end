@@ -176,7 +176,7 @@ export default function FrequentlyAskedQuestions() {
             {t("FAQ.title")}
           </h2>
 
-          <p className="w-11/12 md:w-9/12 lg:w-5/12 mx-auto text-[#4A4C56]">
+          <p className="w-11/12 md:w-9/12 lg:w-5/12 text-[16px] py-4 mx-auto text-[#4A4C56]">
             {t("FAQ.subtitle")}
           </p>
         </motion.div>
@@ -199,7 +199,7 @@ export default function FrequentlyAskedQuestions() {
                 <AccordionItem
                   key={idx}
                   value={`left-${idx}`}
-                  className="bg-white border border-gray-200 rounded-md transition hover:shadow-sm"
+                  className="bg-white border border-gray-200 rounded-md transition text-black hover:shadow-sm"
                 >
                   <AccordionTrigger
                     className={`mx-4 text-lg md:text-xl font-semibold ${
@@ -214,7 +214,7 @@ export default function FrequentlyAskedQuestions() {
                       locale === "ar" ? "text-right" : ""
                     }`}
                   >
-                    <p>{item.a}</p>
+                    <p className="text-[16px]">{item.a}</p>
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -237,7 +237,7 @@ export default function FrequentlyAskedQuestions() {
                 <AccordionItem
                   key={idx}
                   value={`right-${idx}`}
-                  className="bg-white border border-gray-200 rounded-md transition hover:shadow-sm"
+                  className="bg-white border text-black border-gray-200 rounded-md transition hover:shadow-sm"
                 >
                   <AccordionTrigger
                     className={`mx-4 text-lg md:text-xl font-semibold ${
@@ -252,7 +252,7 @@ export default function FrequentlyAskedQuestions() {
                       locale === "ar" ? "text-right" : ""
                     }`}
                   >
-                    <p>{item.a}</p>
+                    <p className="text-[16px]">{item.a}</p>
                   </AccordionContent>
                 </AccordionItem>
               ))}

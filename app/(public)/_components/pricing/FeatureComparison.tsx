@@ -34,11 +34,11 @@ export function FeatureComparison() {
         viewport={{ once: false, amount: 0.6 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h2 className="text-4xl md:text-5xl font-semibold mb-4 text-gray-900">
+        <h2 className="text-4xl md:text-5xl font-semibold mb-4 text-black">
           {t("FeatureComparison.title")}
         </h2>
 
-        <p className="text-[16px] text-black">
+        <p className="text-[16px]! text-black">
           {t("FeatureComparison.subtitleLine1")}
           <br />
           {t("FeatureComparison.subtitleLine2")}
@@ -48,15 +48,15 @@ export function FeatureComparison() {
       {/* Table (UNCHANGED) */}
       <div className={isRTL ? "text-right" : ""}>
         <Table>
-          <TableHeader className="bg-linear-to-r text-white text-[16px] font-semibold from-[#3CB3FF] to-[#7153FF]">
+          <TableHeader className="bg-linear-to-r text-black text-[16px] font-semibold from-[#3CB3FF] to-[#7153FF]">
             <TableRow>
-              <TableHead className="text-center text-white">
+              <TableHead className="text-center text-black">
                 {t("FeatureComparison.columns.feature")}
               </TableHead>
-              <TableHead className="text-center text-white">
+              <TableHead className="text-center text-black">
                 {t("FeatureComparison.columns.free")}
               </TableHead>
-              <TableHead className="text-center text-white">
+              <TableHead className="text-center text-black">
                 {t("FeatureComparison.columns.premium")}
               </TableHead>
             </TableRow>
@@ -64,7 +64,7 @@ export function FeatureComparison() {
 
           <TableBody className="text-center text-[16px]">
             {rows.map((row, idx) => (
-              <TableRow key={`${row.feature}-${idx}`}>
+              <TableRow className="text-black" key={`${row.feature}-${idx}`}>
                 <TableCell className={isRTL ? "text-right" : ""}>
                   {row.feature}
                 </TableCell>

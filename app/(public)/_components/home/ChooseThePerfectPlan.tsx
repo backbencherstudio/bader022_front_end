@@ -5,6 +5,7 @@ import React, { useMemo, useState } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
 import { motion, cubicBezier } from "framer-motion";
+import { Star } from "lucide-react";
 
 type Billing = "monthly" | "annual";
 
@@ -124,28 +125,28 @@ export default function ChooseThePerfectPlan() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.6 }}
-            className="bg-[#F9FAFB] p-5 rounded-xl transition-shadow hover:shadow-lg"
+            className="bg-[#edeef0] p-5 rounded-xl transition-shadow hover:shadow-lg"
           >
             <div className="bg-white rounded-xl p-6">
-              <h3 className="text-xl font-bold text-black">{basic?.name}</h3>
-              <p className="py-3 text-slate-700">{basic?.desc}</p>
+              <h3 className="text-3xl font-bold text-black">{basic?.name}</h3>
+              <p className="py-3 text-slate-700 text-[16px]">{basic?.desc}</p>
 
               <p>
                 <span className="text-4xl font-bold text-black">
                   {basicPrice}
                 </span>
-                <span className="text-sm text-slate-500 px-1">
+                <span className="text-sm text-slate-700 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
 
-              <button className="mt-5 w-full bg-white border text-black border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center group">
+              <button className="mt-5 w-full bg-white cursor-pointer border text-black border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center group">
                 {basic?.cta}
                 <MdArrowOutward className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
 
-            <div className="p-6 space-y-3">
+            <div className="p-6 space-y-5">
               {basic?.features?.map((f, i) => (
                 <motion.p
                   key={i}
@@ -154,9 +155,12 @@ export default function ChooseThePerfectPlan() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, amount: 0.8 }}
-                  className="flex gap-2 items-center text-slate-700"
+                  className="flex gap-3 items-center text-black"
                 >
-                  <IoIosCheckmarkCircleOutline />
+                  <IoIosCheckmarkCircleOutline
+                    className="bg-linear-to-l from-indigo-500 to-blue-500 rounded-full text-white"
+                    size={20}
+                  />
                   {f}
                 </motion.p>
               ))}
@@ -169,27 +173,31 @@ export default function ChooseThePerfectPlan() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.6 }}
-            className="relative bg-linear-to-r from-[#3CB3FF] to-[#7153FF] p-5 rounded-xl transition-shadow hover:shadow-xl"
+            className="bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl transition-shadow hover:shadow-xl"
           >
             {/* Badge */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white text-indigo-600 px-4 py-1 rounded-full text-sm font-semibold shadow">
-              Most Popular
-            </div>
 
             <div className="bg-white rounded-xl p-6">
-              <h3 className="text-xl font-bold text-black">{premium?.name}</h3>
-              <p className="py-3 text-slate-700">{premium?.desc}</p>
+              <div className="flex items-center gap-4">
+                <h3 className="text-3xl font-bold text-black">
+                  {premium?.name}
+                </h3>
+                <span className="bg-linear-to-r gap-2 flex justify-center items-center w-40 from-blue-500 to-indigo-500 px-4 py-1 rounded-full text-sm font-medium shadow">
+                  <Star /> Most Popular
+                </span>
+              </div>
+              <p className="py-4 text-slate-700 text-[16px]">{premium?.desc}</p>
 
               <p>
                 <span className="text-4xl font-bold text-black">
                   {premiumPrice}
                 </span>
-                <span className="text-sm text-slate-500 px-1">
+                <span className="text-sm text-slate-700 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
 
-              <button className="mt-5 w-full bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold text-white flex justify-center gap-2 items-center group">
+              <button className="mt-5 w-full bg-linear-to-r cursor-pointer from-blue-500 to-indigo-500 px-6 py-3 rounded-md font-semibold text-white flex justify-center gap-2 items-center group">
                 {premium?.cta}
                 <MdArrowOutward
                   className={`transition-transform group-hover:translate-x-1 ${
@@ -199,7 +207,7 @@ export default function ChooseThePerfectPlan() {
               </button>
             </div>
 
-            <div className="p-6 space-y-3">
+            <div className="p-6 space-y-5">
               {premium?.features?.map((f, i) => (
                 <motion.p
                   key={i}
@@ -210,7 +218,10 @@ export default function ChooseThePerfectPlan() {
                   viewport={{ once: false, amount: 0.8 }}
                   className="flex gap-2 items-center text-white"
                 >
-                  <IoIosCheckmarkCircleOutline />
+                  <IoIosCheckmarkCircleOutline
+                    size={20}
+                    className="bg-white text-black rounded-full"
+                  />
                   {f}
                 </motion.p>
               ))}

@@ -102,8 +102,8 @@ export default function HowBokliWorks() {
           initial="hidden"
           whileInView="visible"
           viewport={{
-            once: false, // 🔥 scroll up & down
-            amount: 0.6, // 🔥 trigger when mostly visible
+            once: false,
+            amount: 0.6,
           }}
         >
           <h2 className="text-3xl md:text-[48px] font-semibold text-slate-900">
@@ -138,16 +138,16 @@ export default function HowBokliWorks() {
                     <Icon className="h-5 w-5 text-blue-600" />
                   </div>
 
-                  <span className="rounded-md bg-blue-50 px-3 py-1 text-[14px] font-medium text-blue-600">
+                  <span className="rounded-md bg-blue-50 px-3 py-1 text-[18px] font-medium text-blue-600">
                     {s.step}
                   </span>
                 </div>
 
-                <h3 className="mt-5 text-xl md:text-[24px] font-semibold text-slate-900">
+                <h3 className="text-xl my-6 md:text-[24px] font-semibold text-slate-900">
                   {s.title}
                 </h3>
 
-                <p className="mt-2 text-[16px] leading-relaxed text-slate-600">
+                <p className="mt-2 text-[16px] leading-7 text-slate-600">
                   {s.desc}
                 </p>
               </motion.div>

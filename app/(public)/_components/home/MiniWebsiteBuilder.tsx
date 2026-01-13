@@ -106,7 +106,7 @@ export default function MiniWebsiteBuilder() {
               {t("MiniWebsiteBuilder.title")}
             </h2>
 
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-slate-600">
+            <p className="mt-4 max-w-lg  leading-relaxed text-slate-600">
               {t("MiniWebsiteBuilder.subtitle")}
             </p>
 
@@ -125,16 +125,14 @@ export default function MiniWebsiteBuilder() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
                     {ICONS[idx]}
                   </div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    {label}
-                  </p>
+                  <p className=" font-semibold text-slate-900">{label}</p>
                 </motion.div>
               ))}
             </div>
 
             {/* ADDITIONAL FEATURES */}
             <div className="mt-6 rounded-xl border border-slate-100 bg-white p-6 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
-              <p className="text-sm font-bold text-slate-900">
+              <p className=" font-bold text-slate-900">
                 {t("MiniWebsiteBuilder.additionalTitle")}
               </p>
 
@@ -144,7 +142,7 @@ export default function MiniWebsiteBuilder() {
                     {list.map((txt) => (
                       <li
                         key={txt}
-                        className={`flex items-center gap-2 text-sm text-slate-700 ${
+                        className={`flex items-center gap-2  text-slate-700 ${
                           locale === "ar"
                             ? "flex-row-reverse justify-end text-right"
                             : ""

@@ -21,7 +21,9 @@ export default function page({ bgSrc = "/images/banner_bg.png" }: Props) {
         <Navbar />
         <ChooseThePerfectPlan />
       </div>
-      <FeatureComparison />
+      <div className="bg-white">
+        <FeatureComparison />
+      </div>
       <GrowYourBusiness />
     </div>
   );

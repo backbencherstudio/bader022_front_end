@@ -204,7 +204,7 @@ export default function ProjectSelectorImages() {
   }, [t]);
 
   return (
-    <section className="w-full bg-white overflow-hidden">
+    <section id="services" className="w-full bg-white overflow-hidden">
       <div className="container mx-auto px-4 py-16 md:py-24">
         {/* ---------------- Heading (SCROLL BASED, FROM TOP) ---------------- */}
         <motion.div

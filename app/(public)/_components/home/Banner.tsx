@@ -47,7 +47,7 @@ export default function Banner() {
   const { t, locale } = useI18n();
 
   return (
-    <section className="relative container mx-auto">
+    <section id="hero" className="relative container mx-auto">
       <Navbar />
 
       {/* TEXT is the trigger */}
@@ -82,9 +82,9 @@ export default function Banner() {
 
           <motion.div
             variants={itemVariants}
-            className="mt-6 flex justify-center gap-3"
+            className="mt-6 flex flex-col sm:flex-row justify-center gap-3"
           >
-            <div className="h-12 px-4 bg-linear-to-l from-indigo-500 to-blue-500 text-white rounded-md flex items-center font-medium cursor-pointer">
+            <div className="h-12 px-4 bg-linear-to-l justify-center from-indigo-500 to-blue-500 text-white rounded-md flex items-center font-medium cursor-pointer">
               {t("Banner.primaryBtn")}
               <ArrowUpRight
                 size={18}
@@ -92,7 +92,7 @@ export default function Banner() {
               />
             </div>
 
-            <div className="h-12 px-4 text-black border-[1.8px] cursor-pointer border-blue-500 rounded-md flex items-center font-medium">
+            <div className="h-12 px-4 text-black border-[1.8px] justify-center cursor-pointer border-blue-500 rounded-md flex items-center font-medium">
               {t("Banner.secondaryBtn")}
               <ArrowUpRight
                 size={18}

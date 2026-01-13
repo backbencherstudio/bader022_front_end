@@ -129,10 +129,10 @@ export default function WhyChooseBokli() {
             amount: 0.6,
           }}
         >
-          <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold">
+          <h2 className="text-2xl md:text-3xl text-black lg:text-5xl font-semibold">
             {t("WhyChooseBokli.title")}
           </h2>
-          <p className="w-11/12 md:w-9/12 lg:w-4/12 mx-auto text-[#4A4C56]">
+          <p className="w-11/12 md:w-9/12 lg:w-4/12 mx-auto text-[#4A4C56] py-4">
             {t("WhyChooseBokli.subtitle")}
           </p>
         </motion.div>
@@ -167,7 +167,7 @@ export default function WhyChooseBokli() {
                 />
               </div>
 
-              <h3 className="text-xl font-semibold pt-4 text-center">
+              <h3 className="text-xl font-semibold pt-4 text-center text-black">
                 {item.title}
               </h3>
 

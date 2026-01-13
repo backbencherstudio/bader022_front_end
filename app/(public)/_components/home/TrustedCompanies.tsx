@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useI18n } from "@/components/provider/I18nProvider";
@@ -17,9 +16,9 @@ export default function TrustedCompanies() {
   const { t } = useI18n();
   return (
     // Infinite scrolling ticker of images
-    <div className="flex justify-center items-center bg-white py-12 w-full">
+    <div className="flex justify-center items-center bg-white py-12 md:py-20 w-full">
       <div className="relative w-full overflow-hidden">
-        <p className="text-xl mt-4 text-center text-[#4A4C56]">
+        <p className="text-xl mt-4 text-center text-[#4A4C56] pb-10">
           {t("TrustedCompaniesStateMent.title")}
         </p>
         <motion.div
@@ -37,7 +36,7 @@ export default function TrustedCompanies() {
           {[...tickerImages, ...tickerImages].map((img, idx) => (
             <div
               key={idx}
-              className="relative shrink-0 w-64 gap-8 h-26 rounded-lg mb-8"
+              className="relative shrink-0 w-64 gap-8 h-26 rounded-lg"
             >
               <Image
                 src={img}

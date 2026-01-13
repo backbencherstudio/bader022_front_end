@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 "use client";
 
 import { useI18n } from "@/components/provider/I18nProvider";
@@ -8,9 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -19,17 +21,35 @@ const LANGS = {
 
 export default function Navbar() {
   const { locale, setLocale, t } = useI18n();
+  const [open, setOpen] = useState(false);
+
+  const NavLinks = ({ onClick }: { onClick?: () => void }) => (
+    <>
+      <Link href="/#hero" onClick={onClick}>
+        {t("Nav.home")}
+      </Link>
+      <Link href="/#services" onClick={onClick}>
+        {t("Nav.services")}
+      </Link>
+      <Link href="/#faq-section" onClick={onClick}>
+        {t("Nav.faqs")}
+      </Link>
+      <Link href="/pricing" onClick={onClick}>
+        {t("Nav.pricing")}
+      </Link>
+    </>
+  );
 
   return (
-    <div className="container w-full mx-auto">
-      <header className="px-4 md:px-6 py-5">
+    <div className="container mx-auto w-full">
+      <header className="px-4 md:px-6 py-5 relative">
         <div
           className={`flex items-center justify-between ${
-            locale === "en" ? "" : "flex-row-reverse"
+            locale === "ar" ? "flex-row-reverse" : ""
           }`}
         >
-          {/* Left Logo */}
-          <Link href="/" className="flex items-center gap-2 cursor-pointer">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/images/image 259.png"
               alt="Logo"
@@ -39,42 +59,26 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Center Nav */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-[18px] font-semibold text-black">
-            <Link href="/#hero" className="hover:text-slate-900 transition">
-              {t("Nav.home")}
-            </Link>
-            <Link href="/#services" className="hover:text-slate-900 transition">
-              {t("Nav.services")}
-            </Link>
-            <Link
-              href="/#faq-section"
-              // scroll={false}
-              className="hover:text-slate-900 transition"
-            >
-              {t("Nav.faqs")}
-            </Link>
-            <Link href="/pricing" className="hover:text-slate-900 transition">
-              {t("Nav.pricing")}
-            </Link>
+            <NavLinks />
           </nav>
 
-          {/* Right Buttons */}
+          {/* Right Side */}
           <div
-            className={`flex items-center gap-4 ${
-              locale === "en" ? "" : "flex-row-reverse"
+            className={`flex items-center gap-3 ${
+              locale === "ar" ? "flex-row-reverse" : ""
             }`}
           >
-            {/* Language Dropdown */}
+            {/* Language */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[18px] text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 cursor-pointer">
                   <Image
                     src={LANGS[locale].flag}
-                    alt={`${LANGS[locale].label} flag`}
-                    width={23}
-                    height={23}
-                    className="rounded-sm"
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
                   />
                   <span className="uppercase">{locale}</span>
                   <ChevronDown size={14} />
@@ -90,10 +94,9 @@ export default function Navbar() {
                   >
                     <Image
                       src={LANGS[key].flag}
-                      alt={`${LANGS[key].label} flag`}
-                      width={23}
-                      height={23}
-                      className="rounded-sm"
+                      alt={LANGS[key].label}
+                      width={22}
+                      height={22}
                     />
                     <span>{LANGS[key].label}</span>
                   </DropdownMenuItem>
@@ -101,19 +104,48 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Start Free Button */}
-            <Button className="rounded-md px-3 py-6 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer ">
-              {/* bg-linear-to-l from-[#7153FF] to-[#3CB3FF] */}
+            {/* CTA (desktop only) */}
+            <Button className="hidden md:flex rounded-md px-3 py-6 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]">
               {t("Nav.button")}
               <ArrowUpRight
                 size={18}
-                className={`font-semibold ${
-                  locale === "ar" ? "rotate-270" : ""
-                }`}
+                className={locale === "ar" ? "rotate-270" : ""}
               />
             </Button>
+
+            {/* Mobile Toggle */}
+            <button
+              className="md:hidden p-2 text-black"
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X size={26} /> : <Menu size={26} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {open && (
+          <div
+            className={`md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t shadow-md ${
+              locale === "ar" ? "text-right" : "text-left"
+            }`}
+          >
+            <nav className="flex flex-col gap-4 px-6 py-6 text-[18px] font-semibold text-black">
+              <NavLinks onClick={() => setOpen(false)} />
+
+              <Button
+                onClick={() => setOpen(false)}
+                className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold"
+              >
+                {t("Nav.button")}
+                <ArrowUpRight
+                  size={18}
+                  className={locale === "ar" ? "rotate-270" : ""}
+                />
+              </Button>
+            </nav>
+          </div>
+        )}
       </header>
     </div>
   );

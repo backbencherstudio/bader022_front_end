@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import AccountSuccess from "../_components/AccountSuccess";
+import Image from "next/image";
 
 type FormValues = {
   password: string;
@@ -25,14 +26,19 @@ export default function ResetPasswordPage() {
       {!successful ? (
         <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
           {/* Logo */}
-          <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white">
-              <span className="text-blue-600">B</span>Bokli
-            </div>
+          <div className="flex justify-center">
+            <Image
+              src="/images/image 259.png"
+              alt="Company Logo"
+              width={120}
+              height={40}
+              priority
+              className="h-auto w-auto object-contain dark:brightness-0 dark:invert"
+            />
           </div>
 
           {/* Title */}
-          <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white">
+          <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
             Login to Bokli
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
@@ -60,7 +66,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -86,7 +92,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setConfirmPassword(!confirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
                 >
                   {confirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -96,7 +102,7 @@ export default function ResetPasswordPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90"
+              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
             >
               Save
             </button>

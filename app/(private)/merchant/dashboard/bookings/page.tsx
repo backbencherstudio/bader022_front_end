@@ -135,7 +135,7 @@ export default function Page() {
 
           <Button
             onClick={() => setIsModalOpen(true)}
-            className="w-full sm:w-auto cursor-pointer"
+            className="w-full sm:w-auto cursor-pointer dark:bg-gray-700 dark:text-white"
           >
             Add Booking
           </Button>
@@ -209,11 +209,11 @@ export default function Page() {
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                     <MonthPicker value={month} onChange={setMonth} />
 
-                    <div className="flex bg-[#F5F5F5] items-center rounded-lg border gap-1 p-1">
+                    <div className="flex bg-[#F5F5F5] dark:bg-gray-700 items-center rounded-lg border gap-1 p-1">
                       <Button
                         // variant={view === "monthly" ? "default" : "ghost"}
                         size="sm"
-                        className="h-8 bg-white text-black hover:bg-white cursor-pointer"
+                        className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
                         onClick={() => setView("monthly")}
                       >
                         Monthly
@@ -221,7 +221,7 @@ export default function Page() {
                       <Button
                         // variant={view === "monthly" ? "ghost" : "default"}
                         size="sm"
-                        className="h-8 bg-[#f5f5f5] text-black hover:bg-white cursor-pointer"
+                        className="h-8 bg-[#f5f5f5] text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
                         onClick={() => setView("weekly")}
                       >
                         Weekly
@@ -251,12 +251,12 @@ export default function Page() {
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                     <MonthPicker value={month} onChange={setMonth} />
 
-                    <div className="flex items-center bg-[#F5F5F5] rounded-lg gap-1 border p-1">
+                    <div className="flex items-center bg-[#F5F5F5] dark:bg-gray-700  rounded-lg gap-1 border p-1">
                       <Button
                         // variant={view === "weekly" ? "ghost" : "default"}
                         size="sm"
                         // className="h-8"
-                        className="h-8 bg-[#f5f5f5] text-black hover:bg-white cursor-pointer"
+                        className="h-8 bg-[#f5f5f5] text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white  cursor-pointer"
                         onClick={() => setView("monthly")}
                       >
                         Monthly
@@ -266,7 +266,7 @@ export default function Page() {
                         size="sm"
                         // className="h-8"
                         // className="h-8 bg-white text-black hover:bg-white cursor-pointer"
-                        className="h-8 bg-white text-black hover:bg-white cursor-pointer"
+                        className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
                         onClick={() => setView("weekly")}
                       >
                         Weekly

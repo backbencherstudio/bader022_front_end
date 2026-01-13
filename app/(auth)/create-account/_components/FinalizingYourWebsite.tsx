@@ -42,7 +42,6 @@ export default function FinalizingYourWebsite() {
       }, 500); // small delay for UX
     }
   }, [progress, setStep, step]);
-
   // calculate active step based on progress
   const activeStepIndex = Math.floor(
     (progress / 100) * FINALIZING_STEPS.length

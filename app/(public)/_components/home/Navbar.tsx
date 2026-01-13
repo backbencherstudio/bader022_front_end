@@ -40,14 +40,18 @@ export default function Navbar() {
           </Link>
 
           {/* Center Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-[18px] font-medium text-slate-700">
-            <Link href="/" className="hover:text-slate-900 transition">
+          <nav className="hidden md:flex items-center gap-8 text-[18px] font-semibold text-black">
+            <Link href="/#hero" className="hover:text-slate-900 transition">
               {t("Nav.home")}
             </Link>
-            <Link href="/services" className="hover:text-slate-900 transition">
+            <Link href="/#services" className="hover:text-slate-900 transition">
               {t("Nav.services")}
             </Link>
-            <Link href="/faqs" className="hover:text-slate-900 transition">
+            <Link
+              href="/#faq-section"
+              // scroll={false}
+              className="hover:text-slate-900 transition"
+            >
               {t("Nav.faqs")}
             </Link>
             <Link href="/pricing" className="hover:text-slate-900 transition">
@@ -98,7 +102,7 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* Start Free Button */}
-            <Button className="rounded-md px-3 py-6 bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer ">
+            <Button className="rounded-md px-3 py-6 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px] hover:opacity-90 cursor-pointer ">
               {/* bg-linear-to-l from-[#7153FF] to-[#3CB3FF] */}
               {t("Nav.button")}
               <ArrowUpRight

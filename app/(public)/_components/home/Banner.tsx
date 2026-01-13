@@ -47,7 +47,7 @@ export default function Banner() {
   const { t, locale } = useI18n();
 
   return (
-    <section className="relative container mx-auto">
+    <section id="hero" className="relative container mx-auto">
       <Navbar />
 
       {/* TEXT is the trigger */}

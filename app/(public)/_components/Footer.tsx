@@ -32,7 +32,7 @@ export default function Footer() {
               }`}
             >
               <span className="text-3xl font-bold text-blue-600">B</span>
-              <span className="text-xl font-semibold">Bokli</span>
+              <span className="text-xl font-semibold text-black">Bokli</span>
             </div>
 
             <p className="mt-4 text-sm text-gray-600 max-w-xs">

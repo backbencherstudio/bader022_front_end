@@ -95,11 +95,11 @@ export default function CustomerRecommended() {
             ease: cubicBezier(0.25, 0.1, 0.25, 1),
           }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">
             {t("Testimonials.title")}
           </h2>
 
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">
+          <p className="my-6 text-[18px] leading-relaxed text-slate-600">
             {t("Testimonials.subtitle")}
           </p>
         </motion.div>
@@ -122,7 +122,7 @@ export default function CustomerRecommended() {
                   once: false,
                   amount: 0.6, // 🔥 trigger on scroll
                 }}
-                className={`rounded-xl bg-linear-to-br from-blue-50 via-white to-blue-200 px-6 py-8 md:py-10 ${
+                className={`rounded-xl bg-linear-to-br border border-blue-500 from-blue-50 via-white to-blue-200 px-6 py-8 md:py-10 ${
                   locale === "ar" ? "text-right" : ""
                 }`}
               >
@@ -138,7 +138,7 @@ export default function CustomerRecommended() {
                 </div>
 
                 {/* Quote */}
-                <p className="mt-4 text-[16px] leading-relaxed text-slate-700">
+                <p className="my-10 text-xl  leading-relaxed text-black font-medium">
                   {item.quote}
                 </p>
 
@@ -148,7 +148,7 @@ export default function CustomerRecommended() {
                     locale === "ar" ? "flex-row-reverse justify-end" : ""
                   }`}
                 >
-                  <div className="relative h-10 w-10 overflow-hidden rounded-full border border-slate-200">
+                  <div className="relative h-12 w-12 overflow-hidden rounded-full border border-slate-200">
                     <Image
                       src={item.avatar}
                       alt={item.name}
@@ -157,10 +157,10 @@ export default function CustomerRecommended() {
                     />
                   </div>
                   <div>
-                    <p className="text-[18px] font-semibold text-slate-900">
+                    <p className="text-xl font-semibold text-slate-900">
                       {item.name}
                     </p>
-                    <p className="text-[11px] text-slate-500">{item.title}</p>
+                    <p className="text-[14px] text-slate-700">{item.title}</p>
                   </div>
                 </div>
               </motion.div>

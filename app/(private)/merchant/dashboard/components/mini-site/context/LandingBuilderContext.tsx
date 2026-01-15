@@ -167,7 +167,7 @@ export function LandingPageProvider({
       "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication.",
     aboutImage: "",
     backgroundColor: "",
-    padding: 5,
+    padding: 30,
   });
 
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData>({

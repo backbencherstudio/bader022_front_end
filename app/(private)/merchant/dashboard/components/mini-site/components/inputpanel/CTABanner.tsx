@@ -96,7 +96,7 @@ export default function CTABanner() {
 
           {/* Background Color */}
           <div>
-            <label className="text-sm font-medium">Background Color</label>
+            <label className="text-sm font-medium">Overlay Color</label>
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="color"
@@ -123,7 +123,7 @@ export default function CTABanner() {
           </div>
 
           {/* Overlay Color */}
-          <div>
+          {/* <div>
             <label className="text-sm font-medium">Overlay Color</label>
             <input
               type="color"
@@ -136,7 +136,7 @@ export default function CTABanner() {
               }
               className="h-12 w-full cursor-pointer rounded-md"
             />
-          </div>
+          </div> */}
 
           {/* Padding */}
           <div>

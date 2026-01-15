@@ -10,7 +10,10 @@ export default function CTABanner() {
   if (!ctaBannerData.ctaBannerTitle) return null;
 
   return (
-    <section style={{ marginTop: layoutSettingsData.sectionSpacing }}>
+    <section
+      className="relative"
+      style={{ marginTop: layoutSettingsData.sectionSpacing }}
+    >
       <div className="relative min-h-[360px] sm:min-h-[320px]">
         {/* Background Image */}
         <Image
@@ -76,6 +79,14 @@ export default function CTABanner() {
           </Link>
         </div>
       </div>
+      {/* Overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundColor: ctaBannerData.backgroundColor,
+          opacity: 0.6,
+        }}
+      />
     </section>
   );
 }

@@ -30,7 +30,7 @@ export default function Hero() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundColor: heroData.overlayColor || "#000",
+            backgroundColor: heroData.overlayColor,
             opacity: 0.6,
           }}
         />

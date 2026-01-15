@@ -13,8 +13,10 @@ export default function About() {
       style={{
         backgroundColor: aboutData.backgroundColor || "transparent",
         marginTop: layoutSettingsData.sectionSpacing,
+        paddingTop: aboutData.padding,
+        paddingBottom: aboutData.padding,
       }}
-      className="py-16 transition-colors dark:bg-gray-900"
+      className="transition-colors dark:bg-gray-900"
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">

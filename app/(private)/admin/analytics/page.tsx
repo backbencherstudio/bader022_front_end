@@ -84,8 +84,25 @@ export default function page() {
                 Revenue Overview
               </p>
               <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-                <TabsTrigger value="weekly">Weekly</TabsTrigger>
-                <TabsTrigger value="monthly">Monthly</TabsTrigger>
+                <TabsTrigger
+                  value="weekly"
+                  className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+                >
+                  Weekly
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="monthly"
+                  className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+                >
+                  Monthly
+                </TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="weekly">

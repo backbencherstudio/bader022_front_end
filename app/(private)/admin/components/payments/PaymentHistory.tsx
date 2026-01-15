@@ -270,16 +270,16 @@ export default function PaymentHistory({
                         <button
                           type="button"
                           onClick={() => setOpenDetails(true)}
-                          className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                          className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
-                          <Eye className="h-5 w-5 text-muted-foreground" />
+                          <Eye className="h-5 w-5" />
                         </button>
 
                         <button
                           type="button"
-                          className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                          className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
-                          <Download className="h-5 w-5 text-muted-foreground" />
+                          <Download className="h-5 w-5" />
                         </button>
                       </div>
                     </TableCell>

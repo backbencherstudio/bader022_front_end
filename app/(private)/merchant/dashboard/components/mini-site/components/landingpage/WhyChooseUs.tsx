@@ -3,23 +3,43 @@ import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 
 export default function WhyChooseUs() {
-  const { whyChooseUsData } = useLandingPage();
+  const {
+    whyChooseUsData,
+    colorSystemData,
+    layoutSettingsData,
+    typographyData,
+  } = useLandingPage();
 
   if (!whyChooseUsData.whyChooseUsTitle) return null;
 
   return (
     <section
-      style={{ backgroundColor: whyChooseUsData.backgroundColor }}
+      style={{
+        backgroundColor: whyChooseUsData.backgroundColor,
+        marginTop: layoutSettingsData.sectionSpacing,
+      }}
       className="py-16 transition-colors"
     >
       <div className="container mx-auto px-4">
         {/* Title */}
-        <h3 className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white">
+        <h3
+          style={{
+            color: colorSystemData.headingColor,
+            fontSize: typographyData.h1Size,
+          }}
+          className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white"
+        >
           {whyChooseUsData.whyChooseUsTitle}
         </h3>
 
         {/* Subtitle */}
-        <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12">
+        <p
+          style={{
+            color: colorSystemData.bodyTextColor,
+            fontSize: typographyData.bodySize,
+          }}
+          className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12"
+        >
           {whyChooseUsData.whyChooseUsSubtitle}
         </p>
 
@@ -49,11 +69,17 @@ export default function WhyChooseUs() {
 
                 {/* Content */}
                 <div>
-                  <h3 className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white">
+                  <h3
+                    style={{ color: colorSystemData.headingColor }}
+                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                  >
                     {item.title}
                   </h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 line-clamp-2">
+                  <p
+                    style={{ color: colorSystemData.bodyTextColor }}
+                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  >
                     {item.description}
                   </p>
                 </div>

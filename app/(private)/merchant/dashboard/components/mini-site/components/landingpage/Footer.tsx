@@ -24,13 +24,14 @@ const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 export default function Footer() {
-  const { footerData } = useLandingPage();
+  const { footerData, layoutSettingsData } = useLandingPage();
 
   return (
     <footer
       style={{
         backgroundColor: footerData.footerBackground || undefined,
         color: footerData.footerTextColor || undefined,
+        marginTop: layoutSettingsData.sectionSpacing,
       }}
       className="dark:bg-gray-900 transition-colors"
     >

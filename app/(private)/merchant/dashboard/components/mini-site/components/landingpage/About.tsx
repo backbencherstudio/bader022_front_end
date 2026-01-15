@@ -3,7 +3,8 @@ import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 
 export default function About() {
-  const { aboutData, colorSystemData } = useLandingPage();
+  const { aboutData, colorSystemData, layoutSettingsData, typographyData } =
+    useLandingPage();
 
   if (!aboutData?.aboutTitle) return null;
 
@@ -11,6 +12,7 @@ export default function About() {
     <section
       style={{
         backgroundColor: aboutData.backgroundColor || "transparent",
+        marginTop: layoutSettingsData.sectionSpacing,
       }}
       className="py-16 transition-colors dark:bg-gray-900"
     >
@@ -29,17 +31,29 @@ export default function About() {
 
           {/* Content */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
+            <h3
+              style={{
+                color: colorSystemData.headingColor,
+                fontSize: typographyData.h1Size,
+              }}
+              className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white"
+            >
               {aboutData.aboutTitle}
             </h3>
 
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p
+              style={{
+                color: colorSystemData.bodyTextColor,
+                fontSize: typographyData.bodySize,
+              }}
+              className="text-gray-600 dark:text-gray-300 mb-6"
+            >
               {aboutData.aboutDescription}
             </p>
 
             <button
               style={{
-                backgroundColor: colorSystemData.primaryColor,
+                backgroundColor: colorSystemData.buttonColor,
               }}
               className="
                 px-6 py-3 rounded-md

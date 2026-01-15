@@ -251,8 +251,8 @@ export function LandingPageProvider({
 
   const [typographyData, setTypographyData] = useState<TypographyData>({
     h1Size: 30,
-    h2Size: 20,
-    bodySize: 12,
+    h2Size: 10,
+    bodySize: 10,
     fontFamily: "Inter",
   });
 

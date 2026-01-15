@@ -4,8 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
-  const { heroData, brandingData, typographyData, colorSystemData } =
-    useLandingPage();
+  const {
+    heroData,
+    brandingData,
+    typographyData,
+    colorSystemData,
+    layoutSettingsData,
+  } = useLandingPage();
 
   if (!heroData.heroTitle) return null;
 
@@ -70,7 +75,13 @@ export default function Hero() {
     "
           >
             {heroData.heroSubtitle && (
-              <h3 className="text-xs md:text-sm uppercase tracking-wide opacity-90">
+              <h3
+                style={{
+                  color: colorSystemData.headingColor,
+                  fontSize: typographyData.h2Size,
+                }}
+                className="text-xs md:text-sm uppercase tracking-wide opacity-90"
+              >
                 {heroData.heroSubtitle}
               </h3>
             )}
@@ -78,18 +89,21 @@ export default function Hero() {
             <h1
               className="font-bold mt-3 leading-tight"
               style={{
-                fontSize: `${Math.max(
-                  (typographyData.h1Size || 48) - 10,
-                  28
-                )}px`,
-                fontFamily: typographyData.fontFamily,
+                fontSize: typographyData.h1Size,
+                color: colorSystemData.headingColor,
               }}
             >
               {heroData.heroTitle}
             </h1>
 
             {heroData.heroDescription && (
-              <p className="mt-4 text-sm md:text-lg text-gray-200">
+              <p
+                style={{
+                  color: colorSystemData.bodyTextColor,
+                  fontSize: typographyData.bodySize,
+                }}
+                className="mt-4 text-sm md:text-lg text-gray-200"
+              >
                 {heroData.heroDescription}
               </p>
             )}

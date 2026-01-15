@@ -6,9 +6,14 @@ import About from "./landingpage/About";
 import CTABanner from "./landingpage/CTABanner";
 import ServicesPreview from "./landingpage/ServicesPreview";
 import Footer from "./landingpage/Footer";
+import { useLandingPage } from "../context/LandingBuilderContext";
 export default function LandingPage() {
+  const { typographyData } = useLandingPage();
   return (
-    <div className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow my-3 p-3 rounded-md">
+    <div
+      style={{ fontFamily: typographyData.fontFamily }}
+      className="border-r border-gray-200 dark:border-gray-700 space-y-1 bg-gray-50 dark:bg-gray-800 dark:text-white overflow-y-auto shadow my-3 p-3 rounded-md"
+    >
       {/* HERO */}
       <Hero />
       {/* About Section */}

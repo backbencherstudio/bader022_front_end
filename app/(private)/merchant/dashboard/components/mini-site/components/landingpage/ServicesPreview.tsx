@@ -4,7 +4,12 @@ import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
 
 export default function ServicesPreview() {
-  const { servicesPreviewData, colorSystemData } = useLandingPage();
+  const {
+    servicesPreviewData,
+    colorSystemData,
+    layoutSettingsData,
+    typographyData,
+  } = useLandingPage();
 
   if (!servicesPreviewData.servicesPreviewTitle) return null;
 
@@ -12,6 +17,7 @@ export default function ServicesPreview() {
     <section
       style={{
         backgroundColor: servicesPreviewData.backgroundColor,
+        marginTop: layoutSettingsData.sectionSpacing,
       }}
       className="py-16 transition-colors"
     >
@@ -19,18 +25,30 @@ export default function ServicesPreview() {
         {/* Header */}
         <div className="flex flex-col gap-4 mb-12">
           {/* Title */}
-          <h3 className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3">
+          <h3
+            style={{
+              color: colorSystemData.headingColor,
+              fontSize: typographyData.h1Size,
+            }}
+            className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
+          >
             {servicesPreviewData.servicesPreviewTitle}
           </h3>
 
           <div className="flex flex-col md:flex-row gap-4 md:justify-between">
             {/* Subtitle */}
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl">
+            <p
+              style={{
+                color: colorSystemData.bodyTextColor,
+                fontSize: typographyData.bodySize,
+              }}
+              className="text-gray-600 dark:text-gray-300 max-w-2xl"
+            >
               {servicesPreviewData.servicesPreviewSubtitle}
             </p>
             <button
               style={{
-                backgroundColor: colorSystemData.primaryColor,
+                backgroundColor: colorSystemData.buttonColor,
               }}
               className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
@@ -64,7 +82,10 @@ export default function ServicesPreview() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5 space-y-4">
+                <div
+                  style={{ color: colorSystemData.bodyTextColor }}
+                  className="p-5 space-y-4"
+                >
                   {/* Meta */}
                   <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-2">
@@ -82,7 +103,10 @@ export default function ServicesPreview() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">
+                  <p
+                    style={{ fontSize: typographyData.bodySize }}
+                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  >
                     {item.description}
                   </p>
 
@@ -90,7 +114,7 @@ export default function ServicesPreview() {
                   <Link href={"/user/bookings/add-booking"}>
                     <button
                       style={{
-                        backgroundColor: colorSystemData.primaryColor,
+                        backgroundColor: colorSystemData.buttonColor,
                       }}
                       className="
                 px-5 py-2 rounded-md

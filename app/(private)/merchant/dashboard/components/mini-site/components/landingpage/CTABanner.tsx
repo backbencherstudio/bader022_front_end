@@ -4,12 +4,13 @@ import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
 
 export default function CTABanner() {
-  const { ctaBannerData, colorSystemData } = useLandingPage();
+  const { ctaBannerData, colorSystemData, layoutSettingsData, typographyData } =
+    useLandingPage();
 
   if (!ctaBannerData.ctaBannerTitle) return null;
 
   return (
-    <section>
+    <section style={{ marginTop: layoutSettingsData.sectionSpacing }}>
       <div className="relative min-h-[360px] sm:min-h-[320px]">
         {/* Background Image */}
         <Image
@@ -37,12 +38,24 @@ export default function CTABanner() {
             text-white
           "
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
+          <h2
+            style={{
+              color: colorSystemData.headingColor,
+              fontSize: typographyData.h1Size,
+            }}
+            className="text-xl sm:text-2xl md:text-3xl font-bold"
+          >
             {ctaBannerData.ctaBannerTitle}
           </h2>
 
           {ctaBannerData.ctaBannerSubTitle && (
-            <p className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200">
+            <p
+              style={{
+                color: colorSystemData.bodyTextColor,
+                fontSize: typographyData.bodySize,
+              }}
+              className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
+            >
               {ctaBannerData.ctaBannerSubTitle}
             </p>
           )}
@@ -50,7 +63,7 @@ export default function CTABanner() {
           <Link href={"/user/bookings/add-booking"}>
             <button
               style={{
-                backgroundColor: colorSystemData.primaryColor,
+                backgroundColor: colorSystemData.buttonColor,
               }}
               className="
               px-6 py-3 rounded-md

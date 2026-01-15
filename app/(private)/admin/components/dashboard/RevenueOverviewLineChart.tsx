@@ -42,7 +42,16 @@ export default function RevenueOverviewLineChart({
           <XAxis dataKey="name" />
           <YAxis domain={[0, maxValue]} />
 
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: theme === "dark" ? "#ffffff" : "#ffffff",
+              color: "#000000",
+              borderRadius: "8px",
+              border: "1px solid #e5e7eb",
+            }}
+            labelStyle={{ color: "#000000" }}
+            itemStyle={{ color: "#000000" }}
+          />
 
           <Line
             type="monotone"

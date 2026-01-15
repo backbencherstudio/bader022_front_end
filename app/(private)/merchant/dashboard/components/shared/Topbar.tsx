@@ -43,9 +43,9 @@ export default function TopBar() {
           aria-label="Toggle Theme"
         >
           {isDarkMode ? (
-            <Sun className="w-5.5 h-5.5 text-black dark:text-white" />
-          ) : (
             <Moon className="w-5.5 h-5.5 text-black dark:text-white" />
+          ) : (
+            <Sun className="w-5.5 h-5.5 text-black dark:text-white" />
           )}
         </button>
 

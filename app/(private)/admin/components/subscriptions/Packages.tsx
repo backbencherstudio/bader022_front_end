@@ -107,8 +107,23 @@ export default function Packages() {
         <Tabs defaultValue="active_subscription">
           <div className="flex justify-between">
             <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-              <TabsTrigger value="packages">Packages</TabsTrigger>
-              <TabsTrigger value="active_subscription">
+              <TabsTrigger
+                value="packages"
+                className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+              >
+                Packages
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="active_subscription"
+                className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+              >
                 Active Subscription
               </TabsTrigger>
             </TabsList>
@@ -208,11 +223,11 @@ export default function Packages() {
 
                         <TableCell className="pr-8">
                           <div className="flex gap-3">
-                            <button className="h-10 w-10 rounded-xl border flex items-center justify-center">
-                              <Eye className="h-5 w-5 text-muted-foreground" />
+                            <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
+                              <Eye className="h-5 w-5" />
                             </button>
-                            <button className="h-10 w-10 rounded-xl border flex items-center justify-center">
-                              <Edit className="h-5 w-5 text-muted-foreground" />
+                            <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
+                              <Edit className="h-5 w-5" />
                             </button>
                           </div>
                         </TableCell>
@@ -283,17 +298,17 @@ export default function Packages() {
 
                         <TableCell className="pr-8">
                           <div className="flex gap-3">
-                            <button className="h-10 w-10 rounded-xl border flex items-center justify-center">
-                              <Eye className="h-5 w-5 text-muted-foreground" />
+                            <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
+                              <Eye className="h-5 w-5" />
                             </button>
                             <Dialog>
                               <DialogTrigger asChild>
                                 <button
                                   type="button"
                                   //   onClick={() => onEdit?.(r)}
-                                  className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                                  className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                                 >
-                                  <Pencil className="h-5 w-5 text-muted-foreground" />
+                                  <Pencil className="h-5 w-5" />
                                 </button>
                                 {/* <Button variant="outline">Edit Profile</Button> */}
                               </DialogTrigger>

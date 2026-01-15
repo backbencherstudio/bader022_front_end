@@ -247,18 +247,18 @@ export function MerchantManagementCard({
                           onClick={() =>
                             navigate.push("/admin/merchants/profile-view")
                           }
-                          className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                          className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
-                          <Eye className="h-5 w-5 text-muted-foreground" />
+                          <Eye className="h-5 w-5" />
                         </button>
                         <Dialog>
                           <DialogTrigger asChild>
                             <button
                               type="button"
                               onClick={() => onEdit?.(r)}
-                              className="h-10 w-10 rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
+                              className="h-10 w-10 rounded-xl text-muted-foreground hover:text-black border hover:bg-white flex items-center justify-center cursor-pointer"
                             >
-                              <Pencil className="h-5 w-5 text-muted-foreground" />
+                              <Pencil className="h-5 w-5" />
                             </button>
                             {/* <Button variant="outline">Edit Profile</Button> */}
                           </DialogTrigger>

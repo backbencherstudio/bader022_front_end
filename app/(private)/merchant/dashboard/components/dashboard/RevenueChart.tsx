@@ -64,7 +64,17 @@ export default function RevenueChart({ data }: { data: TData[] }) {
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis width="auto" />
-      <Tooltip />
+      <Tooltip
+        contentStyle={{
+          backgroundColor: theme === "dark" ? "#ffffff" : "#ffffff",
+          color: "#000000",
+          borderRadius: "8px",
+          border: "1px solid #e5e7eb",
+        }}
+        labelStyle={{ color: "#000000" }}
+        itemStyle={{ color: "#000000" }}
+      />
+
       <Legend />
       <Bar
         dataKey="revenue"

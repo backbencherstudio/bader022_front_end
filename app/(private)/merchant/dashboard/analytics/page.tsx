@@ -3,7 +3,7 @@ import StatCard from "../components/dashboard/StateCard";
 import {
   Calendar,
   CircleDollarSign,
-  Scissors,
+  Star,
   User,
   UserCheck,
 } from "lucide-react";
@@ -57,7 +57,7 @@ export default function page() {
             <StatCard title="Total Bookings" value={248} Icon={Calendar} />
             <StatCard title="New Customers" value={34} Icon={User} />
             <StatCard title="Returning Customers" value={86} Icon={UserCheck} />
-            <StatCard title="Top Service" value={"Haircut"} Icon={Scissors} />
+            <StatCard title="Top Service" value={"Haircut"} Icon={Star} />
           </div>
           <div className="flex flex-col gap-4 lg:flex-row ">
             <div className="pl-4 pt-2 pb-4 rounded-xl w-full p-4  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">

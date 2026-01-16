@@ -76,12 +76,25 @@ export default function DashboardPage() {
                   <TabsList
                     className="h-14 p-2 dark:bg-gray-800
               border border-gray-200 dark:border-gray-700
-              rounded-2xl shadow-sm"
+              rounded-xl shadow-sm"
                   >
-                    <TabsTrigger className="cursor-pointer" value="weekly">
+                    <TabsTrigger
+                      value="weekly"
+                      className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+                    >
                       Weekly
                     </TabsTrigger>
-                    <TabsTrigger className="cursor-pointer" value="monthly">
+
+                    <TabsTrigger
+                      value="monthly"
+                      className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+                    >
                       Monthly
                     </TabsTrigger>
                   </TabsList>

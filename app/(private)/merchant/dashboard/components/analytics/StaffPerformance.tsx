@@ -96,7 +96,7 @@ export function StaffPerformanceCard({
             <Button
               type="button"
               onClick={onViewAll}
-              className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer px-6 text-white"
+              className="h-12 rounded-xl dark:bg-gray-700  dark:hover:bg-gray-600 cursor-pointer px-6 text-white"
             >
               Export Data
             </Button>

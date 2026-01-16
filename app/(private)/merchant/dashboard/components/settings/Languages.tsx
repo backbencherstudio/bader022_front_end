@@ -21,9 +21,7 @@ export default function LanguageSettings() {
   return (
     <div className="container max-w-3xl mx-auto p-4">
       <div className=" p-5 border rounded-xl">
-        <h2 className="text-xl font-semibold mb-4 text-black">
-          Language Settings
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Language Settings</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Language Settings */}
           <div className="flex flex-col">

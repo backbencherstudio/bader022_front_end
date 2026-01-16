@@ -219,7 +219,7 @@ export default function Page() {
     ${
       isMonthly
         ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white  dark:bg-black!"
+        : "text-black dark:text-white bg-white  dark:bg-black!"
     }
   `}
                         onClick={() => setView("monthly")}
@@ -234,44 +234,13 @@ export default function Page() {
     ${
       isWeekly
         ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white  dark:bg-gray-800"
+        : "text-black dark:text-white hover:text-white bg-gray-100 dark:bg-gray-800"
     }
   `}
                         onClick={() => setView("weekly")}
                       >
                         Weekly
                       </Button>
-                      {/* <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setView("weekly")}
-                        className={`
-    h-8 cursor-pointer transition-colors
-    ${
-      isWeekly
-        ? "bg-black text-white dark:bg-white dark:text-black"
-        : "text-black dark:text-white"
-    }
-  `}
-                      >
-                        Weekly
-                      </Button>
-
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setView("monthly")}
-                        className={`
-    h-8 cursor-pointer transition-colors
-    ${
-      isMonthly
-        ? "bg-black text-white dark:bg-white dark:text-black"
-        : "text-black dark:text-white"
-    }
-  `}
-                      >
-                        Monthly
-                      </Button> */}
                     </div>
                   </div>
                 </div>
@@ -307,7 +276,7 @@ export default function Page() {
     ${
       isMonthly
         ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white  dark:bg-gray-800"
+        : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
     }
   `}
                         onClick={() => setView("monthly")}

@@ -2,7 +2,7 @@ import RecentTransactions from "../components/dashboard/RecentTransactions";
 
 export default function page() {
   return (
-    <div>
+    <div className="mt-4">
       <RecentTransactions />
     </div>
   );

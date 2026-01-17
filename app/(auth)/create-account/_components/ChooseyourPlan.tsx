@@ -60,7 +60,7 @@ export default function ChooseyourPlan({
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="container mx-auto py-5 px-4">
+      <div className="container mx-auto py-5 md:px-4">
         {/* Heading */}
         <div className="flex flex-col items-center gap-5 py-5 text-center">
           {/* Billing Toggle */}
@@ -96,7 +96,7 @@ export default function ChooseyourPlan({
         {/* Plans */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Basic */}
-          <div className="bg-[#F9FAFB] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-5 rounded-md">
+          <div className="bg-[#F9FAFB] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 md:p-5 rounded-md">
             <div className="bg-white dark:bg-gray-900 shadow rounded-md p-5">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 {basic?.name}

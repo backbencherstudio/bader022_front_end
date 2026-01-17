@@ -137,7 +137,7 @@ export default function CreateAccountPage() {
     <div className="space-y-5 p-5 pr-14 h-fit container mx-auto">
       {/* Dynamic Step Title */}
       {step <= 4 ? (
-        <div className="flex items-center justify-between  border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">
+        <div className="flex items-start gap-2 sm:items-center justify-between flex-col md:flex-row  border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">
           <div className="flex flex-col gap-2">
             <h1 className="capitalize font-inter font-medium text-2xl leading-5 tracking-[0.01em] text-black dark:text-white">
               {step === 1 && " Complete your Profile"}
@@ -168,7 +168,9 @@ export default function CreateAccountPage() {
                     width={22}
                     height={22}
                   />
-                  <span className="uppercase">{locale}</span>
+                  <span className="uppercase text-black dark:text-white">
+                    {locale}
+                  </span>
                   <ChevronDown size={14} />
                 </button>
               </DropdownMenuTrigger>

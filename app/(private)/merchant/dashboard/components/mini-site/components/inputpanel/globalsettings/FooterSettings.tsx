@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { FiImage } from "react-icons/fi";
 import { useLandingPage } from "../../../context/LandingBuilderContext";
 
@@ -57,257 +51,246 @@ export default function FooterSettings() {
   };
 
   return (
-    <Accordion type="single" collapsible className="w-full">
-      <AccordionItem
-        value="item-1"
-        className="border rounded-md overflow-hidden"
-      >
-        <AccordionTrigger className="flex items-center justify-between bg-gray-100 dark:bg-gray-700 px-4 py-3 hover:bg-gray-200 dark:hover:bg-gray-600 transition [&>svg]:transition-transform [&>svg]:-rotate-90 [&[data-state=open]>svg]:rotate-0">
-          <span className="font-medium">Footer Settings</span>
-        </AccordionTrigger>
+    <section className="flex flex-col gap-4 text-balance p-2">
+      {/* Footer Title */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Web Site Name
+        </label>
+        <input
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={footerData.footerTitle}
+          onChange={(e) =>
+            setFooterData({ ...footerData, footerTitle: e.target.value })
+          }
+          placeholder="Web Site Name"
+        />
+      </div>
 
-        <AccordionContent className="flex flex-col gap-4 text-balance p-2">
-          {/* Footer Title */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Web Site Name
-            </label>
+      {/* Footer Description */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Footer Description
+        </label>
+        <textarea
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={footerData.footerSubTitle}
+          onChange={(e) =>
+            setFooterData({ ...footerData, footerSubTitle: e.target.value })
+          }
+          placeholder="Footer Description"
+        />
+      </div>
+
+      {/* Footer Logo */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Logo
+        </label>
+        <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <FiImage size={26} className="text-gray-400" />
+          <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+            Click to upload
+          </span>
+          <input
+            type="file"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const url = URL.createObjectURL(file);
+              setFooterData({ ...footerData, footerLogo: url });
+            }}
+          />
+        </label>
+      </div>
+      {/* Footer Background Color  */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Footer Background
+        </label>
+        <div className="grid grid-cols-2 gap-5">
+          <input
+            type="color"
+            value={footerData.footerBackground}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                footerBackground: e.target.value,
+              })
+            }
+            className="cursor-pointer rounded-md h-12 w-full"
+          />
+          <input
+            value={footerData.footerBackground}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                footerBackground: e.target.value,
+              })
+            }
+            className="rounded-md p-3 w-full dark:bg-white dark:text-black"
+          />
+        </div>
+      </div>
+      {/* Footer Text Color */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Footer Text Color
+        </label>
+        <div className="grid grid-cols-2 gap-5">
+          <input
+            type="color"
+            value={footerData.footerTextColor}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                footerTextColor: e.target.value,
+              })
+            }
+            className="cursor-pointer rounded-md h-12 w-full"
+          />
+          <input
+            value={footerData.footerTextColor}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                footerTextColor: e.target.value,
+              })
+            }
+            className="rounded-md p-3 w-full dark:bg-white dark:text-black"
+          />
+        </div>
+      </div>
+
+      {/* Social Links */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Social Links</h3>
+        {footerData.socialLinks.map((item, index) => (
+          <div
+            key={index}
+            className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center"
+          >
             <input
-              className="w-full border p-2 rounded dark:bg-gray-700"
-              value={footerData.footerTitle}
-              onChange={(e) =>
-                setFooterData({ ...footerData, footerTitle: e.target.value })
-              }
-              placeholder="Web Site Name"
+              type="text"
+              value={item.icon}
+              readOnly
+              className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
             />
-          </div>
-
-          {/* Footer Description */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Footer Description
-            </label>
-            <textarea
-              className="w-full border p-2 rounded dark:bg-gray-700"
-              value={footerData.footerSubTitle}
-              onChange={(e) =>
-                setFooterData({ ...footerData, footerSubTitle: e.target.value })
-              }
-              placeholder="Footer Description"
+            <input
+              type="url"
+              placeholder="URL"
+              value={item.url}
+              onChange={(e) => updateSocialLink(index, e.target.value)}
+              className="w-full p-3 rounded-md border dark:bg-gray-700"
             />
-          </div>
-
-          {/* Footer Logo */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Logo
-            </label>
-            <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <FiImage size={26} className="text-gray-400" />
-              <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
-                Click to upload
-              </span>
-              <input
-                type="file"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (!file) return;
-                  const url = URL.createObjectURL(file);
-                  setFooterData({ ...footerData, footerLogo: url });
-                }}
-              />
-            </label>
-          </div>
-          {/* Footer Background Color  */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Footer Background
-            </label>
-            <div className="grid grid-cols-2 gap-5">
-              <input
-                type="color"
-                value={footerData.footerBackground}
-                onChange={(e) =>
-                  setFooterData({
-                    ...footerData,
-                    footerBackground: e.target.value,
-                  })
-                }
-                className="cursor-pointer rounded-md h-12 w-full"
-              />
-              <input
-                value={footerData.footerBackground}
-                onChange={(e) =>
-                  setFooterData({
-                    ...footerData,
-                    footerBackground: e.target.value,
-                  })
-                }
-                className="rounded-md p-3 w-full dark:bg-white dark:text-black"
-              />
-            </div>
-          </div>
-          {/* Footer Text Color */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Footer Text Color
-            </label>
-            <div className="grid grid-cols-2 gap-5">
-              <input
-                type="color"
-                value={footerData.footerTextColor}
-                onChange={(e) =>
-                  setFooterData({
-                    ...footerData,
-                    footerTextColor: e.target.value,
-                  })
-                }
-                className="cursor-pointer rounded-md h-12 w-full"
-              />
-              <input
-                value={footerData.footerTextColor}
-                onChange={(e) =>
-                  setFooterData({
-                    ...footerData,
-                    footerTextColor: e.target.value,
-                  })
-                }
-                className="rounded-md p-3 w-full dark:bg-white dark:text-black"
-              />
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium">Social Links</h3>
-            {footerData.socialLinks.map((item, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center"
+            {footerData.socialLinks.length > 1 && (
+              <button
+                onClick={() => removeSocialLink(index)}
+                className="text-red-500 text-sm px-2"
               >
-                <input
-                  type="text"
-                  value={item.icon}
-                  readOnly
-                  className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
-                />
-                <input
-                  type="url"
-                  placeholder="URL"
-                  value={item.url}
-                  onChange={(e) => updateSocialLink(index, e.target.value)}
-                  className="w-full p-3 rounded-md border dark:bg-gray-700"
-                />
-                {footerData.socialLinks.length > 1 && (
-                  <button
-                    onClick={() => removeSocialLink(index)}
-                    className="text-red-500 text-sm px-2"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
+                ✕
+              </button>
+            )}
           </div>
+        ))}
+      </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium">Navigation Links</h3>
-            {footerData.navigation.map((nav, i) => (
-              <div key={i} className="grid grid-cols-2 gap-2 items-center">
-                <input
-                  type="text"
-                  placeholder="Label"
-                  value={nav.label}
-                  onChange={(e) => updateNavigation(i, "label", e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700"
-                />
-                <input
-                  type="text"
-                  placeholder="Href"
-                  value={nav.href}
-                  onChange={(e) => updateNavigation(i, "href", e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Support Links */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium">Support Links</h3>
-            {footerData.support.map((sup, i) => (
-              <div key={i} className="grid grid-cols-2 gap-2 items-center">
-                <input
-                  type="text"
-                  placeholder="Label"
-                  value={sup.label}
-                  onChange={(e) => updateSupport(i, "label", e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700"
-                />
-                <input
-                  type="text"
-                  placeholder="Href"
-                  value={sup.href}
-                  onChange={(e) => updateSupport(i, "href", e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Contact */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium">Contact Info</h3>
+      {/* Navigation Links */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Navigation Links</h3>
+        {footerData.navigation.map((nav, i) => (
+          <div key={i} className="grid grid-cols-2 gap-2 items-center">
             <input
               type="text"
-              placeholder="Phone"
-              value={footerData.contact.phone}
-              onChange={(e) => updateContact("phone", e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={footerData.contact.email}
-              onChange={(e) => updateContact("email", e.target.value)}
+              placeholder="Label"
+              value={nav.label}
+              onChange={(e) => updateNavigation(i, "label", e.target.value)}
               className="w-full p-2 border rounded dark:bg-gray-700"
             />
             <input
               type="text"
-              placeholder="Address"
-              value={footerData.contact.address}
-              onChange={(e) => updateContact("address", e.target.value)}
+              placeholder="Href"
+              value={nav.href}
+              onChange={(e) => updateNavigation(i, "href", e.target.value)}
               className="w-full p-2 border rounded dark:bg-gray-700"
             />
           </div>
+        ))}
+      </div>
 
-          {/* Powered By Toggle */}
-          <div className="flex items-center justify-between py-3">
-            <span className="text-sm font-medium">Show “Powered By Bokli”</span>
-            <button
-              onClick={() =>
-                setFooterData({
-                  ...footerData,
-                  showPoweredBy: !footerData.showPoweredBy,
-                })
-              }
-              className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
-                footerData.showPoweredBy
-                  ? "bg-blue-600"
-                  : "bg-gray-400 dark:bg-gray-600"
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ${
-                  footerData.showPoweredBy ? "translate-x-6" : "translate-x-0"
-                }`}
-              />
-            </button>
+      {/* Support Links */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Support Links</h3>
+        {footerData.support.map((sup, i) => (
+          <div key={i} className="grid grid-cols-2 gap-2 items-center">
+            <input
+              type="text"
+              placeholder="Label"
+              value={sup.label}
+              onChange={(e) => updateSupport(i, "label", e.target.value)}
+              className="w-full p-2 border rounded dark:bg-gray-700"
+            />
+            <input
+              type="text"
+              placeholder="Href"
+              value={sup.href}
+              onChange={(e) => updateSupport(i, "href", e.target.value)}
+              className="w-full p-2 border rounded dark:bg-gray-700"
+            />
           </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+        ))}
+      </div>
+
+      {/* Contact */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Contact Info</h3>
+        <input
+          type="text"
+          placeholder="Phone"
+          value={footerData.contact.phone}
+          onChange={(e) => updateContact("phone", e.target.value)}
+          className="w-full p-2 border rounded dark:bg-gray-700"
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={footerData.contact.email}
+          onChange={(e) => updateContact("email", e.target.value)}
+          className="w-full p-2 border rounded dark:bg-gray-700"
+        />
+        <input
+          type="text"
+          placeholder="Address"
+          value={footerData.contact.address}
+          onChange={(e) => updateContact("address", e.target.value)}
+          className="w-full p-2 border rounded dark:bg-gray-700"
+        />
+      </div>
+
+      {/* Powered By Toggle */}
+      <div className="flex items-center justify-between py-3">
+        <span className="text-sm font-medium">Turn Off “Powered By Bokli”</span>
+        <button
+          onClick={() =>
+            setFooterData({
+              ...footerData,
+              showPoweredBy: !footerData.showPoweredBy,
+            })
+          }
+          className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
+            footerData.showPoweredBy
+              ? "bg-blue-600"
+              : "bg-gray-400 dark:bg-gray-600"
+          }`}
+        >
+          <span
+            className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ${
+              footerData.showPoweredBy ? "translate-x-6" : "translate-x-0"
+            }`}
+          />
+        </button>
+      </div>
+    </section>
   );
 }

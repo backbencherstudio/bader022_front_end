@@ -31,16 +31,112 @@ export default function InputPanel() {
           </h3>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          {/* Branding */}
-          <Branding />
-          {/* Color System */}
-          <ColorSystem />
-          {/* Typography */}
-          <Typography />
-          {/*Layout Settings */}
-          <LayoutSettings />
-          {/* Footer Settings */}
-          <FooterSettings />
+          <Accordion type="single" collapsible className="w-full space-y-3">
+            {/* Branding */}
+            <AccordionItem value="branding" className="border rounded-md">
+              <AccordionTrigger
+                className="
+        flex items-center justify-between
+        bg-gray-100 dark:bg-gray-700
+        px-4 py-3
+        hover:bg-gray-200 dark:hover:bg-gray-600
+        transition
+        [&>svg]:transition-transform
+        [&>svg]:-rotate-90
+        [&[data-state=open]>svg]:rotate-0
+      "
+              >
+                <span className="font-medium">Branding</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <Branding />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Color System */}
+            <AccordionItem value="colorsystem" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Color System</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ColorSystem />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Typography */}
+            <AccordionItem value="typography" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Typography</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <Typography />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/*Layout Settings */}
+            <AccordionItem value="settings" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Layout Settings</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <LayoutSettings />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Footer Settings */}
+            <AccordionItem value="footer" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Footer Settings</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <FooterSettings />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </AccordionContent>
       </AccordionItem>
       {/* Home Page */}

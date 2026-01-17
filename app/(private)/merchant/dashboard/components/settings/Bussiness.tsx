@@ -11,6 +11,13 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
+type WorkingHour = {
+  day: string;
+  enabled: boolean;
+  from: string;
+  to: string;
+};
+
 type FormData = {
   businessName: string;
   businessLogo: File | null;
@@ -20,15 +27,35 @@ type FormData = {
   city: string;
   timeZone: string;
   currency: string;
+  workingHours: WorkingHour[];
 };
 
+const DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 export default function BusinessSetting() {
   const {
     control,
     handleSubmit,
+    watch,
     register,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      workingHours: DAYS.map((day) => ({
+        day,
+        enabled: day !== "Saturday" && day !== "Sunday",
+        from: "08:00 AM",
+        to: "08:00 PM",
+      })),
+    },
+  });
   const [logo, setLogo] = useState<File | null>(null);
 
   const onSubmit = (data: FormData) => {
@@ -85,6 +112,54 @@ export default function BusinessSetting() {
               {logo && <p>{logo.name}</p>}
               <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
+          </div>
+
+          {/* Working Hours */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Working Hours
+            </h3>
+
+            {watch("workingHours")?.map((item, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_1fr_auto_1fr] items-center"
+              >
+                {/* Day */}
+                <Controller
+                  control={control}
+                  name={`workingHours.${index}.enabled`}
+                  render={({ field }) => (
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <input
+                        type="checkbox"
+                        checked={field.value}
+                        onChange={field.onChange}
+                      />
+                      {DAYS[index]}
+                    </label>
+                  )}
+                />
+
+                {/* From */}
+                <input
+                  {...register(`workingHours.${index}.from`)}
+                  disabled={!item.enabled}
+                  className="rounded-md border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white disabled:opacity-50"
+                />
+
+                <span className="hidden sm:block text-xs text-gray-500">
+                  to
+                </span>
+
+                {/* To */}
+                <input
+                  {...register(`workingHours.${index}.to`)}
+                  disabled={!item.enabled}
+                  className="rounded-md border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white disabled:opacity-50"
+                />
+              </div>
+            ))}
           </div>
 
           {/* Business Category */}

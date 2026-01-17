@@ -1,6 +1,6 @@
 "use client";
 import StatCard from "./components/dashboard/StateCard";
-import { Calendar, CircleDollarSign, TrendingUp, Users } from "lucide-react";
+import { Calendar, SaudiRiyal, TrendingUp, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChartsTabs from "./components/dashboard/RevenueChart";
 import {
@@ -55,8 +55,9 @@ export default function DashboardPage() {
           <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <StatCard
               title="Revenue"
-              value={"109 SAR"}
-              Icon={CircleDollarSign}
+              Currency={SaudiRiyal}
+              value={"109"}
+              Icon={SaudiRiyal}
             />
             <StatCard title="Total Bookings" value={248} Icon={Calendar} />
             <StatCard title="Appointments" value={34} Icon={TrendingUp} />
@@ -100,10 +101,10 @@ export default function DashboardPage() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <ChartsTabs data={weeklyData} />
+                  <ChartsTabs data={weeklyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <ChartsTabs data={monthlyData} />
+                  <ChartsTabs data={monthlyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
               </Tabs>
             </div>

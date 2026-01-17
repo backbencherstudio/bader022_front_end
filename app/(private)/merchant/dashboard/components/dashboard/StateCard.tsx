@@ -6,9 +6,16 @@ interface IStatCard {
   value: string | number;
   expired?: string;
   Icon: (props: React.ComponentProps<"svg">) => React.ReactNode;
+  Currency?: (props: React.ComponentProps<"svg">) => React.ReactNode;
 }
 
-const StatCard: React.FC<IStatCard> = ({ title, value, Icon, expired }) => {
+const StatCard: React.FC<IStatCard> = ({
+  title,
+  Currency,
+  value,
+  Icon,
+  expired,
+}) => {
   return (
     <div
       className="rounded-xl bg-white dark:bg-gray-800
@@ -26,7 +33,8 @@ const StatCard: React.FC<IStatCard> = ({ title, value, Icon, expired }) => {
       </div>
 
       <div className="flex justify-between pt-6 items-center">
-        <div className="text-3xl font-semibold text-black dark:text-white">
+        <div className="text-3xl font-semibold text-black dark:text-white flex items-center gap-3">
+          {Currency && <Currency />}
           {value}
         </div>
         {expired && <p>{expired}</p>}

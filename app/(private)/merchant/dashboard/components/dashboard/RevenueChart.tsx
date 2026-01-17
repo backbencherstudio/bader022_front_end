@@ -1,3 +1,6 @@
+"use client";
+
+import { LucideIcon } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -6,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 import { TData } from "../../page";
 import { useTheme } from "next-themes";
@@ -15,72 +19,95 @@ const CustomBar = (props: any) => {
   const barRadius = 8;
 
   return (
-    <g>
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        rx={barRadius}
-        ry={barRadius}
-        fill={fill}
-      />
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        rx={barRadius}
-        ry={barRadius}
-        fill={fill}
-      />
-    </g>
+    <rect
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      rx={barRadius}
+      ry={barRadius}
+      fill={fill}
+    />
   );
 };
 
-export default function RevenueChart({ data }: { data: TData[] }) {
+type RevenueChartProps = {
+  data: TData[];
+  CurrencyIcon: LucideIcon;
+};
+
+export default function RevenueChart({
+  data,
+  CurrencyIcon,
+}: RevenueChartProps) {
   const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
-    <BarChart
+    <div
       style={{
         width: "100%",
-        maxWidth: "700px",
-        maxHeight: "70vh",
-        aspectRatio: 1.618,
-        backgroundColor: theme === "dark" ? "dark:bg-gray-800" : "",
-        borderRadius: "4px",
-        margin: "4px",
-        padding: "6px",
-      }}
-      responsive
-      data={data}
-      margin={{
-        top: 25,
-        right: 0,
-        left: 0,
-        bottom: 5,
+        height: 520,
+        borderRadius: 8,
+        padding: 12,
+        backgroundColor: isDark ? "#1f2937" : "#ffffff",
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis width="auto" />
-      <Tooltip
-        contentStyle={{
-          backgroundColor: theme === "dark" ? "#ffffff" : "#ffffff",
-          color: "#000000",
-          borderRadius: "8px",
-          border: "1px solid #e5e7eb",
-        }}
-        labelStyle={{ color: "#000000" }}
-        itemStyle={{ color: "#000000" }}
-      />
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 10, left: 0, bottom: 5 }}
+        >
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={isDark ? "#374151" : "#e5e7eb"}
+          />
 
-      <Legend />
-      <Bar
-        dataKey="revenue"
-        shape={<CustomBar />}
-        fill={theme === "dark" ? "#fff" : "#black"}
-      />
-    </BarChart>
+          <XAxis dataKey="name" stroke={isDark ? "#d1d5db" : "#374151"} />
+
+          <YAxis stroke={isDark ? "#d1d5db" : "#374151"} />
+
+          <Tooltip
+            contentStyle={{
+              backgroundColor: isDark ? "#111827" : "#ffffff",
+              borderRadius: 8,
+              border: "1px solid #e5e7eb",
+            }}
+            labelStyle={{
+              color: isDark ? "#e5e7eb" : "#111827",
+              fontWeight: 600,
+            }}
+            formatter={(value?: number) => (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <CurrencyIcon size={14} />
+                  <span>{value ?? 0}</span>
+                </span>
+              </div>
+            )}
+          />
+
+          <Legend />
+
+          <Bar
+            dataKey="revenue"
+            shape={<CustomBar />}
+            fill={isDark ? "#ffffff" : "#111827"}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

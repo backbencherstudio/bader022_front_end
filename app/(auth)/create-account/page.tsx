@@ -134,7 +134,7 @@ export default function CreateAccountPage() {
   };
 
   return (
-    <div className="space-y-5 p-5 pr-14 h-fit container mx-auto">
+    <div className="space-y-5 p-5 h-fit container mx-auto">
       {/* Dynamic Step Title */}
       {step <= 4 ? (
         <div className="flex items-start gap-2 sm:items-center justify-between flex-col md:flex-row  border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">

@@ -8,7 +8,7 @@ import { Star } from "lucide-react";
 type Row = { feature: string; free: string; premium: string };
 
 export function FeatureComparison() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const rows = useMemo(() => {
     const value = t("FeatureComparison.rows");

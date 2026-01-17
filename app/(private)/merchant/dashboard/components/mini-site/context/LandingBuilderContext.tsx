@@ -157,7 +157,7 @@ export function LandingPageProvider({
     secondaryBtn: "Book A Consultation",
     heroImage: "",
     imageLeft: true,
-    overlayColor: "#000000",
+    overlayColor: "#f7f7f7",
     heroHeight: 48,
   });
 
@@ -232,8 +232,8 @@ export function LandingPageProvider({
       "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment",
     ctaBannerImage: "",
     backgroundColor: "",
-    ctaBannerOverlayColor: "",
-    padding: 5,
+    ctaBannerOverlayColor: "#f7f7f7",
+    padding: 72,
   });
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({

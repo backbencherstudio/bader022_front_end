@@ -32,6 +32,9 @@ export default function CTABanner() {
 
         {/* Content */}
         <div
+          style={{
+            padding: ctaBannerData.padding,
+          }}
           className="
             relative z-10
             flex flex-col items-center justify-center
@@ -83,7 +86,7 @@ export default function CTABanner() {
       <div
         className="absolute inset-0"
         style={{
-          backgroundColor: ctaBannerData.backgroundColor,
+          backgroundColor: ctaBannerData.ctaBannerOverlayColor,
           opacity: 0.6,
         }}
       />

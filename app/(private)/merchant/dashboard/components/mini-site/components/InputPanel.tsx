@@ -51,16 +51,112 @@ export default function InputPanel() {
           </h3>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          {/* Hero Section */}
-          <HeroSection />
-          {/* About Section */}
-          <AboutSection />
-          {/*Why Choose Us */}
-          <WhyChooseUs />
-          {/* Services Preview */}
-          <ServicesPreview />
-          {/* CTA Banner */}
-          <CTABanner />
+          <Accordion type="single" collapsible className="w-full space-y-3">
+            {/* HERO */}
+            <AccordionItem value="hero" className="border rounded-md">
+              <AccordionTrigger
+                className="
+        flex items-center justify-between
+        bg-gray-100 dark:bg-gray-700
+        px-4 py-3
+        hover:bg-gray-200 dark:hover:bg-gray-600
+        transition
+        [&>svg]:transition-transform
+        [&>svg]:-rotate-90
+        [&[data-state=open]>svg]:rotate-0
+      "
+              >
+                <span className="font-medium">Hero Section</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <HeroSection />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* ABOUT */}
+            <AccordionItem value="about" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">About Section</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <AboutSection />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* WHY CHOOSE US */}
+            <AccordionItem value="why" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Why Choose Us</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <WhyChooseUs />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Services */}
+            <AccordionItem value="services" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">Services</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ServicesPreview />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* CTA Banner */}
+            <AccordionItem value="banner" className="border rounded-md">
+              <AccordionTrigger
+                className="
+                      flex items-center justify-between
+                      bg-gray-100 dark:bg-gray-700
+                      px-4 py-3
+                      hover:bg-gray-200 dark:hover:bg-gray-600
+                      transition
+                      [&>svg]:transition-transform
+                      [&>svg]:-rotate-90
+                      [&[data-state=open]>svg]:rotate-0
+                    "
+              >
+                <span className="font-medium">CTA Banner</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <CTABanner />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

@@ -4,13 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
-  const {
-    heroData,
-    brandingData,
-    typographyData,
-    colorSystemData,
-    layoutSettingsData,
-  } = useLandingPage();
+  const { heroData, brandingData, typographyData, colorSystemData } =
+    useLandingPage();
 
   if (!heroData.heroTitle) return null;
 

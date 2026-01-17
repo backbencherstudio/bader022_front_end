@@ -75,14 +75,14 @@ export default function StaffPage() {
   };
 
   return (
-    <section className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <section className="p-4 md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
           All Staff
         </h2>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row items-center gap-3">
           {/* Search */}
           <div className="relative">
             <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />

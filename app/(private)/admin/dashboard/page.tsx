@@ -1,5 +1,11 @@
 "use client";
-import { CircleDollarSign, Crown, ShoppingCart, Users } from "lucide-react";
+import {
+  CircleDollarSign,
+  Crown,
+  SaudiRiyal,
+  ShoppingCart,
+  Users,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
 import RevenueOverviewLineChart from "../components/dashboard/RevenueOverviewLineChart";
@@ -41,7 +47,12 @@ export default function DashboardPage() {
       <div>
         {/* Statistics Cards */}
         <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <StatCard title="Revenue" value={"$84320"} Icon={CircleDollarSign} />
+          <StatCard
+            Currency={SaudiRiyal}
+            title="Revenue"
+            value={"84320"}
+            Icon={SaudiRiyal}
+          />
           <StatCard title="Total Merchants" value={156} Icon={ShoppingCart} />
           <StatCard title="Premium Users" value={114} Icon={Crown} />
           <StatCard title="Basic Users" value={40} Icon={Users} />

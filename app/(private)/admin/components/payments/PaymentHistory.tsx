@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Eye, Search } from "lucide-react";
+import { Download, Eye, SaudiRiyal, Search } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ export const demoPayments: PaymentHistoryRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=12",
     packageName: "Basic plan",
     date: "Jun 12, 2023",
-    amount: "120 SAR",
+    amount: "120",
     paymentMethod: "Paypal",
     status: "successful",
   },
@@ -57,7 +57,7 @@ export const demoPayments: PaymentHistoryRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=5",
     packageName: "Basic plan",
     date: "Jun 13, 2023",
-    amount: "100 SAR",
+    amount: "100",
     paymentMethod: "Paypal",
     status: "successful",
   },
@@ -68,7 +68,7 @@ export const demoPayments: PaymentHistoryRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=32",
     packageName: "Premium Plan",
     date: "Jun 14, 2023",
-    amount: "110 SAR",
+    amount: "110",
     paymentMethod: "Paypal",
     status: "successful",
   },
@@ -79,7 +79,7 @@ export const demoPayments: PaymentHistoryRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=15",
     packageName: "Basic plan",
     date: "Jun 15, 2023",
-    amount: "90 SAR",
+    amount: "90",
     paymentMethod: "Google Pay",
     status: "failed",
   },
@@ -90,7 +90,7 @@ export const demoPayments: PaymentHistoryRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=48",
     packageName: "Premium Plan",
     date: "Jun 16, 2023",
-    amount: "80 SAR",
+    amount: "80",
     paymentMethod: "Google Pay",
     status: "failed",
   },
@@ -131,7 +131,7 @@ export default function PaymentHistory({
     statusSubtitle: "Monthly subscription payment for Basic plan",
 
     transactionId: "#TXOO1",
-    amount: "120 SAR",
+    amount: "120",
     dateTime: "2025-11-30 10:00 AM",
     method: "Paypal",
 
@@ -254,7 +254,10 @@ export default function PaymentHistory({
                     </TableCell>
 
                     <TableCell className="text-base font-semibold text-foreground">
-                      {r.amount}
+                      <div className="flex items-center">
+                        <SaudiRiyal size={14} />
+                        {r.amount}
+                      </div>
                     </TableCell>
 
                     <TableCell className="text-base text-foreground">

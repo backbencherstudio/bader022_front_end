@@ -2,7 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { FaFileExport } from "react-icons/fa";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
-import { CircleDollarSign, Crown, ShoppingCart, Users } from "lucide-react";
+import {
+  CircleDollarSign,
+  Crown,
+  SaudiRiyal,
+  ShoppingCart,
+  Users,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TData } from "../../merchant/dashboard/page";
 import RevenueOverviewLineChart from "../components/dashboard/RevenueOverviewLineChart";
@@ -56,7 +62,12 @@ export default function page() {
       </div>
       {/* Statistics Cards */}
       <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">
-        <StatCard title="Revenue" value={"$84320"} Icon={CircleDollarSign} />
+        <StatCard
+          title="Revenue"
+          Currency={SaudiRiyal}
+          value={"84320"}
+          Icon={SaudiRiyal}
+        />
         <StatCard title="Total Merchants" value={156} Icon={ShoppingCart} />
         <StatCard title="Premium Users" value={114} Icon={Crown} />
         <StatCard title="Basic Users" value={40} Icon={Users} />
@@ -125,7 +136,7 @@ export default function page() {
                 </SelectContent>
               </Select>
             </CardHeader>
-            <RevenueChart data={monthlyRevenueData} />
+            <RevenueChart CurrencyIcon={SaudiRiyal} data={monthlyRevenueData} />
           </Card>
         </div>
         <div className="rounded-xl lg:w-2/3 w-full p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">

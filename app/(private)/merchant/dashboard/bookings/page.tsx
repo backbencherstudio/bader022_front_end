@@ -51,11 +51,6 @@ export type TBookingFilters = {
 
 export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-function toDate(iso: string) {
-  // You MUST ensure ISO includes timezone and is valid.
-  return new Date(iso);
-}
-
 export default function Page() {
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");

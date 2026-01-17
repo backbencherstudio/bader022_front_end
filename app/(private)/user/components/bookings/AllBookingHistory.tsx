@@ -1,5 +1,5 @@
 "use client";
-import { Search } from "lucide-react";
+import { SaudiRiyal, Search } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ export const demoTransactions: TransactionRow[] = [
     customerName: "Cameron Williamson",
     customerAvatar: "https://i.pravatar.cc/100?img=12",
     service: "Hair Treatment",
-    amountLabel: "100 SAR",
+    amountLabel: "100",
     dateLabel: "Jun 12, 2023",
     status: "completed",
   },
@@ -50,7 +50,7 @@ export const demoTransactions: TransactionRow[] = [
     customerName: "Jane Cooper",
     customerAvatar: "https://i.pravatar.cc/100?img=5",
     service: "Beard Trim",
-    amountLabel: "89 SAR",
+    amountLabel: "89",
     dateLabel: "Jun 13, 2023",
     status: "confirm",
   },
@@ -59,7 +59,7 @@ export const demoTransactions: TransactionRow[] = [
     customerName: "Esther Howard",
     customerAvatar: "https://i.pravatar.cc/100?img=32",
     service: "Beard Trim",
-    amountLabel: "79 SAR",
+    amountLabel: "79",
     dateLabel: "Jun 14, 2023",
     status: "cancel",
   },
@@ -68,7 +68,7 @@ export const demoTransactions: TransactionRow[] = [
     customerName: "Brooklyn Simmons",
     customerAvatar: "https://i.pravatar.cc/100?img=15",
     service: "Hair Treatment",
-    amountLabel: "107 SAR",
+    amountLabel: "107",
     dateLabel: "Jun 15, 2023",
     status: "pending",
   },
@@ -77,7 +77,7 @@ export const demoTransactions: TransactionRow[] = [
     customerName: "Darlene Robertson",
     customerAvatar: "https://i.pravatar.cc/100?img=48",
     service: "Beard Trim",
-    amountLabel: "109 SAR",
+    amountLabel: "109",
     dateLabel: "Jun 16, 2023",
     status: "cancel",
   },
@@ -250,7 +250,10 @@ export function RecentTransactionsCard({
                       {r.service}
                     </TableCell>
                     <TableCell className="text-base text-foreground">
-                      {r.amountLabel}
+                      <div className="flex items-center">
+                        <SaudiRiyal size={14} />
+                        {r.amountLabel}
+                      </div>
                     </TableCell>
                     <TableCell className="text-base text-foreground">
                       {r.dateLabel}

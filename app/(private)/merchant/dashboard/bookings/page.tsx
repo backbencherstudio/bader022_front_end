@@ -28,6 +28,7 @@ import { useCallback, useState } from "react";
 import AllBookingHistory from "../components/bookings/AllBookingHistory";
 import AddBookingModal from "../components/bookings/AddBookingModal";
 import { Switch } from "@/components/ui/switch";
+import { BookingPopup } from "../components/bookings/BookingPopup";
 
 export type TBooking = {
   id: string;
@@ -78,12 +79,13 @@ export default function Page() {
   });
 
   // +more modal state
+  const [isPopup, setIsPopup] = useState(true);
+
   const [moreOpen, setMoreOpen] = useState(false);
   const [moreTitle, setMoreTitle] = useState("");
   const [moreBookings, setMoreBookings] = useState<TBooking[]>([]);
   const isMonthly = view === "monthly";
   const isWeekly = view === "weekly";
-  console.log(view, isWeekly, "is weekly", isMonthly, "is month");
 
   const onOpenMore = useCallback((day: Date, dayBookings: TBooking[]) => {
     setMoreTitle(`Bookings • ${format(day, "EEEE, MMM d")}`);
@@ -127,6 +129,7 @@ export default function Page() {
             >
               <TabsTrigger
                 value="calendar"
+                onClick={() => setIsPopup(false)}
                 className="
       data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
@@ -138,6 +141,7 @@ export default function Page() {
 
               <TabsTrigger
                 value="table"
+                onClick={() => setIsPopup(true)}
                 className="
       data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
@@ -339,6 +343,7 @@ export default function Page() {
             </CardContent>
           </Card>
           <AllBookingHistory />
+          <BookingPopup isPopup={isPopup} setIsPopup={setIsPopup} />
         </TabsContent>
       </Tabs>
       <AddBookingModal

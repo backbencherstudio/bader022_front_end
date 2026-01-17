@@ -11,23 +11,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { TData } from "../../page";
 import { useTheme } from "next-themes";
+import { TData } from "../../page";
 
 const CustomBar = (props: any) => {
   const { x, y, width, height, fill } = props;
-  const barRadius = 8;
-
   return (
-    <rect
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      rx={barRadius}
-      ry={barRadius}
-      fill={fill}
-    />
+    <rect x={x} y={y} width={width} height={height} rx={8} ry={8} fill={fill} />
   );
 };
 
@@ -40,14 +30,16 @@ export default function RevenueChart({
   data,
   CurrencyIcon,
 }: RevenueChartProps) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   return (
     <div
+      suppressHydrationWarning
       style={{
         width: "100%",
         height: 520,
+        maxWidth: "100%",
         borderRadius: 8,
         padding: 12,
         backgroundColor: isDark ? "#1f2937" : "#ffffff",
@@ -64,51 +56,28 @@ export default function RevenueChart({
           />
 
           <XAxis dataKey="name" stroke={isDark ? "#d1d5db" : "#374151"} />
-
           <YAxis stroke={isDark ? "#d1d5db" : "#374151"} />
 
           <Tooltip
+            formatter={(value?: number) => (
+              <span className="flex items-center gap-1">
+                <CurrencyIcon size={14} />
+                {value ?? 0}
+              </span>
+            )}
             contentStyle={{
               backgroundColor: isDark ? "#111827" : "#ffffff",
               borderRadius: 8,
-              border: "1px solid #e5e7eb",
             }}
-            labelStyle={{
-              color: isDark ? "#e5e7eb" : "#111827",
-              fontWeight: 600,
-            }}
-            formatter={(value?: number) => (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
-              >
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                  }}
-                >
-                  <CurrencyIcon size={14} />
-                  <span>{value ?? 0}</span>
-                </span>
-              </div>
-            )}
           />
 
           <Legend />
 
-          <div className="">
-            {" "}
-            <Bar
-              dataKey="revenue"
-              shape={<CustomBar />}
-              fill={isDark ? "#ffffff" : "#111827"}
-            />
-          </div>
+          <Bar
+            dataKey="revenue"
+            shape={<CustomBar />}
+            fill={isDark ? "#ffffff" : "#111827"}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -6,6 +6,7 @@ import {
   Star,
   User,
   UserCheck,
+  SaudiRiyal,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RevenueChart from "../components/dashboard/RevenueChart";
@@ -89,10 +90,10 @@ export default function page() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <RevenueChart data={weeklyData} />
+                  <RevenueChart data={weeklyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <RevenueChart data={monthlyData} />
+                  <RevenueChart data={monthlyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
               </Tabs>
             </div>

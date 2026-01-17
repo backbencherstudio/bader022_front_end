@@ -31,20 +31,6 @@ const monthlyRevenueData: TData[] = [
   { name: "Nov", revenue: 1500 },
   { name: "Dec", revenue: 5000 },
 ];
-const monthlyUsersData: TData[] = [
-  { name: "Jan", revenue: 4500 },
-  { name: "Feb", revenue: 500 },
-  { name: "Mar", revenue: 1500 },
-  { name: "Apr", revenue: 3000 },
-  { name: "May", revenue: 1500 },
-  { name: "Jun", revenue: 3000 },
-  { name: "Jul", revenue: 5000 },
-  { name: "Aug", revenue: 3000 },
-  { name: "Sep", revenue: 1500 },
-  { name: "Oct", revenue: 3000 },
-  { name: "Nov", revenue: 1500 },
-  { name: "Dec", revenue: 5000 },
-];
 const weeklyRevenueData: TData[] = [
   { name: "Sat", revenue: 1500 },
   { name: "Sun", revenue: 3000 },
@@ -75,75 +61,76 @@ export default function page() {
         <StatCard title="Premium Users" value={114} Icon={Crown} />
         <StatCard title="Basic Users" value={40} Icon={Users} />
       </div>
-      {/* charts */}
-      <div className="flex flex-col gap-4 lg:flex-row ">
-        <div className="pl-4 pt-2 pb-4 rounded-xl w-full p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-          <Tabs defaultValue="monthly">
-            <div className="flex justify-between mt-5">
-              <p className="text-xl font-semibold text-[#444950] dark:text-white">
-                Revenue Overview
-              </p>
-              <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-                <TabsTrigger
-                  value="weekly"
-                  className="
-      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
-      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
-    "
-                >
-                  Weekly
-                </TabsTrigger>
 
-                <TabsTrigger
-                  value="monthly"
-                  className="
+      <div className="pl-4 pt-2 pb-4 rounded-xl w-full p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+        <Tabs defaultValue="monthly">
+          <div className="flex justify-between mt-5">
+            <p className="text-xl font-semibold text-[#444950] dark:text-white">
+              Revenue Overview
+            </p>
+            <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+              <TabsTrigger
+                value="weekly"
+                className="
       data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
     "
-                >
-                  Monthly
-                </TabsTrigger>
-              </TabsList>
-            </div>
-            <TabsContent value="weekly">
-              <RevenueOverviewLineChart data={weeklyRevenueData} />
-            </TabsContent>
-            <TabsContent value="monthly">
-              <RevenueOverviewLineChart data={monthlyRevenueData} />
-            </TabsContent>
-          </Tabs>
+              >
+                Weekly
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="monthly"
+                className="
+      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
+      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
+    "
+              >
+                Monthly
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <TabsContent value="weekly">
+            <RevenueOverviewLineChart data={weeklyRevenueData} />
+          </TabsContent>
+          <TabsContent value="monthly">
+            <RevenueOverviewLineChart data={monthlyRevenueData} />
+          </TabsContent>
+        </Tabs>
+      </div>
+      {/* charts */}
+      <div className="flex flex-col gap-4 lg:flex-row mt-5">
+        <div className="w-full">
+          <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+            <CardHeader className="flex items-center justify-between mt-5">
+              <h1 className="text-xl font-medium">Subscription Analytics</h1>
+              <Select defaultValue="2026">
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Year" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="2024">2024</SelectItem>
+                  <SelectItem value="2023">2023</SelectItem>
+                  <SelectItem value="2022">2022</SelectItem>
+                  <SelectItem value="2021">2021</SelectItem>
+                  <SelectItem value="2020">2020</SelectItem>
+                  <SelectItem value="2019">2019</SelectItem>
+                  <SelectItem value="2018">2018</SelectItem>
+                  <SelectItem value="2017">2017</SelectItem>
+                  <SelectItem value="2016">2016</SelectItem>
+                  <SelectItem value="2015">2015</SelectItem>
+                </SelectContent>
+              </Select>
+            </CardHeader>
+            <RevenueChart data={monthlyRevenueData} />
+          </Card>
         </div>
-        <div className="rounded-xl lg:w-2/4 w-full p-4 pl-0 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+        <div className="rounded-xl lg:w-2/3 w-full p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <BusinessTypeAnalyticsChart />
         </div>
-      </div>
-      <div className="mt-5">
-        <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-          <CardHeader className="flex items-center justify-between mt-5">
-            <h1 className="text-xl font-medium">Subscription Analytics</h1>
-            <Select defaultValue="2026">
-              <SelectTrigger>
-                <SelectValue placeholder="Select Year" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="2026">2026</SelectItem>
-                <SelectItem value="2025">2025</SelectItem>
-                <SelectItem value="2024">2024</SelectItem>
-                <SelectItem value="2023">2023</SelectItem>
-                <SelectItem value="2022">2022</SelectItem>
-                <SelectItem value="2021">2021</SelectItem>
-                <SelectItem value="2020">2020</SelectItem>
-                <SelectItem value="2019">2019</SelectItem>
-                <SelectItem value="2018">2018</SelectItem>
-                <SelectItem value="2017">2017</SelectItem>
-                <SelectItem value="2016">2016</SelectItem>
-                <SelectItem value="2015">2015</SelectItem>
-              </SelectContent>
-            </Select>
-          </CardHeader>
-          <RevenueChart data={monthlyRevenueData} />
-        </Card>
       </div>
     </div>
   );

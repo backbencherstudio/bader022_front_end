@@ -25,7 +25,7 @@ export default function Navbar() {
 
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <>
-      <Link href="/#hero" onClick={onClick}>
+      <Link href="/" onClick={onClick}>
         {t("Nav.home")}
       </Link>
       <Link href="/#services" onClick={onClick}>
@@ -41,8 +41,8 @@ export default function Navbar() {
   );
 
   return (
-    <div className="container mx-auto w-full">
-      <header className="px-4 md:px-6 py-5 relative">
+    <div className="mx-auto w-full bg-white z-50 fixed">
+      <header className="px-4 md:px-6 py-5 container mx-auto">
         <div
           className={`flex items-center justify-between ${
             locale === "ar" ? "flex-row-reverse" : ""

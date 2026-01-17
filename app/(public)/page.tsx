@@ -28,16 +28,18 @@ export default function HomePage({ bgSrc = "/images/banner_bg.png" }: Props) {
       >
         <Banner />
       </div>
-      <TrustedCompanies />
-      <HowBokliWorks />
-      <YourProjects />
-      <KeyFeatures />
-      <ChooseThePerfectPlan />
-      <WhyChooseBokli />
-      <MiniWebsiteBuilder />
-      <CustomerRecommended />
-      <FrequentlyAskedQuestions />
-      <GrowYourBusiness />
+      <div>
+        <TrustedCompanies />
+        <HowBokliWorks />
+        <YourProjects />
+        <KeyFeatures />
+        <ChooseThePerfectPlan />
+        <WhyChooseBokli />
+        <MiniWebsiteBuilder />
+        <CustomerRecommended />
+        <FrequentlyAskedQuestions />
+        <GrowYourBusiness />
+      </div>
     </section>
   );
 }

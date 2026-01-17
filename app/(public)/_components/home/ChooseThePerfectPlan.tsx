@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/components/provider/I18nProvider";
-import React, { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
 import { motion, cubicBezier } from "framer-motion";
@@ -18,7 +18,7 @@ interface PricingPlan {
   features: string[];
 }
 
-/* ---------------- MOBILE DETECTION (REAL BREAKPOINT) ---------------- */
+/* ---------------- MOBILE DETECTION ---------------- */
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -33,17 +33,14 @@ function useIsMobile() {
   return isMobile;
 }
 
-/* ---------------- DESKTOP VARIANTS ---------------- */
+/* ---------------- MOTION VARIANTS ---------------- */
 
 const leftCardVariant = {
   hidden: { opacity: 0, x: -80 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 1.2,
-      ease: cubicBezier(0.25, 0.1, 0.25, 1),
-    },
+    transition: { duration: 1.1, ease: cubicBezier(0.25, 0.1, 0.25, 1) },
   },
 };
 
@@ -52,27 +49,22 @@ const rightCardVariant = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 1.2,
-      ease: cubicBezier(0.25, 0.1, 0.25, 1),
-    },
+    transition: { duration: 1.1, ease: cubicBezier(0.25, 0.1, 0.25, 1) },
   },
 };
 
 const featureVariant = {
-  hidden: { opacity: 0, x: -10 },
+  hidden: { opacity: 0, x: -8 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
     transition: {
-      delay: i * 0.05,
+      delay: i * 0.04,
       duration: 0.35,
       ease: cubicBezier(0.25, 0.1, 0.25, 1),
     },
   }),
 };
-
-/* ---------------- MOBILE (NO MOTION, NO X) ---------------- */
 
 const mobileStatic = {
   hidden: { opacity: 1, x: 0 },
@@ -109,10 +101,7 @@ export default function ChooseThePerfectPlan() {
           initial={isMobile ? false : { opacity: 0, y: -24 }}
           whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
-          transition={{
-            duration: 0.9,
-            ease: cubicBezier(0.25, 0.1, 0.25, 1),
-          }}
+          transition={{ duration: 0.9 }}
         >
           <h2 className="text-4xl lg:text-5xl font-semibold text-black">
             {t("Pricing.title")}
@@ -123,16 +112,16 @@ export default function ChooseThePerfectPlan() {
           </p>
 
           {/* Billing Toggle */}
-          <div className="bg-[#FAFAFA] p-2 flex items-center gap-2 rounded-full">
+          <div className="bg-[#FAFAFA] p-2 flex gap-2 rounded-full shadow-sm">
             {(["monthly", "annual"] as Billing[]).map((b) => (
               <button
                 key={b}
                 onClick={() => setBilling(b)}
                 className={[
-                  "py-2 px-4 rounded-full text-sm font-semibold transition cursor-pointer",
+                  "py-2 px-4 rounded-full font-semibold transition-all duration-300",
                   billing === b
-                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF]"
-                    : "text-slate-700 hover:bg-white",
+                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF] shadow-md scale-[1.02]"
+                    : "text-slate-700 hover:bg-white hover:shadow",
                 ].join(" ")}
               >
                 {t(`Pricing.billing.${b}`)}
@@ -149,25 +138,25 @@ export default function ChooseThePerfectPlan() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.6 }}
-            className="bg-[#edeef0] p-5 rounded-xl transition-shadow hover:shadow-lg"
+            whileHover={{ y: -6 }}
+            className="bg-[#edeef0] p-5 rounded-xl transition-all duration-300 hover:shadow-xl"
           >
             <div className="bg-white rounded-xl p-6">
               <h3 className="text-3xl font-bold text-black">{basic.name}</h3>
-
               <p className="py-3 text-slate-700 text-[16px]">{basic.desc}</p>
 
               <p>
                 <span className="text-4xl font-bold text-black">
                   {basicPrice}
                 </span>
-                <span className="text-sm text-slate-700 px-1">
+                <span className="text-slate-700 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
 
-              <button className="mt-5 w-full bg-white cursor-pointer border text-black border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center group">
+              <button className="mt-5 w-full border text-black cursor-pointer border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center transition-all hover:shadow-md hover:scale-[1.01]">
                 {basic.cta}
-                <MdArrowOutward className="transition-transform group-hover:translate-x-1" />
+                <MdArrowOutward className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
 
@@ -179,8 +168,7 @@ export default function ChooseThePerfectPlan() {
                   variants={isMobile ? mobileStatic : featureVariant}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: false, amount: 0.8 }}
-                  className="flex gap-3 items-center text-black"
+                  className="flex gap-3 items-center text-black transition-opacity hover:opacity-80"
                 >
                   <IoIosCheckmarkCircleOutline
                     className="bg-linear-to-l from-indigo-500 to-blue-500 rounded-full text-white"
@@ -198,16 +186,16 @@ export default function ChooseThePerfectPlan() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.6 }}
-            className="bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl transition-shadow hover:shadow-xl"
+            whileHover={{ y: -8 }}
+            className="relative bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl transition-all duration-300 hover:shadow-[0_30px_80px_rgba(99,102,241,0.45)]"
           >
             <div className="bg-white rounded-xl p-6">
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col-reverse sm:flex-row items-center gap-4">
                 <h3 className="text-3xl font-bold text-black">
                   {premium.name}
                 </h3>
-
-                <span className="bg-linear-to-r gap-2 flex justify-center items-center w-40 from-blue-500 to-indigo-500 px-4 py-1 rounded-full text-sm font-medium shadow">
-                  <Star /> Most Popular
+                <span className="flex items-center gap-2 px-4 py-1 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 text-white shadow-md">
+                  <Star size={16} /> Most Popular
                 </span>
               </div>
 
@@ -217,12 +205,12 @@ export default function ChooseThePerfectPlan() {
                 <span className="text-4xl font-bold text-black">
                   {premiumPrice}
                 </span>
-                <span className="text-sm text-slate-700 px-1">
+                <span className="text-slate-700 px-1">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
 
-              <button className="mt-5 w-full bg-linear-to-r cursor-pointer from-blue-500 to-indigo-500 px-6 py-3 rounded-md font-semibold text-white flex justify-center gap-2 items-center group">
+              <button className="mt-5 w-full cursor-pointer bg-linear-to-r from-blue-500 to-indigo-500 px-6 py-3 rounded-md font-semibold text-white flex justify-center gap-2 items-center transition-all hover:scale-[1.03] hover:shadow-lg">
                 {premium.cta}
                 <MdArrowOutward
                   className={`transition-transform group-hover:translate-x-1 ${
@@ -240,8 +228,7 @@ export default function ChooseThePerfectPlan() {
                   variants={isMobile ? mobileStatic : featureVariant}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: false, amount: 0.8 }}
-                  className="flex gap-2 items-center text-white"
+                  className="flex gap-2 items-center text-white transition-opacity hover:opacity-90"
                 >
                   <IoIosCheckmarkCircleOutline
                     size={20}

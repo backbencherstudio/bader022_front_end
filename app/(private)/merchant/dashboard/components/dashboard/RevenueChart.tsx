@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
 import {
   BarChart,
@@ -14,12 +15,9 @@ import {
 import { useTheme } from "next-themes";
 import { TData } from "../../page";
 
-const CustomBar = (props: any) => {
-  const { x, y, width, height, fill } = props;
-  return (
-    <rect x={x} y={y} width={width} height={height} rx={8} ry={8} fill={fill} />
-  );
-};
+const CustomBar = ({ x, y, width, height, fill }: any) => (
+  <rect x={x} y={y} width={width} height={height} rx={8} ry={8} fill={fill} />
+);
 
 type RevenueChartProps = {
   data: TData[];
@@ -30,26 +28,29 @@ export default function RevenueChart({
   data,
   CurrencyIcon,
 }: RevenueChartProps) {
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const isDark = theme === "dark";
 
   return (
     <div
-      suppressHydrationWarning
       style={{
         width: "100%",
         height: 520,
-        maxWidth: "100%",
         borderRadius: 8,
         padding: 12,
         backgroundColor: isDark ? "#1f2937" : "#ffffff",
       }}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={data}
-          margin={{ top: 20, right: 10, left: 0, bottom: 5 }}
-        >
+        <BarChart data={data} margin={{ top: 20, bottom: 5 }}>
           <CartesianGrid
             strokeDasharray="3 3"
             stroke={isDark ? "#374151" : "#e5e7eb"}
@@ -59,16 +60,19 @@ export default function RevenueChart({
           <YAxis stroke={isDark ? "#d1d5db" : "#374151"} />
 
           <Tooltip
-            formatter={(value?: number) => (
-              <span className="flex items-center gap-1">
-                <CurrencyIcon size={14} />
-                {value ?? 0}
-              </span>
-            )}
             contentStyle={{
               backgroundColor: isDark ? "#111827" : "#ffffff",
               borderRadius: 8,
+              border: "1px solid #e5e7eb",
             }}
+            formatter={(value?: number) => (
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <CurrencyIcon size={14} />
+                  <span>{value ?? 0}</span>
+                </span>
+              </div>
+            )}
           />
 
           <Legend />

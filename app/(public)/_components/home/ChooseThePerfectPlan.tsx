@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/components/provider/I18nProvider";
-import React, { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
 import { motion, cubicBezier } from "framer-motion";

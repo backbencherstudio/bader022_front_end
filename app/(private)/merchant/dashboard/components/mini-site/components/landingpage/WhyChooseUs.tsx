@@ -51,7 +51,7 @@ export default function WhyChooseUs() {
                 className="
                     flex flex-col items-center text-center gap-4
                     rounded-xl p-6
-                    bg-white dark:bg-gray-800
+                    bg-white 
                     border border-gray-200 dark:border-gray-700
                     shadow-sm hover:shadow-md
                     transition

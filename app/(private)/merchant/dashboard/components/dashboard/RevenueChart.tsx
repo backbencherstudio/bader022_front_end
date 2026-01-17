@@ -101,11 +101,14 @@ export default function RevenueChart({
 
           <Legend />
 
-          <Bar
-            dataKey="revenue"
-            shape={<CustomBar />}
-            fill={isDark ? "#ffffff" : "#111827"}
-          />
+          <div className="">
+            {" "}
+            <Bar
+              dataKey="revenue"
+              shape={<CustomBar />}
+              fill={isDark ? "#ffffff" : "#111827"}
+            />
+          </div>
         </BarChart>
       </ResponsiveContainer>
     </div>

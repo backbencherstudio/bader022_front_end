@@ -166,7 +166,7 @@ export function LandingPageProvider({
     aboutDescription:
       "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication.",
     aboutImage: "",
-    backgroundColor: "",
+    backgroundColor: "#f7f7f7",
     padding: 30,
   });
 
@@ -174,7 +174,7 @@ export function LandingPageProvider({
     whyChooseUsTitle: "Why We’re Right Choice",
     whyChooseUsSubtitle:
       "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results",
-    backgroundColor: "",
+    backgroundColor: "#f7f7f7",
     featureCards: [
       {
         image: null,
@@ -203,7 +203,7 @@ export function LandingPageProvider({
       servicesPreviewSubtitle:
         "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health",
       serviceViewBtn: "",
-      backgroundColor: "",
+      backgroundColor: "#f7f7f7",
       servicesCards: [
         {
           image: null,
@@ -252,7 +252,7 @@ export function LandingPageProvider({
   const [typographyData, setTypographyData] = useState<TypographyData>({
     h1Size: 30,
     h2Size: 10,
-    bodySize: 10,
+    bodySize: 20,
     fontFamily: "Inter",
   });
 

@@ -3,7 +3,6 @@
 import { cubicBezier, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import Navbar from "./Navbar";
 import { useI18n } from "@/components/provider/I18nProvider";
 
 /* ------------------ Variants ------------------ */
@@ -48,8 +47,6 @@ export default function Banner() {
 
   return (
     <section id="hero" className="relative container mx-auto">
-      <Navbar />
-
       {/* TEXT is the trigger */}
       <motion.div
         className="relative z-10 px-4 pt-16 md:pt-20"

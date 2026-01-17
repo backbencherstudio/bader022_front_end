@@ -1,4 +1,3 @@
-import { DivideCircle, Dot } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
 const data = [

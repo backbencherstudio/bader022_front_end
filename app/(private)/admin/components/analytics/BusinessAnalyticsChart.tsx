@@ -49,7 +49,7 @@ const renderSliceLabel = ({
 
 export default function BusinessTypeAnalyticsChart() {
   return (
-    <div className="w-full max-w-md bg-white p-4 dark:bg-gray-800">
+    <div className="w-full bg-white p-4 dark:bg-gray-800">
       {/*  Title */}
       <h2 className="text-xl font-medium mb-6">Business Type Analytics</h2>
 
@@ -101,14 +101,14 @@ export default function BusinessTypeAnalyticsChart() {
       </div>
 
       {/*  Legend (Manual, same as screenshot) */}
-      <div className="mt-10 space-y-4">
+      <div className="mt-10 flex items-center flex-wrap gap-4">
         {chartData.map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-4 text-[26px] text-[#6B7280] font-medium"
+            className="flex items-center gap-4 text-2xl text-[#6B7280] font-medium"
           >
             <span
-              className="w-8 h-8 rounded-lg"
+              className="w-6 h-6 rounded-lg"
               style={{ backgroundColor: item.color }}
             />
 

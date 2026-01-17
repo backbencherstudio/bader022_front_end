@@ -52,8 +52,9 @@ export default function page() {
           <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <StatCard
               title="Revenue"
-              value={"$12450"}
-              Icon={CircleDollarSign}
+              Currency={SaudiRiyal}
+              value={"12450"}
+              Icon={SaudiRiyal}
             />
             <StatCard title="Total Bookings" value={248} Icon={Calendar} />
             <StatCard title="New Customers" value={34} Icon={User} />

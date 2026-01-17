@@ -1,5 +1,5 @@
 "use client";
-import { Search, Star } from "lucide-react";
+import { SaudiRiyal, Search, Star } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -139,7 +139,12 @@ export function StaffPerformanceCard({
                       {r.avgRating}
                     </TableCell>
 
-                    <TableCell className="pr-8">{r.revenueGenerated}</TableCell>
+                    <TableCell className="pr-8">
+                      <div className="flex items-center">
+                        <SaudiRiyal size={14} />
+                        {r.revenueGenerated}
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))}
 
@@ -175,35 +180,35 @@ export const demoTransactions: TransactionRow[] = [
     staffName: "Cameron Williamson",
     service: "Hair Treatment",
     avgRating: 4.9,
-    revenueGenerated: "$3,200",
+    revenueGenerated: "3,200",
   },
   {
     id: "2",
     staffName: "Oliver Bennett",
     service: "Beard Trim",
     avgRating: 4.6,
-    revenueGenerated: "$2,200",
+    revenueGenerated: "2,200",
   },
   {
     id: "3",
     staffName: "Jasper Hayes",
     service: "Beard Trim",
     avgRating: 4.9,
-    revenueGenerated: "$1,900",
+    revenueGenerated: "1,900",
   },
   {
     id: "4",
     staffName: "Luna Monroe",
     service: "Hair Treatment",
     avgRating: 4.7,
-    revenueGenerated: "$1,200",
+    revenueGenerated: "1,200",
   },
   {
     id: "5",
     staffName: "Silas Everhart",
     service: "Beard Trim",
     avgRating: 4.2,
-    revenueGenerated: "$1,000",
+    revenueGenerated: "1,000",
   },
 ];
 

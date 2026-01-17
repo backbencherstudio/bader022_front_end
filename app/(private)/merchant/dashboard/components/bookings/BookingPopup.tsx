@@ -20,7 +20,7 @@ export function BookingPopup({ isPopup, setIsPopup }: DashboardPopupProps) {
 
     const timer = setTimeout(() => {
       setIsPopup(false);
-    }, 6000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, [isPopup, setIsPopup]);

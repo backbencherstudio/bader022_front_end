@@ -1,6 +1,14 @@
 "use client";
 
-import { Download, Edit, Eye, Pencil, RefreshCcw, Search } from "lucide-react";
+import {
+  Download,
+  Edit,
+  Eye,
+  Pencil,
+  RefreshCcw,
+  SaudiRiyal,
+  Search,
+} from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,7 +65,7 @@ export const demoPayments: PackageRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=12",
     packageName: "Basic plan",
     date: "Jun 12, 2023",
-    amount: "120 SAR",
+    amount: "120",
     paymentMethod: "Paypal",
     status: "successful",
   },
@@ -68,7 +76,7 @@ export const demoPayments: PackageRow[] = [
     businessAvatar: "https://i.pravatar.cc/100?img=15",
     packageName: "Basic plan",
     date: "Jun 15, 2023",
-    amount: "90 SAR",
+    amount: "90",
     paymentMethod: "Google Pay",
     status: "failed",
   },
@@ -214,7 +222,10 @@ export default function Packages() {
                         </TableCell>
 
                         <TableCell className="font-semibold">
-                          {r.amount}
+                          <div className="flex items-center">
+                            <SaudiRiyal size={14} />
+                            {r.amount}
+                          </div>
                         </TableCell>
                         <TableCell>
                           <StatusPill status={r.status} />
@@ -287,7 +298,10 @@ export default function Packages() {
                         <TableCell>Monthly</TableCell>
 
                         <TableCell className="font-semibold">
-                          {r.amount}
+                          <div className="flex items-center">
+                            <SaudiRiyal size={14} />
+                            {r.amount}
+                          </div>
                         </TableCell>
                         <TableCell>{r.date}</TableCell>
                         <TableCell>{r.date}</TableCell>

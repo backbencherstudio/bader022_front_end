@@ -75,7 +75,7 @@ export default function StaffPage() {
   };
 
   return (
-    <section className="p-4 md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <section className="md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">

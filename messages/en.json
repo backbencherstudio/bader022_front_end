@@ -127,6 +127,7 @@
         "features": [
           "Create only 1 Staff",
           "Mini-site locked",
+          "Limited bookings",
           "Limited features",
           "Basic analytics",
           "Limited customization"
@@ -141,6 +142,7 @@
         "features": [
           "Create Unlimited Staff",
           "Mini-site enabled",
+          "Unlimited bookings",
           "Additional features",
           "Advanced analytics",
           "Unlimited customization"
@@ -311,6 +313,7 @@
     "title": "Detailed Feature Comparison",
     "subtitleLine1": "Manage appointments, staff schedules, services, and customer",
     "subtitleLine2": "interactions seamlessly through Bokli's intelligent, automated booking system.",
+    "upgrade": "Upgrade to unlock",
     "columns": {
       "feature": "Features",
       "free": "Free Plan",
@@ -321,6 +324,11 @@
       {
         "feature": "Number of staff",
         "free": "1 Staff",
+        "premium": "Unlimited"
+      },
+      {
+        "feature": "Max booking",
+        "free": "25 bookings per month",
         "premium": "Unlimited"
       },
       { "feature": "Multiple branches", "free": "✘", "premium": "✔" },

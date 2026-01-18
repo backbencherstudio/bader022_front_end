@@ -62,6 +62,16 @@ export default function BusinessSetting() {
     console.log("Form Data:", data);
   };
 
+  const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
+    const hour24 = Math.floor(i / 2);
+    const minute = i % 2 === 0 ? "00" : "30";
+
+    const hour12 = hour24 % 12 || 12;
+    const period = hour24 < 12 ? "AM" : "PM";
+
+    return `${hour12}:${minute} ${period}`;
+  });
+
   return (
     <div className="container max-w-3xl mx-auto p-4">
       <div className="border rounded-xl p-4 sm:p-6">
@@ -115,15 +125,14 @@ export default function BusinessSetting() {
           </div>
 
           {/* Working Hours */}
-          <div className="space-y-3">
+          <div className="space-y-3 overflow-x-auto">
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Working Hours
             </h3>
-
             {watch("workingHours")?.map((item, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_1fr_auto_1fr] items-center"
+                className="grid gap-3 grid-cols-[140px_1fr_1fr_1fr] items-center "
               >
                 {/* Day */}
                 <Controller
@@ -142,21 +151,55 @@ export default function BusinessSetting() {
                 />
 
                 {/* From */}
-                <input
-                  {...register(`workingHours.${index}.from`)}
-                  disabled={!item.enabled}
-                  className="rounded-md border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white disabled:opacity-50"
+                <Controller
+                  control={control}
+                  name="businessCategory"
+                  defaultValue="8:00 AM"
+                  render={({ field }) => (
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      disabled={!item.enabled}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {TIME_OPTIONS.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
-
                 <span className="hidden sm:block text-xs text-gray-500">
                   to
                 </span>
-
                 {/* To */}
-                <input
-                  {...register(`workingHours.${index}.to`)}
-                  disabled={!item.enabled}
-                  className="rounded-md border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white disabled:opacity-50"
+                <Controller
+                  control={control}
+                  name="businessCategory"
+                  defaultValue="8:00 PM"
+                  render={({ field }) => (
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      disabled={!item.enabled}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {TIME_OPTIONS.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
               </div>
             ))}

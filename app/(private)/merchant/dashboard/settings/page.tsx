@@ -27,7 +27,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "account"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("account")}
         >
@@ -43,7 +43,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "business"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("business")}
         >
@@ -59,7 +59,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "notifications"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("notifications")}
         >
@@ -75,7 +75,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "language"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("language")}
         >
@@ -91,7 +91,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "support"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("support")}
         >
@@ -133,7 +133,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "account"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("account")}
           >
@@ -144,7 +144,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "business"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("business")}
           >
@@ -155,7 +155,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "notifications"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("notifications")}
           >
@@ -166,7 +166,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "language"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("language")}
           >
@@ -177,7 +177,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "support"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("support")}
           >

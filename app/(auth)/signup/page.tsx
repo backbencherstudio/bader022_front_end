@@ -165,9 +165,7 @@ export default function SignUpPage() {
   );
 }
 
-/* ------------------ */
 /* Reusable Input    */
-/* ------------------ */
 function Input({
   label,
   icon,

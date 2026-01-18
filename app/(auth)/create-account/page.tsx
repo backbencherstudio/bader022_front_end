@@ -16,13 +16,16 @@ import {
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/components/provider/I18nProvider";
+import AccountCreation from "./_components/AccountCreation";
+import BusinessInfo from "./_components/BusinessInfo";
 
 interface CreateAccountData {
   step1: {
     businessName: string;
     businessAddress: string;
-    businessLogo: FileList | null;
-    workingHours: any[];
+    category: string;
+    // businessLogo: FileList | null;
+    // workingHours: any[];
   };
   step2: {
     serviceName: string;
@@ -33,9 +36,17 @@ interface CreateAccountData {
   step4: {
     serviceName: string;
   };
+  step5: {
+    fullName: string;
+    email: string;
+    phone: string;
+    password: string;
+    category: string;
+    remember: boolean;
+  };
 }
 
-const steps = [1, 2, 3, 4];
+const steps = [1, 2, 3];
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -50,8 +61,9 @@ export default function CreateAccountPage() {
       step1: {
         businessName: "",
         businessAddress: "",
-        businessLogo: null,
-        workingHours: [],
+        category: "",
+        // businessLogo: null,
+        // workingHours: [],
       },
       step2: {
         serviceName: "",
@@ -62,7 +74,15 @@ export default function CreateAccountPage() {
       step4: {
         serviceName: "",
       },
-    }
+      step5: {
+        fullName: "",
+        email: "",
+        phone: "",
+        password: "",
+        category: "",
+        remember: false,
+      },
+    },
   );
 
   useEffect(() => {
@@ -71,7 +91,7 @@ export default function CreateAccountPage() {
 
   const handleNext = <K extends keyof CreateAccountData>(
     stepKey: K,
-    data: Partial<CreateAccountData[K]>
+    data: Partial<CreateAccountData[K]>,
   ) => {
     setCreateAccountData((prev) => ({
       ...prev,
@@ -81,7 +101,7 @@ export default function CreateAccountPage() {
       },
     }));
 
-    if (step < 6) setStep(step + 1);
+    if (step < 5) setStep(step + 1);
   };
 
   const handlePrevious = () => {
@@ -92,41 +112,53 @@ export default function CreateAccountPage() {
     switch (step) {
       case 1:
         return (
-          <AccountCreated
-            data={createAccountData.step1}
-            onNext={(data) => handleNext("step1", data)}
-          />
+          <AccountCreation onNext={(data) => handleNext("step5", data)} />
+          // <AccountCreated
+          //   data={createAccountData.step1}
+          //   onNext={(data) => handleNext("step1", data)}
+          // />
         );
       case 2:
         return (
-          <AddYourServices
-            data={createAccountData.step2}
-            onNext={(data) => handleNext("step2", data)}
-            onPrevious={handlePrevious}
+          <BusinessInfo
+            data={createAccountData.step1}
+            onNext={(data) => handleNext("step1", data)}
           />
+          // <AddYourServices
+          //   data={createAccountData.step2}
+          //   onNext={(data) => handleNext("step2", data)}
+          //   onPrevious={handlePrevious}
+          // />
         );
       case 3:
-        return (
-          <AddYourTeam
-            data={createAccountData.step3}
-            onNext={(data) => handleNext("step3", data)}
-            onPrevious={handlePrevious}
-          />
-        );
-      case 4:
         return (
           <ChooseyourPlan
             data={createAccountData.step4}
             onNext={(data) => handleNext("step3", data)}
             onPrevious={handlePrevious}
           />
+          // <AddYourTeam
+          //   data={createAccountData.step3}
+          //   onNext={(data) => handleNext("step3", data)}
+          //   onPrevious={handlePrevious}
+          // />
+        );
+      case 4:
+        return (
+          <FinalizingYourWebsite />
+          // <ChooseyourPlan
+          //   data={createAccountData.step4}
+          //   onNext={(data) => handleNext("step3", data)}
+          //   onPrevious={handlePrevious}
+          // />
         );
 
       case 5:
-        return <FinalizingYourWebsite />;
-
-      case 6:
         return <CompleteYourProfile />;
+      // return <FinalizingYourWebsite />;
+
+      // case 6:
+      //   return <CompleteYourProfile />;
 
       default:
         return null;
@@ -136,7 +168,7 @@ export default function CreateAccountPage() {
   return (
     <div className="space-y-5 p-5 h-fit container mx-auto">
       {/* Dynamic Step Title */}
-      {step <= 4 ? (
+      {step <= 3 ? (
         <div className="flex items-center justify-between  border-b border-b-[#dfe1e7] dark:border-b-[#2a2d35] pb-4">
           <div className="flex flex-col gap-2">
             <h1 className="capitalize font-inter font-medium text-2xl leading-5 tracking-[0.01em] text-black dark:text-white">

@@ -6,7 +6,7 @@ export default function CreateAccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white dark:bg-gray-900 max-h-full">
+    <div className="">
       <CreateAccountProvider>{children}</CreateAccountProvider>
     </div>
   );

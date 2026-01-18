@@ -10,6 +10,7 @@ import {
   FaPhoneAlt,
   FaUser,
 } from "react-icons/fa";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
   fullName: string;
@@ -26,37 +27,40 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
 
+  // ---------------- i18n ----------------
+  const { t } = useI18n();
+
   return (
     <form
       onSubmit={handleSubmit(onNext)}
       className="space-y-6 rounded-xl bg-white p-4 sm:p-6 dark:bg-gray-900 h-full"
     >
       <Input
-        label="Full Name"
+        label={t("AccountCreation.fullName")}
         icon={<FaUser />}
-        placeholder="John Doe"
+        placeholder={t("AccountCreation.fullNamePlaceholder")}
         register={register("fullName", { required: true })}
       />
 
       <Input
-        label="Email Address"
+        label={t("AccountCreation.email")}
         icon={<FaEnvelope />}
         type="email"
-        placeholder="john@example.com"
+        placeholder={t("AccountCreation.emailPlaceholder")}
         register={register("email", { required: true })}
       />
 
       <Input
-        label="Phone"
+        label={t("AccountCreation.phone")}
         icon={<FaPhoneAlt />}
-        placeholder="+1 (555) 000-0000"
+        placeholder={t("AccountCreation.phonePlaceholder")}
         register={register("phone", { required: true })}
       />
 
       {/* Password */}
       <div>
         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-          Password *
+          {t("AccountCreation.password")} *
         </label>
 
         <div className="relative">
@@ -64,7 +68,7 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
 
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
+            placeholder={t("AccountCreation.passwordPlaceholder")}
             {...register("password", { required: true })}
             className="w-full pl-10 pr-10 py-3 border rounded-md
               bg-white dark:bg-gray-700
@@ -85,15 +89,15 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
 
       <button
         type="submit"
-        className="w-full rounded-md bg-black py-3 font-medium text-white hover:opacity-90 dark:bg-blue-600"
+        className="w-full rounded-md bg-black py-3 font-medium text-white hover:opacity-90 dark:bg-blue-600 cursor-pointer"
       >
-        Continue to Business Info
+        {t("AccountCreation.submit")}
       </button>
     </form>
   );
 }
 
-/* Reusable Input */
+/* ---------------- Reusable Input ---------------- */
 interface InputProps {
   label: string;
   icon: React.ReactNode;

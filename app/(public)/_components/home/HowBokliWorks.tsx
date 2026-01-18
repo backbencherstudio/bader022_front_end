@@ -1,9 +1,10 @@
 "use client";
 
 import { cubicBezier, motion, useReducedMotion } from "framer-motion";
-import { useI18n } from "@/components/provider/I18nProvider";
 import { UserPlus, Settings, CalendarDays } from "lucide-react";
+import { useI18n } from "@/components/provider/I18nProvider";
 
+/* ------------------ ICONS ------------------ */
 const ICONS = [UserPlus, Settings, CalendarDays];
 
 /* ------------------ DESKTOP CARD VARIANTS ------------------ */
@@ -58,13 +59,12 @@ const desktopCardVariants = [
   },
 ];
 
-/* ------------------ MOBILE VARIANT (NO MOTION) ------------------ */
+/* ------------------ MOBILE VARIANTS ------------------ */
 const mobileCardVariant = {
   hidden: { opacity: 1 },
   visible: { opacity: 1 },
 };
 
-/* ------------------ TITLE VARIANTS ------------------ */
 const desktopTitleVariant = {
   hidden: { opacity: 0, y: -48 },
   visible: {
@@ -79,15 +79,18 @@ const mobileTitleVariant = {
   visible: { opacity: 1 },
 };
 
-export default function HowBokliWorks() {
-  const { t } = useI18n();
-  const reduceMotion = useReducedMotion(); // true on mobile / reduced motion
+type HowItWorksStep = {
+  step: string;
+  title: string;
+  desc: string;
+};
 
-  const steps = t("HowItWorks.steps") as unknown as Array<{
-    step: string;
-    title: string;
-    desc: string;
-  }>;
+export default function HowBokliWorks() {
+  const { t, get } = useI18n();
+  const reduceMotion = useReducedMotion();
+
+  /** ✅ Correct way to read array data from i18n */
+  const steps = get<HowItWorksStep[]>("HowItWorks.steps") ?? [];
 
   return (
     <section className="w-full bg-white py-16">
@@ -100,9 +103,10 @@ export default function HowBokliWorks() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-[48px] font-semibold text-slate-900">
+          <h2 className="text-3xl font-semibold text-slate-900 md:text-[48px]">
             {t("HowItWorks.title")}
           </h2>
+
           <p className="mt-4 text-[16px] text-slate-600">
             {t("HowItWorks.subtitle")}
           </p>
@@ -136,7 +140,7 @@ export default function HowBokliWorks() {
                   </span>
                 </div>
 
-                <h3 className="my-6 text-xl md:text-[24px] font-semibold text-slate-900">
+                <h3 className="my-6 text-xl font-semibold text-slate-900 md:text-[24px]">
                   {s.title}
                 </h3>
 

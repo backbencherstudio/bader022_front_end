@@ -152,7 +152,10 @@
           "تخصيص غير محدود"
         ]
       }
-    }
+    },
+    "BusinessInfo": {
+    "backButton": "عودة"
+  }
   },
   "WhyChooseBokli": {
     "title": "لماذا تختار Bokli؟",
@@ -346,5 +349,43 @@
       { "feature": "تحليلات أساسية", "free": "✘", "premium": "✔" },
       { "feature": "تقارير متقدمة", "free": "✘", "premium": "✔" }
     ]
+  },
+  "createAccount": {
+    "step1Title": "أكمل ملفك الشخصي",
+    "step2Title": "أضف خدماتك",
+    "step3Title": "أضف فريقك",
+    "step4Title": "اختر الخطة",
+
+    "step1Desc": "الخطوة {{step}} من {{total}} - إعداد ملف النشاط التجاري",
+    "step2Desc": "الخطوة {{step}} من {{total}} - تحديد الخدمات التي تقدمها",
+    "step3Desc": "الخطوة {{step}} من {{total}} - إضافة أعضاء الفريق",
+    "step4Desc": "الخطوة {{step}} من {{total}} - اختر الخطة المناسبة لعملك"
+  },
+    "AccountCreation": {
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "جون دو",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "john@example.com",
+    "phone": "الهاتف",
+    "phonePlaceholder": "+1 (555) 000-0000",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "submit": "متابعة إلى معلومات العمل"
+  },
+  "BusinessInfo": {
+    "businessName": "اسم العمل",
+    "businessNamePlaceholder": "اسم عملك",
+    "businessNameRequired": "اسم العمل مطلوب",
+    "businessCategory": "فئة العمل",
+    "selectCategory": "اختر الفئة",
+    "categories": {
+      "beautySpa": "الجمال والسبا",
+      "fitness": "لياقة بدنية",
+      "consulting": "استشارات",
+      "healthcare": "الرعاية الصحية"
+    },
+    "businessAddress": "عنوان العمل",
+    "businessAddressPlaceholder": "123 شارع رئيسي، المدينة، الدولة، الرمز البريدي",
+    "submit": "الانتقال إلى اختيار الباقة"
   }
 }

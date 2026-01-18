@@ -3,9 +3,7 @@
 import { useI18n } from "@/components/provider/I18nProvider";
 import { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
-import { MdArrowOutward } from "react-icons/md";
 import { motion, cubicBezier } from "framer-motion";
-import { Star } from "lucide-react";
 
 type Billing = "monthly" | "annual";
 
@@ -72,18 +70,16 @@ const mobileStatic = {
 };
 
 export default function ChooseThePerfectPlan() {
-  const { t, locale } = useI18n();
+  const { t, get, locale } = useI18n();
   const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
 
-  const basic = useMemo(
-    () => t("Pricing.plans.basic") as unknown as PricingPlan,
-    [t]
-  );
+  /* ✅ USE get() FOR OBJECTS */
+  const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
 
   const premium = useMemo(
-    () => t("Pricing.plans.premium") as unknown as PricingPlan,
-    [t]
+    () => get<PricingPlan>("Pricing.plans.premium"),
+    [get],
   );
 
   const basicPrice =
@@ -111,7 +107,6 @@ export default function ChooseThePerfectPlan() {
             {t("Pricing.subtitle")}
           </p>
 
-          {/* Billing Toggle */}
           <div className="bg-[#FAFAFA] p-2 flex gap-2 rounded-full shadow-sm">
             {(["monthly", "annual"] as Billing[]).map((b) => (
               <button
@@ -120,8 +115,8 @@ export default function ChooseThePerfectPlan() {
                 className={[
                   "py-2 px-4 rounded-full font-semibold transition-all duration-300",
                   billing === b
-                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF] shadow-md scale-[1.02]"
-                    : "text-slate-700 hover:bg-white hover:shadow",
+                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF]"
+                    : "text-slate-700 hover:bg-white",
                 ].join(" ")}
               >
                 {t(`Pricing.billing.${b}`)}
@@ -137,43 +132,29 @@ export default function ChooseThePerfectPlan() {
             variants={isMobile ? mobileStatic : leftCardVariant}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.6 }}
-            whileHover={{ y: -6 }}
-            className="bg-[#edeef0] p-5 rounded-xl transition-all duration-300 hover:shadow-xl"
+            className="bg-[#edeef0] p-5 rounded-xl"
           >
             <div className="bg-white rounded-xl p-6">
-              <h3 className="text-3xl font-bold text-black">{basic.name}</h3>
-              <p className="py-3 text-slate-700 text-[16px]">{basic.desc}</p>
+              <h3 className="text-3xl font-bold">{basic.name}</h3>
+              <p className="py-3">{basic.desc}</p>
 
               <p>
-                <span className="text-4xl font-bold text-black">
-                  {basicPrice}
-                </span>
-                <span className="text-slate-700 px-1">
-                  /{t(`Pricing.billing.${billing}`)}
-                </span>
+                <span className="text-4xl font-bold">{basicPrice}</span>
+                <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>
-
-              <button className="mt-5 w-full border text-black cursor-pointer border-slate-200 px-6 py-3 rounded-md font-semibold flex justify-center gap-2 items-center transition-all hover:shadow-md hover:scale-[1.01]">
-                {basic.cta}
-                <MdArrowOutward className="group-hover:translate-x-1 transition-transform" />
-              </button>
             </div>
 
             <div className="p-6 space-y-5">
-              {basic.features.map((f, i) => (
+              {(basic.features ?? []).map((f, i) => (
                 <motion.p
                   key={i}
                   custom={i}
-                  variants={isMobile ? mobileStatic : featureVariant}
+                  variants={featureVariant}
                   initial="hidden"
                   whileInView="visible"
-                  className="flex gap-3 items-center text-black transition-opacity hover:opacity-80"
+                  className="flex gap-3 items-center"
                 >
-                  <IoIosCheckmarkCircleOutline
-                    className="bg-linear-to-l from-indigo-500 to-blue-500 rounded-full text-white"
-                    size={20}
-                  />
+                  <IoIosCheckmarkCircleOutline size={20} />
                   {f}
                 </motion.p>
               ))}
@@ -185,55 +166,29 @@ export default function ChooseThePerfectPlan() {
             variants={isMobile ? mobileStatic : rightCardVariant}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.6 }}
-            whileHover={{ y: -8 }}
-            className="relative bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl transition-all duration-300 hover:shadow-[0_30px_80px_rgba(99,102,241,0.45)]"
+            className="bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl"
           >
             <div className="bg-white rounded-xl p-6">
-              <div className="flex flex-col-reverse sm:flex-row items-center gap-4">
-                <h3 className="text-3xl font-bold text-black">
-                  {premium.name}
-                </h3>
-                <span className="flex items-center gap-2 px-4 py-1 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 text-white shadow-md">
-                  <Star size={16} /> Most Popular
-                </span>
-              </div>
-
-              <p className="py-4 text-slate-700 text-[16px]">{premium.desc}</p>
+              <h3 className="text-3xl font-bold">{premium.name}</h3>
+              <p className="py-4">{premium.desc}</p>
 
               <p>
-                <span className="text-4xl font-bold text-black">
-                  {premiumPrice}
-                </span>
-                <span className="text-slate-700 px-1">
-                  /{t(`Pricing.billing.${billing}`)}
-                </span>
+                <span className="text-4xl font-bold">{premiumPrice}</span>
+                <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>
-
-              <button className="mt-5 w-full cursor-pointer bg-linear-to-r from-blue-500 to-indigo-500 px-6 py-3 rounded-md font-semibold text-white flex justify-center gap-2 items-center transition-all hover:scale-[1.03] hover:shadow-lg">
-                {premium.cta}
-                <MdArrowOutward
-                  className={`transition-transform group-hover:translate-x-1 ${
-                    locale === "ar" ? "rotate-270" : ""
-                  }`}
-                />
-              </button>
             </div>
 
             <div className="p-6 space-y-5">
-              {premium.features.map((f, i) => (
+              {(premium.features ?? []).map((f, i) => (
                 <motion.p
                   key={i}
                   custom={i}
-                  variants={isMobile ? mobileStatic : featureVariant}
+                  variants={featureVariant}
                   initial="hidden"
                   whileInView="visible"
-                  className="flex gap-2 items-center text-white transition-opacity hover:opacity-90"
+                  className="flex gap-2 items-center text-white"
                 >
-                  <IoIosCheckmarkCircleOutline
-                    size={20}
-                    className="bg-white text-black rounded-full"
-                  />
+                  <IoIosCheckmarkCircleOutline size={20} />
                   {f}
                 </motion.p>
               ))}

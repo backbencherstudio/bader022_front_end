@@ -1,8 +1,11 @@
+"use client";
+
 import PaymentDetailsModal from "@/app/(private)/merchant/dashboard/components/modal/PaymentDetailsModal";
 import { useI18n } from "@/components/provider/I18nProvider";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
+import { motion, cubicBezier } from "framer-motion";
 
 type Billing = "monthly" | "annual";
 
@@ -14,6 +17,7 @@ interface PricingPlan {
   cta: string;
   features: string[];
 }
+
 type Step2Data = {
   serviceName: string;
 };
@@ -23,96 +27,113 @@ interface Step2Props {
   onNext: (values: Step2Data) => void;
   onPrevious: () => void;
 }
-export default function ChooseyourPlan({
-  data,
-  onNext,
-  onPrevious,
-}: Step2Props) {
-  const { t, locale } = useI18n();
+
+/* ---------------- MOBILE DETECTION ---------------- */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  return isMobile;
+}
+
+/* ---------------- MOTION VARIANTS ---------------- */
+const leftCardVariant = {
+  hidden: { opacity: 0, x: -80 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 1.1, ease: cubicBezier(0.25, 0.1, 0.25, 1) },
+  },
+};
+
+const rightCardVariant = {
+  hidden: { opacity: 0, x: 80 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 1.1, ease: cubicBezier(0.25, 0.1, 0.25, 1) },
+  },
+};
+
+const mobileStatic = {
+  hidden: { opacity: 1, x: 0 },
+  visible: { opacity: 1, x: 0 },
+};
+
+/* ---------------- COMPONENT ---------------- */
+export default function ChooseyourPlan({ onNext, onPrevious }: Step2Props) {
+  const { t, get, locale } = useI18n();
+  const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
+  const [open, setOpen] = useState(false);
 
-  const basic = useMemo(
-    () => t("Pricing.plans.basic") as unknown as PricingPlan,
-    [t]
-  );
+  /*  Use get() for object-based translations */
+  const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
   const premium = useMemo(
-    () => t("Pricing.plans.premium") as unknown as PricingPlan,
-    [t]
+    () => get<PricingPlan>("Pricing.plans.premium"),
+    [get],
   );
 
-  const basicFeatures = useMemo(() => {
-    const f = basic?.features;
-    return Array.isArray(f) ? f : [];
-  }, [basic]);
-
-  const premiumFeatures = useMemo(() => {
-    const f = premium?.features;
-    return Array.isArray(f) ? f : [];
-  }, [premium]);
+  const basicFeatures = Array.isArray(basic?.features) ? basic.features : [];
+  const premiumFeatures = Array.isArray(premium?.features)
+    ? premium.features
+    : [];
 
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
-
   const premiumPrice =
     billing === "monthly" ? premium?.priceMonthly : premium?.priceAnnual;
-
-  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
       <div className="container mx-auto py-5 md:px-4">
-        {/* Heading */}
-        <div className="flex flex-col items-center gap-5 py-5 text-center">
-          {/* Billing Toggle */}
-          <div className="bg-[#FAFAFA] dark:bg-gray-800 p-2 flex items-center gap-2 rounded-full">
+        {/* Billing Toggle */}
+        <div className="flex justify-center mb-5 gap-2 w-[300px] mx-auto bg-[#FAFAFA] dark:bg-gray-800 p-2 rounded-full">
+          {(["monthly", "annual"] as Billing[]).map((b) => (
             <button
+              key={b}
               type="button"
-              onClick={() => setBilling("monthly")}
+              onClick={() => setBilling(b)}
               className={[
                 "py-2 px-4 rounded-full text-sm font-semibold transition cursor-pointer",
-                billing === "monthly"
+                billing === b
                   ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF]"
                   : "text-slate-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700",
               ].join(" ")}
             >
-              {t("Pricing.billing.monthly")}
+              {t(`Pricing.billing.${b}`)}
             </button>
-
-            <button
-              type="button"
-              onClick={() => setBilling("annual")}
-              className={[
-                "py-2 px-4 rounded-full text-sm font-semibold transition cursor-pointer",
-                billing === "annual"
-                  ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF]"
-                  : "text-slate-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700",
-              ].join(" ")}
-            >
-              {t("Pricing.billing.annual")}
-            </button>
-          </div>
+          ))}
         </div>
 
         {/* Plans */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Basic */}
-          <div className="bg-[#F9FAFB] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 md:p-5 rounded-md">
+          <motion.div
+            variants={isMobile ? mobileStatic : leftCardVariant}
+            initial="hidden"
+            whileInView="visible"
+            className="bg-[#F9FAFB] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 md:p-5 rounded-md"
+          >
             <div className="bg-white dark:bg-gray-900 shadow rounded-md p-5">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 {basic?.name}
               </h3>
-
               <p className="py-3 text-slate-700 dark:text-gray-400">
                 {basic?.desc}
               </p>
-
               <p className="text-gray-900 dark:text-white">
                 <span className="text-4xl font-bold">{basicPrice}</span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
-
               <div className="inline-block p-0.5 rounded-md bg-linear-to-r from-[#3CB3FF] to-[#7153FF] my-5">
                 <button className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer">
                   {basic?.cta}
@@ -122,9 +143,8 @@ export default function ChooseyourPlan({
                 </button>
               </div>
             </div>
-
             <div className="p-5 space-y-3">
-              {basicFeatures.map((f: string, idx: number) => (
+              {basicFeatures.map((f, idx) => (
                 <p
                   key={idx}
                   className="flex gap-2 items-center text-slate-700 dark:text-gray-300"
@@ -134,26 +154,28 @@ export default function ChooseyourPlan({
                 </p>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Premium */}
-          <div className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] p-5 rounded-md">
+          <motion.div
+            variants={isMobile ? mobileStatic : rightCardVariant}
+            initial="hidden"
+            whileInView="visible"
+            className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] p-5 rounded-md"
+          >
             <div className="bg-[#F9FAFB] dark:bg-gray-900 shadow rounded-md p-5">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 {premium?.name}
               </h3>
-
               <p className="py-3 text-slate-700 dark:text-gray-400">
                 {premium?.desc}
               </p>
-
               <p className="text-gray-900 dark:text-white">
                 <span className="text-4xl font-bold">{premiumPrice}</span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
-
               <button
                 onClick={() => setOpen(true)}
                 className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
@@ -164,30 +186,24 @@ export default function ChooseyourPlan({
                 />
               </button>
             </div>
-
             <div className="p-5 space-y-3">
-              {premiumFeatures.map((f: string, idx: number) => (
+              {premiumFeatures.map((f, idx) => (
                 <p key={idx} className="flex gap-2 items-center text-white">
                   <IoIosCheckmarkCircleOutline />
                   {f}
                 </p>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Footer */}
         <div className="flex justify-between pt-6">
           <button
             onClick={onPrevious}
-            className="
-          rounded-md border px-6 py-2 text-sm
-          text-gray-700 dark:text-gray-300
-          border-gray-300 dark:border-gray-600
-          hover:bg-gray-100 dark:hover:bg-gray-800
-        "
+            className="rounded-md cursor-pointer border px-6 py-2 text-sm text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            Back
+            {t("Pricing.BusinessInfo.backButton") || "Back"}
           </button>
         </div>
       </div>

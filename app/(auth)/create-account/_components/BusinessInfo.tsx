@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type Step1Data = {
   businessName: string;
@@ -27,6 +28,8 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
     },
   });
 
+  const { t } = useI18n();
+
   return (
     <form
       onSubmit={handleSubmit(onNext)}
@@ -35,13 +38,13 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
       {/* Business Name */}
       <div>
         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-          Business Name *
+          {t("BusinessInfo.businessName")} *
         </label>
         <input
           {...register("businessName", {
-            required: "Business name is required",
+            required: t("BusinessInfo.businessNameRequired") || "Required",
           })}
-          placeholder="Your Business Name"
+          placeholder={t("BusinessInfo.businessNamePlaceholder")}
           className="w-full p-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
@@ -56,7 +59,7 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
       {/* Business Category */}
       <div>
         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-          Business Category *
+          {t("BusinessInfo.businessCategory")} *
         </label>
         <select
           {...register("category", { required: true })}
@@ -66,22 +69,22 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
                   text-gray-700 dark:text-gray-200
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="">Select category</option>
-          <option>Beauty & Spa</option>
-          <option>Fitness</option>
-          <option>Consulting</option>
-          <option>Healthcare</option>
+          <option value="">{t("BusinessInfo.selectCategory")}</option>
+          <option>{t("BusinessInfo.categories.beautySpa")}</option>
+          <option>{t("BusinessInfo.categories.fitness")}</option>
+          <option>{t("BusinessInfo.categories.consulting")}</option>
+          <option>{t("BusinessInfo.categories.healthcare")}</option>
         </select>
       </div>
 
       {/* Business Address */}
       <div className="space-y-1">
         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-          Business Address *
+          {t("BusinessInfo.businessAddress")} *
         </label>
         <input
           {...register("businessAddress")}
-          placeholder="123 Main St, City, State, ZIP"
+          placeholder={t("BusinessInfo.businessAddressPlaceholder")}
           className="w-full p-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
@@ -89,12 +92,13 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
+
       {/* Submit */}
       <button
         type="submit"
         className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
       >
-        Continue to Package Selection
+        {t("BusinessInfo.submit")}
       </button>
     </form>
   );

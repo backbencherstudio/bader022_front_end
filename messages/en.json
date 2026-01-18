@@ -382,7 +382,46 @@
     "businessAddressPlaceholder": "123 Main St, City, State, ZIP",
     "submit": "Continue to Package Selection"
   
-}
+},
+    "finalizing": {
+    "title": "Finalizing Your Website...",
+    "subtitle": "Finishing setting up your website...",
+    "steps": {
+      "template": "Creating website template",
+      "products": "Setting up your products and services",
+      "settings": "Configuring your business settings",
+      "content": "Creating your content",
+      "finish": "Finishing your website setup"
+    }
+  },
+    "completeProfile": {
+    "title": "Your Account Has Been Successfully Created!",
+    "subtitle": "Share the subscription link with your customers",
+    "copy": "Copy Link",
+    "copied": "Copied",
+    "dashboard": "Go to the dashboard"
+  },
+  "payment": {
+    "title": "Payment Details",
+    "subtitle": "Enter your card information to start Premium",
+    "cardNumber": "Card Number",
+    "cardNumberPlaceholder": "1234 5678 9012 3456",
+    "cardholder": "Cardholder Name",
+    "cardholderPlaceholder": "John Doe",
+    "method": "Payment Method",
+    "applePay": "Apple Pay",
+    "googlePay": "Google Pay",
+    "expiry": "Expiry Date",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "123",
+    "plan": "Premium Plan",
+    "month": "month",
+    "complete": "Complete Setup"
+  },
+  "common": {
+    "cancel": "Cancel"
+  }
 
 
 }

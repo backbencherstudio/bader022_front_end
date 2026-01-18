@@ -1,4 +1,6 @@
 "use client";
+
+import { useI18n } from "@/components/provider/I18nProvider";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FiCheck, FiCopy, FiArrowUpRight } from "react-icons/fi";
@@ -10,6 +12,7 @@ interface CompleteYourProfileProps {
 export default function CompleteYourProfile({
   subscriptionLink = "https://bokli.io/dfg",
 }: CompleteYourProfileProps) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -31,10 +34,10 @@ export default function CompleteYourProfile({
         {/* Text */}
         <div className="space-y-2">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
-            Your Account Has Been Successfully Created!
+            {t("completeProfile.title")}
           </h1>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-            Share the subscription link with your customers
+            {t("completeProfile.subtitle")}
           </p>
         </div>
 
@@ -51,14 +54,14 @@ export default function CompleteYourProfile({
             className="flex items-center justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
           >
             <FiCopy />
-            {copied ? "Copied" : "Copy Link"}
+            {copied ? t("completeProfile.copied") : t("completeProfile.copy")}
           </button>
         </div>
 
         {/* Dashboard Button */}
-        <Link href={"/merchant/dashboard"}>
+        <Link href="/merchant/dashboard">
           <button className="mx-auto mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-blue-600 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
-            Go to the dashboard
+            {t("completeProfile.dashboard")}
             <FiArrowUpRight />
           </button>
         </Link>

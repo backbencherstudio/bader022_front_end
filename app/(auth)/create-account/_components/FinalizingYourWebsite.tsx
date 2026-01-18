@@ -3,20 +3,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiCheckCircle, FiTool } from "react-icons/fi";
 import { useCreateAccount } from "../context/CreateAccount";
-
-const FINALIZING_STEPS = [
-  "Creating website template",
-  "Setting up your products and services",
-  "Configuring your business settings",
-  "Creating your content",
-  "Finishing your website setup",
-];
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function FinalizingYourWebsite() {
   const { step, setStep } = useCreateAccount();
+  const { t } = useI18n();
 
   const [progress, setProgress] = useState(0);
-  const hasAdvancedStep = useRef(false); // prevent double increment
+  const hasAdvancedStep = useRef(false);
+
+  const FINALIZING_STEPS = [
+    t("finalizing.steps.template"),
+    t("finalizing.steps.products"),
+    t("finalizing.steps.settings"),
+    t("finalizing.steps.content"),
+    t("finalizing.steps.finish"),
+  ];
 
   // auto progress
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function FinalizingYourWebsite() {
         }
         return prev + 1;
       });
-    }, 60); // speed control
+    }, 60);
 
     return () => clearInterval(interval);
   }, []);
@@ -39,12 +41,12 @@ export default function FinalizingYourWebsite() {
       hasAdvancedStep.current = true;
       setTimeout(() => {
         setStep(step + 1);
-      }, 500); // small delay for UX
+      }, 500);
     }
   }, [progress, setStep, step]);
-  // calculate active step based on progress
+
   const activeStepIndex = Math.floor(
-    (progress / 100) * FINALIZING_STEPS.length
+    (progress / 100) * FINALIZING_STEPS.length,
   );
 
   return (
@@ -59,10 +61,10 @@ export default function FinalizingYourWebsite() {
       {/* Title */}
       <div className="text-center space-y-2">
         <h1 className="text-2xl font-semibold text-black dark:text-white">
-          Finalizing Your Website...
+          {t("finalizing.title")}
         </h1>
         <p className="text-gray-500 dark:text-gray-400">
-          Finishing setting up your website...
+          {t("finalizing.subtitle")}
         </p>
       </div>
 

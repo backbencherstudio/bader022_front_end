@@ -387,5 +387,44 @@
     "businessAddress": "عنوان العمل",
     "businessAddressPlaceholder": "123 شارع رئيسي، المدينة، الدولة، الرمز البريدي",
     "submit": "الانتقال إلى اختيار الباقة"
+  },
+  "finalizing": {
+    "title": "جارٍ إنهاء موقعك...",
+    "subtitle": "يتم الآن إكمال إعداد موقعك...",
+    "steps": {
+      "template": "إنشاء قالب الموقع",
+      "products": "إعداد المنتجات والخدمات",
+      "settings": "تهيئة إعدادات النشاط التجاري",
+      "content": "إنشاء المحتوى",
+      "finish": "إنهاء إعداد الموقع"
+    }
+  },
+    "completeProfile": {
+    "title": "تم إنشاء حسابك بنجاح!",
+    "subtitle": "شارك رابط الاشتراك مع عملائك",
+    "copy": "نسخ الرابط",
+    "copied": "تم النسخ",
+    "dashboard": "الانتقال إلى لوحة التحكم"
+  },
+   "payment": {
+    "title": "تفاصيل الدفع",
+    "subtitle": "أدخل معلومات بطاقتك لبدء الاشتراك المميز",
+    "cardNumber": "رقم البطاقة",
+    "cardNumberPlaceholder": "1234 5678 9012 3456",
+    "cardholder": "اسم صاحب البطاقة",
+    "cardholderPlaceholder": "John Doe",
+    "method": "طريقة الدفع",
+    "applePay": "Apple Pay",
+    "googlePay": "Google Pay",
+    "expiry": "تاريخ الانتهاء",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "123",
+    "plan": "الخطة المميزة",
+    "month": "شهر",
+    "complete": "إكمال الإعداد"
+  },
+  "common": {
+    "cancel": "إلغاء"
   }
 }

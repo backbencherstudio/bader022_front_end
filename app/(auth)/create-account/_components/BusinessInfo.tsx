@@ -37,7 +37,7 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
     >
       {/* Business Name */}
       <div>
-        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 px-2">
           {t("BusinessInfo.businessName")} *
         </label>
         <input
@@ -58,7 +58,7 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
 
       {/* Business Category */}
       <div>
-        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 px-2">
           {t("BusinessInfo.businessCategory")} *
         </label>
         <select
@@ -79,13 +79,13 @@ export default function BusinessInfo({ data, onNext }: Step1Props) {
 
       {/* Business Address */}
       <div className="space-y-1">
-        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 px-2">
           {t("BusinessInfo.businessAddress")} *
         </label>
         <input
           {...register("businessAddress")}
           placeholder={t("BusinessInfo.businessAddressPlaceholder")}
-          className="w-full p-3 border rounded-md
+          className="w-full p-3 px-2 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
                   text-gray-700 dark:text-gray-200

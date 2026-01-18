@@ -115,12 +115,12 @@ function Input({
 }: InputProps) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 px-2">
         {label} *
       </label>
 
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 px-2">
           {icon}
         </span>
 
@@ -128,7 +128,7 @@ function Input({
           type={type}
           placeholder={placeholder}
           {...register}
-          className="w-full pl-10 py-3 border rounded-md
+          className="w-full pl-10 py-3 px-2 border rounded-md
             bg-white dark:bg-gray-700
             border-gray-300 dark:border-gray-600
             text-gray-900 dark:text-white

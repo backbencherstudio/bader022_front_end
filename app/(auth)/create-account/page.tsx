@@ -200,7 +200,9 @@ export default function CreateAccountPage() {
                     width={22}
                     height={22}
                   />
-                  <span className="uppercase">{locale}</span>
+                  <span className="uppercase text-black dark:text-white">
+                    {locale}
+                  </span>
                   <ChevronDown size={14} />
                 </button>
               </DropdownMenuTrigger>

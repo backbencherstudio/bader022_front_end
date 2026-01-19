@@ -78,7 +78,7 @@ export default function CreateAccountPage() {
   );
 
   useEffect(() => {
-    console.log("Create Account Data Updated:", createAccountData);
+    // console.log("Create Account Data Updated:", createAccountData);
   }, [createAccountData]);
 
   const handleNext = <K extends keyof CreateAccountData>(
@@ -175,7 +175,7 @@ export default function CreateAccountPage() {
                 <DropdownMenuItem
                   key={key}
                   onClick={() => setLocale(key)}
-                  className="flex cursor-pointer items-center gap-2"
+                  className="flex cursor-pointer items-center gap-2 py-1"
                 >
                   <Image
                     src={LANGS[key].flag}

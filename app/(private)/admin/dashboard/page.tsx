@@ -50,7 +50,7 @@ export default function DashboardPage() {
           <StatCard
             Currency={SaudiRiyal}
             title="Revenue"
-            value={"84320"}
+            value={"84,320"}
             Icon={SaudiRiyal}
           />
           <StatCard title="Total Merchants" value={156} Icon={ShoppingCart} />

@@ -65,7 +65,7 @@ export default function page() {
         <StatCard
           title="Revenue"
           Currency={SaudiRiyal}
-          value={"84320"}
+          value={"84,320"}
           Icon={SaudiRiyal}
         />
         <StatCard title="Total Merchants" value={156} Icon={ShoppingCart} />

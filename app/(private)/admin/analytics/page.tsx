@@ -2,13 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { FaFileExport } from "react-icons/fa";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
-import {
-  CircleDollarSign,
-  Crown,
-  SaudiRiyal,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { Crown, SaudiRiyal, ShoppingCart, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TData } from "../../merchant/dashboard/page";
 import RevenueOverviewLineChart from "../components/dashboard/RevenueOverviewLineChart";

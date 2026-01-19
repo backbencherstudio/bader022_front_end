@@ -70,7 +70,7 @@ const mobileStatic = {
 };
 
 export default function ChooseThePerfectPlan() {
-  const { t, get, locale } = useI18n();
+  const { t, get } = useI18n();
   const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
 
@@ -132,7 +132,7 @@ export default function ChooseThePerfectPlan() {
             variants={isMobile ? mobileStatic : leftCardVariant}
             initial="hidden"
             whileInView="visible"
-            className="bg-[#edeef0] p-5 rounded-xl"
+            className="bg-[#edeef0] text-black p-5 rounded-xl"
           >
             <div className="bg-white rounded-xl p-6">
               <h3 className="text-3xl font-bold">{basic.name}</h3>
@@ -168,7 +168,7 @@ export default function ChooseThePerfectPlan() {
             whileInView="visible"
             className="bg-linear-to-r from-blue-500 to-indigo-500 p-5 rounded-xl"
           >
-            <div className="bg-white rounded-xl p-6">
+            <div className="bg-white text-black rounded-xl p-6">
               <h3 className="text-3xl font-bold">{premium.name}</h3>
               <p className="py-4">{premium.desc}</p>
 

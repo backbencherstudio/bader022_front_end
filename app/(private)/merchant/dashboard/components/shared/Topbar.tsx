@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function TopBar() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -21,11 +22,13 @@ export default function TopBar() {
     setIsDarkMode(!isDarkMode);
     setTheme(!isDarkMode ? "light" : "dark");
   };
-
+  const { t, locale } = useI18n();
   return (
     <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] bg-white/10 dark:bg-gray-900 backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
       {/* Left Side */}
-      <div className="pl-10 hidden lg:block lg:pl-70 flex-1">
+      <div
+        className={`pl-10 hidden lg:block flex-1 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
+      >
         <p className="text-xl font-semibold mb-1 text-black dark:text-white">
           Welcome back, Carlota!
         </p>

@@ -1,4 +1,5 @@
 "use client";
+import { useI18n } from "@/components/provider/I18nProvider";
 import AppSidebar from "../components/AppSidebar";
 import TopBar from "../merchant/dashboard/components/shared/Topbar";
 import {
@@ -57,6 +58,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { locale } = useI18n();
   return (
     <div>
       <div>
@@ -68,7 +70,9 @@ export default function DashboardLayout({
           badgeText="premium"
         />
         <TopBar />
-        <div className="pl-0 lg:pl-70 pt-17">
+        <div
+          className={`pl-0 pt-17 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
+        >
           <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9] dark:bg-gray-900 ">
             {children}
           </div>

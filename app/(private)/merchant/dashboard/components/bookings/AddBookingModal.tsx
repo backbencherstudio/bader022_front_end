@@ -23,7 +23,8 @@ const defaultValues = {
   service: "",
   price: "",
   duration: "",
-  dateTime: "",
+  date: "",
+  time: "",
   staffMember: "",
   status: "completed",
 };
@@ -173,30 +174,42 @@ export default function AddBookingModal({
               </div>
 
               {/* Date & Time */}
+              {/* Date */}
               <div>
-                <label
-                  htmlFor="dateTime"
-                  className="block text-sm font-semibold"
-                >
-                  Date & Time *
+                <label htmlFor="date" className="block text-sm font-semibold">
+                  Date *
                 </label>
                 <Controller
-                  name="dateTime"
+                  name="date"
                   control={control}
-                  rules={{ required: "Date & Time is required" }}
+                  rules={{ required: "Date is required" }}
                   render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="dateTime"
-                      placeholder="Select date & time"
-                      type="datetime-local"
-                      className="mt-2"
-                    />
+                    <Input {...field} id="date" type="date" className="mt-2" />
                   )}
                 />
-                {errors.dateTime && (
+                {errors.date && (
                   <span className="text-red-500 text-xs">
-                    {errors.dateTime.message}
+                    {errors.date.message}
+                  </span>
+                )}
+              </div>
+
+              {/* Time */}
+              <div>
+                <label htmlFor="time" className="block text-sm font-semibold">
+                  Time *
+                </label>
+                <Controller
+                  name="time"
+                  control={control}
+                  rules={{ required: "Time is required" }}
+                  render={({ field }) => (
+                    <Input {...field} id="time" type="time" className="mt-2" />
+                  )}
+                />
+                {errors.time && (
+                  <span className="text-red-500 text-xs">
+                    {errors.time.message}
                   </span>
                 )}
               </div>

@@ -154,8 +154,8 @@
       }
     },
     "BusinessInfo": {
-    "backButton": "عودة"
-  }
+      "backButton": "عودة"
+    }
   },
   "WhyChooseBokli": {
     "title": "لماذا تختار Bokli؟",
@@ -336,18 +336,22 @@
       {
         "feature": "الحد الأقصى للحجوزات",
         "free": "25 حجزًا شهريًا",
-        "premium": "غير محدود"
+        "premium": "✔ غير محدود"
       },
       { "feature": "فروع متعددة", "free": "✘", "premium": "✔" },
       {
         "feature": "تذكير الحجوزات",
         "free": "إرسال تذكير يدوي",
-        "premium": "تذكير تلقائي"
+        "premium": "✔ تذكير تلقائي"
       },
       { "feature": "الوصول للموقع المصغّر", "free": "✘", "premium": "✔" },
-      { "feature": "إشعارات البريد الإلكتروني", "free": "✘", "premium": "✔" },
-      { "feature": "تحليلات أساسية", "free": "✘", "premium": "✔" },
-      { "feature": "تقارير متقدمة", "free": "✘", "premium": "✔" }
+      {
+        "feature": "إشعارات البريد الإلكتروني",
+        "free": "✘",
+        "premium": "✔ الترقية لفتح"
+      },
+      { "feature": "تحليلات أساسية", "free": "✘", "premium": "✔ الترقية لفتح" },
+      { "feature": "تقارير متقدمة", "free": "✘", "premium": "✔ الترقية لفتح" }
     ]
   },
   "createAccount": {
@@ -367,7 +371,7 @@
       "choosePlan": "اختر الخطة"
     }
   },
-    "AccountCreation": {
+  "AccountCreation": {
     "fullName": "الاسم الكامل",
     "fullNamePlaceholder": "جون دو",
     "email": "البريد الإلكتروني",
@@ -406,14 +410,14 @@
       "finish": "إنهاء إعداد الموقع"
     }
   },
-    "completeProfile": {
+  "completeProfile": {
     "title": "تم إنشاء حسابك بنجاح!",
     "subtitle": "شارك رابط الاشتراك مع عملائك",
     "copy": "نسخ الرابط",
     "copied": "تم النسخ",
     "dashboard": "الانتقال إلى لوحة التحكم"
   },
-   "payment": {
+  "payment": {
     "title": "تفاصيل الدفع",
     "subtitle": "أدخل معلومات بطاقتك لبدء الاشتراك المميز",
     "cardNumber": "رقم البطاقة",

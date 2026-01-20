@@ -205,7 +205,7 @@ export function FeatureComparison() {
                   </div>
 
                   {/* FREE header */}
-                  <div className="col-span-4 bg-white border border-gray-100 rounded-tl-lg">
+                  <div className="col-span-4 bg-white border-2 border-gray-100 rounded-tl-lg">
                     <div className="pt-11 relative border-gray-100 flex flex-col items-center justify-center px-4">
                       <div className="text-2xl font-bold text-gray-900 mb-2">
                         Free Plan
@@ -223,7 +223,7 @@ export function FeatureComparison() {
                   </div>
 
                   {/* PREMIUM header (highlight) */}
-                  <div className="col-span-4 border-gray-100 border from-[#7A5CFF]/10 to-[#7A5CFF]/12">
+                  <div className="col-span-4 border-gray-100 border-2 border-l-0 from-[#7A5CFF]/10 to-[#7A5CFF]/12">
                     <div className="py-6 relative flex flex-col items-center justify-center px-4">
                       <span className="absolute left-auto right-auto top-0 inline-flex items-center gap-2 rounded-full bg-[#7A5CFF] px-3 py-1 text-xs font-semibold text-white shadow">
                         <Star className="h-3.5 w-3.5" />
@@ -261,7 +261,7 @@ export function FeatureComparison() {
                           {section.title}
                         </div>
                       </div>
-                      <div className="col-span-4 bg-white border-b border-gray-100 border-l" />
+                      <div className="col-span-4 bg-white border-b border-gray-100 border-l-2" />
                       <div className="col-span-4 bg-linear-to-b from-[#7A5CFF]/10 to-[#7A5CFF]/12 border-b border-gray-100 border-l" />
 
                       {/* Feature rows */}
@@ -281,7 +281,7 @@ export function FeatureComparison() {
                           </div>
 
                           {/* Free */}
-                          <div className="col-span-4 text-[16px] bg-white border-b border-gray-100 border-l px-4 py-5 flex items-center justify-center">
+                          <div className="col-span-4 text-[16px] bg-white border-b border-gray-100 border-l-2 px-4 py-5 flex items-center justify-center">
                             {renderCellValue(row.free, "free")}
                           </div>
 

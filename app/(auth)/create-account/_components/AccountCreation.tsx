@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, UseFormRegister } from "react-hook-form";
-import {
-  FaEnvelope,
-  FaEye,
-  FaEyeSlash,
-  FaLock,
-  FaPhoneAlt,
-  FaUser,
-} from "react-icons/fa";
+import { useForm, Controller, UseFormRegister } from "react-hook-form";
+import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
@@ -24,12 +19,18 @@ interface AccountCreationProps {
 }
 
 export default function AccountCreation({ onNext }: AccountCreationProps) {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, control } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const { locale, t } = useI18n();
 
+  const isRTL = locale === "ar";
+
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4 ">
+    <form
+      onSubmit={handleSubmit(onNext)}
+      className="space-y-4"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <Input
         label={t("AccountCreation.fullName")}
         icon={<FaUser />}
@@ -51,19 +52,41 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
           {t("AccountCreation.phone")} *
         </label>
 
-        <div className="relative flex items-center">
-          <span className="absolute left-3 text-gray-400">
-            <FaPhoneAlt />
-          </span>
+        <Controller
+          name="phone"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <PhoneInput
+              international
+              defaultCountry={"AR"}
+              value={field.value}
+              onChange={field.onChange}
+              dir={isRTL ? "rtl" : "ltr"}
+              className={`
+          w-full
 
-          <input
-            placeholder={t("AccountCreation.phonePlaceholder")}
-            {...register("phone", { required: true })}
-            className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-3 text-sm
-              text-gray-900
-              dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-          />
-        </div>
+          [&_input]:h-11
+          [&_input]:w-full
+          [&_input]:rounded-md
+          [&_input]:border
+          [&_input]:border-gray-300
+          [&_input]:bg-white
+          dark:[&_input]:bg-gray-800
+          dark:[&_input]:border-gray-600
+
+          [&_input]:px-3
+          [&_input]:text-sm
+          [&_input]:text-gray-900
+          dark:[&_input]:text-white
+
+          [&_.PhoneInputCountry]:mr-2
+          rtl:[&_.PhoneInputCountry]:ml-2
+          rtl:[&_.PhoneInputCountry]:mr-0
+        `}
+            />
+          )}
+        />
       </div>
 
       {/* Password */}
@@ -73,21 +96,31 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
         </label>
 
         <div className="relative">
-          <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <FaLock
+            className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+              isRTL ? "right-3" : "left-3"
+            }`}
+          />
 
           <input
             type={showPassword ? "text" : "password"}
             placeholder={t("AccountCreation.passwordPlaceholder")}
             {...register("password", { required: true })}
-            className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-12 text-sm
-              text-gray-900
-              dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className={`
+              w-full rounded-md border border-gray-300
+              bg-white dark:bg-gray-800
+              py-3 text-sm
+              text-gray-900 dark:text-white
+              ${isRTL ? "pr-10 pl-12" : "pl-10 pr-12"}
+            `}
           />
 
           <button
             type="button"
             onClick={() => setShowPassword((p) => !p)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700"
+            className={`absolute top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 ${
+              isRTL ? "left-3" : "right-3"
+            }`}
           >
             <div className="flex items-center gap-2">
               {showPassword ? <FaEye /> : <FaEyeSlash />}
@@ -101,13 +134,12 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
       <button
         type="submit"
         className="mt-4 w-full rounded-md bg-linear-to-r
-          from-blue-500 to-purple-500 py-3 text-sm font-medium text-white
-          hover:opacity-90 transition cursor-pointer"
+        from-blue-500 to-purple-500 py-3 text-sm font-medium text-white
+        hover:opacity-90 transition cursor-pointer"
       >
         {t("AccountCreation.submit")}
       </button>
 
-      {/* Helper text */}
       <p className="text-center text-xs text-gray-400">
         Takes less than 2 minutes
       </p>
@@ -147,8 +179,7 @@ function Input({
           placeholder={placeholder}
           {...register}
           className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-3 text-sm
-            text-gray-900
-            dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
     </div>

@@ -359,7 +359,13 @@
     "step1Desc": "الخطوة {{step}} من {{total}} - إعداد ملف النشاط التجاري",
     "step2Desc": "الخطوة {{step}} من {{total}} - تحديد الخدمات التي تقدمها",
     "step3Desc": "الخطوة {{step}} من {{total}} - إضافة أعضاء الفريق",
-    "step4Desc": "الخطوة {{step}} من {{total}} - اختر الخطة المناسبة لعملك"
+    "step4Desc": "الخطوة {{step}} من {{total}} - اختر الخطة المناسبة لعملك",
+    
+      "steps": {
+      "accountCreation": "إنشاء الحساب",
+      "basicBusinessInfo": "معلومات النشاط التجاري",
+      "choosePlan": "اختر الخطة"
+    }
   },
     "AccountCreation": {
     "fullName": "الاسم الكامل",
@@ -371,6 +377,7 @@
     "password": "كلمة المرور",
     "passwordPlaceholder": "••••••••",
     "submit": "متابعة إلى معلومات العمل"
+
   },
   "BusinessInfo": {
     "businessName": "اسم العمل",

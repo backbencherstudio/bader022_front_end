@@ -347,20 +347,26 @@
     ]
   },
   "createAccount": {
-    "step1Title": "Complete your profile",
+    "step1Title": "Create your Bolki Merchant Account",
     "step2Title": "Business Info",
     "step3Title": "Choose your plan",
 
-    "step1Desc": "Step {{step}} of {{total}} - Set up your Business profile",
+    "step1Desc": "Step {{step}} of {{total}} -  Account Details",
     "step2Desc": "Step {{step}} of {{total}} - Define the Business Info you offer",
-    "step3Desc": "Step {{step}} of {{total}} - Select the plan that fits your business"
+    "step3Desc": "Step {{step}} of {{total}} - Select the plan that fits your business",
+
+      "steps": {
+      "accountCreation": "Account creation",
+      "basicBusinessInfo": "Basic business information",
+      "choosePlan": "Choose your plan"
+    }
   },
     "AccountCreation": {
     "fullName": "Full Name",
     "fullNamePlaceholder": "John Doe",
-    "email": "Email Address",
+    "email": "Business Email Address",
     "emailPlaceholder": "john@example.com",
-    "phone": "Phone",
+    "phone": "Business Phone Number",
     "phonePlaceholder": "+1 (555) 000-0000",
     "password": "Password",
     "passwordPlaceholder": "••••••••",

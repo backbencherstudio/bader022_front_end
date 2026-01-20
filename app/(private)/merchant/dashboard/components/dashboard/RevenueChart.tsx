@@ -30,9 +30,20 @@ export default function RevenueChart({
 }: RevenueChartProps) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [paddingRight, setPaddingRight] = useState(8);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+
+    const handleResize = () => {
+      setPaddingRight(window.innerWidth >= 1320 ? 144 : 8);
+    };
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   if (!mounted) return null;
@@ -45,7 +56,8 @@ export default function RevenueChart({
         width: "100%",
         height: 520,
         borderRadius: 8,
-        padding: 12,
+        padding: 8,
+        paddingRight,
         backgroundColor: isDark ? "#1f2937" : "#ffffff",
       }}
     >
@@ -67,10 +79,8 @@ export default function RevenueChart({
             }}
             formatter={(value?: number) => (
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <CurrencyIcon size={14} />
-                  <span>{value ?? 0}</span>
-                </span>
+                <CurrencyIcon size={14} />
+                <span>{value ?? 0}</span>
               </div>
             )}
           />

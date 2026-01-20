@@ -2,7 +2,7 @@
 import StatCard from "./components/dashboard/StateCard";
 import { Calendar, SaudiRiyal, TrendingUp, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ChartsTabs from "./components/dashboard/RevenueChart";
+import RevenueChart from "./components/dashboard/RevenueChart";
 import {
   Appointment,
   TodaysAppointments,
@@ -101,10 +101,10 @@ export default function DashboardPage() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <ChartsTabs data={weeklyData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart data={weeklyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <ChartsTabs data={monthlyData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart data={monthlyData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
               </Tabs>
             </div>

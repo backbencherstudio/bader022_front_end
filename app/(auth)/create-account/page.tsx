@@ -44,8 +44,13 @@ interface CreateAccountData {
   };
 }
 
-const steps = [1, 2, 3] as const;
-const TOTAL_STEPS = steps.length;
+// const steps = [1, 2, 3] as const;
+// const steps = [
+//   "Account creation",
+//   "Basic business information",
+//   "Choose your plan",
+// ];
+// const TOTAL_STEPS = steps.length;
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -55,6 +60,23 @@ const LANGS = {
 export default function CreateAccountPage() {
   const { locale, setLocale, t } = useI18n();
   const { step, setStep } = useCreateAccount();
+
+  const steps = [
+    {
+      key: "step1",
+      label: t("createAccount.steps.accountCreation"),
+    },
+    {
+      key: "step2",
+      label: t("createAccount.steps.basicBusinessInfo"),
+    },
+    {
+      key: "step3",
+      label: t("createAccount.steps.choosePlan"),
+    },
+  ];
+
+  const TOTAL_STEPS = steps.length;
 
   const [createAccountData, setCreateAccountData] = useState<CreateAccountData>(
     {
@@ -106,6 +128,7 @@ export default function CreateAccountPage() {
           <BusinessInfo
             data={createAccountData.step1}
             onNext={(data) => handleNext("step1", data)}
+            onPrevious={handlePrevious}
           />
         );
       case 3:
@@ -126,10 +149,10 @@ export default function CreateAccountPage() {
   };
 
   return (
-    <div className="container mx-auto h-fit space-y-5 p-5">
+    <div className="max-w-4xl mx-auto p-5  rounded-md shadow bg-white px-4 py-6 sm:px-6 dark:bg-gray-900">
       {/* Header */}
       {step <= 3 && (
-        <div className="flex items-center justify-between border-b border-b-[#dfe1e7] pb-4 dark:border-b-[#2a2d35]">
+        <div className="flex items-center justify-between pb-4">
           <div className="flex flex-col gap-2">
             <h1 className="font-inter text-2xl font-medium text-black dark:text-white">
               {step === 1 && t("createAccount.step1Title")}
@@ -153,46 +176,74 @@ export default function CreateAccountPage() {
           </div>
 
           {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
-                <Image
-                  src={LANGS[locale].flag}
-                  alt={LANGS[locale].label}
-                  width={22}
-                  height={22}
-                />
-                <span className="uppercase">{locale}</span>
-                <ChevronDown size={14} />
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              align="end"
-              className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white"
-            >
-              {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map((key) => (
-                <DropdownMenuItem
-                  key={key}
-                  onClick={() => setLocale(key)}
-                  className="flex cursor-pointer items-center gap-2 py-1"
-                >
+          {step === 1 ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
                   <Image
-                    src={LANGS[key].flag}
-                    alt={LANGS[key].label}
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
                     width={22}
                     height={22}
                   />
-                  <span>{LANGS[key].label}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <span className="uppercase">{locale}</span>
+                  <ChevronDown size={14} />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent
+                align="end"
+                className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
+              >
+                {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map(
+                  (key) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setLocale(key)}
+                      className="flex cursor-pointer items-center gap-2 py-1"
+                    >
+                      <Image
+                        src={LANGS[key].flag}
+                        alt={LANGS[key].label}
+                        width={22}
+                        height={22}
+                      />
+                      <span>{LANGS[key].label}</span>
+                    </DropdownMenuItem>
+                  ),
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              {locale === "ar" ? (
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                  <Image
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
+                  />
+                  <span className="">Arabic</span>
+                </button>
+              ) : (
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                  <Image
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
+                  />
+                  <span className="">English</span>
+                </button>
+              )}
+            </>
+          )}
         </div>
       )}
 
       {/* Progress */}
-      {step <= steps.length && (
+      {/* {step <= steps.length && (
         <div className="flex w-full gap-5">
           {steps.map((item) => (
             <div key={item} className="flex-1">
@@ -208,7 +259,67 @@ export default function CreateAccountPage() {
             </div>
           ))}
         </div>
-      )}
+      )} */}
+      {/* Progress */}
+      <div className="max-w-xl mx-auto">
+        {step <= steps.length && (
+          <div className="w-full flex items-start mb-8">
+            {steps.map((item, index) => {
+              const currentStep = index + 1;
+              const isActive = step === currentStep;
+              const isCompleted = step > currentStep;
+
+              return (
+                <div
+                  key={item.key}
+                  className="flex flex-1 items-center relative"
+                >
+                  {/* Step */}
+                  <div className="relative flex flex-col items-center">
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium
+                  ${
+                    isCompleted || isActive
+                      ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+                      : "border border-gray-300 dark:border-gray-600 text-gray-400 bg-white dark:bg-gray-900"
+                  }
+                `}
+                    >
+                      {isCompleted ? "✓" : currentStep}
+                    </div>
+
+                    {/* Label */}
+                    <span
+                      className={`absolute hidden md:block top-12 w-max text-xs text-center
+                  ${
+                    isActive || isCompleted
+                      ? "text-gray-900 dark:text-gray-100"
+                      : "text-gray-400"
+                  }
+                `}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+
+                  {/* Connector */}
+                  {index !== steps.length - 1 && (
+                    <div
+                      className={`flex-1 h-2.5 
+                  ${
+                    isCompleted
+                      ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+                      : "bg-gray-200 dark:bg-gray-700"
+                  }
+                `}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {/* Step Content */}
       {renderStep()}

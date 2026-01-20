@@ -60,7 +60,7 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
             placeholder={t("AccountCreation.phonePlaceholder")}
             {...register("phone", { required: true })}
             className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-3 text-sm
-              text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500
+              text-gray-900
               dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           />
         </div>
@@ -80,7 +80,7 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
             placeholder={t("AccountCreation.passwordPlaceholder")}
             {...register("password", { required: true })}
             className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-12 text-sm
-              text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500
+              text-gray-900
               dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           />
 
@@ -147,7 +147,7 @@ function Input({
           placeholder={placeholder}
           {...register}
           className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-3 text-sm
-            text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500
+            text-gray-900
             dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>

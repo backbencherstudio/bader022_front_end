@@ -176,41 +176,69 @@ export default function CreateAccountPage() {
           </div>
 
           {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
-                <Image
-                  src={LANGS[locale].flag}
-                  alt={LANGS[locale].label}
-                  width={22}
-                  height={22}
-                />
-                <span className="uppercase">{locale}</span>
-                <ChevronDown size={14} />
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              align="end"
-              className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white"
-            >
-              {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map((key) => (
-                <DropdownMenuItem
-                  key={key}
-                  onClick={() => setLocale(key)}
-                  className="flex cursor-pointer items-center gap-2 py-1"
-                >
+          {step === 1 ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
                   <Image
-                    src={LANGS[key].flag}
-                    alt={LANGS[key].label}
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
                     width={22}
                     height={22}
                   />
-                  <span>{LANGS[key].label}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <span className="uppercase">{locale}</span>
+                  <ChevronDown size={14} />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent
+                align="end"
+                className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
+              >
+                {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map(
+                  (key) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setLocale(key)}
+                      className="flex cursor-pointer items-center gap-2 py-1"
+                    >
+                      <Image
+                        src={LANGS[key].flag}
+                        alt={LANGS[key].label}
+                        width={22}
+                        height={22}
+                      />
+                      <span>{LANGS[key].label}</span>
+                    </DropdownMenuItem>
+                  ),
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              {locale === "ar" ? (
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                  <Image
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
+                  />
+                  <span className="">English</span>
+                </button>
+              ) : (
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                  <Image
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
+                  />
+                  <span className="">Arabic</span>
+                </button>
+              )}
+            </>
+          )}
         </div>
       )}
 
@@ -249,7 +277,7 @@ export default function CreateAccountPage() {
                   {/* Step */}
                   <div className="relative flex flex-col items-center">
                     <div
-                      className={`z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium
+                      className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium
                   ${
                     isCompleted || isActive
                       ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"

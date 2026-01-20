@@ -26,7 +26,7 @@ interface AccountCreationProps {
 export default function AccountCreation({ onNext }: AccountCreationProps) {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-4 ">
@@ -89,15 +89,10 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
             onClick={() => setShowPassword((p) => !p)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700"
           >
-            {showPassword ? (
-              <div className="flex items-center gap-2">
-                <FaEye /> Hide
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <FaEyeSlash /> Show
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+              {locale !== "ar" && (showPassword ? "Hide" : "Show")}
+            </div>
           </button>
         </div>
       </div>

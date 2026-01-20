@@ -224,7 +224,7 @@ export default function CreateAccountPage() {
                     width={22}
                     height={22}
                   />
-                  <span className="">English</span>
+                  <span className="">Arabic</span>
                 </button>
               ) : (
                 <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
@@ -234,7 +234,7 @@ export default function CreateAccountPage() {
                     width={22}
                     height={22}
                   />
-                  <span className="">Arabic</span>
+                  <span className="">English</span>
                 </button>
               )}
             </>

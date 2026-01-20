@@ -150,8 +150,8 @@
       }
     },
     "BusinessInfo": {
-    "backButton": "Back"
-  }
+      "backButton": "Back"
+    }
   },
   "WhyChooseBokli": {
     "title": "Why Choose Bokli?",
@@ -332,18 +332,34 @@
       {
         "feature": "Max booking",
         "free": "25 bookings per month",
-        "premium": "Unlimited"
+        "premium": "✔ Unlimited"
       },
       { "feature": "Multiple branches", "free": "✘", "premium": "✔" },
       {
         "feature": "Booking reminders",
         "free": "Manual reminder sending",
-        "premium": "Auto reminders"
+        "premium": "✔ Auto reminders"
       },
-      { "feature": "Mini-site access", "free": "✘", "premium": "✔" },
-      { "feature": "Email notifications", "free": "✘", "premium": "✔" },
-      { "feature": "Basic analytics", "free": "✘", "premium": "✔" },
-      { "feature": "Advanced reports", "free": "✘", "premium": "✔" }
+      {
+        "feature": "Mini-site access",
+        "free": "✘",
+        "premium": "✔"
+      },
+      {
+        "feature": "Email notifications",
+        "free": "✘",
+        "premium": "✔ Upgrade to unlock"
+      },
+      {
+        "feature": "Basic analytics",
+        "free": "✘",
+        "premium": "✔ Upgrade to unlock"
+      },
+      {
+        "feature": "Advanced reports",
+        "free": "✘",
+        "premium": "✔ Upgrade to unlock"
+      }
     ]
   },
   "createAccount": {
@@ -355,7 +371,7 @@
     "step2Desc": "Step {{step}} of {{total}} - Define the Business Info you offer",
     "step3Desc": "Step {{step}} of {{total}} - Select the plan that fits your business"
   },
-    "AccountCreation": {
+  "AccountCreation": {
     "fullName": "Full Name",
     "fullNamePlaceholder": "John Doe",
     "email": "Email Address",
@@ -381,9 +397,8 @@
     "businessAddress": "Business Address",
     "businessAddressPlaceholder": "123 Main St, City, State, ZIP",
     "submit": "Continue to Package Selection"
-  
-},
-    "finalizing": {
+  },
+  "finalizing": {
     "title": "Finalizing Your Website...",
     "subtitle": "Finishing setting up your website...",
     "steps": {
@@ -394,7 +409,7 @@
       "finish": "Finishing your website setup"
     }
   },
-    "completeProfile": {
+  "completeProfile": {
     "title": "Your Account Has Been Successfully Created!",
     "subtitle": "Share the subscription link with your customers",
     "copy": "Copy Link",
@@ -422,6 +437,4 @@
   "common": {
     "cancel": "Cancel"
   }
-
-
 }

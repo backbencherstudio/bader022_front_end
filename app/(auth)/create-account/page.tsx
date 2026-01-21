@@ -181,7 +181,7 @@ export default function CreateAccountPage() {
           {step === 1 ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
                   <Image
                     src={LANGS[locale].flag}
                     alt={LANGS[locale].label}
@@ -219,7 +219,7 @@ export default function CreateAccountPage() {
           ) : (
             <>
               {locale === "ar" ? (
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
                   <Image
                     src={LANGS[locale].flag}
                     alt={LANGS[locale].label}
@@ -229,7 +229,7 @@ export default function CreateAccountPage() {
                   <span className="">Arabic</span>
                 </button>
               ) : (
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 dark:text-white">
+                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
                   <Image
                     src={LANGS[locale].flag}
                     alt={LANGS[locale].label}

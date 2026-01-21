@@ -48,13 +48,12 @@ const titleVariant = {
 };
 
 export default function ProjectSelectorImages() {
-  const { t } = useI18n();
+  const { t, get } = useI18n();
   const [selected, setSelected] = useState<string>("");
 
-  const items = useMemo(() => {
-    const value = t("ProjectSelector.items");
-    return Array.isArray(value) ? (value as ProjectItem[]) : [];
-  }, [t]);
+  const items = useMemo<ProjectItem[]>(() => {
+    return get<ProjectItem[]>("ProjectSelector.items") ?? [];
+  }, [get]);
 
   return (
     <section id="services" className="w-full bg-white overflow-hidden">
@@ -66,8 +65,8 @@ export default function ProjectSelectorImages() {
           initial="hidden"
           whileInView="visible"
           viewport={{
-            once: false, // 🔥 scroll up & down
-            amount: 0.6, // 🔥 trigger when mostly visible
+            once: false,
+            amount: 0.6,
           }}
         >
           <h2 className="text-3xl md:text-5xl font-semibold text-slate-900 pb-4">

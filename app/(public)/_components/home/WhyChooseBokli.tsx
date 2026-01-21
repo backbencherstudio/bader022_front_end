@@ -108,13 +108,11 @@ const cardVariant = {
 };
 
 export default function WhyChooseBokli() {
-  const { t } = useI18n();
+  const { t, get } = useI18n();
 
   const items = useMemo(() => {
-    const value = t("WhyChooseBokli.items");
-    return Array.isArray(value) ? (value as ChooseItem[]) : [];
-  }, [t]);
-
+    return get<ChooseItem[]>("WhyChooseBokli.items") ?? [];
+  }, [get]);
   return (
     <section className="bg-[#F9FAFB] w-full">
       <div className="container mx-auto py-20 px-4">

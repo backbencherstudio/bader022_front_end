@@ -72,22 +72,18 @@ const tileVariant = {
 };
 
 export default function MiniWebsiteBuilder() {
-  const { t, locale } = useI18n();
+  const { t, locale, get } = useI18n();
+  const topOptions = useMemo<string[]>(() => {
+    return get<string[]>("MiniWebsiteBuilder.topOptions") ?? [];
+  }, [get]);
 
-  const topOptions = useMemo(() => {
-    const value = t("MiniWebsiteBuilder.topOptions");
-    return Array.isArray(value) ? (value as string[]) : [];
-  }, [t]);
+  const extraLeft = useMemo<string[]>(() => {
+    return get<string[]>("MiniWebsiteBuilder.extraLeft") ?? [];
+  }, [get]);
 
-  const extraLeft = useMemo(() => {
-    const value = t("MiniWebsiteBuilder.extraLeft");
-    return Array.isArray(value) ? (value as string[]) : [];
-  }, [t]);
-
-  const extraRight = useMemo(() => {
-    const value = t("MiniWebsiteBuilder.extraRight");
-    return Array.isArray(value) ? (value as string[]) : [];
-  }, [t]);
+  const extraRight = useMemo<string[]>(() => {
+    return get<string[]>("MiniWebsiteBuilder.extraRight") ?? [];
+  }, [get]);
 
   return (
     <section className="relative w-full overflow-hidden">

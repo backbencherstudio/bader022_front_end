@@ -403,7 +403,15 @@
     },
     "businessAddress": "Business Address",
     "businessAddressPlaceholder": "123 Main St, City, State, ZIP",
-    "submit": "Continue to Package Selection"
+    "submit": "Continue to Package Selection",
+
+    "numberOfBranches": "Number of branches",
+    "selectBranches": "Please select number of branches",
+    "branches": {
+      "one": "1 branch",
+      "twoToFive": "2–5 branches",
+      "sixPlus": "6+ branches"
+    }
   },
   "finalizing": {
     "title": "Finalizing Your Website...",

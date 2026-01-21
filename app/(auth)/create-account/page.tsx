@@ -24,6 +24,7 @@ interface CreateAccountData {
     businessName: string;
     businessAddress: string;
     category: string;
+    branches: "1" | "2-5" | "6+";
   };
   step2: {
     serviceName: string;
@@ -84,6 +85,7 @@ export default function CreateAccountPage() {
         businessName: "",
         businessAddress: "",
         category: "",
+        branches: "1",
       },
       step2: { serviceName: "" },
       step3: { serviceName: "" },

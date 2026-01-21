@@ -397,7 +397,15 @@
     },
     "businessAddress": "عنوان العمل",
     "businessAddressPlaceholder": "123 شارع رئيسي، المدينة، الدولة، الرمز البريدي",
-    "submit": "الانتقال إلى اختيار الباقة"
+    "submit": "الانتقال إلى اختيار الباقة",
+    
+    "numberOfBranches": "عدد الفروع",
+    "selectBranches": "يرجى اختيار عدد الفروع",
+    "branches": {
+      "one": "فرع واحد",
+      "twoToFive": "من 2 إلى 5 فروع",
+      "sixPlus": "6 فروع أو أكثر"
+    }
   },
   "finalizing": {
     "title": "جارٍ إنهاء موقعك...",

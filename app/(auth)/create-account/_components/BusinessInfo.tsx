@@ -20,6 +20,7 @@ type Step1Data = {
   businessName: string;
   businessAddress: string;
   category: string;
+  branches: "1" | "2-5" | "6+";
 };
 
 interface Step1Props {
@@ -40,6 +41,11 @@ const CATEGORIES = [
   { key: "maintenance", label: "Maintenance", icon: Wrench },
   { key: "other", label: "Other", icon: MoreHorizontal },
 ];
+const BRANCH_OPTIONS = [
+  { key: "1", label: "1 Branch" },
+  { key: "2-5", label: "2–5 Branches" },
+  { key: "6+", label: "6+ Branches" },
+] as const;
 
 export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
   const {
@@ -119,6 +125,43 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
         {errors.category && (
           <p className="mt-1 text-xs text-red-500">
             {t("BusinessInfo.selectCategory")}
+          </p>
+        )}
+      </div>
+
+      {/* Number of Branches */}
+      <div>
+        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          {t("BusinessInfo.numberOfBranches")} *
+        </label>
+
+        <div className="grid grid-cols-3 gap-3">
+          {BRANCH_OPTIONS.map(({ key, label }) => {
+            const active = watch("branches") === key;
+
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() =>
+                  setValue("branches", key, { shouldValidate: true })
+                }
+                className={`flex items-center justify-center rounded-lg border p-4 text-sm font-medium transition
+            ${
+              active
+                ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
+                : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+            }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {errors.branches && (
+          <p className="mt-1 text-xs text-red-500">
+            {t("BusinessInfo.selectBranches")}
           </p>
         )}
       </div>

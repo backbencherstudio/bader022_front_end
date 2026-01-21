@@ -50,7 +50,7 @@ export default function FinalizingYourWebsite() {
   );
 
   return (
-    <div className="p-8 space-y-8 min-h-screen">
+    <div className="p-8 space-y-8">
       {/* Icon */}
       <div className="flex justify-center">
         <div className="flex size-20 items-center justify-center rounded-full bg-[#0f172a] dark:bg-blue-600">

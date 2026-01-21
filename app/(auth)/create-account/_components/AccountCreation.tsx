@@ -58,32 +58,28 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
           rules={{ required: true }}
           render={({ field }) => (
             <PhoneInput
+              country="SA"
               international
-              defaultCountry={"AR"}
+              withCountryCallingCode
+              defaultCountry={"SA"}
+              countryCallingCodeEditable={false}
               value={field.value}
               onChange={field.onChange}
-              dir={isRTL ? "rtl" : "ltr"}
               className={`
-          w-full
+                          w-full
+                          [&_input]:h-11
+                          [&_input]:w-full
+                          [&_input]:rounded-md
+                          [&_input]:border
+                          [&_input]:pl-2
+                          [&_input]:border-gray-300
+                          dark:[&_input]:border-gray-600
 
-          [&_input]:h-11
-          [&_input]:w-full
-          [&_input]:rounded-md
-          [&_input]:border
-          [&_input]:border-gray-300
-          [&_input]:bg-white
-          dark:[&_input]:bg-gray-800
-          dark:[&_input]:border-gray-600
-
-          [&_input]:px-3
-          [&_input]:text-sm
-          [&_input]:text-gray-900
-          dark:[&_input]:text-white
-
-          [&_.PhoneInputCountry]:mr-2
-          rtl:[&_.PhoneInputCountry]:ml-2
-          rtl:[&_.PhoneInputCountry]:mr-0
-        `}
+                          /* Disable country selector interaction */
+                          [&_.PhoneInputCountrySelect]:pointer-events-none
+                          [&_.PhoneInputCountrySelect]:opacity-60
+                          [&_.PhoneInputCountrySelect]:cursor-not-allowed
+                        `}
             />
           )}
         />

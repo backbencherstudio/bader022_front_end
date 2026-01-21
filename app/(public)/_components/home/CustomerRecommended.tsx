@@ -36,12 +36,11 @@ const cardVariant = {
 };
 
 export default function CustomerRecommended() {
-  const { t, locale } = useI18n();
+  const { t, locale, get } = useI18n();
 
   const testimonials = useMemo(() => {
-    const value = t("Testimonials.items");
-    return Array.isArray(value) ? (value as Testimonial[]) : [];
-  }, [t]);
+    return get<Testimonial[]>("Testimonials.items") ?? [];
+  }, [get]);
 
   const [perPage, setPerPage] = useState(3);
   const [page, setPage] = useState(0);
@@ -61,7 +60,7 @@ export default function CustomerRecommended() {
 
   const pages = useMemo(
     () => chunk(testimonials, perPage),
-    [testimonials, perPage]
+    [testimonials, perPage],
   );
 
   useEffect(() => {

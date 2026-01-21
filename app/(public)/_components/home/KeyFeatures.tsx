@@ -56,12 +56,11 @@ const featureVariant = {
 };
 
 export default function KeyFeatures() {
-  const { t, locale } = useI18n();
+  const { t, locale, get } = useI18n();
 
-  const features = useMemo(() => {
-    const value = t("KeyFeatures.features");
-    return Array.isArray(value) ? (value as Feature[]) : [];
-  }, [t]);
+  const features = useMemo<Feature[]>(() => {
+    return get<Feature[]>("KeyFeatures.features") ?? [];
+  }, [get]);
 
   return (
     <section className="relative w-full overflow-hidden">

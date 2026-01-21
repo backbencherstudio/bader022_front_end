@@ -3,6 +3,7 @@ import { LandingPageProvider } from "../components/mini-site/context/LandingBuil
 import LandingPage from "../components/mini-site/components/LandingPage";
 import InputPanel from "../components/mini-site/components/InputPanel";
 import { FiCopy, FiSave } from "react-icons/fi";
+import MiniSiteCopyLink from "../components/mini-site/components/MiniSiteCopyLink";
 
 export default function page() {
   return (
@@ -28,7 +29,7 @@ export default function page() {
           </div>
 
           {/* Bottom row */}
-          <div className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 gap-4">
+          {/* <div className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 gap-4">
             <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 w-full">
               <span className="shrink-0">Live at:</span>
 
@@ -43,7 +44,8 @@ export default function page() {
               <FiCopy size={16} />
               Copy Link
             </button>
-          </div>
+          </div> */}
+          <MiniSiteCopyLink />
         </div>
 
         {/* CONTENT */}

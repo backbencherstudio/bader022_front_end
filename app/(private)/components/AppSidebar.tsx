@@ -84,7 +84,7 @@ function SidebarInner({
               alt="Logo"
               width={200}
               height={100}
-              className="rounded dark:hidden -ml-10"
+              className="rounded dark:hidden -ml-15"
               priority
             />
             <Image
@@ -92,7 +92,7 @@ function SidebarInner({
               alt="Logo"
               width={200}
               height={100}
-              className="rounded hidden dark:block -ml-10"
+              className="rounded hidden dark:block -ml-15"
               priority
             />
           </>

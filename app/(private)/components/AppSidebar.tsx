@@ -77,14 +77,25 @@ function SidebarInner({
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 gap-3 px-4 py-5 border-b border-white/10 dark:border-[#555]">
         {logoSrc && (
-          <Image
-            src={logoSrc}
-            alt="Logo"
-            width={100}
-            height={100}
-            className="rounded dark:bg-gray-300"
-            priority
-          />
+          <>
+            {" "}
+            <Image
+              src="/images/Logo_dark.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="rounded dark:hidden "
+              priority
+            />
+            <Image
+              src="/images/Logo-White.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="rounded hidden dark:block "
+              priority
+            />
+          </>
         )}
 
         {title && (

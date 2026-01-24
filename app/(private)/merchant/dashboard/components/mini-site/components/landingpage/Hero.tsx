@@ -26,7 +26,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             backgroundColor: heroData.overlayColor,
-            opacity: 0.3,
+            opacity: 0.05,
           }}
         />
 

@@ -17,7 +17,7 @@ export default function LandingPage() {
       {/* HERO */}
       <Hero />
       {/* About Section */}
-      <About /> 
+      <About />
       {/* Why Choose Us */}
       <WhyChooseUs />
       {/* Services Preview */}

@@ -75,7 +75,7 @@ function SidebarInner({
   return (
     <>
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 gap-3 px-4 pb-5 border-b border-white/10 dark:border-[#555]">
+      <div className="bg-white dark:bg-gray-900 gap-3 -mt-5 px-4 pb-5 border-b border-white/10 dark:border-[#555]">
         {logoSrc && (
           <>
             {" "}

@@ -8,7 +8,7 @@ export default function CreateAccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-linear-to-r from-purple-200 to-indigo-200 min-h-screen">
+    <div className="bg-linear-to-r from-purple-200 via-indigo-400 to-purple-200 min-h-screen">
       <div className="p-5">
         {" "}
         {/* Logo */}

@@ -42,13 +42,13 @@ export default function ServicesPreview() {
                 color: colorSystemData.bodyTextColor,
                 fontSize: typographyData.bodySize,
               }}
-              className="text-gray-600 dark:text-gray-300 max-w-2xl"
+              className="text-gray-600 dark:text-gray-300 max-w-xl"
             >
               {servicesPreviewData.servicesPreviewSubtitle}
             </p>
             <button
               style={{
-                backgroundColor: colorSystemData.buttonColor,
+                backgroundColor: colorSystemData.primaryColor,
               }}
               className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
@@ -114,7 +114,7 @@ export default function ServicesPreview() {
                   <Link href={"/user/bookings/add-booking"}>
                     <button
                       style={{
-                        backgroundColor: colorSystemData.buttonColor,
+                        backgroundColor: colorSystemData.primaryColor,
                       }}
                       className="
                 px-5 py-2 rounded-md

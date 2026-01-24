@@ -69,11 +69,11 @@ export default function CTABanner() {
           <Link href={"/user/bookings/add-booking"}>
             <button
               style={{
-                backgroundColor: colorSystemData.buttonColor,
+                backgroundColor: colorSystemData.primaryColor,
               }}
               className="
               px-6 py-3 rounded-md
-              text-white font-medium
+              text-white font-medium            
               transition hover:opacity-90 cursor-pointer
             "
             >

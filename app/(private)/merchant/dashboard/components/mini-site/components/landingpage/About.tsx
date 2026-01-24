@@ -55,7 +55,7 @@ export default function About() {
 
             <button
               style={{
-                backgroundColor: colorSystemData.buttonColor,
+                backgroundColor: colorSystemData.primaryColor,
               }}
               className="
                 px-6 py-3 rounded-md

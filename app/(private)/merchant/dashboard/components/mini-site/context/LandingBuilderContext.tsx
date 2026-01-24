@@ -60,6 +60,7 @@ type CtaBannerData = {
 type BrandingData = {
   logo: string;
   position?: "left" | "center" | "right";
+  logoSize: number;
 };
 
 type ColorSystemData = {
@@ -157,7 +158,7 @@ export function LandingPageProvider({
     secondaryBtn: "Book A Consultation",
     heroImage: "",
     imageLeft: true,
-    overlayColor: "#f7f7f7",
+    overlayColor: "#fff",
     heroHeight: 48,
   });
 
@@ -239,10 +240,11 @@ export function LandingPageProvider({
   const [brandingData, setBrandingData] = useState<BrandingData>({
     logo: "",
     position: "center",
+    logoSize: 100,
   });
 
   const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({
-    primaryColor: "#701096",
+    primaryColor: "#d98526",
     secondaryColor: "#235115",
     headingColor: "#221551",
     bodyTextColor: "#111927",
@@ -250,9 +252,9 @@ export function LandingPageProvider({
   });
 
   const [typographyData, setTypographyData] = useState<TypographyData>({
-    h1Size: 30,
+    h1Size: 26,
     h2Size: 10,
-    bodySize: 20,
+    bodySize: 16,
     fontFamily: "Inter",
   });
 

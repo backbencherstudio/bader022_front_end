@@ -11,7 +11,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full">
-      <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[600px] w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden rounded-md">
         {/* Background Image */}
         <Image
           src={heroData.heroImage || "/images/mini-site/heroImage.png"}
@@ -26,7 +26,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             backgroundColor: heroData.overlayColor,
-            opacity: 0.6,
+            opacity: 0.3,
           }}
         />
 
@@ -39,17 +39,17 @@ export default function Hero() {
               brandingData.position === "center"
                 ? "justify-center"
                 : brandingData.position === "right"
-                ? "justify-end"
-                : "justify-start"
+                  ? "justify-end"
+                  : "justify-start"
             }
           `}
         >
           <Image
             src={brandingData.logo || "/images/image 259.png"}
             alt="Logo"
-            width={120}
-            height={40}
-            className="object-contain max-w-[100px] md:max-w-[120px]"
+            width={brandingData.logoSize || 120}
+            height={brandingData.logoSize || 40}
+            className="object-contain"
             priority
           />
         </div>
@@ -72,20 +72,20 @@ export default function Hero() {
             {heroData.heroSubtitle && (
               <h3
                 style={{
-                  color: colorSystemData.headingColor,
+                  // color: colorSystemData.headingColor,
                   fontSize: typographyData.h2Size,
                 }}
-                className="text-xs md:text-sm uppercase tracking-wide opacity-90"
+                className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
               >
                 {heroData.heroSubtitle}
               </h3>
             )}
 
             <h1
-              className="font-bold mt-3 leading-tight"
+              className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
               style={{
                 fontSize: typographyData.h1Size,
-                color: colorSystemData.headingColor,
+                // color: colorSystemData.headingColor,
               }}
             >
               {heroData.heroTitle}
@@ -94,10 +94,10 @@ export default function Hero() {
             {heroData.heroDescription && (
               <p
                 style={{
-                  color: colorSystemData.bodyTextColor,
+                  // color: colorSystemData.bodyTextColor,
                   fontSize: typographyData.bodySize,
                 }}
-                className="mt-4 text-sm md:text-lg text-gray-200"
+                className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
               >
                 {heroData.heroDescription}
               </p>
@@ -123,7 +123,7 @@ export default function Hero() {
                 <Link href={"/user/bookings/add-booking"}>
                   <button
                     style={{
-                      color: colorSystemData.secondaryColor,
+                      // color: colorSystemData.secondaryColor,
                       borderColor: colorSystemData.secondaryColor,
                     }}
                     className="px-6 py-3 rounded-md border font-medium transition

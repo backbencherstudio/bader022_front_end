@@ -4,6 +4,13 @@ import { useLandingPage } from "../../../context/LandingBuilderContext";
 
 export default function Branding() {
   const { brandingData, setBrandingData } = useLandingPage();
+
+  const update = (key: string, value: number) => {
+    setBrandingData({
+      ...brandingData,
+      [key]: value,
+    });
+  };
   return (
     <section className="flex flex-col gap-4 text-balance p-2">
       {/* Logo */}
@@ -28,6 +35,7 @@ export default function Branding() {
           />
         </label>
       </div>
+      {/* Position  */}
       <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Logo Position
@@ -58,6 +66,24 @@ export default function Branding() {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Section Spacing */}
+      <div>
+        <label className="text-sm font-medium flex justify-between">
+          Logo Size:
+          <span>{brandingData.logoSize || 0}px</span>
+        </label>
+
+        <input
+          type="range"
+          min={0}
+          max={520}
+          step={1}
+          value={brandingData.logoSize}
+          onChange={(e) => update("logoSize", Number(e.target.value))}
+          className="w-full mt-2 cursor-pointer"
+        />
       </div>
     </section>
   );

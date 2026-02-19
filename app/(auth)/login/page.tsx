@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 
 type FormValues = {
   email: string;
@@ -23,7 +23,7 @@ export default function LoginPage() {
 
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
-console.log("ttttttt",useLoginMutation)
+  console.log("ttttttt", useLoginMutation);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -38,12 +38,11 @@ console.log("ttttttt",useLoginMutation)
             token: response.token,
             user: {
               ...response.data.user,
-              role: response.data.user_type, 
+              role: response.data.user_type,
             },
-          })
+          }),
         );
-console.log("dddddddddddd",data)
-       
+
         if (response.data.user_type === "Admin") {
           router.push("/admin");
         } else if (response.data.user_type === "Merchant") {
@@ -52,12 +51,10 @@ console.log("dddddddddddd",data)
           router.push("/user");
         }
       }
-
     } catch (error: any) {
       console.error(error);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
@@ -134,7 +131,6 @@ console.log("dddddddddddd",data)
 
           {/* Submit */}
           <button
-    
             type="submit"
             className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
           >

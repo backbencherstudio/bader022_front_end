@@ -2,17 +2,17 @@
 
 import { useTheme } from "next-themes";
 import {
-  LineChart,
+  CartesianGrid,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 
 export type RevenueData = {
-  name: string;
+  day: string;
   revenue: number;
 };
 

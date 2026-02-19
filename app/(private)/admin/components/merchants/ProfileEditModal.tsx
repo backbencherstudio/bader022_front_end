@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 
 import {
-  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -26,26 +25,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUpdateMerchantByIdMutation } from "@/redux/features/admin/adminApi";
+import { toast } from "sonner";
 
 type FormValues = {
-  packageStatus: string;
-  platformStatus: string;
-  platformAccess: string;
+  status: string;
+  platform_status: string;
+  platform_access: string;
 };
 
-export function EditProfileDialog() {
+export function EditProfileDialog({ id }: any) {
   const form = useForm<FormValues>({
     defaultValues: {
-      packageStatus: "active",
-      platformStatus: "live",
-      platformAccess: "enabled",
+      status: "active",
+      platform_status: "live",
+      platform_access: "enabled",
     },
   });
 
-  function onSubmit(values: FormValues) {
-    console.log(values);
-    // call API here
-  }
+  const [updateMerchantById] = useUpdateMerchantByIdMutation(id);
+
+  const onSubmit = async (values: FormValues) => {
+    try {
+      const response = await updateMerchantById({ id, values });
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Submit Error:", error);
+    }
+  };
 
   return (
     <DialogContent className="rounded-xl">
@@ -58,7 +68,7 @@ export function EditProfileDialog() {
           {/* Package Status */}
           <FormField
             control={form.control}
-            name="packageStatus"
+            name="status"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Package Status</FormLabel>
@@ -80,7 +90,7 @@ export function EditProfileDialog() {
           {/* Platform Status */}
           <FormField
             control={form.control}
-            name="platformStatus"
+            name="platform_status"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Platform Status</FormLabel>
@@ -102,7 +112,7 @@ export function EditProfileDialog() {
           {/* Platform Access */}
           <FormField
             control={form.control}
-            name="platformAccess"
+            name="platform_access"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Platform Access</FormLabel>
@@ -123,7 +133,9 @@ export function EditProfileDialog() {
 
           {/* Actions */}
           <div className="flex justify-start gap-4 pt-4">
-            <Button type="submit">Save Profile</Button>
+            <Button type="submit" className="cursor-pointer">
+              Save Profile
+            </Button>
             <DialogTrigger asChild>
               <Button
                 className="cursor-pointer"

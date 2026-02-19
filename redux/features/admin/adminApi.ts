@@ -25,9 +25,12 @@ export const adminApi = baseApi.injectEndpoints({
     }),
     //  Merchants
     getAllMerchants: builder.query({
-      query: () => ({
+      query: ({ search }) => ({
         url: "/admin/merchant/index",
         method: "GET",
+        params: {
+          search,
+        },
       }),
     }),
     //  Get Single Merchant
@@ -46,6 +49,22 @@ export const adminApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    //  PaymentHistory
+    getPaymentHistory: builder.query({
+      query: () => ({
+        url: `/admin/payment-history/index`,
+        method: "GET",
+      }),
+    }),
+
+    //  SinglePaymentHistory
+    getSinglePaymentHistory: builder.query({
+      query: (id) => ({
+        url: `/admin/payment-history/show/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -56,4 +75,6 @@ export const {
   useGetAllMerchantsQuery,
   useGetSingleMerchantByIdQuery,
   useUpdateMerchantByIdMutation,
+  useGetPaymentHistoryQuery,
+  useGetSinglePaymentHistoryQuery,
 } = adminApi;

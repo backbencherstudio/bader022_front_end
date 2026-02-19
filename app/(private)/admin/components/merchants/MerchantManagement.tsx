@@ -15,9 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDebounce } from "@/lib/useDebounce";
 import { useGetAllMerchantsQuery } from "@/redux/features/admin/adminApi";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { EditProfileDialog } from "./ProfileEditModal";
 
 type MerchantStatus = "active" | "expired";
@@ -63,12 +65,16 @@ export function MerchantManagementCard({
   onViewAll,
   onView,
   onEdit,
+  search,
+  setSearch,
 }: {
   rows: MerchantRow[];
   className?: string;
   onViewAll?: () => void;
   onView?: (row: MerchantRow) => void;
   onEdit?: (id: string) => void;
+  search: string;
+  setSearch: (value: string) => void;
 }) {
   const navigate = useRouter();
 
@@ -89,6 +95,8 @@ export function MerchantManagementCard({
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search anything"
                 className="h-12 rounded-xl pl-10"
               />
@@ -260,7 +268,11 @@ export function MerchantManagementCard({
 }
 
 export default function MerchantManagement() {
-  const { data, isLoading, isError } = useGetAllMerchantsQuery({});
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
+  const { data, isLoading, isError } = useGetAllMerchantsQuery({
+    search: debouncedSearch,
+  });
 
   // Transform backend response → MerchantRow[]
   const merchants: MerchantRow[] =
@@ -306,5 +318,11 @@ export default function MerchantManagement() {
     );
   }
 
-  return <MerchantManagementCard rows={merchants} />;
+  return (
+    <MerchantManagementCard
+      rows={merchants}
+      search={search}
+      setSearch={setSearch}
+    />
+  );
 }

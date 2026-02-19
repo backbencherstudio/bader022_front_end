@@ -1,40 +1,40 @@
 "use client";
 
-import { CheckCircle2, Download, X } from "lucide-react";
+import { CheckCircle2, Download } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { useGetSinglePaymentHistoryQuery } from "@/redux/features/admin/adminApi";
 
 export type PaymentDetails = {
-  statusTitle: string;
-  statusSubtitle: string;
-
-  transactionId: string;
+  id: number;
+  tx_id: string;
+  merchant_name: string;
+  business_logo: string | null;
+  store_name: string | null;
+  package_name: string;
+  date: string;
   amount: string;
-  dateTime: string;
-  method: string;
-
-  merchantName: string;
-  businessName: string;
-  email: string;
-  phone: string;
-  packageName: string;
+  payment_method: string;
+  status: "Paid" | "Unpaid" | "Failed";
 };
 
 export function PaymentModal({
   open,
   onOpenChange,
-  details,
+  selectedPayment,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  details: PaymentDetails;
+  selectedPayment: any;
 }) {
+  const { data } = useGetSinglePaymentHistoryQuery(selectedPayment?.id);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="rounded-2xl p-0 dark:bg-gray-900">
@@ -80,10 +80,13 @@ export function PaymentModal({
             </h1>
             <div>
               <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-                {details.statusTitle}
+                {data?.data?.status === "Paid"
+                  ? "Payment Successful"
+                  : "Payment Fail"}
               </p>
               <p className="text-sm text-foreground/70 dark:text-white/60">
-                {details.statusSubtitle}
+                {data?.statusSubtitle} subscription payment for{" "}
+                {data?.data?.package_name} plan
               </p>
             </div>
           </div>
@@ -105,28 +108,28 @@ export function PaymentModal({
                   Transaction ID:
                 </div>
                 <div className="text-right font-medium text-foreground dark:text-white">
-                  {details.transactionId}
+                  {data?.data?.tx_id}
                 </div>
 
                 <div className="text-muted-foreground dark:text-white/50">
                   Amount:
                 </div>
                 <div className="text-right font-medium text-foreground dark:text-white">
-                  {details.amount}
+                  {data?.data?.amount}
                 </div>
 
                 <div className="text-muted-foreground dark:text-white/50">
                   Date & Time:
                 </div>
                 <div className="text-right font-medium text-foreground dark:text-white">
-                  {details.dateTime}
+                  {data?.data?.date}
                 </div>
 
                 <div className="text-muted-foreground dark:text-white/50">
                   Payment Method:
                 </div>
                 <div className="text-right font-medium text-foreground dark:text-white">
-                  {details.method}
+                  {data?.data?.payment_method}
                 </div>
               </div>
             </div>
@@ -145,11 +148,14 @@ export function PaymentModal({
           "
             >
               {[
-                ["Merchant Name:", details.merchantName],
-                ["Business Name:", details.businessName],
-                ["Email:", details.email],
-                ["Phone:", details.phone],
-                ["Package:", details.packageName],
+                ["Merchant Name:", data?.data?.merchant_name],
+                [
+                  "Business Name:",
+                  data?.data?.store_name ? data?.data?.store_name : "N/A",
+                ],
+                ["Email:", data?.email],
+                ["Phone:", data?.phone],
+                ["Package:", data?.data?.package_name],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between">
                   <span className="text-muted-foreground dark:text-white/50">

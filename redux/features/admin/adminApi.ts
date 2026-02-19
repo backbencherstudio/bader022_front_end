@@ -37,6 +37,15 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    //  Get Single Merchant
+    updateMerchantById: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/admin/merchant/update/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +55,5 @@ export const {
   useMonthlypaymentCountQuery,
   useGetAllMerchantsQuery,
   useGetSingleMerchantByIdQuery,
+  useUpdateMerchantByIdMutation,
 } = adminApi;

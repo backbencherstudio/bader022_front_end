@@ -1,9 +1,10 @@
+import { I18nProvider } from "@/components/provider/I18nProvider";
+import { ThemeProvider } from "@/components/provider/ThemeProvider";
+import StoreProvider from "@/redux/storeProviders";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
-import { ThemeProvider } from "@/components/provider/ThemeProvider";
-import { I18nProvider } from "@/components/provider/I18nProvider";
-import StoreProvider from "@/redux/storeProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      
         <StoreProvider>
           <ThemeProvider
             attribute="class"
@@ -39,6 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <I18nProvider>
+              <Toaster />
               {children}
             </I18nProvider>
           </ThemeProvider>
@@ -47,7 +48,6 @@ export default function RootLayout({
     </html>
   );
 }
-
 
 // "use client"
 // import type { Metadata } from "next";
@@ -83,7 +83,7 @@ export default function RootLayout({
 //       <body
 //         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 //       >
-     
+
 //           <ThemeProvider
 //             attribute="class"
 //             defaultTheme="system"
@@ -92,7 +92,7 @@ export default function RootLayout({
 //           >
 //             <I18nProvider>{children}</I18nProvider>
 //           </ThemeProvider>
-       
+
 //       </body>
 //     </html>
 //   );

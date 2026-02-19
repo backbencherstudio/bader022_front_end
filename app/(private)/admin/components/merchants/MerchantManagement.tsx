@@ -68,7 +68,7 @@ export function MerchantManagementCard({
   className?: string;
   onViewAll?: () => void;
   onView?: (row: MerchantRow) => void;
-  onEdit?: (row: MerchantRow) => void;
+  onEdit?: (id: string) => void;
 }) {
   const navigate = useRouter();
 
@@ -199,14 +199,14 @@ export function MerchantManagementCard({
                           <DialogTrigger asChild>
                             <button
                               type="button"
-                              onClick={() => onEdit?.(r)}
+                              onClick={() => onEdit?.(r?.id)}
                               className="h-10 w-10 rounded-xl text-muted-foreground hover:text-black border hover:bg-white flex items-center justify-center cursor-pointer"
                             >
                               <Pencil className="h-5 w-5" />
                             </button>
                             {/* <Button variant="outline">Edit Profile</Button> */}
                           </DialogTrigger>
-                          <EditProfileDialog />
+                          <EditProfileDialog id={r?.id} />
                         </Dialog>
                       </div>
                     </TableCell>

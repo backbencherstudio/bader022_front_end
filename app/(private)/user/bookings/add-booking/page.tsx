@@ -44,7 +44,7 @@ function Stepper({ steps, currentStep }: StepperProps) {
             {index !== steps.length - 1 && (
               <div
                 className={cn(
-                  "h-[3px] w-full mx-2 sm:mx-3 rounded-full",
+                  "h-0.75 w-full mx-2 sm:mx-3 rounded-full",
                   stepNumber < currentStep
                     ? "bg-[#111827] dark:bg-green-800"
                     : "bg-border"

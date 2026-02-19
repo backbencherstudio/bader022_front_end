@@ -1,7 +1,6 @@
-import React from "react";
-import { useLandingPage } from "../../context/LandingBuilderContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useLandingPage } from "../../context/LandingBuilderContext";
 
 export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =

@@ -153,8 +153,8 @@ export function PaymentModal({
                   "Business Name:",
                   data?.data?.store_name ? data?.data?.store_name : "N/A",
                 ],
-                ["Email:", data?.email],
-                ["Phone:", data?.phone],
+                ["Email:", data?.data?.merchant_email],
+                ["Phone:", data?.data?.merchant_phone],
                 ["Package:", data?.data?.package_name],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between">
@@ -174,7 +174,7 @@ export function PaymentModal({
             <Button
               className="
             h-12 rounded-xl bg-black hover:bg-black/90 text-white
-            dark:bg-white dark:text-black dark:hover:bg-white/90
+            dark:bg-white dark:text-black dark:hover:bg-white/90 cursor-pointer
           "
             >
               Download Receipt
@@ -182,10 +182,7 @@ export function PaymentModal({
 
             <Button
               variant="outline"
-              className="
-            h-12 rounded-xl bg-muted/30 hover:bg-muted
-            dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10
-          "
+              className="h-12 rounded-xl bg-muted/30 hover:bg-muted dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 cursor-pointer"
             >
               Send Email
             </Button>

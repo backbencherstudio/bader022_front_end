@@ -30,6 +30,13 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    //  Get Single Merchant
+    getSingleMerchantById: builder.query({
+      query: (id) => ({
+        url: `/admin/merchant/show/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useWeeklyPaymentCountQuery,
   useMonthlypaymentCountQuery,
   useGetAllMerchantsQuery,
+  useGetSingleMerchantByIdQuery,
 } = adminApi;

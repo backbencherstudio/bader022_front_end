@@ -34,64 +34,6 @@ export type MerchantRow = {
   status: MerchantStatus;
 };
 
-// export const demoMerchants: MerchantRow[] = [
-//   {
-//     id: "1",
-//     businessName: "Luxe beauty",
-//     businessAvatar: "https://i.pravatar.cc/100?img=12",
-//     businessType: "Beauty Salon",
-//     email: "Luxebeauty@gmail.com",
-//     package: "Premium",
-//     planType: "Monthly",
-//     expireDate: "12-01-2026",
-//     status: "active",
-//   },
-//   {
-//     id: "2",
-//     businessName: "DXL Sports",
-//     businessAvatar: "https://i.pravatar.cc/100?img=5",
-//     businessType: "Sports Academy",
-//     email: "profitclub@gmail.com",
-//     package: "Premium",
-//     planType: "Yearly",
-//     expireDate: "12-01-2026",
-//     status: "active",
-//   },
-//   {
-//     id: "3",
-//     businessName: "Home Renovation",
-//     businessAvatar: "https://i.pravatar.cc/100?img=32",
-//     businessType: "Home Service",
-//     email: "flexihub@gmail.com",
-//     package: "Premium",
-//     planType: "Yearly",
-//     expireDate: "12-01-2026",
-//     status: "active",
-//   },
-//   {
-//     id: "4",
-//     businessName: "Expert tech",
-//     businessAvatar: "https://i.pravatar.cc/100?img=15",
-//     businessType: "Work-Spaces",
-//     email: "flexihub@gmail.com",
-//     package: "Premium",
-//     planType: "Yearly",
-//     expireDate: "12-01-2026",
-//     status: "expired",
-//   },
-//   {
-//     id: "5",
-//     businessName: "Child Care",
-//     businessAvatar: "https://i.pravatar.cc/100?img=48",
-//     businessType: "Children's Nursery",
-//     email: "homehero@gmail.com",
-//     package: "Basic",
-//     planType: "Yearly",
-//     expireDate: "12-01-2026",
-//     status: "expired",
-//   },
-// ];
-
 function initials(name: string) {
   const parts = name?.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "U";
@@ -247,7 +189,7 @@ export function MerchantManagementCard({
                         <button
                           type="button"
                           onClick={() =>
-                            navigate.push("/admin/merchants/profile-view")
+                            navigate.push(`/admin/merchants/${r.id}`)
                           }
                           className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >

@@ -23,6 +23,13 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    //  Merchants
+    getAllMerchants: builder.query({
+      query: () => ({
+        url: "/admin/merchant/index",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -30,4 +37,5 @@ export const {
   useDashboardOverviewQuery,
   useWeeklyPaymentCountQuery,
   useMonthlypaymentCountQuery,
+  useGetAllMerchantsQuery,
 } = adminApi;

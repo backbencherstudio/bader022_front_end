@@ -1,9 +1,11 @@
 "use client";
 
-import { Search, Eye, Pencil } from "lucide-react";
+import { Eye, Pencil, Search } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -13,10 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
-import { Dialog } from "@/components/ui/dialog";
+import { useGetAllMerchantsQuery } from "@/redux/features/admin/adminApi";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 import { EditProfileDialog } from "./ProfileEditModal";
 
 type MerchantStatus = "active" | "expired";
@@ -33,66 +34,66 @@ export type MerchantRow = {
   status: MerchantStatus;
 };
 
-export const demoMerchants: MerchantRow[] = [
-  {
-    id: "1",
-    businessName: "Luxe beauty",
-    businessAvatar: "https://i.pravatar.cc/100?img=12",
-    businessType: "Beauty Salon",
-    email: "Luxebeauty@gmail.com",
-    package: "Premium",
-    planType: "Monthly",
-    expireDate: "12-01-2026",
-    status: "active",
-  },
-  {
-    id: "2",
-    businessName: "DXL Sports",
-    businessAvatar: "https://i.pravatar.cc/100?img=5",
-    businessType: "Sports Academy",
-    email: "profitclub@gmail.com",
-    package: "Premium",
-    planType: "Yearly",
-    expireDate: "12-01-2026",
-    status: "active",
-  },
-  {
-    id: "3",
-    businessName: "Home Renovation",
-    businessAvatar: "https://i.pravatar.cc/100?img=32",
-    businessType: "Home Service",
-    email: "flexihub@gmail.com",
-    package: "Premium",
-    planType: "Yearly",
-    expireDate: "12-01-2026",
-    status: "active",
-  },
-  {
-    id: "4",
-    businessName: "Expert tech",
-    businessAvatar: "https://i.pravatar.cc/100?img=15",
-    businessType: "Work-Spaces",
-    email: "flexihub@gmail.com",
-    package: "Premium",
-    planType: "Yearly",
-    expireDate: "12-01-2026",
-    status: "expired",
-  },
-  {
-    id: "5",
-    businessName: "Child Care",
-    businessAvatar: "https://i.pravatar.cc/100?img=48",
-    businessType: "Children's Nursery",
-    email: "homehero@gmail.com",
-    package: "Basic",
-    planType: "Yearly",
-    expireDate: "12-01-2026",
-    status: "expired",
-  },
-];
+// export const demoMerchants: MerchantRow[] = [
+//   {
+//     id: "1",
+//     businessName: "Luxe beauty",
+//     businessAvatar: "https://i.pravatar.cc/100?img=12",
+//     businessType: "Beauty Salon",
+//     email: "Luxebeauty@gmail.com",
+//     package: "Premium",
+//     planType: "Monthly",
+//     expireDate: "12-01-2026",
+//     status: "active",
+//   },
+//   {
+//     id: "2",
+//     businessName: "DXL Sports",
+//     businessAvatar: "https://i.pravatar.cc/100?img=5",
+//     businessType: "Sports Academy",
+//     email: "profitclub@gmail.com",
+//     package: "Premium",
+//     planType: "Yearly",
+//     expireDate: "12-01-2026",
+//     status: "active",
+//   },
+//   {
+//     id: "3",
+//     businessName: "Home Renovation",
+//     businessAvatar: "https://i.pravatar.cc/100?img=32",
+//     businessType: "Home Service",
+//     email: "flexihub@gmail.com",
+//     package: "Premium",
+//     planType: "Yearly",
+//     expireDate: "12-01-2026",
+//     status: "active",
+//   },
+//   {
+//     id: "4",
+//     businessName: "Expert tech",
+//     businessAvatar: "https://i.pravatar.cc/100?img=15",
+//     businessType: "Work-Spaces",
+//     email: "flexihub@gmail.com",
+//     package: "Premium",
+//     planType: "Yearly",
+//     expireDate: "12-01-2026",
+//     status: "expired",
+//   },
+//   {
+//     id: "5",
+//     businessName: "Child Care",
+//     businessAvatar: "https://i.pravatar.cc/100?img=48",
+//     businessType: "Children's Nursery",
+//     email: "homehero@gmail.com",
+//     package: "Basic",
+//     planType: "Yearly",
+//     expireDate: "12-01-2026",
+//     status: "expired",
+//   },
+// ];
 
 function initials(name: string) {
-  const parts = name.trim().split(/\s+/);
+  const parts = name?.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "U";
 }
 
@@ -128,6 +129,7 @@ export function MerchantManagementCard({
   onEdit?: (row: MerchantRow) => void;
 }) {
   const navigate = useRouter();
+
   return (
     <Card
       className={[
@@ -195,7 +197,7 @@ export function MerchantManagementCard({
               </TableHeader>
 
               <TableBody>
-                {rows.map((r) => (
+                {rows?.map((r) => (
                   <TableRow key={r.id} className="h-19.5">
                     {/* Business name + avatar */}
                     <TableCell className="pl-8">
@@ -269,7 +271,7 @@ export function MerchantManagementCard({
                   </TableRow>
                 ))}
 
-                {rows.length === 0 && (
+                {rows?.length === 0 && (
                   <TableRow>
                     <TableCell
                       colSpan={8}
@@ -316,5 +318,51 @@ export function MerchantManagementCard({
 }
 
 export default function MerchantManagement() {
-  return <MerchantManagementCard rows={demoMerchants} />;
+  const { data, isLoading, isError } = useGetAllMerchantsQuery({});
+
+  // Transform backend response → MerchantRow[]
+  const merchants: MerchantRow[] =
+    data?.data?.map((item: any) => {
+      const isExpired = item.ends_at && new Date(item.ends_at) < new Date();
+
+      return {
+        id: String(item.id),
+
+        businessName: item.user?.name ?? "N/A",
+
+        businessAvatar: item.user?.image ?? undefined,
+
+        businessType: item.user?.business_category ?? "N/A",
+
+        email: item.user?.email ?? "N/A",
+
+        package: item.plan?.name ?? "N/A",
+
+        planType: item.plan?.package ?? "N/A",
+
+        expireDate: item.ends_at
+          ? new Date(item.ends_at).toLocaleDateString()
+          : "N/A",
+
+        status: isExpired ? "expired" : "active",
+      };
+    }) ?? [];
+
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        Loading merchants...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6 text-center text-red-500">
+        Failed to load merchants.
+      </div>
+    );
+  }
+
+  return <MerchantManagementCard rows={merchants} />;
 }

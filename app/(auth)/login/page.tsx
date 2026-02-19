@@ -1,5 +1,8 @@
 "use client";
 
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setCredentials } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,10 +21,43 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-    router.push("/merchant/dashboard");
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+console.log("ttttttt",useLoginMutation)
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await login({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+
+      if (response.success) {
+        dispatch(
+          setCredentials({
+            token: response.token,
+            user: {
+              ...response.data.user,
+              role: response.data.user_type, 
+            },
+          })
+        );
+console.log("dddddddddddd",data)
+       
+        if (response.data.user_type === "Admin") {
+          router.push("/admin");
+        } else if (response.data.user_type === "Merchant") {
+          router.push("/merchant");
+        } else {
+          router.push("/user");
+        }
+      }
+
+    } catch (error: any) {
+      console.error(error);
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
@@ -98,10 +134,11 @@ export default function LoginPage() {
 
           {/* Submit */}
           <button
+    
             type="submit"
             className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
           >
-            Sign Up
+            {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Download,
   Edit,
   Eye,
   Pencil,
@@ -9,9 +8,10 @@ import {
   SaudiRiyal,
   Search,
 } from "lucide-react";
-import { useMemo, useState } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -28,13 +28,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
-import RecentTransactions from "@/app/(private)/merchant/dashboard/components/dashboard/RecentTransactions";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { EditSubscriptionModal } from "./EditSubscriptionModal";
 
 // import { PaymentDetails, PaymentModal } from "./PaymentModal";

@@ -65,6 +65,14 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    //  Get Subscriptions
+    getSubscriptions: builder.query({
+      query: () => ({
+        url: `/admin/subscription/index`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -77,4 +85,5 @@ export const {
   useUpdateMerchantByIdMutation,
   useGetPaymentHistoryQuery,
   useGetSinglePaymentHistoryQuery,
+  useGetSubscriptionsQuery,
 } = adminApi;

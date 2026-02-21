@@ -104,7 +104,9 @@ export function MerchantManagementCard({
 
             <Button
               type="button"
-              onClick={onViewAll}
+              onClick={() => {
+                setSearch("");
+              }}
               className="h-12 rounded-xl bg-black hover:bg-black/90 cursor-pointer px-6 text-white"
             >
               View All

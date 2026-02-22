@@ -44,9 +44,9 @@ export default function LoginPage() {
         );
 
         if (response.data.user_type === "Admin") {
-          router.push("/admin");
+          router.push("/admin/dashboard");
         } else if (response.data.user_type === "Merchant") {
-          router.push("/merchant");
+          router.push("/merchant/dashboard");
         } else {
           router.push("/user");
         }

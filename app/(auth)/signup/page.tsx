@@ -35,7 +35,7 @@ export default function SignUpPage() {
   const dispatch = useAppDispatch();
 
   const [registerUser, { isLoading }] = useRegisterMutation();
-
+console.log(registerUser,"kay")
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await registerUser({
@@ -47,7 +47,6 @@ export default function SignUpPage() {
       }).unwrap();
 
       if (response.success) {
-        // Save token + user
         dispatch(
           setCredentials({
             token: response.token,
@@ -58,8 +57,7 @@ export default function SignUpPage() {
           })
         );
 
-        // toast.success("Account created successfully!");
-        router.push("/user/dashboard");
+        router.push("/dashboard");
       }
     } catch (error: any) {
       console.error(error);
@@ -134,7 +132,7 @@ export default function SignUpPage() {
           </div>
 
           {/* Business Category */}
-                   <div>
+                   {/* <div>
                     <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                        Business Category *
                    </label>
@@ -152,7 +150,7 @@ export default function SignUpPage() {
                         <option>Consulting</option>
                         <option>Healthcare</option>
                       </select>
-                    </div>
+                    </div> */}
 
           <button
             type="submit"

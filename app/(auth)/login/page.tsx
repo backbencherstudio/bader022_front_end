@@ -2,11 +2,11 @@
 
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { setCredentials } from "@/redux/features/auth/authSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 
@@ -24,6 +24,23 @@ export default function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   console.log("ttttttt", useLoginMutation);
+
+  const { token, user } = useAppSelector((state) => state.auth);
+
+  console.log("token-===========", token);
+  console.log("user-===========", user);
+
+  useEffect(() => {
+    if (token && user) {
+      if (user.role === "Admin") {
+        router.push("/admin/dashboard");
+      } else if (user.role === "Merchant") {
+        router.push("/merchant/dashboard");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [token, user, router]);
 
   const onSubmit = async (data: FormValues) => {
     try {

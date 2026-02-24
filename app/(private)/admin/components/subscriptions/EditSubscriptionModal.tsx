@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -26,71 +27,95 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Edit } from "lucide-react";
+import { useUpdateSubscriptionsByIdMutation } from "@/redux/features/admin/adminApi";
+
 type FormValues = {
   packageStatus: string;
-  platformStatus: string;
-  platformAccess: string;
 };
 
-export function EditSubscriptionModal() {
+export function EditSubscriptionModal({ id }: { id: string, businessName:string }) {
+  const [open, setOpen] = useState(false);
+
+  const [updateSubscription, { isLoading }] =
+    useUpdateSubscriptionsByIdMutation();
+
   const form = useForm<FormValues>({
     defaultValues: {
       packageStatus: "active",
-      platformStatus: "live",
-      platformAccess: "enabled",
     },
   });
 
-  function onSubmit(values: FormValues) {
-    console.log(values);
-    // call API here
+  async function onSubmit(values: FormValues) {
+    try {
+      await updateSubscription({
+        id,
+        data: {
+          status: values.packageStatus,
+        },
+      }).unwrap();
+      
+
+      setOpen(false); // close modal after success
+      form.reset();
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
   }
 
   return (
-    <DialogContent className="rounded-xl">
-      <DialogHeader>
-        <DialogTitle>Edit Subscription</DialogTitle>
-      </DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Edit className="h-5 w-5 cursor-pointer mt-2" />
+      </DialogTrigger>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Package Status */}
-          <FormField
-            control={form.control}
-            name="packageStatus"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Subscription Status</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <FormControl className="w-full">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+      <DialogContent className="rounded-xl">
+        <DialogHeader>
+          <DialogTitle>Edit Subscription</DialogTitle>
+        </DialogHeader>
 
-          {/* Actions */}
-          <div className="flex justify-start gap-4 pt-4">
-            <Button type="submit">Save</Button>
-            <DialogTrigger asChild>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="packageStatus"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Subscription Status</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl className="w-full">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+ 
+            <div className="flex justify-start gap-4 pt-4">
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Updating..." : "Save"}
+              </Button>
+
               <Button
-                className="cursor-pointer"
                 variant="outline"
                 type="button"
+                onClick={() => setOpen(false)}
               >
                 Cancel
               </Button>
-            </DialogTrigger>
-          </div>
-        </form>
-      </Form>
-    </DialogContent>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }

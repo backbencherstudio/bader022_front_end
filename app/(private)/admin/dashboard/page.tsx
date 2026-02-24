@@ -1,46 +1,58 @@
 "use client";
-import {
-  CircleDollarSign,
-  Crown,
-  SaudiRiyal,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  useDashboardOverviewQuery,
+  useMonthlypaymentCountQuery,
+  useWeeklyPaymentCountQuery,
+} from "@/redux/features/admin/adminApi";
+import { Crown, SaudiRiyal, ShoppingCart, Users } from "lucide-react";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
 import RevenueOverviewLineChart from "../components/dashboard/RevenueOverviewLineChart";
 import MerchantManagement from "../components/merchants/MerchantManagement";
 
 export type TData = {
-  name: string;
+  day: string;
   revenue: number;
 };
 
-const monthlyRevenueData: TData[] = [
-  { name: "Jan", revenue: 4500 },
-  { name: "Feb", revenue: 500 },
-  { name: "Mar", revenue: 1500 },
-  { name: "Apr", revenue: 3000 },
-  { name: "May", revenue: 1500 },
-  { name: "Jun", revenue: 3000 },
-  { name: "Jul", revenue: 5000 },
-  { name: "Aug", revenue: 3000 },
-  { name: "Sep", revenue: 1500 },
-  { name: "Oct", revenue: 3000 },
-  { name: "Nov", revenue: 1500 },
-  { name: "Dec", revenue: 5000 },
-];
-const weeklyRevenueData: TData[] = [
-  { name: "Sat", revenue: 1500 },
-  { name: "Sun", revenue: 3000 },
-  { name: "Mon", revenue: 1500 },
-  { name: "Tue", revenue: 2500 },
-  { name: "Wed", revenue: 500 },
-  { name: "Thu", revenue: 3000 },
-  { name: "Fri", revenue: 5000 },
-];
+type MonthlyRevenueItem = {
+  month: string;
+  revenue: number;
+};
 
+type WeeklyRevenueItem = {
+  day: string;
+  revenue: number;
+};
 export default function DashboardPage() {
+  // const { data } = useWeeklyPaymentCountQuery({});
+  // const { data: monthlyData } = useMonthlypaymentCountQuery({});
+  // const { data: dashboardOverview } = useDashboardOverviewQuery({});
+  // console.log(dashboardOverview);
+  // const weeklyRevenueData: TData[] = data;
+  // const monthlyRevenueData: TData[] = monthlyData;
+
+  const { data: weeklyApiData } = useWeeklyPaymentCountQuery({});
+  const { data: monthlyApiData } = useMonthlypaymentCountQuery({});
+  const { data: dashboardOverview } = useDashboardOverviewQuery({});
+
+
+  const monthlyRevenueData =
+    (monthlyApiData as MonthlyRevenueItem[] | undefined)?.map(
+      (item: MonthlyRevenueItem) => ({
+        name: item.month,
+        revenue: item.revenue,
+      })
+    ) || [];
+
+
+  const weeklyRevenueData =
+    (weeklyApiData as WeeklyRevenueItem[] | undefined)?.map(
+      (item: WeeklyRevenueItem) => ({
+        name: item.day,
+        revenue: item.revenue,
+      })
+    ) || [];
   return (
     <div>
       {/* Charts */}
@@ -50,12 +62,24 @@ export default function DashboardPage() {
           <StatCard
             Currency={SaudiRiyal}
             title="Revenue"
-            value={"84,320"}
+            value={dashboardOverview?.data?.revenue}
             Icon={SaudiRiyal}
           />
-          <StatCard title="Total Merchants" value={156} Icon={ShoppingCart} />
-          <StatCard title="Premium Users" value={114} Icon={Crown} />
-          <StatCard title="Basic Users" value={40} Icon={Users} />
+          <StatCard
+            title="Total Merchants"
+            value={dashboardOverview?.data?.merchants_count}
+            Icon={ShoppingCart}
+          />
+          <StatCard
+            title="Premium Users"
+            value={dashboardOverview?.data?.plan_sales?.Premium}
+            Icon={Crown}
+          />
+          <StatCard
+            title="Basic Users"
+            value={dashboardOverview?.data?.plan_sales?.Basic}
+            Icon={Users}
+          />
         </div>
         {/* Revenue overview charts */}
         <div className="rounded-xl p-4 pl-0 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">

@@ -10,6 +10,10 @@ import {
 } from "@/components/ui/dialog";
 import { useGetSinglePaymentHistoryQuery } from "@/redux/features/admin/adminApi";
 
+export type PaymentDetails = {
+  id: string;
+};
+
 export function PaymentModal({
   open,
   onOpenChange,

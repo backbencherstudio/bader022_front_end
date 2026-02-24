@@ -23,6 +23,16 @@ import {
   useWeeklyPaymentCountQuery,
 } from "@/redux/features/admin/adminApi";
 
+type WeeklyPaymentItem = {
+  day: string;
+  revenue: number;
+};
+
+type MonthlyPaymentItem = {
+  month: string;
+  revenue: number;
+};
+
 export default function Page() {
   const { data: weeklyApiData } = useWeeklyPaymentCountQuery({});
   const { data: monthlyApiData } = useMonthlypaymentCountQuery({});
@@ -30,15 +40,15 @@ export default function Page() {
 
   
   const monthlyRevenueData =
-    monthlyApiData?.map((item) => ({
-      name: item.month,     
-      revenue: item.revenue, 
+    monthlyApiData?.map((item: MonthlyPaymentItem) => ({
+      name: item.month,
+      revenue: item.revenue,
     })) || [];
 
 
   const weeklyRevenueData =
-    weeklyApiData?.map((item) => ({
-      name: item.day,       
+    weeklyApiData?.map((item: WeeklyPaymentItem) => ({
+      name: item.day,
       revenue: item.revenue,
     })) || [];
 

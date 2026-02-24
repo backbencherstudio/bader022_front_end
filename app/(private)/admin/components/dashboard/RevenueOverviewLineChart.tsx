@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 export type RevenueData = {
-  day: string;
+  name: string;
   revenue: number;
 };
 
@@ -20,6 +20,7 @@ type Props = {
   data: RevenueData[];
   height?: number;
   maxValue?: number;
+  
 };
 
 export default function RevenueOverviewLineChart({

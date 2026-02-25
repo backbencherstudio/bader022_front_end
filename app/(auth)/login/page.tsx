@@ -25,13 +25,18 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
   console.log("ttttttt", useLoginMutation);
 
+   const { token, user } = useAppSelector((state) => state.auth);
+   console.log('====================================');
+   console.log('token:', token);
+   console.log('user:', user);
+   console.log('====================================');
+
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login({
         email: data.email,
         password: data.password,
       }).unwrap();
-
       if (response.success) {
         dispatch(
           setCredentials({

@@ -1,10 +1,8 @@
 "use client";
 
-import { Eye, Pencil, RefreshCcw, SaudiRiyal, Search } from "lucide-react";
-
+import { Eye, RefreshCcw, SaudiRiyal, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -23,55 +21,46 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { EditSubscriptionModal } from "./EditSubscriptionModal";
+import { useGetSubscriptionsQuery } from "@/redux/features/admin/adminApi";
+import { AddPlan } from "./AddPlan";
 import PackageTab from "./PackageTab";
-
-// import { PaymentDetails, PaymentModal } from "./PaymentModal";
-
-/* ---------------- Types ---------------- */
+import { EditSubscriptionModal } from "./EditSubscriptionModal";
+import { ViewSubscriptionModal } from "./ViewPakagePlanModal";
 
 type PackageStatus = "successful" | "failed";
 
-export type PackageRow = {
+type SubscriptionApiItem = {
+  id: number;
+  status: "active" | "pending";
+  starts_at: string;
+  ends_at: string;
+  created_at: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    store_name: string | null;
+    business_logo: string | null;
+  };
+  plan: {
+    id: number;
+    name: string;
+    price: string;
+  };
+};
+
+type SubscriptionRow = {
   id: string;
-  merchantName: string;
   businessName: string;
   businessAvatar?: string;
   packageName: string;
-  date: string;
-  amount: string;
-  paymentMethod: string;
+  planType: string;
+  price: string;
+  startDate: string;
+  expiryDate: string;
+  remainingDays: string;
   status: PackageStatus;
 };
-
-/* ---------------- Demo Data ---------------- */
-
-export const demoPayments: PackageRow[] = [
-  {
-    id: "#TXOO1",
-    merchantName: "Ralph Edwards",
-    businessName: "Luxe beauty",
-    businessAvatar: "https://i.pravatar.cc/100?img=12",
-    packageName: "Basic plan",
-    date: "Jun 12, 2023",
-    amount: "120",
-    paymentMethod: "Paypal",
-    status: "successful",
-  },
-  {
-    id: "#TXOO4",
-    merchantName: "Theresa Webb",
-    businessName: "Expert tech",
-    businessAvatar: "https://i.pravatar.cc/100?img=15",
-    packageName: "Basic plan",
-    date: "Jun 15, 2023",
-    amount: "90",
-    paymentMethod: "Google Pay",
-    status: "failed",
-  },
-];
-
-/* ---------------- Helpers ---------------- */
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -95,9 +84,37 @@ function StatusPill({ status }: { status: PackageStatus }) {
   );
 }
 
-/* ---------------- Component ---------------- */
-
 export default function Packages() {
+  const { data, isLoading, isError } = useGetSubscriptionsQuery({});
+
+  const rows: SubscriptionRow[] =
+    (data?.data as SubscriptionApiItem[] | undefined)?.map((item) => {
+      const startDate = new Date(item.starts_at);
+      const endDate = new Date(item.ends_at);
+
+      const remainingDays = Math.max(
+        Math.ceil((endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+        0
+      );
+
+      return {
+        id: String(item.id),
+        businessName: item.user.store_name ?? item.user.name,
+        businessAvatar: item.user.business_logo ?? undefined,
+        packageName: item.plan.name,
+        planType: "Monthly",
+        price: item.plan.price,
+        startDate: startDate.toLocaleDateString(),
+        expiryDate: endDate.toLocaleDateString(),
+        remainingDays: `${remainingDays} days`,
+        status:
+          item.status === "active" ? "successful" : "failed",
+      };
+    }) || [];
+
+  if (isLoading) return <div className="p-6">Loading...</div>;
+  if (isError) return <div className="p-6 text-red-500">Failed to load</div>;
+
   return (
     <div>
       <div className="w-full rounded-xl p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
@@ -106,26 +123,19 @@ export default function Packages() {
             <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <TabsTrigger
                 value="packages"
-                className="
-      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
-      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
-    "
+                className="data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black"
               >
                 Packages
               </TabsTrigger>
-
               <TabsTrigger
                 value="active_subscription"
-                className="
-      data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white
-      dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
-    "
+                className="data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black"
               >
                 Active Subscription
               </TabsTrigger>
             </TabsList>
           </div>
-          {/* Filter Bar */}
+
           <div className="mb-6 flex flex-wrap justify-between items-center gap-4 pt-5">
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
@@ -134,6 +144,7 @@ export default function Packages() {
                 className="h-10 rounded-xl pl-10"
               />
             </div>
+
             <div className="flex flex-wrap items-center gap-2">
               <Select>
                 <SelectTrigger className="h-12 w-44">
@@ -145,6 +156,7 @@ export default function Packages() {
                   <SelectItem value="premium">Premium</SelectItem>
                 </SelectContent>
               </Select>
+
               <Select>
                 <SelectTrigger className="h-12 w-44">
                   <SelectValue placeholder="Plan Type" />
@@ -166,21 +178,23 @@ export default function Packages() {
                   <SelectItem value="failed">Failed</SelectItem>
                 </SelectContent>
               </Select>
+
               <Button variant="outline" className="cursor-pointer">
-                <RefreshCcw /> Refresh
+                <RefreshCcw />
               </Button>
             </div>
           </div>
+
           <TabsContent value="packages">
             <div className="mb-4 flex items-end justify-end">
-              <button className="px-4 py-2 border text-muted-foreground rounded-lg cursor-pointer">
-                Add Plan
+              <button className="px-4 py-2 cursor-pointer">
+                <AddPlan />
               </button>
             </div>
             <PackageTab />
           </TabsContent>
+
           <TabsContent value="active_subscription">
-            {/* Table */}
             <div className="overflow-hidden rounded-2xl border border-muted/40">
               <div className="overflow-x-auto">
                 <Table>
@@ -201,7 +215,7 @@ export default function Packages() {
                   </TableHeader>
 
                   <TableBody>
-                    {demoPayments.map((r) => (
+                    {rows.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell>
                           <div className="flex items-center gap-3">
@@ -216,49 +230,39 @@ export default function Packages() {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell>{r.merchantName}</TableCell>
-                        <TableCell>Monthly</TableCell>
+
+                        <TableCell>{r.packageName}</TableCell>
+                        <TableCell>{r.planType}</TableCell>
 
                         <TableCell className="font-semibold">
                           <div className="flex items-center">
                             <SaudiRiyal size={14} />
-                            {r.amount}
+                            {r.price}
                           </div>
                         </TableCell>
-                        <TableCell>{r.date}</TableCell>
-                        <TableCell>{r.date}</TableCell>
-                        <TableCell>30days</TableCell>
+
+                        <TableCell>{r.startDate}</TableCell>
+                        <TableCell>{r.expiryDate}</TableCell>
+                        <TableCell>{r.remainingDays}</TableCell>
+
                         <TableCell>
                           <StatusPill status={r.status} />
                         </TableCell>
 
                         <TableCell className="pr-8">
                           <div className="flex gap-3">
-                            <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
-                              <Eye className="h-5 w-5" />
-                            </button>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <button
-                                  type="button"
-                                  //   onClick={() => onEdit?.(r)}
-                                  className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
-                                >
-                                  <Pencil className="h-5 w-5" />
-                                </button>
-                                {/* <Button variant="outline">Edit Profile</Button> */}
-                              </DialogTrigger>
-                              <EditSubscriptionModal />
-                            </Dialog>
+                            <ViewSubscriptionModal id={r.id} />
+                            <EditSubscriptionModal id={r.id} businessName={r.businessName} />
                           </div>
+                          
                         </TableCell>
                       </TableRow>
                     ))}
 
-                    {demoPayments.length === 0 && (
+                    {rows.length === 0 && (
                       <TableRow>
                         <TableCell colSpan={9} className="py-10 text-center">
-                          No payment history found.
+                          No subscription found.
                         </TableCell>
                       </TableRow>
                     )}

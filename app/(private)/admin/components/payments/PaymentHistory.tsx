@@ -68,7 +68,7 @@ export default function PaymentHistory() {
     null,
   );
 
-  // ✅ Safe Transform Backend Data
+ 
   const rows: PaymentHistoryRow[] =
     data?.data?.map((item: any) => ({
       id: item.id,
@@ -195,11 +195,12 @@ export default function PaymentHistory() {
                         <button
                           type="button"
                           onClick={() => {
-                            setSelectedPayment(r as any);
+                            setSelectedPayment({ id: r.id });
                             setOpenDetails(true);
                           }}
                           className="h-10 w-10 rounded-xl border flex items-center justify-center text-muted-foreground hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                         >
+                         
                           <Eye className="h-5 w-5" />
                         </button>
 

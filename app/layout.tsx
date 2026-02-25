@@ -39,7 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <I18nProvider>
-              <Toaster />
+              <Toaster className="top-center top-0" />
               {children}
             </I18nProvider>
           </ThemeProvider>

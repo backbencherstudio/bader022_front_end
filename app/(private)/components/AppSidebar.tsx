@@ -82,9 +82,9 @@ function SidebarInner({
             <Image
               src="/images/Logo_dark.png"
               alt="Logo"
-              width={200}
+              width={150}
               height={100}
-              className="rounded dark:hidden -ml-15"
+              className="rounded dark:hidden mt-5"
               priority
             />
             <Image

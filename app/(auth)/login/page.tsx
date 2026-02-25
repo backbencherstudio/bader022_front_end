@@ -25,23 +25,6 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
   console.log("ttttttt", useLoginMutation);
 
-  const { token, user } = useAppSelector((state) => state.auth);
-
-  console.log("token-===========", token);
-  console.log("user-===========", user);
-
-  useEffect(() => {
-    if (token && user) {
-      if (user.role === "Admin") {
-        router.push("/admin/dashboard");
-      } else if (user.role === "Merchant") {
-        router.push("/merchant/dashboard");
-      } else {
-        router.push("/");
-      }
-    }
-  }, [token, user, router]);
-
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login({

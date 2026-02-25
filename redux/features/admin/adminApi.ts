@@ -73,6 +73,38 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getSubscriptionsId: builder.query({
+      query: (id: string | number) => ({
+        url: `/admin/subscription/edit/${id}`,
+        method: "GET",
+      }),
+    }),
+    //EditSbcription
+    updateSubscriptionsById: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/admin/subscription/update/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Subscription"],
+    }),
+
+    getSubscriptionsPlan: builder.query({
+      query: () => ({
+        url: `/admin/plan/index`,
+        method: "GET",
+      }),
+      providesTags: ["Plan"],
+    }),
+    SubcriptionPost: builder.mutation({
+      query: (body) => ({
+        url: "/admin/plan/store",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Plan"],
+    }),
   }),
 });
 
@@ -86,4 +118,8 @@ export const {
   useGetPaymentHistoryQuery,
   useGetSinglePaymentHistoryQuery,
   useGetSubscriptionsQuery,
+  useGetSubscriptionsIdQuery,
+  useUpdateSubscriptionsByIdMutation,
+  useGetSubscriptionsPlanQuery,
+  useSubcriptionPostMutation,
 } = adminApi;

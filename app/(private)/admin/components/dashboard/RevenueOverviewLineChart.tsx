@@ -20,6 +20,7 @@ type Props = {
   data: RevenueData[];
   height?: number;
   maxValue?: number;
+  
 };
 
 export default function RevenueOverviewLineChart({

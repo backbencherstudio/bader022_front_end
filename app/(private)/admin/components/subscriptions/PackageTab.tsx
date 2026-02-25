@@ -7,21 +7,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useGetSubscriptionsPlanQuery } from "@/redux/features/admin/adminApi";
 import { Edit, Eye, SaudiRiyal } from "lucide-react";
+import { EditSubscriptionModal } from "./EditSubscriptionModal";
 
 type PackageStatus = "successful" | "failed";
 
-export type PackageRow = {
-  id: string;
-  merchantName: string;
-  businessName: string;
-  businessAvatar?: string;
-  packageName: string;
-  date: string;
-  amount: string;
-  paymentMethod: string;
-  status: PackageStatus;
-};
+
+
+type SubscriptionPlan = {
+  id: number;
+  name: string;
+  package: string;
+  price: string;
+  title: string;
+  created_at: string;
+  currency: string;
+  day: string;
+  status: boolean;
+}
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -45,32 +49,12 @@ function StatusPill({ status }: { status: PackageStatus }) {
   );
 }
 
-export const demoPayments: PackageRow[] = [
-  {
-    id: "#TXOO1",
-    merchantName: "Ralph Edwards",
-    businessName: "Luxe beauty",
-    businessAvatar: "https://i.pravatar.cc/100?img=12",
-    packageName: "Basic plan",
-    date: "Jun 12, 2023",
-    amount: "120",
-    paymentMethod: "Paypal",
-    status: "successful",
-  },
-  {
-    id: "#TXOO4",
-    merchantName: "Theresa Webb",
-    businessName: "Expert tech",
-    businessAvatar: "https://i.pravatar.cc/100?img=15",
-    packageName: "Basic plan",
-    date: "Jun 15, 2023",
-    amount: "90",
-    paymentMethod: "Google Pay",
-    status: "failed",
-  },
-];
+
 
 export default function PackageTab() {
+  const { data, isLoading, isError } = useGetSubscriptionsPlanQuery({});
+  console.log(data, "data show")
+
   return (
     <div>
       {/* Table */}
@@ -90,51 +74,61 @@ export default function PackageTab() {
             </TableHeader>
 
             <TableBody>
-              {demoPayments.map((r) => (
-                <TableRow key={r.id}>
-                  <TableCell className="pl-8 font-medium">{r.id}</TableCell>
-                  <TableCell>{r.merchantName}</TableCell>
-
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-9 w-9">
-                        <AvatarImage src={r.businessAvatar} />
-                        <AvatarFallback>
-                          {initials(r.businessName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium">{r.businessName}</span>
-                    </div>
+              {data?.data?.map((plan: SubscriptionPlan) => (
+                <TableRow key={plan.id}>
+                  {/* Package Name */}
+                  <TableCell className="pl-8 font-medium">
+                    {plan.name}
                   </TableCell>
 
+                  {/* Business Type (Package Type) */}
+                  <TableCell>
+                    {plan.package}
+                  </TableCell>
+
+                  {/* Duration */}
+                  <TableCell>
+                    {plan.day} Days
+                  </TableCell>
+
+                  {/* Price */}
                   <TableCell className="font-semibold">
-                    <div className="flex items-center">
+                    <div className="flex items-center gap-1">
                       <SaudiRiyal size={14} />
-                      {r.amount}
+                      {plan.price}
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <StatusPill status={r.status} />
-                  </TableCell>
-                  <TableCell>{r.date}</TableCell>
 
+                  {/* Status */}
+                  <TableCell>
+                    <StatusPill
+                      status={plan.status ? "successful" : "failed"}
+                    />
+                  </TableCell>
+
+                  {/* Created On */}
+                  <TableCell>
+                    {new Date(plan.created_at).toLocaleDateString()}
+                  </TableCell>
+
+                  {/* Actions */}
                   <TableCell className="pr-8">
                     <div className="flex gap-3">
                       <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
                         <Eye className="h-5 w-5" />
                       </button>
-                      <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
-                        <Edit className="h-5 w-5" />
-                      </button>
+                
+                      <Edit className="h-5 mt-3 w-5 cursor-pointer" />
+                  
                     </div>
                   </TableCell>
                 </TableRow>
               ))}
 
-              {demoPayments.length === 0 && (
+              {data?.data?.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={9} className="py-10 text-center">
-                    No payment history found.
+                  <TableCell colSpan={7} className="py-10 text-center">
+                    No subscription plans found.
                   </TableCell>
                 </TableRow>
               )}

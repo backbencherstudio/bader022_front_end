@@ -15,13 +15,44 @@ export type TData = {
   revenue: number;
 };
 
+type MonthlyRevenueItem = {
+  month: string;
+  revenue: number;
+};
+
+type WeeklyRevenueItem = {
+  day: string;
+  revenue: number;
+};
 export default function DashboardPage() {
-  const { data } = useWeeklyPaymentCountQuery({});
-  const { data: monthlyData } = useMonthlypaymentCountQuery({});
+  // const { data } = useWeeklyPaymentCountQuery({});
+  // const { data: monthlyData } = useMonthlypaymentCountQuery({});
+  // const { data: dashboardOverview } = useDashboardOverviewQuery({});
+  // console.log(dashboardOverview);
+  // const weeklyRevenueData: TData[] = data;
+  // const monthlyRevenueData: TData[] = monthlyData;
+
+  const { data: weeklyApiData } = useWeeklyPaymentCountQuery({});
+  const { data: monthlyApiData } = useMonthlypaymentCountQuery({});
   const { data: dashboardOverview } = useDashboardOverviewQuery({});
-  console.log(dashboardOverview);
-  const weeklyRevenueData: TData[] = data;
-  const monthlyRevenueData: TData[] = monthlyData;
+
+
+  const monthlyRevenueData =
+    (monthlyApiData as MonthlyRevenueItem[] | undefined)?.map(
+      (item: MonthlyRevenueItem) => ({
+        name: item.month,
+        revenue: item.revenue,
+      })
+    ) || [];
+
+
+  const weeklyRevenueData =
+    (weeklyApiData as WeeklyRevenueItem[] | undefined)?.map(
+      (item: WeeklyRevenueItem) => ({
+        name: item.day,
+        revenue: item.revenue,
+      })
+    ) || [];
   return (
     <div>
       {/* Charts */}

@@ -66,8 +66,8 @@ export default function DashboardLayout({
           navItems={MERCHANT_NAV_ITEMS}
           footerItems={MERCHANT_FOOTER_ITEMS}
           logoSrc="/images/image 259.png"
-          title="Car wash"
-          badgeText="premium"
+          // title="Car wash"
+          // badgeText="premium"
         />
         <TopBar />
         <div

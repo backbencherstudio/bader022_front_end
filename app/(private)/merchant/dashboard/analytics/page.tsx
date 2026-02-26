@@ -12,6 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RevenueChart from "../components/dashboard/RevenueChart";
 import NewVSReturningCusChart from "../components/analytics/NewVSReturningCusChart";
 import StaffPerformance from "../components/analytics/StaffPerformance";
+import { useAnalyticsOverviewQuery } from "@/redux/features/merchant/analyticsApi";
+
 
 export type TData = {
   name: string;
@@ -43,6 +45,14 @@ const weeklyData: TData[] = [
 ];
 
 export default function page() {
+
+
+  const { data: analyticsData, isLoading, isError } = useAnalyticsOverviewQuery({});
+  console.log('====================================');
+  console.log('analyticsData:', analyticsData);
+  console.log('isLoading:', isLoading);
+  console.log('isError:', isError);
+  console.log('====================================');
   return (
     <div>
       {/* Charts */}

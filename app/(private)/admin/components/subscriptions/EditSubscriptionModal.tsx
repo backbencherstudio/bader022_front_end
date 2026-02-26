@@ -40,6 +40,8 @@ export function EditSubscriptionModal({ id }: { id: string, businessName:string 
   const [updateSubscription, { isLoading }] =
     useUpdateSubscriptionsByIdMutation();
 
+    console.log(updateSubscription,"status=========")
+
   const form = useForm<FormValues>({
     defaultValues: {
       packageStatus: "active",
@@ -93,7 +95,7 @@ export function EditSubscriptionModal({ id }: { id: string, businessName:string 
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="expired">Expire</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>

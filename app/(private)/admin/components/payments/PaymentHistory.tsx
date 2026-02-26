@@ -61,7 +61,14 @@ function StatusPill({ status }: { status: PaymentStatus }) {
 }
 
 export default function PaymentHistory() {
-  const { data, isLoading, isError } = useGetPaymentHistoryQuery({});
+  const [search, setSearch] = useState("");
+  const [packageFilter, setPackageFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const { data, isLoading, isError } = useGetPaymentHistoryQuery({
+    search,
+    packageName: packageFilter,
+    status: statusFilter,
+  });
 
   const [openDetails, setOpenDetails] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState<PaymentDetails | null>(
@@ -108,28 +115,34 @@ export default function PaymentHistory() {
 
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search anything" className="h-12 w-64 pl-10" />
+            <Input
+              placeholder="Search anything"
+              className="h-12 w-64 pl-10"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
 
-          <Select>
+          <Select onValueChange={(value) => setPackageFilter(value === "all" ? "" : value)}>
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Package" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="basic">Basic plan</SelectItem>
-              <SelectItem value="premium">Premium Plan</SelectItem>
+              <SelectItem value="Basic">Basic</SelectItem>
+              <SelectItem value="Premium">Premium</SelectItem>
             </SelectContent>
           </Select>
 
-          <Select>
+          <Select onValueChange={(value) => setStatusFilter(value === "all" ? "" : value)}>
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="successful">Successful</SelectItem>
-              <SelectItem value="failed">Failed</SelectItem>
+              <SelectItem value="Paid">Paid</SelectItem>
+              <SelectItem value="Failed">Failed</SelectItem>
+              <SelectItem value="Due">Due</SelectItem>
             </SelectContent>
           </Select>
         </div>

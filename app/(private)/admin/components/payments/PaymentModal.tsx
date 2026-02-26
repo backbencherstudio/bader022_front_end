@@ -24,7 +24,7 @@ export function PaymentModal({
   selectedPayment: any;
 }) {
 
-  // ✅ Skip query if no id
+
   const { data, isLoading } = useGetSinglePaymentHistoryQuery(
     selectedPayment?.id,
     {

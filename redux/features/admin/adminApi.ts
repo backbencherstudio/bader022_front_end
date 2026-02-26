@@ -51,10 +51,21 @@ export const adminApi = baseApi.injectEndpoints({
     }),
 
     //  PaymentHistory
+    // getPaymentHistory: builder.query({
+    //   query: () => ({
+    //     url: `/admin/payment-history/index`,
+    //     method: "GET",
+    //   }),
+    // }),
     getPaymentHistory: builder.query({
-      query: () => ({
+      query: ({ search = "", packageName = "", status = "" }) => ({
         url: `/admin/payment-history/index`,
         method: "GET",
+        params: {
+          search,
+          package: packageName,
+          status,
+        },
       }),
     }),
 

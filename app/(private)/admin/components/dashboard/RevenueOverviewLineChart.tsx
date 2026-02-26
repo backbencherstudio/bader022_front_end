@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 export type RevenueData = {
-  day: string;
+  name: string;
   revenue: number;
 };
 

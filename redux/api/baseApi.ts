@@ -7,6 +7,9 @@ export const baseApi = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
+      console.log('====================================');
+      console.log('Token:', token);
+      console.log('====================================');
 
       if (token) {
         headers.set("authorization", `Bearer ${token}`);

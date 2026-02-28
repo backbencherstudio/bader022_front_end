@@ -64,10 +64,11 @@ export default function PaymentHistory() {
   const [search, setSearch] = useState("");
   const [packageFilter, setPackageFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const serchData = packageFilter || statusFilter || search;
   const { data, isLoading, isError } = useGetPaymentHistoryQuery({
-    search,
-    packageName: packageFilter,
-    status: statusFilter,
+    serchData,
+    // packageName: packageFilter,
+    // status: statusFilter,
   });
 
   const [openDetails, setOpenDetails] = useState(false);
@@ -123,18 +124,27 @@ export default function PaymentHistory() {
             />
           </div>
 
-          <Select onValueChange={(value) => setPackageFilter(value === "all" ? "" : value)}>
+          <Select
+            onValueChange={(value) =>
+              setPackageFilter(value === "all" ? "" : value)
+            }
+          >
             <SelectTrigger className="py-6 w-64">
-              <SelectValue placeholder="Package" />
+              <SelectValue placeholder="package
+" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="Basic">Basic</SelectItem>
-              <SelectItem value="Premium">Premium</SelectItem>
+              <SelectItem value="basic">Basic</SelectItem>
+              <SelectItem value="premium">Premium</SelectItem>
             </SelectContent>
           </Select>
 
-          <Select onValueChange={(value) => setStatusFilter(value === "all" ? "" : value)}>
+          <Select
+            onValueChange={(value) =>
+              setStatusFilter(value === "all" ? "" : value)
+            }
+          >
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Status" />
             </SelectTrigger>

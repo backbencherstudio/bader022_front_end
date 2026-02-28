@@ -58,13 +58,12 @@ export const adminApi = baseApi.injectEndpoints({
     //   }),
     // }),
     getPaymentHistory: builder.query({
-      query: ({ search = "", packageName = "", status = "" }) => ({
+      query: ({ search = ""}) => ({
         url: `/admin/payment-history/index`,
         method: "GET",
         params: {
           search,
-          package: packageName,
-          status,
+    
         },
       }),
     }),
@@ -91,7 +90,9 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
     //EditSbcription
+
     updateSubscriptionsById: builder.mutation({
       query: ({ id, data }) => ({
         url: `/admin/subscription/update/${id}`,
@@ -101,6 +102,8 @@ export const adminApi = baseApi.injectEndpoints({
       invalidatesTags: ["Subscription"],
     }),
 
+    //subcription data
+
     getSubscriptionsPlan: builder.query({
       query: () => ({
         url: `/admin/plan/index`,
@@ -108,6 +111,8 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Plan"],
     }),
+
+    //add plan
     SubcriptionPost: builder.mutation({
       query: (body) => ({
         url: "/admin/plan/store",
@@ -115,6 +120,65 @@ export const adminApi = baseApi.injectEndpoints({
         body,
       }),
       invalidatesTags: ["Plan"],
+    }),
+
+    //tap key
+
+    getTapkey: builder.query({
+      query: () => ({
+        url: `/admin/setting/index`,
+        method: "GET",
+      }),
+      providesTags: ["Tapkey"],
+    }),
+
+    //Tap key update
+    updateTapkey: builder.mutation({
+      query: ({body }) => ({
+        url: `admin/setting/update`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Tapkey"],
+    }),
+
+    //subcription card data
+    getsubcriptionSumary: builder.query({
+      query: () => ({
+        url: `/admin/subscription/summary`,
+        method: "GET",
+      }),
+    }),
+
+    //
+
+    //setting personal
+
+    getPersonaltHistory: builder.query({
+      query: () => ({
+        url: `/admin/profile-info`,
+        method: "GET",
+      }),
+      providesTags: ["information"],
+    }),
+
+    // updateInformation: builder.mutation({
+    //   query: ({ id, data }) => ({
+    //     url: `/admin/saveinfo`,
+    //     method: "POST",
+    //     body: data,
+    //   }),
+    //   invalidatesTags: ["information"],
+    // }),
+
+    //update setting info
+    updateInformation: builder.mutation({
+      query: (body) => ({
+        url: `/admin/saveinfo`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["information"],
     }),
   }),
 });
@@ -133,4 +197,9 @@ export const {
   useUpdateSubscriptionsByIdMutation,
   useGetSubscriptionsPlanQuery,
   useSubcriptionPostMutation,
+  useGetTapkeyQuery,
+  useUpdateTapkeyMutation,
+  useGetPersonaltHistoryQuery,
+  useUpdateInformationMutation,
+  useGetsubcriptionSumaryQuery,
 } = adminApi;

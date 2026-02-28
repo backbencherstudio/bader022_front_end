@@ -5,13 +5,14 @@ export const authApi = baseApi.injectEndpoints({
     //  Register
     register: builder.mutation({
       query: (body) => ({
-        url: "/register",
+        url: "/admin/register",
         method: "POST",
         body,
       }),
     }),
 
     //  Login
+    
     login: builder.mutation({
       query: (body) => ({
         url: "/login",
@@ -55,6 +56,13 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: "/admin/passwordchange/1",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -65,4 +73,5 @@ export const {
   useVerifyOtpMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useChangePasswordMutation,
 } = authApi;

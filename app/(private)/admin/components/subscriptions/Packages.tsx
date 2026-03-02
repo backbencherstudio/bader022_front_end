@@ -87,30 +87,18 @@ function StatusPill({ status }: { status: PackageStatus }) {
 export default function Packages() {
   const { data, isLoading, isError } = useGetSubscriptionsQuery({});
 
-  const rows: SubscriptionRow[] =
-    (data?.data as SubscriptionApiItem[] | undefined)?.map((item) => {
-      const startDate = new Date(item.starts_at);
-      const endDate = new Date(item.ends_at);
-
-      const remainingDays = Math.max(
-        Math.ceil((endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
-        0
-      );
-
-      return {
-        id: String(item.id),
-        businessName: item.user.store_name ?? item.user.name,
-        businessAvatar: item.user.business_logo ?? undefined,
-        packageName: item.plan.name,
-        planType: "Monthly",
-        price: item.plan.price,
-        startDate: startDate.toLocaleDateString(),
-        expiryDate: endDate.toLocaleDateString(),
-        remainingDays: `${remainingDays} days`,
-        status:
-          item.status === "active" ? "successful" : "failed",
-      };
-    }) || [];
+  const rows = (data?.data || []).map((item: any) => ({
+    id: String(item.id),
+    businessName: item.user.store_name || item.user.name,
+    businessAvatar: item.user.business_logo || undefined,
+    packageName: item.plan.name,
+    planType: "Monthly",
+    price: item.plan.price,
+    startDate: new Date(item.starts_at).toLocaleDateString(),
+    expiryDate: new Date(item.ends_at).toLocaleDateString(),
+    remainingDays: `${Math.max(Math.ceil((new Date(item.ends_at).getTime() - Date.now()) / (1000 * 60 * 60 * 24)), 0)} days`,
+    status: item.status === "active" ? "successful" : "failed",
+  }));
 
   if (isLoading) return <div className="p-6">Loading...</div>;
   if (isError) return <div className="p-6 text-red-500">Failed to load</div>;
@@ -215,7 +203,7 @@ export default function Packages() {
                   </TableHeader>
 
                   <TableBody>
-                    {rows.map((r) => (
+                    {rows.map((r: any) => (
                       <TableRow key={r.id}>
                         <TableCell>
                           <div className="flex items-center gap-3">

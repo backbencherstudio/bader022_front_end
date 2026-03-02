@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -19,14 +18,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit } from "lucide-react";
 import { useUpdateSubscriptionsByIdMutation } from "@/redux/features/admin/adminApi";
 
@@ -34,31 +26,22 @@ type FormValues = {
   packageStatus: string;
 };
 
-export function EditSubscriptionModal({ id }: { id: string, businessName:string }) {
+export function EditSubscriptionModal({ id, businessName }: { id: string; businessName: string }) {
   const [open, setOpen] = useState(false);
-
-  const [updateSubscription, { isLoading }] =
-    useUpdateSubscriptionsByIdMutation();
-
-    console.log(updateSubscription,"status=========")
+  const [updateSubscription, { isLoading }] = useUpdateSubscriptionsByIdMutation();
 
   const form = useForm<FormValues>({
-    defaultValues: {
-      packageStatus: "active",
-    },
+    defaultValues: { packageStatus: "active" },
   });
 
   async function onSubmit(values: FormValues) {
     try {
       await updateSubscription({
         id,
-        data: {
-          status: values.packageStatus,
-        },
+        data: { status: values.packageStatus },
       }).unwrap();
-      
 
-      setOpen(false); // close modal after success
+      setOpen(false); // 🔥 close modal
       form.reset();
     } catch (error) {
       console.error("Update failed:", error);
@@ -84,10 +67,7 @@ export function EditSubscriptionModal({ id }: { id: string, businessName:string 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Subscription Status</FormLabel>
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl className="w-full">
                       <SelectTrigger>
                         <SelectValue placeholder="Select status" />
@@ -95,23 +75,21 @@ export function EditSubscriptionModal({ id }: { id: string, businessName:string 
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="expired">Expire</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="expired">Expired</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
- 
+
             <div className="flex justify-start gap-4 pt-4">
               <Button type="submit" disabled={isLoading}>
                 {isLoading ? "Updating..." : "Save"}
               </Button>
 
-              <Button
-                variant="outline"
-                type="button"
-                onClick={() => setOpen(false)}
-              >
+              <Button variant="outline" type="button" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
             </div>

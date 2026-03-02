@@ -30,11 +30,9 @@ export const adminApi = baseApi.injectEndpoints({
       query: ({ search }) => ({
         url: "/admin/merchant/index",
         method: "GET",
-        params: {
-          search,
-        },
-        providesTags: ["Merchants"],
+        params: { search },
       }),
+      providesTags: ["Merchants"],
     }),
 
     //  Get Single Merchant
@@ -49,13 +47,10 @@ export const adminApi = baseApi.injectEndpoints({
     updateMerchantById: builder.mutation({
       query: ({ id, data }) => ({
         url: `/admin/merchant/update/${id}`,
-        method: "POST",
-        body: {
-          ...data,
-          _method: "PUT",
-        },
-        invalidatesTags: ["Merchants"],
+        method: "PUT",
+        body: data,
       }),
+      invalidatesTags: ["Merchants"],
     }),
 
     //  PaymentHistory
@@ -83,12 +78,22 @@ export const adminApi = baseApi.injectEndpoints({
       }),
     }),
 
-    //  Get Subscriptions
+    // redux/features/admin/adminApi.ts
     getSubscriptions: builder.query({
       query: () => ({
         url: `/admin/subscription/index`,
         method: "GET",
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map((item: any) => ({
+                type: "Subscription" as const,
+                id: item.id,
+              })),
+              { type: "Subscription", id: "LIST" },
+            ]
+          : [{ type: "Subscription", id: "LIST" }],
     }),
 
     getSubscriptionsId: builder.query({
@@ -96,9 +101,8 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/admin/subscription/edit/${id}`,
         method: "GET",
       }),
+      providesTags: (result, error, id) => [{ type: "Subscription", id }],
     }),
-
-    //EditSbcription
 
     updateSubscriptionsById: builder.mutation({
       query: ({ id, data }) => ({
@@ -106,10 +110,11 @@ export const adminApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Subscription"],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Subscription", id },
+        { type: "Subscription", id: "LIST" },
+      ],
     }),
-
-    //subcription data
 
     getSubscriptionsPlan: builder.query({
       query: () => ({
@@ -119,7 +124,6 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: ["Plan"],
     }),
 
-    //add plan
     SubcriptionPost: builder.mutation({
       query: (body) => ({
         url: "/admin/plan/store",
@@ -128,7 +132,6 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Plan"],
     }),
-
     //tap key
 
     getTapkey: builder.query({

@@ -79,6 +79,7 @@ export function MerchantManagementCard({
   setSearch: (value: string) => void;
 }) {
   const navigate = useRouter();
+  const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <Card
@@ -198,28 +199,37 @@ export function MerchantManagementCard({
                     {/* Actions */}
                     <TableCell className="pr-8">
                       <div className="flex items-center gap-1">
+
+                        {/* View Button */}
                         <button
                           type="button"
-                          onClick={() =>
-                            navigate.push(`/admin/merchants/${r.id}`)
-                          }
+                          onClick={() => navigate.push(`/admin/merchants/${r.id}`)}
                           className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
                           <Eye className="h-5 w-5" />
                         </button>
-                        <Dialog>
+
+                        {/* ✅ Edit Dialog */}
+                        <Dialog
+                          open={openId === r.id}
+                          onOpenChange={(open) => setOpenId(open ? r.id : null)}
+                        >
                           <DialogTrigger asChild>
                             <button
                               type="button"
-                              onClick={() => onEdit?.(r?.id)}
+                              onClick={() => setOpenId(r.id)}
                               className="h-10 w-10 rounded-xl text-muted-foreground hover:text-black border hover:bg-white flex items-center justify-center cursor-pointer"
                             >
                               <Pencil className="h-5 w-5" />
                             </button>
-                            {/* <Button variant="outline">Edit Profile</Button> */}
                           </DialogTrigger>
-                          <EditProfileDialog id={r?.id} />
+
+                          <EditProfileDialog
+                            id={r.id}
+                            onClose={() => setOpenId(null)}
+                          />
                         </Dialog>
+
                       </div>
                     </TableCell>
                   </TableRow>
@@ -277,6 +287,8 @@ export default function MerchantManagement() {
   const { data, isLoading, isError } = useGetAllMerchantsQuery({
     search: debouncedSearch,
   });
+  console.log(data,"proper"
+  )
 
   // Transform backend response → MerchantRow[]
   const merchants: MerchantRow[] =
@@ -302,7 +314,7 @@ export default function MerchantManagement() {
           ? new Date(item.ends_at).toLocaleDateString()
           : "N/A",
 
-        status: item.status === "1" ? "active" : "inactive",
+        status: item?.user?.status === "1" ? "active" : "inactive",
       };
     }) ?? [];
 

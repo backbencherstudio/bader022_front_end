@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, Controller, UseFormRegister } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useI18n } from "@/components/provider/I18nProvider";
 
-type FormValues = {
+export type FormValues = {
   fullName: string;
   email: string;
   phone: string;
@@ -16,18 +16,29 @@ type FormValues = {
 
 interface AccountCreationProps {
   onNext: (values: FormValues) => void;
+  defaultValues?: Partial<FormValues>;
 }
 
-export default function AccountCreation({ onNext }: AccountCreationProps) {
-  const { register, handleSubmit, control } = useForm<FormValues>();
+export default function AccountCreation({
+  onNext,
+  defaultValues,
+}: AccountCreationProps) {
+  const { register, handleSubmit, control } = useForm<FormValues>({
+    defaultValues,
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const { locale, t } = useI18n();
-
   const isRTL = locale === "ar";
+
+  const onSubmit = (values: FormValues) => {
+    console.log("Form Data:", values); 
+    onNext(values);
+  };
 
   return (
     <form
-      onSubmit={handleSubmit(onNext)}
+      onSubmit={handleSubmit(onSubmit)}
       className="space-y-4"
       dir={isRTL ? "rtl" : "ltr"}
     >
@@ -36,6 +47,7 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
         icon={<FaUser />}
         placeholder={t("AccountCreation.fullNamePlaceholder")}
         register={register("fullName", { required: true })}
+        isRTL={isRTL}
       />
 
       <Input
@@ -44,6 +56,7 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
         type="email"
         placeholder={t("AccountCreation.emailPlaceholder")}
         register={register("email", { required: true })}
+        isRTL={isRTL}
       />
 
       {/* Phone */}
@@ -58,28 +71,22 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
           rules={{ required: true }}
           render={({ field }) => (
             <PhoneInput
-              country="SA"
               international
-              withCountryCallingCode
-              defaultCountry={"SA"}
+              defaultCountry="SA"
               countryCallingCodeEditable={false}
               value={field.value}
               onChange={field.onChange}
-              className={`
-                          w-full
-                          [&_input]:h-11
-                          [&_input]:w-full
-                          [&_input]:rounded-md
-                          [&_input]:border
-                          [&_input]:pl-2
-                          [&_input]:border-gray-300
-                          dark:[&_input]:border-gray-600
-
-                          /* Disable country selector interaction */
-                          [&_.PhoneInputCountrySelect]:pointer-events-none
-                          [&_.PhoneInputCountrySelect]:opacity-60
-                          [&_.PhoneInputCountrySelect]:cursor-not-allowed
-                        `}
+              className="w-full
+                [&_input]:h-11
+                [&_input]:w-full
+                [&_input]:rounded-md
+                [&_input]:border
+                [&_input]:border-gray-300
+                dark:[&_input]:border-gray-600
+                [&_input]:bg-white
+                dark:[&_input]:bg-gray-800
+                [&_input]:px-3
+              "
             />
           )}
         />
@@ -101,12 +108,10 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
           <input
             type={showPassword ? "text" : "password"}
             placeholder={t("AccountCreation.passwordPlaceholder")}
-            {...register("password", { required: true })}
-            className={`
-              w-full rounded-md border border-gray-300
+            {...register("password", { required: true, minLength: 6 })}
+            className={`w-full rounded-md border border-gray-300
               bg-white dark:bg-gray-800
-              py-3 text-sm
-              text-gray-900 dark:text-white
+              py-3 text-sm text-gray-900 dark:text-white
               ${isRTL ? "pr-10 pl-12" : "pl-10 pr-12"}
             `}
           />
@@ -114,24 +119,21 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
           <button
             type="button"
             onClick={() => setShowPassword((p) => !p)}
-            className={`absolute top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 ${
+            className={`absolute top-1/2 -translate-y-1/2 text-sm text-gray-500 ${
               isRTL ? "left-3" : "right-3"
             }`}
           >
-            <div className="flex items-center gap-2">
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
-              {locale !== "ar" && (showPassword ? "Hide" : "Show")}
-            </div>
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
         </div>
       </div>
 
-      {/* Continue Button */}
+      {/* Submit */}
       <button
         type="submit"
-        className="mt-4 w-full rounded-md bg-linear-to-r
+        className="mt-4 w-full rounded-md bg-gradient-to-r
         from-blue-500 to-purple-500 py-3 text-sm font-medium text-white
-        hover:opacity-90 transition cursor-pointer"
+        hover:opacity-90 transition"
       >
         {t("AccountCreation.submit")}
       </button>
@@ -144,12 +146,14 @@ export default function AccountCreation({ onNext }: AccountCreationProps) {
 }
 
 /* ---------------- Reusable Input ---------------- */
+
 interface InputProps {
   label: string;
   icon: React.ReactNode;
   placeholder: string;
   type?: string;
-  register: ReturnType<UseFormRegister<FormValues>>;
+  register: any;
+  isRTL: boolean;
 }
 
 function Input({
@@ -158,6 +162,7 @@ function Input({
   placeholder,
   type = "text",
   register,
+  isRTL,
 }: InputProps) {
   return (
     <div>
@@ -166,7 +171,11 @@ function Input({
       </label>
 
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+        <span
+          className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+            isRTL ? "right-3" : "left-3"
+          }`}
+        >
           {icon}
         </span>
 
@@ -174,8 +183,10 @@ function Input({
           type={type}
           placeholder={placeholder}
           {...register}
-          className="w-full rounded-md border border-gray-300 bg-white py-3 pl-10 pr-3 text-sm
-          text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className={`w-full rounded-md border border-gray-300 bg-white py-3 text-sm
+          text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white
+          ${isRTL ? "pr-10 pl-3" : "pl-10 pr-3"}
+        `}
         />
       </div>
     </div>

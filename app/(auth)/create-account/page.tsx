@@ -21,13 +21,17 @@ import CompleteYourProfile from "./_components/CompliteYourProfile";
 
 interface CreateAccountData {
   step1: {
+    fullName: string;
+    email: string;
+    phone: string;
+    password: string;
+    category: string;
+  };
+  step2: {
     businessName: string;
     businessAddress: string;
     category: string;
     branches: "1" | "2-5" | "6+";
-  };
-  step2: {
-    serviceName: string;
   };
   step3: {
     serviceName: string;
@@ -36,22 +40,10 @@ interface CreateAccountData {
     serviceName: string;
   };
   step5: {
-    fullName: string;
-    email: string;
-    phone: string;
-    password: string;
-    category: string;
-    remember: boolean;
+    serviceName: string;
   };
-}
 
-// const steps = [1, 2, 3] as const;
-// const steps = [
-//   "Account creation",
-//   "Basic business information",
-//   "Choose your plan",
-// ];
-// const TOTAL_STEPS = steps.length;
+}
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -82,22 +74,22 @@ export default function CreateAccountPage() {
   const [createAccountData, setCreateAccountData] = useState<CreateAccountData>(
     {
       step1: {
-        businessName: "",
-        businessAddress: "",
-        category: "",
-        branches: "1",
-      },
-      step2: { serviceName: "" },
-      step3: { serviceName: "" },
-      step4: { serviceName: "" },
-      step5: {
         fullName: "",
         email: "",
         phone: "",
         password: "",
         category: "",
-        remember: false,
       },
+      step2: {
+        businessName: "",
+        businessAddress: "",
+        category: "",
+        branches: "1",
+      },
+      step3: { serviceName: "" },
+      step4: { serviceName: "" },
+      step5: { serviceName: "" },
+
     },
   );
 
@@ -120,35 +112,44 @@ export default function CreateAccountPage() {
   const handlePrevious = () => {
     if (step > 1) setStep(step - 1);
   };
-
   const renderStep = () => {
-    switch (step) {
-      case 1:
-        return <AccountCreation onNext={(data) => handleNext("step5", data)} />;
-      case 2:
-        return (
-          <BusinessInfo
-            data={createAccountData.step1}
-            onNext={(data) => handleNext("step1", data)}
-            onPrevious={handlePrevious}
-          />
-        );
-      case 3:
-        return (
-          <ChooseyourPlan
-            data={createAccountData.step4}
-            onNext={(data) => handleNext("step3", data)}
-            onPrevious={handlePrevious}
-          />
-        );
-      case 4:
-        return <FinalizingYourWebsite />;
-      case 5:
-        return <CompleteYourProfile />;
-      default:
-        return null;
-    }
-  };
+  switch (step) {
+    case 1:
+      return (
+        <AccountCreation
+          defaultValues={createAccountData.step1}
+          onNext={(data) => handleNext("step1", data)}
+        />
+      );
+
+    case 2:
+      return (
+        <BusinessInfo
+          data={createAccountData.step2}
+          onNext={(data) => handleNext("step2", data)}
+          onPrevious={handlePrevious}
+        />
+      );
+
+    case 3:
+      return (
+        <ChooseyourPlan
+          data={createAccountData.step3}
+          onNext={(data) => handleNext("step3", data)}
+          onPrevious={handlePrevious}
+        />
+      );
+
+    case 4:
+      return <FinalizingYourWebsite />;
+
+    case 5:
+      return <CompleteYourProfile />;
+
+    default:
+      return null;
+  }
+};
 
   return (
     <div className="max-w-4xl mx-auto p-5  rounded-md shadow bg-white px-4 py-6 sm:px-6 dark:bg-gray-900">
@@ -243,25 +244,6 @@ export default function CreateAccountPage() {
           )}
         </div>
       )}
-
-      {/* Progress */}
-      {/* {step <= steps.length && (
-        <div className="flex w-full gap-5">
-          {steps.map((item) => (
-            <div key={item} className="flex-1">
-              <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e8ee] dark:bg-[#2a2d35]">
-                <div
-                  className={`h-full rounded-full ${
-                    item <= step
-                      ? "bg-black dark:bg-blue-600"
-                      : "bg-[#f5f6f8] dark:bg-[#1e2026]"
-                  }`}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      )} */}
       {/* Progress */}
       <div className="max-w-xl mx-auto">
         {step <= steps.length && (

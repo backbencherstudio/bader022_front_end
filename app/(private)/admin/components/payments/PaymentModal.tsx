@@ -35,15 +35,15 @@ export function PaymentModal({
   const payment = data?.data;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="rounded-2xl p-0 dark:bg-gray-900">
+    <Dialog open={open} onOpenChange={onOpenChange} >
+      <DialogContent className="rounded-2xl p-0 dark:bg-gray-900 overflow-y-auto max-h-[90vh]">
 
         {/* Header */}
         <DialogHeader
           className="flex mt-5 flex-row items-center justify-between px-6 py-5
           bg-muted/30
           dark:bg-linear-to-r dark:from-[#1A1630] dark:via-[#2A2148] dark:to-[#1A1630]
-          dark:border-b dark:border-white/10"
+          dark:border-b dark:border-white/10 overflow-y-auto"
         >
           <DialogTitle className="text-lg font-semibold text-foreground dark:text-white">
             Payment Details

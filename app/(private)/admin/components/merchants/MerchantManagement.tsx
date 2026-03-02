@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EditProfileDialog } from "./ProfileEditModal";
 
-type MerchantStatus = "active" | "expired";
+type MerchantStatus = "active" | "inactive";
 
 export type MerchantRow = {
   id: string;
@@ -44,6 +44,8 @@ function initials(name: string) {
 function StatusPill({ status }: { status: MerchantStatus }) {
   const isActive = status === "active";
 
+  { isActive ? "Active" : "Inactive" }
+
   return (
     <span
       className={[
@@ -54,7 +56,7 @@ function StatusPill({ status }: { status: MerchantStatus }) {
           : "border-red-500 bg-red-50 text-red-600",
       ].join(" ")}
     >
-      {isActive ? "Active" : "Expired"}
+      {isActive ? "Active" : "Inactive"}
     </span>
   );
 }
@@ -300,7 +302,7 @@ export default function MerchantManagement() {
           ? new Date(item.ends_at).toLocaleDateString()
           : "N/A",
 
-        status: isExpired ? "expired" : "active",
+        status: item.status === "1" ? "active" : "inactive",
       };
     }) ?? [];
 

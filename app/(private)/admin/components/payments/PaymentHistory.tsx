@@ -64,12 +64,11 @@ export default function PaymentHistory() {
   const [search, setSearch] = useState("");
   const [packageFilter, setPackageFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const serchData = packageFilter || statusFilter || search;
+  const searchValue = packageFilter || statusFilter || search;
   const { data, isLoading, isError } = useGetPaymentHistoryQuery({
-    serchData,
-    // packageName: packageFilter,
-    // status: statusFilter,
+    search: searchValue,
   });
+  console.log(data, "index data")
 
   const [openDetails, setOpenDetails] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState<PaymentDetails | null>(
@@ -90,7 +89,7 @@ export default function PaymentHistory() {
       paymentMethod: item.payment_method ?? "N/A",
       status: item.status === "Paid" ? "successful" : "failed",
     })) ?? [];
-
+  console.log(rows[0]?.status, "rows data");
   if (isLoading)
     return <div className="p-6 text-center">Loading payments...</div>;
 
@@ -153,6 +152,8 @@ export default function PaymentHistory() {
               <SelectItem value="Paid">Paid</SelectItem>
               <SelectItem value="Failed">Failed</SelectItem>
               <SelectItem value="Due">Due</SelectItem>
+              {/* <SelectItem value="Successfull">Successful</SelectItem> */}
+
             </SelectContent>
           </Select>
         </div>

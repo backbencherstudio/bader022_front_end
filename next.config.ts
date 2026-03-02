@@ -5,15 +5,33 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "",
-      },
-      {
         protocol: "http",
-        hostname: "",
+        hostname: "192.168.7.180",
+        port: "8000",
+        pathname: "/uploads/**",
       },
     ],
   },
 };
 
 export default nextConfig;
+
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//   poweredByHeader: false,
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "",
+//       },
+//       {
+//         protocol: "http",
+//         hostname: "",
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;

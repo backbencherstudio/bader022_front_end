@@ -9,6 +9,7 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
     //  weeklyPaymentCount
     weeklyPaymentCount: builder.query({
       query: () => ({
@@ -16,6 +17,7 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
     //  monthlypaymentCount
     monthlypaymentCount: builder.query({
       query: () => ({
@@ -31,8 +33,10 @@ export const adminApi = baseApi.injectEndpoints({
         params: {
           search,
         },
+        providesTags: ["Merchants"],
       }),
     }),
+
     //  Get Single Merchant
     getSingleMerchantById: builder.query({
       query: (id) => ({
@@ -45,8 +49,12 @@ export const adminApi = baseApi.injectEndpoints({
     updateMerchantById: builder.mutation({
       query: ({ id, data }) => ({
         url: `/admin/merchant/update/${id}`,
-        method: "PUT",
-        body: data,
+        method: "POST",
+        body: {
+          ...data,
+          _method: "PUT",
+        },
+        invalidatesTags: ["Merchants"],
       }),
     }),
 
@@ -58,12 +66,11 @@ export const adminApi = baseApi.injectEndpoints({
     //   }),
     // }),
     getPaymentHistory: builder.query({
-      query: ({ search = ""}) => ({
-        url: `/admin/payment-history/index`,
+      query: ({ search = "" }) => ({
+        url: `/admin/payment-history/index?search=${search}`,
         method: "GET",
         params: {
           search,
-    
         },
       }),
     }),
@@ -134,7 +141,7 @@ export const adminApi = baseApi.injectEndpoints({
 
     //Tap key update
     updateTapkey: builder.mutation({
-      query: ({body }) => ({
+      query: ({ body }) => ({
         url: `admin/setting/update`,
         method: "POST",
         body,

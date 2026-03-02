@@ -37,9 +37,9 @@ type FormValues = {
 export function EditProfileDialog({ id }: any) {
   const form = useForm<FormValues>({
     defaultValues: {
-      status: "active",
-      platform_status: "live",
-      platform_access: "enabled",
+      status: "1",
+      platform_status: "1",
+      platform_access: "1",
     },
   });
 
@@ -47,9 +47,11 @@ export function EditProfileDialog({ id }: any) {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const response = await updateMerchantById({ id, values });
+      console.log("Submitting values:", values, id);
+      const response = await updateMerchantById({ id, data: values });
       console.log(response);
       if (response?.data?.success) {
+   
         toast.success(response?.data?.message);
       }
     } catch (error) {
@@ -75,12 +77,12 @@ export function EditProfileDialog({ id }: any) {
                 <Select value={field.value} onValueChange={field.onChange}>
                   <FormControl className="w-full">
                     <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                      <SelectValue placeholder="status" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="1">Active</SelectItem>
+                    <SelectItem value="0">Inactive</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -97,12 +99,12 @@ export function EditProfileDialog({ id }: any) {
                 <Select value={field.value} onValueChange={field.onChange}>
                   <FormControl className="w-full">
                     <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                      <SelectValue placeholder="platform_status" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="live">Live</SelectItem>
-                    <SelectItem value="offline">Offline</SelectItem>
+                    <SelectItem value="1">Live</SelectItem>
+                    <SelectItem value="0">Offline</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -119,12 +121,12 @@ export function EditProfileDialog({ id }: any) {
                 <Select value={field.value} onValueChange={field.onChange}>
                   <FormControl className="w-full">
                     <SelectTrigger>
-                      <SelectValue placeholder="Select access" />
+                      <SelectValue placeholder="platform_access" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="enabled">Enabled</SelectItem>
-                    <SelectItem value="disabled">Disabled</SelectItem>
+                    <SelectItem value="1">Enabled</SelectItem>
+                    <SelectItem value="0">Disabled</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>

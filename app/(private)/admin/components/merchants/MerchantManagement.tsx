@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EditProfileDialog } from "./ProfileEditModal";
 
-type MerchantStatus = "active" | "inactive";
+type MerchantStatus = "active"| "pending" | "expired" | "cancelled";
 
 export type MerchantRow = {
   id: string;
@@ -42,25 +42,35 @@ function initials(name: string) {
 }
 
 function StatusPill({ status }: { status: MerchantStatus }) {
-  const isActive = status === "active";
+  const statusConfig = {
+    active: {
+      label: "Active",
+      className: "border-emerald-500 bg-emerald-50 text-emerald-700",
+    },
+    pending: {
+      label: "Pending",
+      className: "border-amber-500 bg-amber-50 text-amber-700",
+    },
+    expired: {
+      label: "Expired",
+      className: "border-red-500 bg-red-50 text-red-600",
+    },
+    cancelled: {
+      label: "Cancelled",
+      className: "border-gray-500 bg-gray-100 text-gray-600",
+    },
+  } as const;
 
-  { isActive ? "Active" : "Inactive" }
+  const config = statusConfig[status] ?? statusConfig.pending;
 
   return (
     <span
-      className={[
-        "inline-flex min-w-28 items-center justify-center rounded-xl px-6 py-2 text-sm font-semibold",
-        "border",
-        isActive
-          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-          : "border-red-500 bg-red-50 text-red-600",
-      ].join(" ")}
+      className={`inline-flex min-w-28 items-center justify-center rounded-xl px-6 py-2 text-sm font-semibold border ${config.className}`}
     >
-      {isActive ? "Active" : "Inactive"}
+      {config.label}
     </span>
   );
 }
-
 export function MerchantManagementCard({
   rows,
   className,
@@ -314,7 +324,7 @@ export default function MerchantManagement() {
           ? new Date(item.ends_at).toLocaleDateString()
           : "N/A",
 
-        status: item?.user?.status === "1" ? "active" : "inactive",
+        status: item?.status ?? "inactive",
       };
     }) ?? [];
 

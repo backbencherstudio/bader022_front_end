@@ -1,7 +1,7 @@
 "use client";
 import StatCard from "../../merchant/dashboard/components/dashboard/StateCard";
 import { Clock, Clock3, Crown, Package } from "lucide-react";
-import Packages from "../components/subscriptions/Packages";
+import Packages from "../components/subscriptions/ActiveSubscription";
 import { useGetsubcriptionSumaryQuery } from "@/redux/features/admin/adminApi";
 
 export default function page() {

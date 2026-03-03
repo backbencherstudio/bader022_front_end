@@ -340,5 +340,6 @@ export default function MerchantManagement() {
       search={search}
       setSearch={setSearch}
     />
+  
   );
 }

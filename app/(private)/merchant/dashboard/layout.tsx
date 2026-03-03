@@ -72,7 +72,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { t, locale } = useI18n();
-  console.log(t);
+  // console.log(t);
   return (
     <div>
       <div>

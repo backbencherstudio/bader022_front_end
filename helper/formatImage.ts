@@ -1,9 +1,9 @@
 const BASE_URL = process.env.NEXT_PUBLIC_FILE_URL!;
+export const getImageUrl = (image?: string) => {
 
-export const getImageUrl = (path?: string | null) => {
-  if (!path || path === "null") return "/images/company3.png";
-
-  if (path.startsWith("http")) return path;
-
-  return `${BASE_URL}/${path}`;
+  console.log('====================================');
+  console.log("image======",image);
+  console.log('====================================');
+  if (!image) return "";
+  return `${BASE_URL}/${image}`;
 };

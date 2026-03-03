@@ -2,8 +2,8 @@ import { baseApi } from "@/redux/api/baseApi";
 
 export const dashboardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    //  analyticsOverview
-    dashboardOverview: builder.query({
+    //  Merchant Dashboard Overview
+    merchantDashboardOverview: builder.query({
       query: () => ({
         url: "/admin/mer-dashboard/index",
         method: "GET",
@@ -34,7 +34,7 @@ export const dashboardApi = baseApi.injectEndpoints({
 });
 
 export const {
-    useDashboardOverviewQuery,
+    useMerchantDashboardOverviewQuery,
     useMonthlyRevenueQuery,
     useWeeklyRevenueQuery,
     useTodayAppointmentQuery,

@@ -5,57 +5,58 @@ import { useState } from "react";
 import { FiSearch, FiEdit, FiTrash2 } from "react-icons/fi";
 import StaffModal from "../components/modal/StaffModal";
 import { useAllStaffQuery } from "@/redux/features/merchant/staffApi";
+import { getImageUrl } from "@/helper/formatImage";
 
-export const staffList = [
-  {
-    id: 1,
-    name: "John Smith",
-    role: "Admin",
-    status: "Inactive",
-    avatar: "/images/staffs/staff2.png",
-    services: ["Haircut & Styling", "Hair Coloring", "Scalp Treatment"],
-  },
-  {
-    id: 2,
-    name: "John Smith",
-    role: "Admin",
-    status: "Active",
-    avatar: "/images/staffs/staff1.png",
-    services: ["Haircut & Styling", "Hair Coloring", "Hair Extensions"],
-  },
-  {
-    id: 3,
-    name: "John Smith",
-    role: "Staff",
-    status: "Active",
-    avatar: "/images/staffs/staff3.png",
-    services: ["Haircut & Styling", "Hair Coloring"],
-  },
-  {
-    id: 4,
-    name: "John Smith",
-    role: "Staff",
-    status: "Active",
-    avatar: "/images/staffs/staff2.png",
-    services: ["Haircut & Styling", "Hair Coloring"],
-  },
-  {
-    id: 5,
-    name: "John Smith",
-    role: "Staff",
-    status: "Inactive",
-    avatar: "/images/staffs/staff3.png",
-    services: ["Haircut & Styling", "Hair Coloring"],
-  },
-  {
-    id: 6,
-    name: "John Smith",
-    role: "Staff",
-    status: "Inactive",
-    avatar: "/images/staffs/staff1.png",
-    services: ["Haircut & Styling", "Hair Coloring"],
-  },
-];
+// export const staffList = [
+//   {
+//     id: 1,
+//     name: "John Smith",
+//     role: "Admin",
+//     status: "Inactive",
+//     avatar: "/images/staffs/staff2.png",
+//     services: ["Haircut & Styling", "Hair Coloring", "Scalp Treatment"],
+//   },
+//   {
+//     id: 2,
+//     name: "John Smith",
+//     role: "Admin",
+//     status: "Active",
+//     avatar: "/images/staffs/staff1.png",
+//     services: ["Haircut & Styling", "Hair Coloring", "Hair Extensions"],
+//   },
+//   {
+//     id: 3,
+//     name: "John Smith",
+//     role: "Staff",
+//     status: "Active",
+//     avatar: "/images/staffs/staff3.png",
+//     services: ["Haircut & Styling", "Hair Coloring"],
+//   },
+//   {
+//     id: 4,
+//     name: "John Smith",
+//     role: "Staff",
+//     status: "Active",
+//     avatar: "/images/staffs/staff2.png",
+//     services: ["Haircut & Styling", "Hair Coloring"],
+//   },
+//   {
+//     id: 5,
+//     name: "John Smith",
+//     role: "Staff",
+//     status: "Inactive",
+//     avatar: "/images/staffs/staff3.png",
+//     services: ["Haircut & Styling", "Hair Coloring"],
+//   },
+//   {
+//     id: 6,
+//     name: "John Smith",
+//     role: "Staff",
+//     status: "Inactive",
+//     avatar: "/images/staffs/staff1.png",
+//     services: ["Haircut & Styling", "Hair Coloring"],
+//   },
+// ];
 
 export default function StaffPage() {
   const [search, setSearch] = useState("");
@@ -63,16 +64,23 @@ export default function StaffPage() {
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedStaff, setSelectedStaff] = useState<any>(null);
 
-  const { data: staffData, isLoading } = useAllStaffQuery({});
+  const { data: staffData, isLoading, isError } = useAllStaffQuery({});
 
   console.log('====================================');
-  console.log(staffData);
+  console.log(staffData?.data);
   console.log('====================================');
 
-  const filteredStaff = staffList.filter((staff) =>
+  const staffList = staffData?.data ?? [];
+
+  const filteredStaff = staffList?.filter((staff:any) =>
     staff.name.toLowerCase().includes(search.toLowerCase())
   );
 
+
+
+  console.log('====================================');
+  console.log(filteredStaff);
+  console.log('====================================');
   const handleSubmitStaff = (data: any) => {
     if (mode === "add") {
       console.log("Add Staff:", data);
@@ -81,6 +89,14 @@ export default function StaffPage() {
     }
   };
 
+
+  if (isLoading) {
+  return <div className="p-6">Loading staff...</div>;
+}
+
+if (isError) {
+  return <div className="p-6 text-red-500">Failed to load staff</div>;
+}
   return (
     <section className="md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
@@ -131,7 +147,7 @@ export default function StaffPage() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredStaff.map((staff) => (
+        {filteredStaff.map((staff:any) => (
           <div
             key={staff.id}
             className="
@@ -143,13 +159,14 @@ export default function StaffPage() {
           >
             {/* Top */}
             <div className="flex gap-4">
-              <Image
-                src={staff.avatar}
-                alt={staff.name}
-                width={56}
-                height={56}
-                className="rounded-full object-cover"
-              />
+                <Image
+                  src={getImageUrl(staff.image) || "/images/staffs/staff3.png"}
+                  alt={staff.name}
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                  unoptimized={true}
+                />
 
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-900 dark:text-gray-100">
@@ -169,43 +186,38 @@ export default function StaffPage() {
 
                   <span
                     className={`px-2 py-1 rounded-md ${
-                      staff.status === "Active"
+                      staff.status === 1
                         ? "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400"
                         : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
                     }`}
                   >
-                    {staff.status}
+                    {staff.status=== 1 ? "Active":"Inactive"}
                   </span>
                 </div>
               </div>
             </div>
-
             {/* Assigned Services */}
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                Assigned Services:
-              </p>
+              <div className="mt-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                  Assigned Service:
+                </p>
 
-              <div className="flex flex-wrap gap-2">
-                {staff.services.slice(0, 2).map((service) => (
-                  <span
-                    key={service}
-                    className="
-                      px-3 py-1 text-xs rounded-md
-                      bg-gray-100 dark:bg-gray-700
-                      text-gray-700 dark:text-gray-300
-                    "
-                  >
-                    {service}
-                  </span>
-                ))}
-                {staff.services.length > 2 && (
-                  <span className="px-3 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                    +{staff.services.length - 2} more
-                  </span>
+                {staff.service ? (
+                  <div className="flex flex-wrap gap-2">
+                    <span
+                      className="
+                        px-3 py-1 text-xs rounded-md
+                        bg-gray-100 dark:bg-gray-700
+                        text-gray-700 dark:text-gray-300
+                      "
+                    >
+                      {staff.service.service_name}
+                    </span>
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-400">No service assigned</p>
                 )}
               </div>
-            </div>
 
             {/* Actions */}
             <div className="mt-5 flex items-center gap-3">

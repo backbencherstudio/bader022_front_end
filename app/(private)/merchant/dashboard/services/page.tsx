@@ -37,7 +37,7 @@ export default function ServicesPage() {
   // FILTERED SERVICES
   const filteredServices = useMemo(() => {
     return services.filter((service: any) => {
-      const title = service?.title ?? "";
+      const title = service?.service_name ?? "";
       const category = service?.category ?? service?.service_name ?? "";
 
       const matchesSearch = title.toLowerCase().includes(search.toLowerCase());
@@ -135,13 +135,15 @@ export default function ServicesPage() {
               {/* <Image src={service.image} alt={service.title} fill className="object-cover" /> */}
             <Image
               src={getImageUrl(service.image) || "/images/company3.png"}
-              alt={service?.title ?? service?.service_name ?? "service image"}
+              alt={service?.service_name || "service image"}
               fill
               className="object-cover"
+               unoptimized={true}
             />
             </div>
 
             <div className="p-5 space-y-3">
+              <h3 className="font-semibold">{service?.service_name}</h3>
               <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-1">
                   <FiClock />
@@ -154,8 +156,6 @@ export default function ServicesPage() {
 
               <h3 className="font-semibold">{service.title}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">{service.description}</p>
-              <p>{getImageUrl(service.image)}</p>
-
               <div className="flex gap-3 pt-3">
                 <button
                   onClick={() => {

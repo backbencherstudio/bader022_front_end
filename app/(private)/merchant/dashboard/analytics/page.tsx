@@ -50,13 +50,13 @@ export default function page() {
   const { data: analyticsData, isLoading, isError } = useAnalyticsOverviewQuery({});
   const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
   const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
-  const { data: newReturnData, isLoading:isNewReturnLoading, isError: isNewReturnError } = useNewReturnQuery({});
+  // const { data: newReturnData, isLoading:isNewReturnLoading, isError: isNewReturnError } = useNewReturnQuery({});
   const { data: staffPerformanceData, isLoading: isStaffPerformanceLoading, isError: isStaffPerformanceError } = useStaffPerformanceQuery({});
   console.log('====================================');
   console.log('analyticsData:', analyticsData)
   console.log('monthlyRevenueData:', monthlyRevenueData)
   console.log('weeklyRevenueData:', weeklyRevenueData)
-  console.log('newReturnData:', newReturnData)
+  // console.log('newReturnData:', newReturnData)
   console.log('staffPerformanceData:', staffPerformanceData)
   console.log('====================================');
   return (
@@ -69,12 +69,12 @@ export default function page() {
             <StatCard
               title="Revenue"
               Currency={SaudiRiyal}
-              value={"12,450"}
+              value={analyticsData?.revenue}
               Icon={SaudiRiyal}
             />
-            <StatCard title="Total Bookings" value={248} Icon={Calendar} />
-            <StatCard title="New Customers" value={34} Icon={User} />
-            <StatCard title="Returning Customers" value={86} Icon={UserCheck} />
+            <StatCard title="Total Bookings" value={analyticsData?.total_bookings} Icon={Calendar} />
+            <StatCard title="New Customers" value={analyticsData?.new_customers} Icon={User} />
+            <StatCard title="Returning Customers" value={analyticsData?.returning_customers} Icon={UserCheck} />
             <StatCard title="Top Service" value={"Haircut"} Icon={Star} />
           </div>
           <div className="flex flex-col gap-4 lg:flex-row ">
@@ -107,10 +107,10 @@ export default function page() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <RevenueChart data={weeklyData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart data={weeklyRevenueData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <RevenueChart data={monthlyData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart data={monthlyRevenueData} CurrencyIcon={SaudiRiyal} />
                 </TabsContent>
               </Tabs>
             </div>

@@ -6,7 +6,7 @@ import { FiX, FiImage } from "react-icons/fi";
 
 type Service = {
   id?: number;
-  title: string;
+  service_name: string
   duration: string;
   price: number;
   description?: string;
@@ -35,12 +35,16 @@ export default function ServiceModal({
     formState: { errors },
   } = useForm<Service>();
 
+  console.log('====================================');
+  console.log(initialData?.service_name);
+  console.log('====================================');
+
   // Populate form on Edit
   useEffect(() => {
     if (mode === "edit" && initialData) {
       reset({
-        title: initialData.title,
-        duration: initialData.duration.replace(" min", ""),
+        service_name: initialData.service_name,
+        duration: initialData.duration,
         price: initialData.price,
         description: initialData.description,
       });
@@ -82,7 +86,7 @@ export default function ServiceModal({
               Service Name <span className="text-red-500">*</span>
             </label>
             <input
-              {...register("title", { required: true })}
+              {...register("service_name", { required: true })}
               className="
                 mt-1 w-full rounded-lg px-4 py-2
                 bg-white dark:bg-gray-800

@@ -138,6 +138,7 @@ export default function ServicesPage() {
               alt={service?.title ?? service?.service_name ?? "service image"}
               fill
               className="object-cover"
+               unoptimized={true}
             />
             </div>
 
@@ -154,8 +155,6 @@ export default function ServicesPage() {
 
               <h3 className="font-semibold">{service.title}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">{service.description}</p>
-              <p>{getImageUrl(service.image)}</p>
-
               <div className="flex gap-3 pt-3">
                 <button
                   onClick={() => {

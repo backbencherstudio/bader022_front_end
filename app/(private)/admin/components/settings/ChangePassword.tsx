@@ -7,6 +7,7 @@ import { Eye, EyeOff, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 
 type PasswordFormData = {
   oldPassword: string;
@@ -19,6 +20,10 @@ export default function ChangePasswordCard() {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  console.log(changePassword,"kay")
+
   const form = useForm<PasswordFormData>({
     defaultValues: {
       oldPassword: "",
@@ -27,8 +32,20 @@ export default function ChangePasswordCard() {
     },
   });
 
-  const onSubmit = (data: PasswordFormData) => {
-    console.log("Password Updated:", data);
+  const onSubmit = async (data: PasswordFormData) => {
+    try {
+      const response = await changePassword({
+        current_password: data.oldPassword,
+        new_password: data.newPassword,
+        new_password_confirmation: data.confirmPassword,
+      }).unwrap();
+
+      console.log("Success:", response);
+      form.reset();
+
+    } catch (error) {
+      console.error("Failed:", error);
+    }
   };
 
   return (
@@ -112,9 +129,9 @@ export default function ChangePasswordCard() {
             <Button
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
-              className="cursor-pointer"
+              disabled={isLoading}
             >
-              Save Change
+              {isLoading ? "Changing..." : "Save Change"}
             </Button>
           </div>
         </Card>

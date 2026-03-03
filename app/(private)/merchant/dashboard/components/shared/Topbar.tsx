@@ -13,8 +13,17 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useGetPersonaltHistoryQuery } from "@/redux/features/admin/adminApi";
 
 export default function TopBar() {
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+
+  const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
+
+const ProfileImage =
+  data?.data?.image && imageBaseUrl
+    ? `${imageBaseUrl}/${data.data.image}`
+    : "/default-avatar.png";
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { setTheme } = useTheme();
 
@@ -73,18 +82,20 @@ export default function TopBar() {
               aria-label="Profile"
             >
               <Image
-                src={"/images/user1.png"}
+                key={ProfileImage}
+                src={ProfileImage}
                 alt="User"
                 width={48}
                 height={48}
-                className="w-12 h-12 rounded-full"
+                unoptimized
+                className="w-12 h-12 rounded-full object-cover"
               />
               <div className="text-left sm:block hidden">
                 <p className="text-black dark:text-white font-semibold">
-                  Carlota Monteiro
+                  {data?.data?.name}
                 </p>
                 <p className="text-black dark:text-gray-300 text-[12px]">
-                  calota22@gmail.com
+                  {data?.data?.email}
                 </p>
               </div>
             </button>

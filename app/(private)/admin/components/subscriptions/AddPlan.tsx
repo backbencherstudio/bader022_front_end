@@ -49,11 +49,11 @@ export function AddPlan() {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className="overflow-y-auto">
                 <Button>Add Plan</Button>
             </DialogTrigger>
 
-            <DialogContent className="max-w-md">
+            <DialogContent className="max-w-md overflow-y-auto">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
                         <DialogTitle>Add Subscription Plan</DialogTitle>

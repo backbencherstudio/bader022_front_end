@@ -1,5 +1,6 @@
 "use client";
 
+import { useVerifyOtpMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
@@ -10,6 +11,7 @@ type FormValues = {
 };
 
 export default function OTPPage() {
+  const [Otp, { isLoading }] = useVerifyOtpMutation({});
   const router = useRouter();
   const { handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: { otp: ["", "", "", "", "", ""] },

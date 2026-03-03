@@ -1,12 +1,10 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
 import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
@@ -25,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { useUpdateMerchantByIdMutation } from "@/redux/features/admin/adminApi";
 import { toast } from "sonner";
 
@@ -34,26 +33,30 @@ type FormValues = {
   platform_access: string;
 };
 
-export function EditProfileDialog({ id }: any) {
+export function EditProfileDialog({ id, onClose }: any) {
   const form = useForm<FormValues>({
     defaultValues: {
-      status: "active",
-      platform_status: "live",
-      platform_access: "enabled",
+      status: "1",
+      platform_status: "1",
+      platform_access: "1",
     },
   });
 
-  const [updateMerchantById] = useUpdateMerchantByIdMutation(id);
+  const [updateMerchantById, { isLoading }] =
+    useUpdateMerchantByIdMutation();
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const response = await updateMerchantById({ id, values });
-      console.log(response);
-      if (response?.data?.success) {
-        toast.success(response?.data?.message);
-      }
-    } catch (error) {
-      console.error("Submit Error:", error);
+      const response = await updateMerchantById({
+        id,
+        data: values,
+      }).unwrap();
+
+      toast.success(response.message || "Updated successfully");
+
+      onClose(); // 🔥 CLOSE MODAL HERE
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Update failed");
     }
   };
 
@@ -64,7 +67,10 @@ export function EditProfileDialog({ id }: any) {
       </DialogHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
           {/* Package Status */}
           <FormField
             control={form.control}
@@ -72,15 +78,18 @@ export function EditProfileDialog({ id }: any) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Package Status</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <FormControl className="w-full">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="status" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="1">Active</SelectItem>
+                    <SelectItem value="0">Inactive</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -94,15 +103,18 @@ export function EditProfileDialog({ id }: any) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Platform Status</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <FormControl className="w-full">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="platform_status" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="live">Live</SelectItem>
-                    <SelectItem value="offline">Offline</SelectItem>
+                    <SelectItem value="1">Live</SelectItem>
+                    <SelectItem value="0">Offline</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -114,37 +126,39 @@ export function EditProfileDialog({ id }: any) {
             control={form.control}
             name="platform_access"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Platform Access</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <FormControl className="w-full">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select access" />
+                <Select 
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="platform_access" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="enabled">Enabled</SelectItem>
-                    <SelectItem value="disabled">Disabled</SelectItem>
+                    <SelectItem value="1">Enabled</SelectItem>
+                    <SelectItem value="0">Disabled</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
             )}
           />
 
-          {/* Actions */}
-          <div className="flex justify-start gap-4 pt-4">
-            <Button type="submit" className="cursor-pointer">
-              Save Profile
+          {/* Buttons */}
+          <div className="flex gap-4 pt-4">
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save Profile"}
             </Button>
-            <DialogTrigger asChild>
-              <Button
-                className="cursor-pointer"
-                variant="outline"
-                type="button"
-              >
-                Cancel
-              </Button>
-            </DialogTrigger>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
           </div>
         </form>
       </Form>

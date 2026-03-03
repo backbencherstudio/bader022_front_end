@@ -32,6 +32,10 @@ export default function RevenueChart({
   const [mounted, setMounted] = useState(false);
   const [paddingRight, setPaddingRight] = useState(8);
 
+  console.log('====================================');
+  console.log("day=======", data);
+  console.log('====================================');
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);

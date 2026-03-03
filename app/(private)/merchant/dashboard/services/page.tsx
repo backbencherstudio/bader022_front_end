@@ -1,78 +1,12 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
-import {
-  FiSearch,
-  FiEdit,
-  FiTrash2,
-  FiClock,
-  FiChevronDown,
-} from "react-icons/fi";
+import React, { useMemo, useState } from "react";
+import { FiSearch, FiEdit, FiTrash2, FiClock, FiChevronDown } from "react-icons/fi";
 import ServiceModal from "../components/modal/ServiceModal";
+import { useAllServicesQuery } from "@/redux/features/merchant/servicesApi";
+import { getImageUrl } from "@/helper/formatImage";
 
-/* ------------------ DATA ------------------ */
-export const services = [
-  {
-    id: 1,
-    title: "Hair Treatment",
-    description:
-      "Experience deep nourishment and revitalization with our professional hair treatment service",
-    image: "/images/services1.png",
-    duration: "30 min",
-    price: 109,
-    category: "Hair",
-  },
-  {
-    id: 2,
-    title: "Haircut & Styling",
-    description:
-      "Transform your look with our expert haircut and styling service, tailored to suit your unique features",
-    image: "/images/services2.png",
-    duration: "40 min",
-    price: 112,
-    category: "Hair",
-  },
-  {
-    id: 3,
-    title: "Hair Coloring",
-    description:
-      "Enhance your style with our professional hair coloring service, designed to bring richness",
-    image: "/images/services3.png",
-    duration: "45 min",
-    price: 115,
-    category: "Color",
-  },
-  {
-    id: 4,
-    title: "Hair Extensions",
-    description:
-      "Elevate your look with our premium hair extensions service, crafted to add instant length",
-    image: "/images/services4.png",
-    duration: "35 min",
-    price: 118,
-    category: "Hair",
-  },
-  {
-    id: 5,
-    title: "Scalp Treatment & Massage",
-    description:
-      "Indulge in our soothing scalp treatment and massage, designed to promote relaxation",
-    image: "/images/services5.png",
-    duration: "50 min",
-    price: 120,
-    category: "Spa",
-  },
-  {
-    id: 6,
-    title: "Hair Straightening or Perming",
-    description:
-      "Achieve the perfect texture with our professional hair straightening or perming service",
-    image: "/images/services6.png",
-    duration: "55 min",
-    price: 125,
-    category: "Hair",
-  },
-];
+
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
@@ -82,19 +16,36 @@ export default function ServicesPage() {
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedService, setSelectedService] = useState<any>(null);
 
-  const categories = [
-    "All Services",
-    ...Array.from(new Set(services.map((s) => s.category))),
-  ];
+  const { data: servicesData, isLoading, isError } = useAllServicesQuery({});
 
-  const filteredServices = services.filter((service) => {
-    const matchesSearch = service.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesFilter =
-      filter === "All Services" || service.category === filter;
-    return matchesSearch && matchesFilter;
-  });
+  // SAFE ARRAY (prevents map/filter crash)
+  const services = servicesData?.data ?? [];
+  console.log('====================================');
+  console.log(services);
+  console.log('====================================');
+
+  // CATEGORY LIST
+  const categories = useMemo(() => {
+    const unique = new Set<string>();
+    services.forEach((s: any) => {
+      if (s?.category) unique.add(s.category);
+      else if (s?.service_name) unique.add(s.service_name);
+    });
+    return ["All Services", ...Array.from(unique)];
+  }, [services]);
+
+  // FILTERED SERVICES
+  const filteredServices = useMemo(() => {
+    return services.filter((service: any) => {
+      const title = service?.title ?? "";
+      const category = service?.category ?? service?.service_name ?? "";
+
+      const matchesSearch = title.toLowerCase().includes(search.toLowerCase());
+      const matchesFilter = filter === "All Services" || category === filter;
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [services, search, filter]);
 
   const handleSubmitService = (data: any) => {
     if (mode === "add") {
@@ -103,6 +54,9 @@ export default function ServicesPage() {
       console.log("Edit Service:", data);
     }
   };
+
+  if (isLoading) return <p className="p-6">Loading services...</p>;
+  if (isError) return <p className="p-6 text-red-500">Failed to load services</p>;
 
   return (
     <section className="md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -150,7 +104,6 @@ export default function ServicesPage() {
           </button>
         </div>
 
-        {/* Dropdown */}
         {open && (
           <div className="absolute mt-2 w-40 bg-white dark:bg-gray-700 border rounded-lg shadow-md z-10">
             {categories.map((cat) => (
@@ -161,9 +114,7 @@ export default function ServicesPage() {
                   setOpen(false);
                 }}
                 className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 ${
-                  filter === cat
-                    ? "font-semibold bg-gray-50 dark:bg-gray-600"
-                    : ""
+                  filter === cat ? "font-semibold bg-gray-50 dark:bg-gray-600" : ""
                 }`}
               >
                 {cat}
@@ -175,18 +126,19 @@ export default function ServicesPage() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredServices.map((service) => (
+        {filteredServices.map((service: any) => (
           <div
             key={service.id}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
           >
             <div className="relative h-48">
-              <Image
-                src={service.image}
-                alt={service.title}
-                fill
-                className="object-cover"
-              />
+              {/* <Image src={service.image} alt={service.title} fill className="object-cover" /> */}
+            <Image
+              src={getImageUrl(service.image) || "/images/company3.png"}
+              alt={service?.title ?? service?.service_name ?? "service image"}
+              fill
+              className="object-cover"
+            />
             </div>
 
             <div className="p-5 space-y-3">
@@ -201,9 +153,8 @@ export default function ServicesPage() {
               </div>
 
               <h3 className="font-semibold">{service.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {service.description}
-              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{service.description}</p>
+              <p>{getImageUrl(service.image)}</p>
 
               <div className="flex gap-3 pt-3">
                 <button

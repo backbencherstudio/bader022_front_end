@@ -12,6 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RevenueChart from "../components/dashboard/RevenueChart";
 import NewVSReturningCusChart from "../components/analytics/NewVSReturningCusChart";
 import StaffPerformance from "../components/analytics/StaffPerformance";
+import { useAnalyticsOverviewQuery, useMonthlyRevenueQuery, useNewReturnQuery, useStaffPerformanceQuery, useWeeklyRevenueQuery } from "@/redux/features/merchant/analyticsApi";
+
 
 export type TData = {
   name: string;
@@ -43,6 +45,20 @@ const weeklyData: TData[] = [
 ];
 
 export default function page() {
+
+
+  const { data: analyticsData, isLoading, isError } = useAnalyticsOverviewQuery({});
+  const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
+  const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
+  const { data: newReturnData, isLoading:isNewReturnLoading, isError: isNewReturnError } = useNewReturnQuery({});
+  const { data: staffPerformanceData, isLoading: isStaffPerformanceLoading, isError: isStaffPerformanceError } = useStaffPerformanceQuery({});
+  console.log('====================================');
+  console.log('analyticsData:', analyticsData)
+  console.log('monthlyRevenueData:', monthlyRevenueData)
+  console.log('weeklyRevenueData:', weeklyRevenueData)
+  console.log('newReturnData:', newReturnData)
+  console.log('staffPerformanceData:', staffPerformanceData)
+  console.log('====================================');
   return (
     <div>
       {/* Charts */}

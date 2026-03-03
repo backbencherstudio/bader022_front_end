@@ -105,13 +105,14 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* CTA (desktop only) */}
-            <Button className="hidden md:flex rounded-md px-3 py-6 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]">
+            <Link href={"/create-account"} className="hidden md:flex rounded-md px-3 py-3 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]">
               {t("Nav.button")}
               <ArrowUpRight
                 size={18}
                 className={locale === "ar" ? "rotate-270" : ""}
               />
-            </Button>
+            </Link>
+
 
             {/* Mobile Toggle */}
             <button
@@ -132,8 +133,8 @@ export default function Navbar() {
           >
             <nav className="flex flex-col gap-4 px-6 py-6 text-[18px] font-semibold text-black">
               <NavLinks onClick={() => setOpen(false)} />
-
-              <Button
+              <Link href={"/create-account"}>
+               <Button
                 onClick={() => setOpen(false)}
                 className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold"
               >
@@ -142,7 +143,8 @@ export default function Navbar() {
                   size={18}
                   className={locale === "ar" ? "rotate-270" : ""}
                 />
-              </Button>
+              </Button></Link>
+
             </nav>
           </div>
         )}

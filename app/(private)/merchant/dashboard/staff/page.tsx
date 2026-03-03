@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { FiSearch, FiEdit, FiTrash2 } from "react-icons/fi";
 import StaffModal from "../components/modal/StaffModal";
+import { useAllStaffQuery } from "@/redux/features/merchant/staffApi";
 
 export const staffList = [
   {
@@ -61,6 +62,12 @@ export default function StaffPage() {
   const [openModal, setOpenModal] = useState(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedStaff, setSelectedStaff] = useState<any>(null);
+
+  const { data: staffData, isLoading } = useAllStaffQuery({});
+
+  console.log('====================================');
+  console.log(staffData);
+  console.log('====================================');
 
   const filteredStaff = staffList.filter((staff) =>
     staff.name.toLowerCase().includes(search.toLowerCase())

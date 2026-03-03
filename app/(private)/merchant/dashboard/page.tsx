@@ -9,6 +9,7 @@ import {
 } from "./components/dashboard/TodaysAppoinments";
 import RecentTransactions from "./components/dashboard/RecentTransactions";
 import QuickActionsComponents from "./components/dashboard/QuickActions";
+import { useDashboardOverviewQuery, useMonthlyRevenueQuery, useWeeklyRevenueQuery } from "@/redux/features/merchant/dashboardApi";
 
 export type TData = {
   name: string;
@@ -46,6 +47,9 @@ const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
   serviceName: "Haircut & Styling",
 }));
 export default function DashboardPage() {
+    const { data: dashboardOverview, isLoading, isError } = useDashboardOverviewQuery({});
+    const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
+    const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
   return (
     <div>
       {/* Charts */}

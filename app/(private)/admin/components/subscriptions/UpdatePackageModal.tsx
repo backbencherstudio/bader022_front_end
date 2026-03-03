@@ -41,10 +41,10 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
         data: { status: values.packageStatus },
       }).unwrap();
 
-      setOpen(false);
+      setOpen(false); // 🔥 close modal
       form.reset();
     } catch (error) {
-      // console.error("Update failed:", error);
+      console.error("Update failed:", error);
     }
   }
 
@@ -73,13 +73,12 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
                         <SelectValue placeholder="status" />
                       </SelectTrigger>
                     </FormControl>
-                   <SelectContent>
+                    <SelectContent>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
                       <SelectItem value="expired">Expired</SelectItem>
-
-                   </SelectContent>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
                   </Select>
                 </FormItem>
               )}

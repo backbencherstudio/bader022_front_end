@@ -41,6 +41,7 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/admin/merchant/show/${id}`,
         method: "GET",
       }),
+      providesTags: ["Merchants"],
     }),
 
     //  Get Single Merchant
@@ -79,23 +80,39 @@ export const adminApi = baseApi.injectEndpoints({
     }),
 
     // redux/features/admin/adminApi.ts
-    getSubscriptions: builder.query({
-      query: () => ({
-        url: `/admin/subscription/index`,
-        method: "GET",
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.data.map((item: any) => ({
-                type: "Subscription" as const,
-                id: item.id,
-              })),
-              { type: "Subscription", id: "LIST" },
-            ]
-          : [{ type: "Subscription", id: "LIST" }],
-    }),
+ getSubscriptions: builder.query({
+  query: (params) => {
+    const searchParams = new URLSearchParams();
 
+    if (params?.package) {
+      searchParams.append("package", params.package);
+    }
+
+    if (params?.plan_type) {
+      searchParams.append("plan_type", params.plan_type);
+    }
+
+    if (params?.status) {
+      searchParams.append("status", params.status);
+    }
+
+    if (params?.search) {
+      searchParams.append("search", params.search); // 🔥 add this
+    }
+
+    const queryString = searchParams.toString();
+
+    return {
+      url: queryString
+        ? `/admin/subscription/index?${queryString}`
+        : `/admin/subscription/index`,
+      method: "GET",
+    };
+  },
+  providesTags: ["Subscription"],
+}),
+
+    // show subscription by id
     getSubscriptionsId: builder.query({
       query: (id: string | number) => ({
         url: `/admin/subscription/edit/${id}`,
@@ -104,18 +121,17 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: (result, error, id) => [{ type: "Subscription", id }],
     }),
 
+    // update subscription by id
     updateSubscriptionsById: builder.mutation({
       query: ({ id, data }) => ({
         url: `/admin/subscription/update/${id}`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "Subscription", id },
-        { type: "Subscription", id: "LIST" },
-      ],
+      invalidatesTags: ["Subscription"],
     }),
 
+    // get subscription plan
     getSubscriptionsPlan: builder.query({
       query: () => ({
         url: `/admin/plan/index`,
@@ -124,6 +140,27 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: ["Plan"],
     }),
 
+    //get package by id
+
+    getPackageId: builder.query({
+      query: (id: string | number) => ({
+        url: `/admin/plan/show/${id}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, id) => [{ type: "Plan", id }],
+    }),
+
+    //
+    updatePlanById: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/admin/plan/update-status/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Plan"],
+    }),
+
+    // create subscription plan
     SubcriptionPost: builder.mutation({
       query: (body) => ({
         url: "/admin/plan/store",
@@ -159,8 +196,6 @@ export const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-
-    //
 
     //setting personal
 
@@ -206,6 +241,8 @@ export const {
   useGetSubscriptionsIdQuery,
   useUpdateSubscriptionsByIdMutation,
   useGetSubscriptionsPlanQuery,
+    useGetPackageIdQuery,
+    useUpdatePlanByIdMutation,
   useSubcriptionPostMutation,
   useGetTapkeyQuery,
   useUpdateTapkeyMutation,

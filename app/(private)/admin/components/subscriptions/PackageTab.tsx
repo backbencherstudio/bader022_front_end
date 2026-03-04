@@ -7,11 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetSubscriptionsPlanQuery } from "@/redux/features/admin/adminApi";
+import { useGetSubscriptionsIdQuery, useGetSubscriptionsPlanQuery } from "@/redux/features/admin/adminApi";
 import { Edit, Eye, SaudiRiyal } from "lucide-react";
 import { EditSubscriptionModal } from "./EditSubscriptionModal";
+import { ViewSubscriptionModal } from "./ViewSubscriptionModal";
+import { ViewPackage } from "./ViewPackage";
+import { PackagePlanUpdateModal } from "./PackagePlanUpdateModal";
 
-type PackageStatus = "successful" | "failed";
+type PackageStatus = boolean;
 
 
 
@@ -33,7 +36,7 @@ function initials(name: string) {
 }
 
 function StatusPill({ status }: { status: PackageStatus }) {
-  const isSuccess = status === "successful";
+  const isSuccess = status ;
 
   return (
     <span
@@ -44,7 +47,7 @@ function StatusPill({ status }: { status: PackageStatus }) {
           : "border-red-500 bg-red-50 text-red-600",
       ].join(" ")}
     >
-      {isSuccess ? "Successful" : "Failed"}
+      {isSuccess ? "Active" : "Inactive"}
     </span>
   );
 }
@@ -53,7 +56,9 @@ function StatusPill({ status }: { status: PackageStatus }) {
 
 export default function PackageTab() {
   const { data, isLoading, isError } = useGetSubscriptionsPlanQuery({});
-  console.log(data, "data show")
+
+
+  // console.log(data, "data show")
 
   return (
     <div>
@@ -102,7 +107,7 @@ export default function PackageTab() {
                   {/* Status */}
                   <TableCell>
                     <StatusPill
-                      status={plan.status ? "successful" : "failed"}
+                      status={plan.status }
                     />
                   </TableCell>
 
@@ -115,10 +120,10 @@ export default function PackageTab() {
                   <TableCell className="pr-8">
                     <div className="flex gap-3">
                       <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer">
-                        <Eye className="h-5 w-5" />
+                        <ViewPackage id={plan.id} />
                       </button>
                 
-                      <Edit className="h-5 mt-3 w-5 cursor-pointer" />
+                      <PackagePlanUpdateModal id={plan.id} businessName={plan.name} />
                   
                     </div>
                   </TableCell>

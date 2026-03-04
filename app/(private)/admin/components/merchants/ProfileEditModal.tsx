@@ -36,7 +36,7 @@ type FormValues = {
 export function EditProfileDialog({ id, onClose }: any) {
   const form = useForm<FormValues>({
     defaultValues: {
-      status: "1",
+      status: "active",
       platform_status: "1",
       platform_access: "1",
     },
@@ -54,7 +54,7 @@ export function EditProfileDialog({ id, onClose }: any) {
 
       toast.success(response.message || "Updated successfully");
 
-      onClose(); // 🔥 CLOSE MODAL HERE
+      onClose(); 
     } catch (error: any) {
       toast.error(error?.data?.message || "Update failed");
     }
@@ -88,8 +88,11 @@ export function EditProfileDialog({ id, onClose }: any) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Active</SelectItem>
-                    <SelectItem value="0">Inactive</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="expired">Expired</SelectItem>
+
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>

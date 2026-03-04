@@ -14,7 +14,7 @@ import { useGetSubscriptionsIdQuery } from "@/redux/features/admin/adminApi";
 
 export function ViewSubscriptionModal({ id }: { id: string }) {
     const { data, isLoading } = useGetSubscriptionsIdQuery(id);
-    console.log(data,{id})
+    // console.log(data,{id})
 
     return (
         <Dialog>

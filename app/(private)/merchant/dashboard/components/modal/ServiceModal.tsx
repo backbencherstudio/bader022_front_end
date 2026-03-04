@@ -6,7 +6,7 @@ import { FiX, FiImage } from "react-icons/fi";
 
 type Service = {
   id?: number;
-  service_name: string
+  service_name: string;
   duration: string;
   price: number;
   description?: string;
@@ -19,6 +19,7 @@ type Props = {
   initialData?: Service | null;
   onClose: () => void;
   onSubmitService: (data: Service) => void;
+  isLoading: boolean;
 };
 
 export default function ServiceModal({
@@ -27,6 +28,7 @@ export default function ServiceModal({
   initialData,
   onClose,
   onSubmitService,
+  isLoading,
 }: Props) {
   const {
     register,
@@ -34,10 +36,6 @@ export default function ServiceModal({
     reset,
     formState: { errors },
   } = useForm<Service>();
-
-  // console.log('====================================');
-  // console.log(initialData?.service_name);
-  // console.log('====================================');
 
   // Populate form on Edit
   useEffect(() => {
@@ -59,6 +57,12 @@ export default function ServiceModal({
 
   const onSubmit = (data: Service) => {
     onSubmitService({ ...initialData, ...data });
+    reset({
+      service_name: "",
+      duration: "",
+      price: 0,
+      description: "",
+    });
     onClose();
   };
 
@@ -194,6 +198,7 @@ export default function ServiceModal({
             </button>
             <button
               type="submit"
+              disabled={isLoading}
               className="
                 px-4 py-2 rounded-lg
                 bg-gray-900 dark:bg-white
@@ -201,7 +206,11 @@ export default function ServiceModal({
                 hover:opacity-90
               "
             >
-              {mode === "add" ? "Add Service" : "Update Service"}
+              {isLoading
+                ? "Saving..."
+                : mode === "add"
+                  ? "Add Service"
+                  : "Update Service"}
             </button>
           </div>
         </form>

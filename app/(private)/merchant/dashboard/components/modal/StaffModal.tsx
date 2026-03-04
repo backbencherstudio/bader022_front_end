@@ -1,5 +1,6 @@
 "use client";
 
+import { useAllServicesQuery } from "@/redux/features/merchant/servicesApi";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX, FiImage } from "react-icons/fi";
@@ -7,9 +8,9 @@ import { FiX, FiImage } from "react-icons/fi";
 type Staff = {
   id?: number;
   name: string;
-  role: "Admin" | "Staff";
-  services: string[];
-  avatar?: string;
+  role: "admin" | "staff";
+  service_id: number;
+  image?: string;
 };
 
 type Props = {
@@ -18,15 +19,8 @@ type Props = {
   initialData?: Staff | null;
   onClose: () => void;
   onSubmitStaff: (data: Staff) => void;
+  isLoading: boolean;
 };
-
-const AVAILABLE_SERVICES = [
-  "Haircut & Styling",
-  "Hair Coloring",
-  "Wellness",
-  "Scalp Treatment",
-  "Hair Extensions",
-];
 
 export default function StaffModal({
   open,
@@ -34,6 +28,7 @@ export default function StaffModal({
   initialData,
   onClose,
   onSubmitStaff,
+  isLoading,
 }: Props) {
   const {
     register,
@@ -44,8 +39,15 @@ export default function StaffModal({
     formState: { errors },
   } = useForm<Staff>();
 
-  const [serviceInput, setServiceInput] = useState("");
-  const services = watch("services") || [];
+  const { data: servicesData, isLoading: isServicesLoading } =
+    useAllServicesQuery({});
+
+  // Map API services to options
+  const serviceOptions =
+    servicesData?.data?.map((s: any) => ({
+      id: s.id,
+      name: s.service_name,
+    })) || [];
 
   /* ---------------- Prefill on Edit ---------------- */
   useEffect(() => {
@@ -53,34 +55,23 @@ export default function StaffModal({
       reset({
         name: initialData.name,
         role: initialData.role,
-        services: initialData.services,
+        service_id: initialData.service_id,
       });
     }
 
     if (mode === "add") {
-      reset({ role: "Staff", services: [] });
+      reset({
+        name: "",
+        role: "staff",
+        service_id: undefined,
+      });
     }
   }, [mode, initialData, reset]);
 
   if (!open) return null;
-
-  /* ---------------- Handlers ---------------- */
-  const addService = (service: string) => {
-    if (!services.includes(service)) {
-      setValue("services", [...services, service]);
-    }
-    setServiceInput("");
-  };
-
-  const removeService = (service: string) => {
-    setValue(
-      "services",
-      services.filter((s) => s !== service)
-    );
-  };
-
   const onSubmit = (data: Staff) => {
     onSubmitStaff({ ...initialData, ...data });
+    reset();
     onClose();
   };
 
@@ -123,8 +114,8 @@ export default function StaffModal({
                 {...register("role", { required: true })}
                 className="mt-1 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               >
-                <option value="Staff">Staff</option>
-                <option value="Admin">Admin</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
               </select>
             </div>
           </div>
@@ -132,54 +123,42 @@ export default function StaffModal({
           {/* Assigned Services */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Assigned Services <span className="text-red-500">*</span>
+              Assigned Service <span className="text-red-500">*</span>
             </label>
 
-            <div className="mt-2 flex gap-2">
-              <select
-                value={serviceInput}
-                onChange={(e) => addService(e.target.value)}
-                className="flex-1 border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
-              >
-                <option value="">Select service</option>
-                {AVAILABLE_SERVICES.map((service) => (
-                  <option key={service} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Selected Services */}
-            <div className="flex flex-wrap gap-2 mt-3">
-              {services.map((service) => (
-                <span
-                  key={service}
-                  className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg"
-                >
-                  {service}
-                  <button type="button" onClick={() => removeService(service)}>
-                    <FiX size={14} />
-                  </button>
-                </span>
+            <select
+              {...register("service_id", { required: true })}
+              className="mt-2 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+              disabled={isServicesLoading}
+            >
+              <option value="">Select service</option>
+              {serviceOptions.map((service: any) => (
+                <option key={service.id} value={service.id}>
+                  {service.name}
+                </option>
               ))}
-            </div>
+            </select>
           </div>
-
-          {/* Image Upload */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Image
+              Staff Image{" "}
+              {mode === "add" && <span className="text-red-500">*</span>}
             </label>
-            <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
-              <FiImage size={28} className="text-gray-400 dark:text-gray-300" />
-              <span className="text-sm font-medium mt-2 text-gray-700 dark:text-gray-200">
+
+            <label
+              className="
+                mt-2 flex flex-col items-center justify-center
+                border-2 border-dashed rounded-lg py-8 cursor-pointer
+                border-gray-300 dark:border-gray-700
+                bg-gray-50 dark:bg-gray-800
+                hover:bg-gray-100 dark:hover:bg-gray-700
+              "
+            >
+              <FiImage size={26} className="text-gray-400" />
+              <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
                 Click to upload
               </span>
-              <span className="text-xs text-gray-400 dark:text-gray-300">
-                JPG or PNG (max 3MB)
-              </span>
-              <input type="file" className="hidden" />
+              <input type="file" {...register("image")} className="hidden" />
             </label>
           </div>
 
@@ -188,6 +167,7 @@ export default function StaffModal({
             <button
               type="button"
               onClick={onClose}
+              disabled={isLoading}
               className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
               Cancel
@@ -196,7 +176,11 @@ export default function StaffModal({
               type="submit"
               className="px-4 py-2 rounded-lg bg-gray-900 dark:bg-blue-600 text-white cursor-pointer"
             >
-              {mode === "add" ? "Add Staff" : "Update Staff"}
+              {isLoading
+                ? "Saving..."
+                : mode === "add"
+                  ? "Add Staff"
+                  : "Update Staff"}
             </button>
           </div>
         </form>

@@ -1,12 +1,20 @@
 "use client";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
-import { FiSearch, FiEdit, FiTrash2, FiClock, FiChevronDown } from "react-icons/fi";
+import {
+  FiSearch,
+  FiEdit,
+  FiTrash2,
+  FiClock,
+  FiChevronDown,
+} from "react-icons/fi";
 import ServiceModal from "../components/modal/ServiceModal";
-import { useAllServicesQuery } from "@/redux/features/merchant/servicesApi";
+import {
+  useAllServicesQuery,
+  useCreateServiceMutation,
+} from "@/redux/features/merchant/servicesApi";
 import { getImageUrl } from "@/helper/formatImage";
-
-
+import { toast } from "sonner";
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
@@ -17,12 +25,15 @@ export default function ServicesPage() {
   const [selectedService, setSelectedService] = useState<any>(null);
 
   const { data: servicesData, isLoading, isError } = useAllServicesQuery({});
+  const [createService, { isLoading: isCreateServiceLoading }] =
+    useCreateServiceMutation();
+  // console.log(createService,"=============createService")
 
   // SAFE ARRAY (prevents map/filter crash)
   const services = servicesData?.data ?? [];
-  console.log('====================================');
-  console.log(services);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(services);
+  // console.log('====================================');
 
   // CATEGORY LIST
   const categories = useMemo(() => {
@@ -47,16 +58,36 @@ export default function ServicesPage() {
     });
   }, [services, search, filter]);
 
-  const handleSubmitService = (data: any) => {
+  const handleSubmitService = async (data: any) => {
     if (mode === "add") {
-      console.log("Add Service:", data);
+      // console.log("Add Service:", data);
+      try {
+        const formData = new FormData();
+
+        formData.append("service_name", data.service_name);
+        formData.append("duration", data.duration);
+        formData.append("price", data.price);
+        formData.append("description", data.description);
+        formData.append("status", "1");
+
+        if (data.image && data.image.length > 0) {
+          formData.append("image", data.image[0]);
+        }
+
+        const response = await createService(formData).unwrap();
+
+        toast.success("Service created successfully");
+      } catch (error: any) {
+        toast.error(error?.data?.message || "Failed to create service");
+      }
     } else {
       console.log("Edit Service:", data);
     }
   };
 
   if (isLoading) return <p className="p-6">Loading services...</p>;
-  if (isError) return <p className="p-6 text-red-500">Failed to load services</p>;
+  if (isError)
+    return <p className="p-6 text-red-500">Failed to load services</p>;
 
   return (
     <section className="md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -114,7 +145,9 @@ export default function ServicesPage() {
                   setOpen(false);
                 }}
                 className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 ${
-                  filter === cat ? "font-semibold bg-gray-50 dark:bg-gray-600" : ""
+                  filter === cat
+                    ? "font-semibold bg-gray-50 dark:bg-gray-600"
+                    : ""
                 }`}
               >
                 {cat}
@@ -133,13 +166,13 @@ export default function ServicesPage() {
           >
             <div className="relative h-48">
               {/* <Image src={service.image} alt={service.title} fill className="object-cover" /> */}
-            <Image
-              src={getImageUrl(service.image) || "/images/company3.png"}
-              alt={service?.service_name || "service image"}
-              fill
-              className="object-cover"
-               unoptimized={true}
-            />
+              <Image
+                src={getImageUrl(service.image) || "/images/company3.png"}
+                alt={service?.service_name || "service image"}
+                fill
+                className="object-cover"
+                unoptimized={true}
+              />
             </div>
 
             <div className="p-5 space-y-3">
@@ -155,7 +188,9 @@ export default function ServicesPage() {
               </div>
 
               <h3 className="font-semibold">{service.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{service.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {service.description}
+              </p>
               <div className="flex gap-3 pt-3">
                 <button
                   onClick={() => {

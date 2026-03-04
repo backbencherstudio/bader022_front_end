@@ -35,9 +35,9 @@ export default function ServiceModal({
     formState: { errors },
   } = useForm<Service>();
 
-  console.log('====================================');
-  console.log(initialData?.service_name);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(initialData?.service_name);
+  // console.log('====================================');
 
   // Populate form on Edit
   useEffect(() => {

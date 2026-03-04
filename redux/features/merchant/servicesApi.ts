@@ -13,6 +13,16 @@ export const servicesApi = baseApi.injectEndpoints({
       providesTags: ["Services"],
     }),
 
+    // Create Service
+    createService: builder.mutation<any, FormData>({
+          query: (formData) => ({
+            url: "/admin/service/store",
+            method: "POST",
+            body: formData,
+          }),
+          invalidatesTags: ["Services"],
+        }),
+
     // Update Service
     updateServiceById: builder.mutation({
       query: ({ id, data }) => ({
@@ -28,5 +38,6 @@ export const servicesApi = baseApi.injectEndpoints({
 
 export const {
   useAllServicesQuery,
+  useCreateServiceMutation,
   useUpdateServiceByIdMutation
 } = servicesApi;

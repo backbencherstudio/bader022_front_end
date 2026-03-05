@@ -53,7 +53,7 @@ export default function LoginPage() {
         } else if (response.data.user_type === "Merchant") {
           router.push("/merchant/dashboard");
         } else {
-          router.push("/user");
+          router.push("/user/dashboard");
         }
       }
     } catch (error: any) {

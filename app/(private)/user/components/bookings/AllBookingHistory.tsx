@@ -22,6 +22,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import Link from "next/link";
+import { useBookingHistoryQuery } from "@/redux/features/userDashboard/booking";
+import Pagination from "@/components/reusable/Pagination";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm";
 
@@ -35,53 +37,75 @@ export type TransactionRow = {
   status: TxStatus;
 };
 
-export const demoTransactions: TransactionRow[] = [
-  {
-    bookingID: "BKOOD",
-    customerName: "Cameron Williamson",
-    customerAvatar: "https://i.pravatar.cc/100?img=12",
-    service: "Hair Treatment",
-    amountLabel: "100",
-    dateLabel: "Jun 12, 2023",
-    status: "completed",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Jane Cooper",
-    customerAvatar: "https://i.pravatar.cc/100?img=5",
-    service: "Beard Trim",
-    amountLabel: "89",
-    dateLabel: "Jun 13, 2023",
-    status: "confirm",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Esther Howard",
-    customerAvatar: "https://i.pravatar.cc/100?img=32",
-    service: "Beard Trim",
-    amountLabel: "79",
-    dateLabel: "Jun 14, 2023",
-    status: "cancel",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Brooklyn Simmons",
-    customerAvatar: "https://i.pravatar.cc/100?img=15",
-    service: "Hair Treatment",
-    amountLabel: "107",
-    dateLabel: "Jun 15, 2023",
-    status: "pending",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Darlene Robertson",
-    customerAvatar: "https://i.pravatar.cc/100?img=48",
-    service: "Beard Trim",
-    amountLabel: "109",
-    dateLabel: "Jun 16, 2023",
-    status: "cancel",
-  },
-];
+type Booking = {
+  booking_id: string;
+  customer: string;
+  customer_image: string | null;
+  service_name: string;
+  amount: string;
+  booking_date: string;
+  status: string;
+};
+
+type PaginationType = {
+  total: number;
+  current_page: number;
+  last_page: number;
+  per_page: number;
+};
+
+type DashboardBookingResponse = {
+  data: Booking[];
+  pagination: PaginationType;
+};
+
+// export const demoTransactions: TransactionRow[] = [
+//   {
+//     bookingID: "BKOOD",
+//     customerName: "Cameron Williamson",
+//     customerAvatar: "https://i.pravatar.cc/100?img=12",
+//     service: "Hair Treatment",
+//     amountLabel: "100",
+//     dateLabel: "Jun 12, 2023",
+//     status: "completed",
+//   },
+//   {
+//     bookingID: "BKOOD",
+//     customerName: "Jane Cooper",
+//     customerAvatar: "https://i.pravatar.cc/100?img=5",
+//     service: "Beard Trim",
+//     amountLabel: "89",
+//     dateLabel: "Jun 13, 2023",
+//     status: "confirm",
+//   },
+//   {
+//     bookingID: "BKOOD",
+//     customerName: "Esther Howard",
+//     customerAvatar: "https://i.pravatar.cc/100?img=32",
+//     service: "Beard Trim",
+//     amountLabel: "79",
+//     dateLabel: "Jun 14, 2023",
+//     status: "cancel",
+//   },
+//   {
+//     bookingID: "BKOOD",
+//     customerName: "Brooklyn Simmons",
+//     customerAvatar: "https://i.pravatar.cc/100?img=15",
+//     service: "Hair Treatment",
+//     amountLabel: "107",
+//     dateLabel: "Jun 15, 2023",
+//     status: "pending",
+//   },
+//   {
+//     bookingID: "BKOOD",
+//     customerName: "Darlene Robertson",
+//     customerAvatar: "https://i.pravatar.cc/100?img=48",
+//     service: "Beard Trim",
+//     amountLabel: "109",
+//     dateLabel: "Jun 16, 2023",
+//     status: "cancel",
+//   },
+// ];
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -117,17 +141,21 @@ function StatusPill({ status }: { status: TxStatus }) {
 
 export function RecentTransactionsCard({
   rows,
-  className,
-}: {
-  rows: TransactionRow[];
-  className?: string;
-}) {
+   pagination,
+   page,
+   setPage,
+ }: {
+   rows: TransactionRow[];
+   pagination: any;
+   page: number;
+   setPage: (page: number) => void;
+ }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <Card
       className={[
         "rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm",
-        className ?? "",
+        ,
       ].join(" ")}
     >
       <CardHeader>
@@ -144,11 +172,13 @@ export function RecentTransactionsCard({
                 className="h-12 rounded-xl pl-10"
               />
             </div>
-            <Link href={"/user/bookings/add-booking"}>
-              <Button type="button" className="cursor-pointer py-6">
-                Add Booking
-              </Button>
-            </Link>
+            
+              <Link href={"/user/bookings/add-booking"}>
+                <Button>
+                  Book Now
+                </Button>
+              </Link>
+         
           </div>
         </div>
       </CardHeader>
@@ -229,6 +259,7 @@ export function RecentTransactionsCard({
                     <TableCell className="text-base text-foreground">
                       {r.bookingID}
                     </TableCell>
+
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">
@@ -240,6 +271,7 @@ export function RecentTransactionsCard({
                             {initials(r.customerName)}
                           </AvatarFallback>
                         </Avatar>
+
                         <span className="text-base font-medium text-foreground">
                           {r.customerName}
                         </span>
@@ -249,12 +281,14 @@ export function RecentTransactionsCard({
                     <TableCell className="text-base text-foreground">
                       {r.service}
                     </TableCell>
+
                     <TableCell className="text-base text-foreground">
-                      <div className="flex items-center">
+                      <div className="flex items-center gap-1">
                         <SaudiRiyal size={14} />
                         {r.amountLabel}
                       </div>
                     </TableCell>
+
                     <TableCell className="text-base text-foreground">
                       {r.dateLabel}
                     </TableCell>
@@ -262,6 +296,7 @@ export function RecentTransactionsCard({
                     <TableCell>
                       <StatusPill status={r.status} />
                     </TableCell>
+
                     <TableCell
                       onClick={() => setIsModalOpen(true)}
                       className="pr-8 cursor-pointer underline"
@@ -274,7 +309,7 @@ export function RecentTransactionsCard({
                 {rows.length === 0 && (
                   <TableRow>
                     <TableCell
-                      colSpan={5}
+                      colSpan={7}
                       className="py-10 text-center text-muted-foreground"
                     >
                       No transactions.
@@ -288,36 +323,69 @@ export function RecentTransactionsCard({
       </CardContent>
 
       {/* Pagination UI */}
-      <div className="flex justify-between  flex-col gap-2 sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
-        <div className="text-sm text-muted-foreground">
-          Showing 01-12 of 400 Results
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &lt;
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            1
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            2
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            3
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            4
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &gt;
-          </Button>
-        </div>
-      </div>
+      <div className="flex justify-between flex-col sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
+             <div className="flex justify-between w-full   sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
+     
+               <div className="text-sm text-muted-foreground  ">
+                 Showing {rows.length} results
+               </div>
+     
+             <div>
+                 <Pagination
+                   currentPage={page}
+                   lastPage={pagination?.last_page || 1}
+                   onPageChange={setPage}
+                 />
+     
+               </div>
+             </div>
+     
+             {/* <div className="flex gap-2">
+               <Button variant="outline">&lt;</Button>
+               <Button variant="outline">1</Button>
+               <Button variant="outline">2</Button>
+               <Button variant="outline">3</Button>
+               <Button variant="outline">&gt;</Button>
+             </div> */}
+           </div>
       <div></div>
     </Card>
   );
 }
 
+
+
 export default function AllBookingHistory() {
-  return <RecentTransactionsCard rows={demoTransactions} />;
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, error } = useBookingHistoryQuery({ page }) as {
+    data?: DashboardBookingResponse;
+    isLoading: boolean;
+    error?: unknown;
+  };
+
+  const bookings = data?.data ?? [];
+  const pagination = data?.pagination;
+  console.log(pagination);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong</p>;
+
+  
+  const mappedBookings: TransactionRow[] = bookings.map((b) => ({
+    bookingID: String(b.booking_id),
+    customerName: b.customer,
+    customerAvatar: b.customer_image ?? undefined,
+    service: b.service_name,
+    amountLabel: b.amount,
+    dateLabel: b.booking_date,
+    status: b.status.toLowerCase() as TxStatus,
+  }));
+
+  return <RecentTransactionsCard
+        rows={mappedBookings}
+        pagination={pagination}
+        page={page}
+        setPage={setPage}
+      />;
 }

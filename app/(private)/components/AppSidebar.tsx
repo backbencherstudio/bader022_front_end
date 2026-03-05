@@ -98,17 +98,17 @@ function SidebarInner({
           </>
         )}
 
-        {title && (
+        {/* {title && (
           <p className="text-[16px] -mt-10 text-[#4A4C56] dark:text-white font-medium">
             {title}
           </p>
-        )}
+        )} */}
 
-        {badgeText && (
+        {/* {badgeText && (
           <Button className="text-[11px] uppercase bg-black mt-1.5 text-white dark:bg-gray-700">
             {badgeText}
           </Button>
-        )}
+        )} */}
       </div>
 
       {/* Nav */}

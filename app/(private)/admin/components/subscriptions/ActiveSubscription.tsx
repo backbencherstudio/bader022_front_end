@@ -170,7 +170,7 @@ export default function Packages() {
                 onChange={(e) =>
                   setFilters((prev) => ({
                     ...prev,
-                    search: e.target.value,
+                    package: e.target.value,
                   }))
                 }
               />

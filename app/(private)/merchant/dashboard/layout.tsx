@@ -14,6 +14,9 @@ import {
   Captions,
   Calendar,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { authorize } from "@/lib/auth";
 
 const MERCHANT_NAV_ITEMS = [
   {
@@ -73,6 +76,13 @@ export default function DashboardLayout({
 }) {
   const { t, locale } = useI18n();
   // console.log(t);
+  const router = useRouter();
+  useEffect(() => {
+    const auth = authorize(["Merchant"]);
+    if (!auth.authorized) {
+      router.push("/");
+    }
+  }, []);
   return (
     <div>
       <div>

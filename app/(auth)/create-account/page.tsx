@@ -18,6 +18,8 @@ import BusinessInfo from "./_components/BusinessInfo";
 import ChooseyourPlan from "./_components/ChooseyourPlan";
 import FinalizingYourWebsite from "./_components/FinalizingYourWebsite";
 import CompleteYourProfile from "./_components/CompliteYourProfile";
+import { useRouter } from "next/navigation";
+import { authorize } from "@/lib/auth";
 
 interface CreateAccountData {
   step1: {
@@ -42,7 +44,6 @@ interface CreateAccountData {
   step5: {
     serviceName: string;
   };
-
 }
 
 const LANGS = {
@@ -53,6 +54,13 @@ const LANGS = {
 export default function CreateAccountPage() {
   const { locale, setLocale, t } = useI18n();
   const { step, setStep } = useCreateAccount();
+  const router = useRouter();
+  useEffect(() => {
+    const auth = authorize(["Merchant"]);
+    if (auth.authorized) {
+      router.push("/");
+    }
+  }, []);
 
   const steps = [
     {
@@ -89,7 +97,6 @@ export default function CreateAccountPage() {
       step3: { serviceName: "" },
       step4: { serviceName: "" },
       step5: { serviceName: "" },
-
     },
   );
 
@@ -113,43 +120,43 @@ export default function CreateAccountPage() {
     if (step > 1) setStep(step - 1);
   };
   const renderStep = () => {
-  switch (step) {
-    case 1:
-      return (
-        <AccountCreation
-          defaultValues={createAccountData.step1}
-          onNext={(data) => handleNext("step1", data)}
-        />
-      );
+    switch (step) {
+      case 1:
+        return (
+          <AccountCreation
+            defaultValues={createAccountData.step1}
+            onNext={(data) => handleNext("step1", data)}
+          />
+        );
 
-    case 2:
-      return (
-        <BusinessInfo
-          data={createAccountData.step2}
-          onNext={(data) => handleNext("step2", data)}
-          onPrevious={handlePrevious}
-        />
-      );
+      case 2:
+        return (
+          <BusinessInfo
+            data={createAccountData.step2}
+            onNext={(data) => handleNext("step2", data)}
+            onPrevious={handlePrevious}
+          />
+        );
 
-    case 3:
-      return (
-        <ChooseyourPlan
-          data={createAccountData.step3}
-          onNext={(data) => handleNext("step3", data)}
-          onPrevious={handlePrevious}
-        />
-      );
+      case 3:
+        return (
+          <ChooseyourPlan
+            data={createAccountData.step3}
+            onNext={(data) => handleNext("step3", data)}
+            onPrevious={handlePrevious}
+          />
+        );
 
-    case 4:
-      return <FinalizingYourWebsite />;
+      case 4:
+        return <FinalizingYourWebsite />;
 
-    case 5:
-      return <CompleteYourProfile />;
+      case 5:
+        return <CompleteYourProfile />;
 
-    default:
-      return null;
-  }
-};
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-5  rounded-md shadow bg-white px-4 py-6 sm:px-6 dark:bg-gray-900">

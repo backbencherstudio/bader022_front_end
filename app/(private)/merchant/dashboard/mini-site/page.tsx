@@ -9,7 +9,10 @@ import InputPanel from "../components/mini-site/components/InputPanel";
 import { FiSave } from "react-icons/fi";
 import MiniSiteCopyLink from "../components/mini-site/components/MiniSiteCopyLink";
 import { useAppSelector } from "@/redux/hooks";
-import { useCreateMiniSiteMutation } from "@/redux/features/merchant/miniSiteApi";
+import {
+  useCreateMiniSiteMutation,
+  useCreateWhyChooseUsMutation,
+} from "@/redux/features/merchant/miniSiteApi";
 import { toast } from "sonner";
 
 export default function page() {
@@ -18,17 +21,20 @@ export default function page() {
     heroData,
     aboutData,
     ctaBannerData,
+    whyChooseUsData,
     colorSystemData,
     layoutSettingsData,
     typographyData,
   } = useLandingPage();
 
-  const [createMiniSite, { isLoading: isCreateStaffLoading }] =
+  const [createMiniSite, { isLoading: isCreateMiniSiteLoading }] =
     useCreateMiniSiteMutation();
+  const [createWhyChooseUs, { isLoading: isCreateWhyChooseUsLoading }] =
+    useCreateWhyChooseUsMutation();
 
   const handleSubmit = async () => {
     console.log("====================================");
-    console.log(aboutData);
+    console.log(whyChooseUsData);
     console.log("====================================");
 
     try {
@@ -49,7 +55,33 @@ export default function page() {
       formData.append("cta_overlay_color", ctaBannerData.ctaBannerOverlayColor);
       formData.append("cta_padding", ctaBannerData.padding as any);
 
-      const response = await createMiniSite(formData).unwrap();
+      formData.append("section_title", whyChooseUsData.whyChooseUsTitle);
+      formData.append("section_subtitle", whyChooseUsData.whyChooseUsSubtitle);
+      formData.append("feature_one_title", whyChooseUsData.whyChooseUsTitleOne);
+      formData.append(
+        "feature_one_des",
+        whyChooseUsData.whyChooseUsDescriptionOne,
+      );
+      formData.append("feature_two_title", whyChooseUsData.whyChooseUsTitleTwo);
+      formData.append(
+        "feature_two_des",
+        whyChooseUsData.whyChooseUsDescriptionTwo,
+      );
+      formData.append(
+        "feature_three_title",
+        whyChooseUsData.whyChooseUsTitleThree,
+      );
+      formData.append(
+        "feature_three_des",
+        whyChooseUsData.whyChooseUsDescriptionThree,
+      );
+      formData.append(
+        "feature_background_color",
+        whyChooseUsData.backgroundColor,
+      );
+
+      // await createMiniSite(formData).unwrap();
+      await createWhyChooseUs(formData).unwrap();
 
       toast.success("MiniSite created successfully");
     } catch (error: any) {

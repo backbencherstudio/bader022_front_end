@@ -2,10 +2,19 @@ import { baseApi } from "@/redux/api/baseApi";
 
 export const servicesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    //  All Services
+    //  All MiniSite Data
     allMiniSiteData: builder.query({
       query: () => ({
         url: "/admin/service/index",
+        method: "GET",
+      }),
+      providesTags: ["MiniSite"],
+    }),
+
+    // Get MiniSite By Domain Name
+    miniSiteByDomainName: builder.query({
+      query: (domainName: string) => ({
+        url: `/bokli/${domainName}`,
         method: "GET",
       }),
       providesTags: ["MiniSite"],
@@ -21,11 +30,23 @@ export const servicesApi = baseApi.injectEndpoints({
           invalidatesTags: ["MiniSite"],
         }),
 
+            // Create MiniSite
+    createWhyChooseUs: builder.mutation<any, FormData>({
+          query: (formData) => ({
+            url: "/admin/whychooseus/upsert",
+            method: "POST",
+            body: formData,
+          }),
+          invalidatesTags: ["MiniSite"],
+        }),
+
     
   }),
 });
 
 export const {
   useAllMiniSiteDataQuery,
+  useMiniSiteByDomainNameQuery,
   useCreateMiniSiteMutation,
+  useCreateWhyChooseUsMutation,
 } = servicesApi;

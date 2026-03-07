@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 /* ---------- TYPES ---------- */
 type HeroData = {
@@ -33,6 +34,15 @@ type WhyChooseUsData = {
   whyChooseUsTitle: string;
   whyChooseUsSubtitle: string;
   backgroundColor: string;
+  cardImageOne: string | null;
+  whyChooseUsTitleOne: string;
+  whyChooseUsDescriptionOne: string;
+  cardImageTwo: string | null;
+  whyChooseUsTitleTwo: string;
+  whyChooseUsDescriptionTwo: string;
+  cardImageThree: string | null;
+  whyChooseUsTitleThree: string;
+  whyChooseUsDescriptionThree: string;
   featureCards: FeatureCard[];
 };
 
@@ -149,8 +159,12 @@ export function LandingPageProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { data, isLoading, isError } = useMiniSiteByDomainNameQuery("habiba");
+
+  console.log(data);
+
   const [heroData, setHeroData] = useState<HeroData>({
-    heroTitle: "Nourish Your Scalp for Strong, Healthy Hair Growth",
+    heroTitle: "",
     heroSubtitle: "Care your hair",
     heroDescription:
       "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential",
@@ -161,6 +175,15 @@ export function LandingPageProvider({
     overlayColor: "#fff",
     heroHeight: 48,
   });
+
+  // useEffect(() => {
+  //   if (data?.data?.minisite) {
+  //     setHeroData((prev) => ({
+  //       ...prev,
+  //       heroTitle: data.data.minisite.hero_title,
+  //     }));
+  //   }
+  // }, [data]);
 
   const [aboutData, setAboutData] = useState<AboutData>({
     aboutTitle: "Elevate Your Look with Bespoke Hair Care & Expert",
@@ -176,6 +199,15 @@ export function LandingPageProvider({
     whyChooseUsSubtitle:
       "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results",
     backgroundColor: "#f7f7f7",
+    cardImageOne: null,
+    whyChooseUsTitleOne: "",
+    whyChooseUsDescriptionOne: "",
+    cardImageTwo: null,
+    whyChooseUsTitleTwo: "",
+    whyChooseUsDescriptionTwo: "",
+    cardImageThree: null,
+    whyChooseUsTitleThree: "",
+    whyChooseUsDescriptionThree: "",
     featureCards: [
       {
         image: null,

@@ -1,32 +1,25 @@
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useBookingHistoryQuery, useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
 import { FileClock } from "lucide-react";
-import Image from "next/image";
-import React, { useState } from "react";
 
-export default function Step0({ selectedService, setSelectedService, data,onNext }) {
-  // const [selectedService, setSelectedService] = useState(""); // service_name state
-  // const { data, isLoading, error } = useBookingServiceQuery(selectedService)
+
+export default function Step0({ selectedService, setSelectedService, data, onNext }) {
+
   console.log(data, "=========1111111111111111111111111")
   return (
     <div>
-      <Select value={selectedService} onValueChange={(value) => setSelectedService(value)}>
-        <SelectTrigger>
-          <SelectValue placeholder="All Services" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Services</SelectItem>
-          <SelectItem value="hair">Hair Treatment</SelectItem>
-          <SelectItem value="beard">Beard Trim</SelectItem>
-        </SelectContent>
-      </Select>
+     
+      <div className="flex items-center gap-4 mb-4">
+        <p>Filter by:</p>
+        <select className="border p-1">
+          {data?.data?.map((item: any) => (
+            <option key={item.id} value={item.name}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 md:mt-8">
         {data?.data?.map((service: any) => (
           <div
@@ -53,7 +46,7 @@ export default function Step0({ selectedService, setSelectedService, data,onNext
                 </span>
               </div>
 
-              <h3 className="font-semibold">{service.title}</h3>
+              <h3 className="font-semibold">{service.name}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>

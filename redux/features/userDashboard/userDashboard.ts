@@ -31,6 +31,14 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    //orders details
+    orderDetails: builder.query({
+      query: (booking_id: number | null) => ({
+        url: "/admin/dashboard/view-order-details/{booking_id}",
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const
@@ -39,6 +47,7 @@ export const
       useUserPaymentHistoryQuery,
       useDashboardbookingHistoryQuery,
       useUpcommingQuery,
+      useOrderDetailsQuery,
 
 
  } = dashboardApi;

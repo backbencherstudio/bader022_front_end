@@ -3,12 +3,18 @@ import { baseApi } from "@/redux/api/baseApi";
 export const dashboardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     //booking history
-    bookingHistory: builder.query({
-      query: () => ({
-        url: "/admin/dashboard/history",
-        method: "GET",
-      }),
-    }),
+  bookingHistory: builder.query({
+  query: ({ page = 1, date_filter = "", status = "", service_name = "" }) => ({
+    url: "/admin/dashboard/history",
+    method: "GET",
+    params: {
+      page,
+      date_filter,
+      status,
+      service_name,
+    },
+  }),
+}),
 
     //booking services
     bookingService: builder.query({
@@ -29,10 +35,34 @@ export const dashboardApi = baseApi.injectEndpoints({
         },
       }),
     }),
+
+    //select stup
+    selectStaff: builder.query({
+      query: ({ service_id, date, time }) => ({
+        url: `/admin/booking/staff`,
+        method: "GET",
+        params: {
+          service_id,
+          date,
+          time,
+        },
+      }),
+    }),
+
+    //payment information
+    paymentInformation: builder.mutation({
+      query: (data) => ({
+        url: "/admin/booking/service-booking",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 export const {
   useBookingHistoryQuery,
   useBookingServiceQuery,
   useBookingTimeDateQuery,
+  usePaymentInformationMutation,
+  useSelectStaffQuery,
 } = dashboardApi;

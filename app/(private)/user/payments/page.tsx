@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useUserPaymentHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
 import Pagination from "@/components/reusable/Pagination";
 
-export type TxStatus = "paid" | "failed" ;
+export type TxStatus = "paid" | "failed" | "due" ;
 
 export type TransactionRow = {
   bookingID: string;
@@ -50,14 +50,14 @@ function StatusPill({ status }: { status: TxStatus }) {
   const statusStyles: Record<TxStatus, string> = {
     paid: "border-emerald-500 bg-emerald-50 text-emerald-700",
     failed: "border-red-500 bg-red-50 text-red-600",
-    // pending: "border-amber-500 bg-amber-50 text-amber-700",
+    due: "border-amber-500 bg-amber-50 text-amber-700",
     // confirm: "border-sky-500 bg-sky-50 text-sky-700",
   };
 
   const statusLabels: Record<TxStatus, string> = {
     paid: "Paid",
     failed: "Failed",
-    // pending: "Pending",
+    due: "due",
     // confirm: "Confirmed",
   };
 

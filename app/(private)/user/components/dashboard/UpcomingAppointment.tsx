@@ -54,6 +54,7 @@ type UpcomingResponse = {
 // Component
 // --------------------
 
+
 export default function UpcomingAppointment() {
   const {
     data: upcomingData,
@@ -75,6 +76,7 @@ export default function UpcomingAppointment() {
   const [orderOpen, setOrderOpen] = useState<boolean>(false);
   const [rescheduleOpen, setRescheduleOpen] = useState<boolean>(false);
   const [cancelOpen, setCancelOpen] = useState<boolean>(false);
+  const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
 
   // Safe fallback empty array
   const activities: Activity[] = data?.data ?? [];
@@ -112,7 +114,7 @@ export default function UpcomingAppointment() {
 
           <div className="space-y-4 text-[18px] text-gray-600 mt-4">
             <div className="flex items-center gap-4 text-black dark:text-white">
-              <MapPin size={22} /> Bella Beauty Salon
+              <MapPin size={22} /> {booking?.address}
             </div>
             <div className="flex items-center gap-4 text-black dark:text-white">
               <CalendarDays size={22} />
@@ -134,7 +136,10 @@ export default function UpcomingAppointment() {
 
           <Button
             className="cursor-pointer py-5 mt-6"
-            onClick={() => setOrderOpen(true)}
+            onClick={() => {
+              setSelectedBookingId(booking?.booking_id);
+              setOrderOpen(true);
+            }}
           >
             View Order Details
           </Button>
@@ -194,6 +199,7 @@ export default function UpcomingAppointment() {
       {/* Dialogs */}
       <Dialog open={orderOpen} onOpenChange={setOrderOpen}>
         <OrderDetailsDialog
+          booking_id={selectedBookingId}
           onReschedule={() => {
             setOrderOpen(false);
             setTimeout(() => setRescheduleOpen(true), 150);

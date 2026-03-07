@@ -1,3 +1,168 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+
+import {
+  useBookingTimeDateQuery,
+  useSelectStaffQuery,
+} from "@/redux/features/userDashboard/booking";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface Step1Props {
+  onNext: () => void;
+  onBack: () => void;
+  serviceId: number;
+}
+
+export default function Step1({ onNext, onBack, serviceId }: Step1Props) {
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [staffId, setStaffId] = useState<string>("");
+
+  const formattedDate = date ? date.toISOString().split("T")[0] : "";
+
+  // Get available times
+  const { data, isLoading } = useBookingTimeDateQuery(
+    { service_id: serviceId, date: formattedDate },
+    { skip: !(serviceId && formattedDate) }
+  );
+
+  const timeSlots = data?.available_times || [];
+
+  // Get staff based on selected time
+  const { data: staffData } = useSelectStaffQuery(
+    {
+      service_id: serviceId,
+      date: formattedDate,
+      time: selectedTime,
+    },
+    {
+      skip: !selectedTime,
+    }
+  );
+  const [noSlot, setNoSlot] = useState(false);
+  useEffect(() => {
+    if (!isLoading) {
+      if (timeSlots.length === 0) {
+        setNoSlot(true);
+      } else {
+        setNoSlot(false);
+      }
+    }
+  }, [timeSlots, isLoading]);
+  const staffs = staffData?.available_staff || [];
+
+  return (
+    <Card className="rounded-2xl p-4 sm:p-6 border shadow-sm">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        {/* Calendar */}
+        <div className="border rounded-xl overflow-hidden">
+          <div className="bg-gray-100 px-5 py-4 font-semibold">
+            Select Date
+          </div>
+
+          <div className="p-5">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Time Slots */}
+        <div className="border rounded-xl overflow-hidden">
+          <div className="bg-gray-100 px-5 py-4 font-semibold">
+            Available Times
+          </div>
+
+          <div className="p-5 sm:p-6">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : noSlot ? (
+              <p className="text-red-500 font-medium">
+                No slots available for this date
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                {timeSlots.map((time: string) => (
+                  <button
+                    key={time}
+                    onClick={() => setSelectedTime(time)}
+                    className={cn(
+                      "h-11 rounded-lg border text-sm font-medium transition",
+                      selectedTime === time
+                        ? "border-[#111827] text-[#0B1220]"
+                        : "border-border text-[#637381]"
+                    )}
+                  >
+                    {time}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Staff */}
+        <div className="border rounded-xl overflow-hidden">
+          <div className="bg-gray-100 px-5 py-4 font-semibold">
+            Select Staff
+          </div>
+
+          <div className="p-5">
+            <Select onValueChange={(value) => setStaffId(value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select staff" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="no-preference">No preference</SelectItem>
+
+                {staffs.length === 0 ? (
+                  <SelectItem value="no-staff">No staff available</SelectItem>
+                ) : (
+                  staffs.map((staff: any) => (
+                    <SelectItem key={staff.id} value={String(staff.id)}>
+                      {staff.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex items-end gap-4">
+          <Button variant="outline" onClick={onBack}>
+            Back
+          </Button>
+
+          <Button
+            onClick={onNext}
+            disabled={!selectedTime}
+          >
+            Continue to Checkout
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
+}
 // import { Button } from "@/components/ui/button";
 // import { Card } from "@/components/ui/card";
 // import {
@@ -143,131 +308,136 @@
 //   );
 // }
 
-"use client";
+// "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
+// import { Button } from "@/components/ui/button";
+// import { Card } from "@/components/ui/card";
+// import { Calendar } from "@/components/ui/calendar";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+// import { cn } from "@/lib/utils";
+// import { useState } from "react";
+// import { useBookingTimeDateQuery } from "@/redux/features/userDashboard/booking";
 
-export default function Step1({
-  onNext,
-  onBack,
-}: {
-  onNext: () => void;
-  onBack: () => void;
-}) {
-  const [selectedTime, setSelectedTime] = useState("12:00 AM");
-  const [date, setDate] = useState<Date | undefined>(new Date());
+// export default function Step1({
+//   onNext,
+//   onBack,
+// }: {
+//   onNext: () => void;
+//   onBack: () => void;
+// }) {
+//   const [selectedTime, setSelectedTime] = useState("12:00 AM");
+//   const [date, setDate] = useState<Date | undefined>(new Date());
+  
 
-  const timeSlots = [
-    "8:00 AM",
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
-    "6:00 PM",
-    "7:00 PM",
-    "8:00 PM",
-    "9:00 PM",
-    "10:00 PM",
-    "11:00 PM",
-    "12:00 PM",
-  ];
+//   const timeSlots = [
+//     "8:00 AM",
+//     "9:00 AM",
+//     "10:00 AM",
+//     "11:00 AM",
+//     "12:00 AM",
+//     "2:00 PM",
+//     "3:00 PM",
+//     "4:00 PM",
+//     "6:00 PM",
+//     "7:00 PM",
+//     "8:00 PM",
+//     "9:00 PM",
+//     "10:00 PM",
+//     "11:00 PM",
+//     "12:00 PM",
+//   ];
 
-  return (
-    <Card className="rounded-2xl p-4 sm:p-6  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
-        {/*  Calendar */}
-        <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
-            Select Date
-          </div>
+//   const { data, isLoading, error } = useBookingTimeDateQuery({})
+//   console.log(data,"finaly==========")
 
-          <div className="p-5 sm:p-6">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              className="rounded-md border-0 w-full border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm "
-            />
-          </div>
-        </div>
+//   return (
+//     <Card className="rounded-2xl p-4 sm:p-6  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+//       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+//         {/*  Calendar */}
+//         <div className="rounded-xl border border-border overflow-hidden">
+//           <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
+//             Select Date
+//           </div>
 
-        {/*  Available Times */}
-        <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
-            Available Times
-          </div>
+//           <div className="p-5 sm:p-6">
+//             <Calendar
+//               mode="single"
+//               selected={date}
+//               onSelect={setDate}
+//               className="rounded-md border-0 w-full border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm "
+//             />
+//           </div>
+//         </div>
 
-          <div className="p-5 sm:p-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-              {timeSlots.map((time) => (
-                <button
-                  key={time}
-                  onClick={() => setSelectedTime(time)}
-                  className={cn(
-                    "h-11 rounded-lg border text-sm font-medium transition",
-                    selectedTime === time
-                      ? "border-[#111827] text-[#0B1220]"
-                      : "border-border text-[#637381] hover:border-[#111827]/50"
-                  )}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+//         {/*  Available Times */}
+//         <div className="rounded-xl border border-border overflow-hidden">
+//           <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
+//             Available Times
+//           </div>
 
-        {/*  Staff Select */}
-        <div className="rounded-xl border border-border overflow-hidden">
-          <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
-            Select Staff
-          </div>
+//           <div className="p-5 sm:p-6">
+//             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+//               {timeSlots.map((time) => (
+//                 <button
+//                   key={time}
+//                   onClick={() => setSelectedTime(time)}
+//                   className={cn(
+//                     "h-11 rounded-lg border text-sm font-medium transition",
+//                     selectedTime === time
+//                       ? "border-[#111827] text-[#0B1220]"
+//                       : "border-border text-[#637381] hover:border-[#111827]/50"
+//                   )}
+//                 >
+//                   {time}
+//                 </button>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
 
-          <div className="p-5 sm:p-6">
-            <Select defaultValue="no-preference">
-              <SelectTrigger className="h-11 rounded-lg">
-                <SelectValue placeholder="Select staff" />
-              </SelectTrigger>
+//         {/*  Staff Select */}
+//         <div className="rounded-xl border border-border overflow-hidden">
+//           <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
+//             Select Staff
+//           </div>
 
-              <SelectContent>
-                <SelectItem value="no-preference">No preference</SelectItem>
-                <SelectItem value="guy-hawkins">Guy Hawkins</SelectItem>
-                <SelectItem value="jacob-jones">Jacob Jones</SelectItem>
-                <SelectItem value="darrell-steward">Darrell Steward</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+//           <div className="p-5 sm:p-6">
+//             <Select defaultValue="no-preference">
+//               <SelectTrigger className="h-11 rounded-lg">
+//                 <SelectValue placeholder="Select staff" />
+//               </SelectTrigger>
 
-        {/*  CTA */}
-        <div className="flex items-end gap-4">
-          <Button
-            variant="outline"
-            onClick={onBack}
-            className="cursor-pointer py-5"
-          >
-            Back
-          </Button>
+//               <SelectContent>
+//                 <SelectItem value="no-preference">No preference</SelectItem>
+//                 <SelectItem value="guy-hawkins">Guy Hawkins</SelectItem>
+//                 <SelectItem value="jacob-jones">Jacob Jones</SelectItem>
+//                 <SelectItem value="darrell-steward">Darrell Steward</SelectItem>
+//               </SelectContent>
+//             </Select>
+//           </div>
+//         </div>
 
-          <Button onClick={onNext} className="cursor-pointer py-5">
-            Continue to Checkout
-          </Button>
-        </div>
-      </div>
-    </Card>
-  );
-}
+//         {/*  CTA */}
+//         <div className="flex items-end gap-4">
+//           <Button
+//             variant="outline"
+//             onClick={onBack}
+//             className="cursor-pointer py-5"
+//           >
+//             Back
+//           </Button>
+
+//           <Button onClick={onNext} className="cursor-pointer py-5">
+//             Continue to Checkout
+//           </Button>
+//         </div>
+//       </div>
+//     </Card>
+//   );
+// }

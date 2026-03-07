@@ -8,6 +8,7 @@ import Step2 from "../../components/bookings/Step2";
 import Step3 from "../../components/bookings/Step3";
 import Step4 from "../../components/bookings/Step4";
 import Step0 from "../../components/bookings/Step0";
+import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
 
 type StepperProps = {
   steps: string[];
@@ -58,7 +59,7 @@ function Stepper({ steps, currentStep }: StepperProps) {
   );
 }
 
-export default function BookingCheckoutStepper() {
+export default function BookingCheckoutStepper({}) {
   const steps = [
     "Select Services",
     "Select Date",
@@ -67,7 +68,10 @@ export default function BookingCheckoutStepper() {
     "Confirmed",
   ];
   const [currentStep, setCurrentStep] = useState(0);
-
+  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
+  const [selectedService, setSelectedService] = useState(""); 
+    const { data, isLoading, error } = useBookingServiceQuery(selectedService)
+    console.log(data?.data[0].id, "lkasdjfl;asdjflasjlfd=========1111111111111111111111111")
   return (
     <div className="w-full mx-auto py-8">
       {/* Stepper */}
@@ -84,11 +88,12 @@ export default function BookingCheckoutStepper() {
 
       {/* Step Content */}
       <div className="mt-6">
-        {currentStep === 0 && <Step0 onNext={() => setCurrentStep(1)} />}
+        {currentStep === 0 && <Step0 selectedService={selectedService} setSelectedService={setSelectedService} data={data}  onNext={() => setCurrentStep(1)} />}
         {currentStep === 1 && (
           <Step1
             onNext={() => setCurrentStep(2)}
             onBack={() => setCurrentStep(0)}
+            serviceId={data?.data[0].id}
           />
         )}
         {currentStep === 2 && (

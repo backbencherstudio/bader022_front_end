@@ -104,11 +104,11 @@ function SidebarInner({
           </p>
         )}
 
-        {badgeText && (
+        {/* {badgeText && (
           <Button className="text-[11px] uppercase bg-black mt-1.5 text-white dark:bg-gray-700">
             {badgeText}
           </Button>
-        )}
+        )} */}
       </div>
 
       {/* Nav */}

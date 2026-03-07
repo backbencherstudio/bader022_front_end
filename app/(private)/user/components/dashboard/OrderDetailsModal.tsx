@@ -5,14 +5,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useOrderDetailsQuery } from "@/redux/features/userDashboard/userDashboard";
 
 export function OrderDetailsDialog({
+  booking_id,
   onReschedule,
   onCancel,
 }: {
+  booking_id: number | null;
   onReschedule: () => void;
   onCancel: () => void;
 }) {
+  const { data, isLoading } = useOrderDetailsQuery(booking_id!, {
+    skip: !booking_id,
+  }); // Replace 123 with actual booking_id;
+  console.log(data, isLoading,"=================order details data====================");
+
+
   return (
     <DialogContent className="p-0 overflow-auto rounded-2xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       {/* Header */}

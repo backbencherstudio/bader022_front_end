@@ -1,27 +1,33 @@
 "use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { SaudiRiyal, Search } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useBookingHistoryQuery } from "@/redux/features/userDashboard/booking";
+import Pagination from "@/components/reusable/Pagination";
+
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
+
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
   TableRow,
+  TableHead,
+  TableCell,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
-import Link from "next/link";
+
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm";
 
@@ -35,53 +41,27 @@ export type TransactionRow = {
   status: TxStatus;
 };
 
-export const demoTransactions: TransactionRow[] = [
-  {
-    bookingID: "BKOOD",
-    customerName: "Cameron Williamson",
-    customerAvatar: "https://i.pravatar.cc/100?img=12",
-    service: "Hair Treatment",
-    amountLabel: "100",
-    dateLabel: "Jun 12, 2023",
-    status: "completed",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Jane Cooper",
-    customerAvatar: "https://i.pravatar.cc/100?img=5",
-    service: "Beard Trim",
-    amountLabel: "89",
-    dateLabel: "Jun 13, 2023",
-    status: "confirm",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Esther Howard",
-    customerAvatar: "https://i.pravatar.cc/100?img=32",
-    service: "Beard Trim",
-    amountLabel: "79",
-    dateLabel: "Jun 14, 2023",
-    status: "cancel",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Brooklyn Simmons",
-    customerAvatar: "https://i.pravatar.cc/100?img=15",
-    service: "Hair Treatment",
-    amountLabel: "107",
-    dateLabel: "Jun 15, 2023",
-    status: "pending",
-  },
-  {
-    bookingID: "BKOOD",
-    customerName: "Darlene Robertson",
-    customerAvatar: "https://i.pravatar.cc/100?img=48",
-    service: "Beard Trim",
-    amountLabel: "109",
-    dateLabel: "Jun 16, 2023",
-    status: "cancel",
-  },
-];
+type Booking = {
+  booking_id: string;
+  customer: string;
+  customer_image: string | null;
+  service_name: string;
+  amount: string;
+  booking_date: string;
+  status: string;
+};
+
+type PaginationType = {
+  total: number;
+  current_page: number;
+  last_page: number;
+  per_page: number;
+};
+
+type DashboardBookingResponse = {
+  data: Booking[];
+  pagination: PaginationType;
+};
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -105,219 +85,194 @@ function StatusPill({ status }: { status: TxStatus }) {
 
   return (
     <span
-      className={[
-        "inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border",
-        statusStyles[status],
-      ].join(" ")}
+      className={`inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border ${statusStyles[status]}`}
     >
       {statusLabels[status]}
     </span>
   );
 }
 
-export function RecentTransactionsCard({
-  rows,
-  className,
-}: {
-  rows: TransactionRow[];
-  className?: string;
-}) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  return (
-    <Card
-      className={[
-        "rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm",
-        className ?? "",
-      ].join(" ")}
-    >
-      <CardHeader>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <CardTitle className="text-xl font-semibold">
-            All Booking History
-          </CardTitle>
+export default function AllBookingHistory() {
+  const [page, setPage] = useState(1);
+  const [dateFilter, setDateFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [serviceFilter, setServiceFilter] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+const [service, setService] = useState("");
+  // RTK Query
+  const { data, isLoading, error } = useBookingHistoryQuery({
+    page,
+    date_filter: dateFilter,
+    status: statusFilter,
+    service_name: serviceFilter,
+  }) as { data?: DashboardBookingResponse; isLoading: boolean; error?: unknown };
 
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search anything"
-                className="h-12 rounded-xl pl-10"
-              />
-            </div>
-            <Link href={"/user/bookings/add-booking"}>
-              <Button type="button" className="cursor-pointer py-6">
-                Add Booking
-              </Button>
-            </Link>
+  const bookings = data?.data ?? [];
+  const pagination = data?.pagination;
+  console.log(bookings, "=================booking history data====================");
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setPage(1);
+  }, [dateFilter, statusFilter, serviceFilter]);
+
+  const filteredBookings = bookings.filter((b) =>
+    b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    b.service_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const mappedBookings: TransactionRow[] = filteredBookings.map((b) => ({
+    bookingID: String(b.booking_id),
+    customerName: b.customer,
+    customerAvatar: b.customer_image ?? undefined,
+    service: b.service_name,
+    amountLabel: b.amount,
+    dateLabel: b.booking_date,
+    status: b.status.toLowerCase() as TxStatus,
+  }));
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong</p>;
+
+  return (
+    <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+      {/* Header */}
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <CardTitle className="text-xl font-semibold">All Booking History</CardTitle>
+
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search anything"
+              className="h-12 rounded-xl pl-10"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
+
+          <Link href="/user/bookings/add-booking">
+            <Button>Book Now</Button>
+          </Link>
         </div>
       </CardHeader>
 
-      <CardContent className="pb-8">
-        <div className="mb-6 flex flex-wrap items-center gap-4">
-          <div className="mr-2 text-base font-semibold">Filter by:</div>
-          <div className="flex flex-wrap gap-2">
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="All Dates" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Dates</SelectItem>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-              </SelectContent>
-            </Select>
+      {/* Filters */}
+      <CardContent className="pb-4">
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          <div className="text-base font-semibold mr-2">Filter by:</div>
 
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="All Services" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Services</SelectItem>
-                <SelectItem value="hair">Hair Treatment</SelectItem>
-                <SelectItem value="beard">Beard Trim</SelectItem>
-              </SelectContent>
-            </Select>
+          <Select onValueChange={(v) => setDateFilter(v === "all" ? "" : v)}>
+            <SelectTrigger>
+              <SelectValue placeholder="All Dates" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Dates</SelectItem>
+              <SelectItem value="7_days">Last 7 days</SelectItem>
+              <SelectItem value="30_days">Last 30 days</SelectItem>
+            </SelectContent>
+          </Select>
 
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="cancel">Cancel</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="confirm">Confirmed</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select onValueChange={(v) => setServiceFilter(v === "all" ? "" : v)}>
+            <SelectTrigger>
+              <SelectValue placeholder="All Services" />
+            </SelectTrigger>
+            {
+              bookings.length > 0 && (
+                <SelectContent>
+                  <SelectItem value="all">All Services</SelectItem>
+                  {Array.from(new Set(bookings.map((b) => b.service_name))).map((service) => (
+                    <SelectItem key={service} value={service}>
+                      {service}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              )
+            }
+          </Select>
+
+          <Select onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)}>
+            <SelectTrigger>
+              <SelectValue placeholder="All Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="confirm">Confirmed</SelectItem>
+              <SelectItem value="cancel">Canceled</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
+        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-muted/40">
-          <div>
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
-                    ID
-                  </TableHead>
-                  <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
-                    Customer
-                  </TableHead>
-                  <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
-                    Service
-                  </TableHead>
-                  <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
-                    Amount
-                  </TableHead>
-                  <TableHead className="h-14 text-sm font-semibold text-muted-foreground">
-                    Date
-                  </TableHead>
-                  <TableHead className="h-14 pr-8 text-sm font-semibold text-muted-foreground">
-                    Status
-                  </TableHead>
-                  <TableHead className="h-14 pr-8 text-sm font-semibold text-muted-foreground">
-                    Action
-                  </TableHead>
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/30 hover:bg-muted/30">
+                <TableHead>ID</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Service</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mappedBookings.map((r) => (
+                <TableRow key={r.bookingID}>
+                  <TableCell>{r.bookingID}</TableCell>
+
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-9 w-9">
+                        <AvatarImage src={r.customerAvatar} alt={r.customerName} />
+                        <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
+                      </Avatar>
+                      <span className="text-base font-medium">{r.customerName}</span>
+                    </div>
+                  </TableCell>
+
+                  <TableCell>{r.service}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <SaudiRiyal size={14} />
+                      {r.amountLabel}
+                    </div>
+                  </TableCell>
+                  <TableCell>{r.dateLabel}</TableCell>
+                  <TableCell>
+                    <StatusPill status={r.status} />
+                  </TableCell>
+                  <TableCell>
+                    {/* `/user/bookings/${r.bookingID}` */}
+                    <Link href="#">
+                      <span className="cursor-pointer underline">View Details</span>
+                    </Link>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
+              ))}
 
-              <TableBody>
-                {rows.map((r) => (
-                  <TableRow key={r.bookingID} className="h-19.5">
-                    <TableCell className="text-base text-foreground">
-                      {r.bookingID}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9">
-                          <AvatarImage
-                            src={r.customerAvatar}
-                            alt={r.customerName}
-                          />
-                          <AvatarFallback>
-                            {initials(r.customerName)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="text-base font-medium text-foreground">
-                          {r.customerName}
-                        </span>
-                      </div>
-                    </TableCell>
+              {mappedBookings.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
+                    No transactions.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
 
-                    <TableCell className="text-base text-foreground">
-                      {r.service}
-                    </TableCell>
-                    <TableCell className="text-base text-foreground">
-                      <div className="flex items-center">
-                        <SaudiRiyal size={14} />
-                        {r.amountLabel}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-base text-foreground">
-                      {r.dateLabel}
-                    </TableCell>
-
-                    <TableCell>
-                      <StatusPill status={r.status} />
-                    </TableCell>
-                    <TableCell
-                      onClick={() => setIsModalOpen(true)}
-                      className="pr-8 cursor-pointer underline"
-                    >
-                      View Details
-                    </TableCell>
-                  </TableRow>
-                ))}
-
-                {rows.length === 0 && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={5}
-                      className="py-10 text-center text-muted-foreground"
-                    >
-                      No transactions.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+        {/* Pagination */}
+        <div className="flex justify-end mt-4">
+          <Pagination
+            currentPage={page}
+            lastPage={pagination?.last_page || 1}
+            onPageChange={setPage}
+          />
         </div>
       </CardContent>
-
-      {/* Pagination UI */}
-      <div className="flex justify-between  flex-col gap-2 sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
-        <div className="text-sm text-muted-foreground">
-          Showing 01-12 of 400 Results
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &lt;
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            1
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            2
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            3
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            4
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &gt;
-          </Button>
-        </div>
-      </div>
-      <div></div>
     </Card>
   );
-}
-
-export default function AllBookingHistory() {
-  return <RecentTransactionsCard rows={demoTransactions} />;
 }

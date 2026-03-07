@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { authorize } from "@/lib/auth";
 // import { toast } from "sonner";
 
 type FormValues = {
@@ -35,7 +36,14 @@ export default function SignUpPage() {
   const dispatch = useAppDispatch();
 
   const [registerUser, { isLoading }] = useRegisterMutation();
-console.log(registerUser,"kay")
+
+  useEffect(() => {
+    const auth = authorize(["Merchant", "Admin", "User"]);
+    if (auth.authorized) {
+      router.push("/");
+    }
+  }, []);
+
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await registerUser({
@@ -54,16 +62,14 @@ console.log(registerUser,"kay")
               ...response.data,
               role: "user",
             },
-          })
+          }),
         );
 
-        router.push("/dashboard");
+        router.push("/login");
       }
     } catch (error: any) {
       console.error(error);
-     error(
-        error?.data?.message || "Registration failed. Please try again."
-      );
+      error(error?.data?.message || "Registration failed. Please try again.");
     }
   };
 
@@ -104,7 +110,7 @@ console.log(registerUser,"kay")
           <Input
             label="Phone"
             icon={<FaPhoneAlt />}
-            placeholder="01714980111"
+            placeholder="966..."
             register={register("phone", { required: true })}
           />
 
@@ -130,28 +136,6 @@ console.log(registerUser,"kay")
               </button>
             </div>
           </div>
-
-          {/* Business Category */}
-                   {/* <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                       Business Category *
-                   </label>
-                      <select
-                        {...register("category", { required: true })}
-                        className="w-full p-3 border rounded-md
-                            bg-white dark:bg-gray-700
-                            border-gray-300 dark:border-gray-600
-                            text-gray-700 dark:text-gray-200
-                            focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Select category</option>
-                        <option>Beauty & Spa</option>
-                        <option>Fitness</option>
-                        <option>Consulting</option>
-                        <option>Healthcare</option>
-                      </select>
-                    </div> */}
-
           <button
             type="submit"
             disabled={isLoading}
@@ -207,215 +191,3 @@ function Input({
     </div>
   );
 }
-
-
-
-
-// "use client";
-// import Link from "next/link";
-// import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { useRouter } from "next/navigation";
-// import {
-//   FaEye,
-//   FaEyeSlash,
-//   FaLock,
-//   FaUser,
-//   FaEnvelope,
-//   FaPhoneAlt,
-// } from "react-icons/fa";
-// import Image from "next/image";
-// import { useRegisterMutation } from "@/redux/features/auth/authApi";
-
-// type FormValues = {
-//   fullName: string;
-//   email: string;
-//   phone: string;
-//   password: string;
-//   category: string;
-//   remember: boolean;
-// };
-
-// export default function SignUpPage() {
-//   const { register, handleSubmit } = useForm<FormValues>();
-//   const [showPassword, setShowPassword] = useState(false);
-//   const router = useRouter();
-
- 
-
-//   const onSubmit = (data: FormValues) => {
-
-//     console.log(data);
-//     router.push("/merchant/dashboard");
-//   };
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-//       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
-//         {/* Logo */}
-//         <div className="flex justify-center">
-//           <Image
-//             src="/images/image 259.png"
-//             alt="Company Logo"
-//             width={120}
-//             height={40}
-//             priority
-//             className="h-auto w-auto object-contain dark:brightness-0 dark:invert"
-//           />
-//         </div>
-
-//         {/* Title */}
-//         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-//           Sign Up to Bokli
-//         </h2>
-//         <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
-//           Your all-in-one booking management platform
-//         </p>
-
-//         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-//           <Input
-//             label="Full Name"
-//             icon={<FaUser />}
-//             placeholder="John Doe"
-//             register={register("fullName", { required: true })}
-//           />
-
-//           <Input
-//             label="Email Address"
-//             icon={<FaEnvelope />}
-//             placeholder="john@example.com"
-//             type="email"
-//             register={register("email", { required: true })}
-//           />
-
-//           <Input
-//             label="Phone"
-//             icon={<FaPhoneAlt />}
-//             placeholder="+1 (555) 000-0000"
-//             register={register("phone", { required: true })}
-//           />
-
-//           {/* Password */}
-//           <div>
-//             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-//               Password *
-//             </label>
-//             <div className="relative">
-//               <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-//               <input
-//                 type={showPassword ? "text" : "password"}
-//                 placeholder="••••••••"
-//                 {...register("password", { required: true })}
-//                 className="w-full pl-10 pr-10 py-3 border rounded-md
-//                     bg-white dark:bg-gray-700
-//                     border-gray-300 dark:border-gray-600
-//                     text-gray-900 dark:text-white
-//                     focus:outline-none focus:ring-2 focus:ring-blue-500"
-//               />
-//               <button
-//                 type="button"
-//                 onClick={() => setShowPassword(!showPassword)}
-//                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
-//               >
-//                 {showPassword ? <FaEyeSlash /> : <FaEye />}
-//               </button>
-//             </div>
-//           </div>
-
-//           {/* Business Category */}
-//           <div>
-//             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-//               Business Category *
-//             </label>
-//             <select
-//               {...register("category", { required: true })}
-//               className="w-full p-3 border rounded-md
-//                   bg-white dark:bg-gray-700
-//                   border-gray-300 dark:border-gray-600
-//                   text-gray-700 dark:text-gray-200
-//                   focus:outline-none focus:ring-2 focus:ring-blue-500"
-//             >
-//               <option value="">Select category</option>
-//               <option>Beauty & Spa</option>
-//               <option>Fitness</option>
-//               <option>Consulting</option>
-//               <option>Healthcare</option>
-//             </select>
-//           </div>
-
-//           {/* Remember + Forgot */}
-//           <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
-//             <label className="flex items-center gap-2">
-//               <input type="checkbox" {...register("remember")} />
-//               Remember me
-//             </label>
-//             <Link href={"/forgot-password"}>
-//               {" "}
-//               <button
-//                 type="button"
-//                 className="text-blue-600 hover:underline cursor-pointer"
-//               >
-//                 Forgot password?
-//               </button>
-//             </Link>
-//           </div>
-//           {/* Submit */}
-//           <button
-//             type="submit"
-//             className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
-//           >
-//             Sign Up
-//           </button>
-//         </form>
-
-//         {/* Footer */}
-//         <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
-//           Already have an account?{" "}
-//           <Link href="/login">
-//             <span className="text-blue-600 cursor-pointer hover:underline">
-//               Login
-//             </span>
-//           </Link>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// /* Reusable Input    */
-// function Input({
-//   label,
-//   icon,
-//   register,
-//   placeholder,
-//   type = "text",
-// }: {
-//   label: string;
-//   icon: React.ReactNode;
-//   register: any;
-//   placeholder: string;
-//   type?: string;
-// }) {
-//   return (
-//     <div>
-//       <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-//         {label} *
-//       </label>
-//       <div className="relative">
-//         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-//           {icon}
-//         </span>
-//         <input
-//           type={type}
-//           placeholder={placeholder}
-//           {...register}
-//           className="w-full pl-10 py-3 border rounded-md
-//               bg-white dark:bg-gray-700
-//               border-gray-300 dark:border-gray-600
-//               text-gray-900 dark:text-white
-//               focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-//       </div>
-//     </div>
-//   );
-// }

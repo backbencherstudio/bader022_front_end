@@ -6,40 +6,40 @@ export default function WhyChooseUs() {
   const { whyChooseUsData, setWhyChooseUsData } = useLandingPage();
 
   // why Choose Us
-  const addFeatureCard = () => {
-    setWhyChooseUsData((prev) => ({
-      ...prev,
-      featureCards: [
-        ...prev.featureCards,
-        { image: "", title: "", description: "" },
-      ],
-    }));
-  };
+  // const addFeatureCard = () => {
+  //   setWhyChooseUsData((prev) => ({
+  //     ...prev,
+  //     featureCards: [
+  //       ...prev.featureCards,
+  //       { image: "", title: "", description: "" },
+  //     ],
+  //   }));
+  // };
 
-  const updateFeatureCard = (
-    index: number,
-    field: "image" | "title" | "description",
-    value: string
-  ) => {
-    setWhyChooseUsData((prev) => {
-      const updated = [...prev.featureCards];
-      updated[index] = { ...updated[index], [field]: value };
-      return { ...prev, featureCards: updated };
-    });
-  };
+  // const updateFeatureCard = (
+  //   index: number,
+  //   field: "image" | "title" | "description",
+  //   value: string
+  // ) => {
+  //   setWhyChooseUsData((prev) => {
+  //     const updated = [...prev.featureCards];
+  //     updated[index] = { ...updated[index], [field]: value };
+  //     return { ...prev, featureCards: updated };
+  //   });
+  // };
 
-  const removeFeatureCard = (index: number) => {
-    setWhyChooseUsData((prev) => ({
-      ...prev,
-      featureCards: prev.featureCards.filter((_, i) => i !== index),
-    }));
-  };
+  // const removeFeatureCard = (index: number) => {
+  //   setWhyChooseUsData((prev) => ({
+  //     ...prev,
+  //     featureCards: prev.featureCards.filter((_, i) => i !== index),
+  //   }));
+  // };
 
-  const handleFeatureImageUpload = (index: number, file: File | null) => {
-    if (!file) return;
-    const imageUrl = URL.createObjectURL(file);
-    updateFeatureCard(index, "image", imageUrl);
-  };
+  // const handleFeatureImageUpload = (index: number, file: File | null) => {
+  //   if (!file) return;
+  //   const imageUrl = URL.createObjectURL(file);
+  //   updateFeatureCard(index, "image", imageUrl);
+  // };
   return (
     <section className="flex flex-col gap-4 text-balance p-2">
       <div>
@@ -74,71 +74,172 @@ export default function WhyChooseUs() {
           placeholder="Enter Sub title..."
         />
       </div>
-      <div className="space-y-3">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium">Feature Cards</h3>
+      {/*Image Upload */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Image One
+        </label>
 
-          <button
-            onClick={addFeatureCard}
-            className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-900 text-white dark:bg-white dark:text-black"
-          >
-            +
-          </button>
-        </div>
-
-        {whyChooseUsData.featureCards.map((item, index) => (
-          <div key={index} className="space-y-3 border rounded-lg p-3">
-            <div className="flex justify-between items-center">
-              <h3 className="text-sm font-medium">Feature {index + 1}</h3>
-              {whyChooseUsData.featureCards.length > 1 && (
-                <button
-                  onClick={() => removeFeatureCard(index)}
-                  className="text-red-500 text-sm"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Image Upload */}
-            <label
-              className="mt-2 flex flex-col items-center justify-center
-      border-2 border-dashed rounded-lg py-6 cursor-pointer
-      border-gray-300 dark:border-gray-700
-      bg-gray-50 dark:bg-gray-800"
-            >
-              <FiImage size={26} className="text-gray-400" />
-              <span className="text-sm mt-2">Click to upload</span>
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) =>
-                  handleFeatureImageUpload(index, e.target.files?.[0] || null)
-                }
-              />
-            </label>
-            <input
-              className="w-full border p-2 rounded dark:bg-gray-700"
-              value={item.title}
-              onChange={(e) =>
-                updateFeatureCard(index, "title", e.target.value)
-              }
-              placeholder="Title"
-            />
-
-            <textarea
-              className="w-full border p-2 rounded dark:bg-gray-700"
-              value={item.description}
-              onChange={(e) =>
-                updateFeatureCard(index, "description", e.target.value)
-              }
-              placeholder="Description"
-            />
-          </div>
-        ))}
+        <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <FiImage size={26} className="text-gray-400" />
+          <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+            Click to upload
+          </span>
+          <input
+            type="file"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const url = URL.createObjectURL(file);
+              setWhyChooseUsData({ ...whyChooseUsData, cardImageOne: url });
+            }}
+          />
+        </label>
       </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Title One
+        </label>
+        <input
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsTitleOne}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsTitleOne: e.target.value,
+            })
+          }
+          placeholder="Enter title..."
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Description One
+        </label>
+        <textarea
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsDescriptionOne}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsDescriptionOne: e.target.value,
+            })
+          }
+          placeholder="Description"
+        />
+      </div>
+
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Image Two
+        </label>
+
+        <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <FiImage size={26} className="text-gray-400" />
+          <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+            Click to upload
+          </span>
+          <input
+            type="file"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const url = URL.createObjectURL(file);
+              setWhyChooseUsData({ ...whyChooseUsData, cardImageTwo: url });
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Title Two
+        </label>
+        <input
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsTitleTwo}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsTitleTwo: e.target.value,
+            })
+          }
+          placeholder="Enter title..."
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Description Two
+        </label>
+        <textarea
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsDescriptionTwo}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsDescriptionTwo: e.target.value,
+            })
+          }
+          placeholder="Description"
+        />
+      </div>
+
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Image Three
+        </label>
+
+        <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <FiImage size={26} className="text-gray-400" />
+          <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+            Click to upload
+          </span>
+          <input
+            type="file"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const url = URL.createObjectURL(file);
+              setWhyChooseUsData({ ...whyChooseUsData, cardImageThree: url });
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Title Three
+        </label>
+        <input
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsTitleThree}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsTitleThree: e.target.value,
+            })
+          }
+          placeholder="Enter title..."
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Card Description Three
+        </label>
+        <textarea
+          className="w-full border p-2 rounded dark:bg-gray-700"
+          value={whyChooseUsData.whyChooseUsDescriptionThree}
+          onChange={(e) =>
+            setWhyChooseUsData({
+              ...whyChooseUsData,
+              whyChooseUsDescriptionThree: e.target.value,
+            })
+          }
+          placeholder="Description"
+        />
+      </div>
+
       <div>
         <label className="text-sm">Background Color</label>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { authorize } from "@/lib/auth";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -20,16 +21,15 @@ export default function LoginPage() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
-  // console.log("ttttttt", useLoginMutation);
 
-   const { token, user } = useAppSelector((state) => state.auth);
-   console.log('====================================');
-   console.log('token:', token);
-   console.log('user:', user);
-   console.log('====================================');
+  useEffect(() => {
+    const auth = authorize(["Merchant", "Admin", "User"]);
+    if (auth.authorized) {
+      router.push("/");
+    }
+  }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {

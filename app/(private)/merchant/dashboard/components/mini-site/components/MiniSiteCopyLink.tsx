@@ -3,16 +3,18 @@ import React, { useState } from "react";
 import { FiCopy } from "react-icons/fi";
 
 interface MiniSiteCopyLinkProps {
-  copyLink?: string;
+  subdomain?: string;
 }
 
-export default function MiniSiteCopyLink({
-  copyLink = "http://localhost:3000/merc",
-}: MiniSiteCopyLinkProps) {
+const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL!;
+
+export default function MiniSiteCopyLink({ subdomain }: MiniSiteCopyLinkProps) {
   const [copied, setCopied] = useState(false);
 
+  const domain = `${frontendUrl}/${subdomain}`;
+
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(copyLink);
+    await navigator.clipboard.writeText(domain);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -23,7 +25,7 @@ export default function MiniSiteCopyLink({
 
         <input
           readOnly
-          value={copyLink}
+          value={domain}
           className="w-full bg-transparent outline-none text-gray-900 dark:text-white font-medium"
         />
       </div>

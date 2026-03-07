@@ -19,7 +19,7 @@ export default function ServicesPreview() {
   const updateFeatureCard = (
     index: number,
     field: "image" | "title" | "description",
-    value: string
+    value: string,
   ) => {
     setServicesPreviewData((prev) => {
       const updated = [...prev.servicesCards];
@@ -75,8 +75,7 @@ export default function ServicesPreview() {
           placeholder="Enter Sub title..."
         />
       </div>
-      <div className="space-y-3">
-        {/* Header */}
+      {/* <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium">Services Cards</h3>
 
@@ -102,7 +101,7 @@ export default function ServicesPreview() {
               )}
             </div>
 
-            {/* Image Upload */}
+       
             <label
               className="mt-2 flex flex-col items-center justify-center
       border-2 border-dashed rounded-lg py-6 cursor-pointer
@@ -139,7 +138,7 @@ export default function ServicesPreview() {
             />
           </div>
         ))}
-      </div>
+      </div> */}
       <div>
         <label className="text-sm">Background Color</label>
 

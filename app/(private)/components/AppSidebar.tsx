@@ -75,7 +75,7 @@ function SidebarInner({
   return (
     <>
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 gap-3 -mt-5 px-4 pb-5 border-b border-white/10 dark:border-[#555]">
+      <div className="bg-white dark:bg-gray-900 gap-3 px-4 pb-5 border-b border-white/10 dark:border-[#555] dark:mt-6">
         {logoSrc && (
           <>
             {" "}
@@ -90,19 +90,19 @@ function SidebarInner({
             <Image
               src="/images/Logo-White.png"
               alt="Logo"
-              width={200}
+              width={150}
               height={100}
-              className="rounded hidden dark:block -ml-15"
+              className="rounded hidden dark:block ml-5"
               priority
             />
           </>
         )}
 
-        {/* {title && (
-          <p className="text-[16px] -mt-10 text-[#4A4C56] dark:text-white font-medium">
+        {title && (
+          <p className="text-[16px] mt-5 text-[#4A4C56] dark:text-white font-medium">
             {title}
           </p>
-        )} */}
+        )}
 
         {/* {badgeText && (
           <Button className="text-[11px] uppercase bg-black mt-1.5 text-white dark:bg-gray-700">

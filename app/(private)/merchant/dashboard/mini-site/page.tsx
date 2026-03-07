@@ -10,6 +10,7 @@ import { FiSave } from "react-icons/fi";
 import MiniSiteCopyLink from "../components/mini-site/components/MiniSiteCopyLink";
 import { useAppSelector } from "@/redux/hooks";
 import {
+  useCreateGlobalSettingMutation,
   useCreateMiniSiteMutation,
   useCreateWhyChooseUsMutation,
 } from "@/redux/features/merchant/miniSiteApi";
@@ -22,6 +23,7 @@ export default function page() {
     aboutData,
     ctaBannerData,
     whyChooseUsData,
+    brandingData,
     colorSystemData,
     layoutSettingsData,
     typographyData,
@@ -31,10 +33,12 @@ export default function page() {
     useCreateMiniSiteMutation();
   const [createWhyChooseUs, { isLoading: isCreateWhyChooseUsLoading }] =
     useCreateWhyChooseUsMutation();
+  const [createGlobalSetting, { isLoading: isCreateGlobalSettingLoading }] =
+    useCreateGlobalSettingMutation();
 
   const handleSubmit = async () => {
     console.log("====================================");
-    console.log(whyChooseUsData);
+    console.log(brandingData);
     console.log("====================================");
 
     try {
@@ -79,6 +83,11 @@ export default function page() {
         "feature_background_color",
         whyChooseUsData.backgroundColor,
       );
+
+      formData.append("branding_logo", brandingData.logo);
+      formData.append("logo_position", brandingData.position || "");
+      formData.append("logo_size", String(brandingData.logoSize) || "");
+      formData.append("branding_logo", brandingData.logo);
 
       // await createMiniSite(formData).unwrap();
       await createWhyChooseUs(formData).unwrap();

@@ -1,9 +1,11 @@
+import { getImageUrl } from "@/helper/formatImage";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import MiniSiteFooter from "./MiniSiteFooter";
 
 interface MiniSiteData {
-  heroImage?: string;
+  hero_image?: string;
   overlayColor?: string;
   hero_subtitle?: string;
   hero_title?: string;
@@ -15,6 +17,8 @@ interface MiniSiteData {
   about_hero_image?: string | null;
   about_description?: string;
   about_title?: string;
+  service_title?: string;
+  service_description?: string;
 }
 
 interface WhyChooseUs {
@@ -43,6 +47,7 @@ interface DynamicMiniSiteProps {
     minisite: MiniSiteData;
     why_choose_us: WhyChooseUs;
     services: Service[];
+    global_setting: any;
   };
 }
 
@@ -52,14 +57,18 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
     <div>
       {/* hero section  */}
       <section className="relative w-full">
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full h-[70vh] overflow-hidden">
           {/* Background Image */}
           <Image
-            src={data?.minisite?.heroImage || "/images/mini-site/heroImage.png"}
+            src={
+              //   getImageUrl(data?.minisite?.hero_image) ||
+              "/images/mini-site/heroImage.png"
+            }
             alt="Hero background"
             fill
             className="object-cover"
             priority
+            unoptimized={true}
           />
 
           {/* Overlay */}
@@ -97,7 +106,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
           {/* Content */}
           <div
-            className="
+            className="lg:w-10/12 mx-auto
         relative z-10
         flex items-center h-full
         px-4 md:px-10 lg:px-16 pt-30 pb-10
@@ -105,7 +114,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           >
             <div
               className="
-            max-w-xl
+            max-w-6xl
             text-white
             text-left
         "
@@ -184,7 +193,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
       {/* About Section  */}
       <section
         style={{
-          backgroundColor: data.minisite.background_color || "transparent",
+          //   backgroundColor: data.minisite.background_color || "transparent",
           //   marginTop: layoutSettingsData.sectionSpacing,
           paddingTop: data.minisite.about_padding,
           paddingBottom: data.minisite.about_padding,
@@ -360,7 +369,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               }
               className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
             >
-              {/* {servicesPreviewData.servicesPreviewTitle} */} title
+              {data.minisite.service_title}
             </h3>
 
             <div className="flex flex-col md:flex-row gap-4 md:justify-between">
@@ -374,8 +383,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }
                 className="text-gray-600 dark:text-gray-300 max-w-xl"
               >
-                {/* {servicesPreviewData.servicesPreviewSubtitle} */}{" "}
-                description
+                {data.minisite.service_description}
               </p>
               <button
                 style={
@@ -557,6 +565,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           }}
         />
       </section>
+
+      <MiniSiteFooter data={data} />
     </div>
   );
 }

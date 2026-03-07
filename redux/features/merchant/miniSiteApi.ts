@@ -30,10 +30,20 @@ export const servicesApi = baseApi.injectEndpoints({
           invalidatesTags: ["MiniSite"],
         }),
 
-            // Create MiniSite
+    // Create Why Choose Us
     createWhyChooseUs: builder.mutation<any, FormData>({
           query: (formData) => ({
             url: "/admin/whychooseus/upsert",
+            method: "POST",
+            body: formData,
+          }),
+          invalidatesTags: ["MiniSite"],
+        }),
+
+      // Create Global Setting
+        createGlobalSetting: builder.mutation<any, FormData>({
+          query: (formData) => ({
+            url: "/admin/global-setting/store",
             method: "POST",
             body: formData,
           }),
@@ -49,4 +59,5 @@ export const {
   useMiniSiteByDomainNameQuery,
   useCreateMiniSiteMutation,
   useCreateWhyChooseUsMutation,
+  useCreateGlobalSettingMutation,
 } = servicesApi;

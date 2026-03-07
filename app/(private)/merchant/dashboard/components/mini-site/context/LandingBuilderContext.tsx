@@ -164,7 +164,7 @@ export function LandingPageProvider({
   console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
-    heroTitle: "",
+    heroTitle: "Nourishing hair growth starts with a healthy",
     heroSubtitle: "Care your hair",
     heroDescription:
       "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential",

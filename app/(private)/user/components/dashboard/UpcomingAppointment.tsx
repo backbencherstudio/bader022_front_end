@@ -44,6 +44,7 @@ type UpcomingBooking = {
   service_name: string;
   service_price: string;
   status: string;
+  address?: string;
 };
 
 type UpcomingResponse = {
@@ -137,7 +138,7 @@ export default function UpcomingAppointment() {
           <Button
             className="cursor-pointer py-5 mt-6"
             onClick={() => {
-              setSelectedBookingId(booking?.booking_id);
+              setSelectedBookingId(booking?.booking_id ?? null);
               setOrderOpen(true);
             }}
           >

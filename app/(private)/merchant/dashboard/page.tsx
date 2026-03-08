@@ -9,7 +9,12 @@ import {
 } from "./components/dashboard/TodaysAppoinments";
 import RecentTransactions from "./components/dashboard/RecentTransactions";
 import QuickActionsComponents from "./components/dashboard/QuickActions";
-import { useMerchantDashboardOverviewQuery, useMonthlyRevenueQuery, useTodayAppointmentQuery, useWeeklyRevenueQuery } from "@/redux/features/merchant/dashboardApi";
+import {
+  useMerchantDashboardOverviewQuery,
+  useMonthlyRevenueQuery,
+  useTodayAppointmentQuery,
+  useWeeklyRevenueQuery,
+} from "@/redux/features/merchant/dashboardApi";
 
 export type TData = {
   name: string;
@@ -47,16 +52,32 @@ const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
   serviceName: "Haircut & Styling",
 }));
 export default function DashboardPage() {
-    const { data: dashboardOverview, isLoading, isError } = useMerchantDashboardOverviewQuery({});
-    const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
-    const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
-    const { data: todayAppointmentData, isLoading: isTodayAppointmentLoading, isError: isTodayAppointmentError } = useTodayAppointmentQuery({});
-    console.log('====================================');
-    console.log({dashboardOverview});
-    console.log('====================================');
-    console.log('====================================');
-    console.log({todayAppointmentData});
-    console.log('====================================');
+  const {
+    data: dashboardOverview,
+    isLoading,
+    isError,
+  } = useMerchantDashboardOverviewQuery({});
+  const {
+    data: monthlyRevenueData,
+    isLoading: isMonthlyLoading,
+    isError: isMonthlyError,
+  } = useMonthlyRevenueQuery({});
+  const {
+    data: weeklyRevenueData,
+    isLoading: isWeeklyLoading,
+    isError: isWeeklyError,
+  } = useWeeklyRevenueQuery({});
+  const {
+    data: todayAppointmentData,
+    isLoading: isTodayAppointmentLoading,
+    isError: isTodayAppointmentError,
+  } = useTodayAppointmentQuery({});
+  // console.log('====================================');
+  // console.log({ dashboardOverview });
+  // console.log('====================================');
+  // console.log('====================================');
+  // console.log({todayAppointmentData});
+  // console.log('====================================');
   return (
     <div>
       {/* Charts */}
@@ -70,9 +91,21 @@ export default function DashboardPage() {
               value={dashboardOverview?.revenue}
               Icon={SaudiRiyal}
             />
-            <StatCard title="Total Bookings" value={dashboardOverview?.total_bookings} Icon={Calendar} />
-            <StatCard title="Appointments" value={dashboardOverview?.appointments} Icon={TrendingUp} />
-            <StatCard title="Total Customers" value={dashboardOverview?.Total_Customers} Icon={Users} />
+            <StatCard
+              title="Total Bookings"
+              value={dashboardOverview?.total_bookings}
+              Icon={Calendar}
+            />
+            <StatCard
+              title="Appointments"
+              value={dashboardOverview?.appointments}
+              Icon={TrendingUp}
+            />
+            <StatCard
+              title="Total Customers"
+              value={dashboardOverview?.Total_Customers}
+              Icon={Users}
+            />
           </div>
           <div
             className="rounded-xl border dark:bg-gray-800
@@ -112,10 +145,16 @@ export default function DashboardPage() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <RevenueChart data={weeklyRevenueData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart
+                    data={weeklyRevenueData}
+                    CurrencyIcon={SaudiRiyal}
+                  />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <RevenueChart data={monthlyRevenueData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart
+                    data={monthlyRevenueData}
+                    CurrencyIcon={SaudiRiyal}
+                  />
                 </TabsContent>
               </Tabs>
             </div>

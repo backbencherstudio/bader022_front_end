@@ -298,6 +298,8 @@ export function RecentTransactionsCard({
   );
 }
 
-export default function RecentTransactions() {
+export default function RecentTransactions(data: any) {
+  console.log(data.data);
+
   return <RecentTransactionsCard rows={demoTransactions} />;
 }

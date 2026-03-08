@@ -24,12 +24,6 @@ type AboutData = {
   padding: number;
 };
 
-type FeatureCard = {
-  image: string | null;
-  title: string;
-  description: string;
-};
-
 type WhyChooseUsData = {
   whyChooseUsTitle: string;
   whyChooseUsSubtitle: string;
@@ -43,7 +37,6 @@ type WhyChooseUsData = {
   cardImageThree: string | null;
   whyChooseUsTitleThree: string;
   whyChooseUsDescriptionThree: string;
-  featureCards: FeatureCard[];
 };
 
 type ServicesCard = {
@@ -107,6 +100,28 @@ type FooterData = {
   footerLogo: string;
   footerBackground: string;
   footerTextColor: string;
+  facebookUrl?: string;
+  twitterUrl?: string;
+  instagramUrl?: string;
+  linkedinUrl?: string;
+  pinterestUrl?: string;
+  home?: string;
+  homeUrl?: string;
+  about?: string;
+  aboutUrl?: string;
+  why_choose_us?: string;
+  why_choose_usUrl?: string;
+  service?: string;
+  serviceUrl?: string;
+  contact_us?: string;
+  contactUrl?: string;
+  privacy_policy?: string;
+  privacy_policyUrl?: string;
+  terms_condition?: string;
+  terms_conditionUrl?: string;
+  contact_info?: string;
+  contact_email?: string;
+  address?: string;
   socialLinks: SocialLinks[];
   navigation: NavigationLink[];
   support: SupportLink[];
@@ -208,26 +223,6 @@ export function LandingPageProvider({
     cardImageThree: null,
     whyChooseUsTitleThree: "",
     whyChooseUsDescriptionThree: "",
-    featureCards: [
-      {
-        image: null,
-        title: "Certified Hair Experts",
-        description:
-          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
-      },
-      {
-        image: null,
-        title: "Certified Hair Experts",
-        description:
-          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
-      },
-      {
-        image: null,
-        title: "Certified Hair Experts",
-        description:
-          "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise",
-      },
-    ],
   });
 
   const [servicesPreviewData, setServicesPreviewData] =
@@ -302,6 +297,29 @@ export function LandingPageProvider({
     footerLogo: "",
     footerBackground: "",
     footerTextColor: "",
+    facebookUrl: "",
+    twitterUrl: "",
+    instagramUrl: "",
+    linkedinUrl: "",
+    pinterestUrl: "",
+    home: "",
+    homeUrl: "",
+    about: "",
+    aboutUrl: "",
+    why_choose_us: "",
+    why_choose_usUrl: "",
+    service: "",
+    serviceUrl: "",
+    contact_us: "",
+    contactUrl: "",
+    privacy_policy: "",
+    privacy_policyUrl: "",
+    terms_condition: "",
+    terms_conditionUrl: "",
+    contact_info: "",
+    contact_email: "",
+    address: "",
+
     socialLinks: [
       { icon: "facebook", url: "www.facebook.com" },
       { icon: "twitter", url: "www.twitter.com" },

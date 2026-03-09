@@ -60,54 +60,6 @@ type DashboardBookingResponse = {
   pagination: PaginationType;
 };
 
-// export const demoTransactions: TransactionRow[] = [
-//   {
-//     bookingID: "BKOOD",
-//     customerName: "Cameron Williamson",
-//     customerAvatar: "https://i.pravatar.cc/100?img=12",
-//     service: "Hair Treatment",
-//     amountLabel: "100",
-//     dateLabel: "Jun 12, 2023",
-//     status: "completed",
-//   },
-//   {
-//     bookingID: "BKOOD",
-//     customerName: "Jane Cooper",
-//     customerAvatar: "https://i.pravatar.cc/100?img=5",
-//     service: "Beard Trim",
-//     amountLabel: "89",
-//     dateLabel: "Jun 13, 2023",
-//     status: "confirm",
-//   },
-//   {
-//     bookingID: "BKOOD",
-//     customerName: "Esther Howard",
-//     customerAvatar: "https://i.pravatar.cc/100?img=32",
-//     service: "Beard Trim",
-//     amountLabel: "79",
-//     dateLabel: "Jun 14, 2023",
-//     status: "cancel",
-//   },
-//   {
-//     bookingID: "BKOOD",
-//     customerName: "Brooklyn Simmons",
-//     customerAvatar: "https://i.pravatar.cc/100?img=15",
-//     service: "Hair Treatment",
-//     amountLabel: "107",
-//     dateLabel: "Jun 15, 2023",
-//     status: "pending",
-//   },
-//   {
-//     bookingID: "BKOOD",
-//     customerName: "Darlene Robertson",
-//     customerAvatar: "https://i.pravatar.cc/100?img=48",
-//     service: "Beard Trim",
-//     amountLabel: "109",
-//     dateLabel: "Jun 16, 2023",
-//     status: "cancel",
-//   },
-// ];
-
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "U";
@@ -142,15 +94,15 @@ function StatusPill({ status }: { status: TxStatus }) {
 
 export function RecentTransactionsCard({
   rows,
-   pagination,
-   page,
-   setPage,
- }: {
-   rows: TransactionRow[];
-   pagination: any;
-   page: number;
-   setPage: (page: number) => void;
- }) {
+  pagination,
+  page,
+  setPage,
+}: {
+  rows: TransactionRow[];
+  pagination: any;
+  page: number;
+  setPage: (page: number) => void;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <Card
@@ -183,7 +135,6 @@ export function RecentTransactionsCard({
       </CardHeader>
 
       <CardContent className="pb-8">
-
         <div className="overflow-hidden rounded-2xl border border-muted/40">
           <div>
             <Table>
@@ -284,67 +235,73 @@ export function RecentTransactionsCard({
 
       {/* Pagination UI */}
       <div className="flex justify-between flex-col sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
-             <div className="flex justify-between w-full   sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
-     
-               <div className="text-sm text-muted-foreground  ">
-                 Showing {rows.length} results
-               </div>
-     
-             <div>
-                 <Pagination
-                   currentPage={page}
-                   lastPage={pagination?.last_page || 1}
-                   onPageChange={setPage}
-                 />
-     
-               </div>
-             </div>
-     
-             {/* <div className="flex gap-2">
+        <div className="flex justify-between w-full   sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
+          <div className="text-sm text-muted-foreground  ">
+            Showing {rows.length} results
+          </div>
+
+          <div>
+            <Pagination
+              currentPage={page}
+              lastPage={pagination?.last_page || 1}
+              onPageChange={setPage}
+            />
+          </div>
+        </div>
+
+        {/* <div className="flex gap-2">
                <Button variant="outline">&lt;</Button>
                <Button variant="outline">1</Button>
                <Button variant="outline">2</Button>
                <Button variant="outline">3</Button>
                <Button variant="outline">&gt;</Button>
              </div> */}
-           </div>
+      </div>
       <div></div>
     </Card>
   );
 }
 
-
-export default function AllBookingHistory() {
+export default function AllBookingHistory({ data }: any) {
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, error } = useDashboardbookingHistoryQuery({ page }) as {
+  console.log(data?.data);
+
+  const {
+    data: paginationData,
+    isLoading,
+    error,
+  } = useDashboardbookingHistoryQuery({
+    page,
+  }) as {
     data?: DashboardBookingResponse;
     isLoading: boolean;
     error?: unknown;
   };
 
   const bookings = data?.data ?? [];
-  const pagination = data?.pagination;
-  console.log(pagination); 
+  const pagination = paginationData?.pagination;
+  // console.log(bookings);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 
-  
-  const mappedBookings: TransactionRow[] = bookings.map((b) => ({
-    bookingID: String(b.booking_id),
-    customerName: b.customer,
+  const mappedBookings: TransactionRow[] = bookings.map((b: any) => ({
+    bookingID: String(b.id),
+    customerName: b.customer_name,
     customerAvatar: b.customer_image ?? undefined,
-    service: b.service_name,
-    amountLabel: b.amount,
-    dateLabel: b.booking_date,
+    service: b.service.service_name,
+    amountLabel: b.service.price,
+    dateLabel: b.date_time,
     status: b.status.toLowerCase() as TxStatus,
   }));
 
-  return <RecentTransactionsCard
-        rows={mappedBookings}
-        pagination={pagination}
-        page={page}
-        setPage={setPage}
-      />;
+  return (
+    <RecentTransactionsCard
+      rows={mappedBookings}
+      pagination={pagination}
+      page={page}
+      setPage={setPage}
+    />
+  );
 }

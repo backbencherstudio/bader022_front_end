@@ -29,6 +29,10 @@ import AllBookingHistory from "../components/bookings/AllBookingHistory";
 import AddBookingModal from "../components/bookings/AddBookingModal";
 import { Switch } from "@/components/ui/switch";
 import { BookingPopup } from "../components/bookings/BookingPopup";
+import {
+  useAllBookingsQuery,
+  useGetBookingByIdQuery,
+} from "@/redux/features/merchant/bookingsApi";
 
 export type TBooking = {
   id: string;
@@ -52,6 +56,12 @@ export type TBookingFilters = {
 export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function Page() {
+  const { data: allBookings, isLoading, isError } = useAllBookingsQuery({});
+  // console.log({ allBookings });
+
+  const { data: booking } = useGetBookingByIdQuery(5);
+  // console.log({ booking });
+
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");
   const [month, setMonth] = useState(() => new Date(2026, 0, 1));
@@ -62,10 +72,10 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleAddBooking = (data: any) => {
-    console.log("New booking data: ", data);
-    // Handle form submission (e.g., send data to backend)
-  };
+  // const handleAddBooking = (data: any) => {
+  //   console.log("New booking data: ", data);
+  //   // Handle form submission (e.g., send data to backend)
+  // };
   const { bookings, loading } = useBookings({
     filterBy,
     scope,
@@ -90,7 +100,7 @@ export default function Page() {
 
   const monthLabel = `${format(month, "MMMM yyyy")} • ${format(
     startOfMonth(month),
-    "MMM d, yyyy"
+    "MMM d, yyyy",
   )} - ${format(endOfMonth(month), "MMM d, yyyy")}`;
 
   return (
@@ -337,14 +347,14 @@ export default function Page() {
               </p>
             </CardContent>
           </Card>
-          <AllBookingHistory />
+          <AllBookingHistory data={allBookings} />
           <BookingPopup isPopup={isPopup} setIsPopup={setIsPopup} />
         </TabsContent>
       </Tabs>
       <AddBookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddBooking}
+        // onSubmit={handleAddBooking}
       />
     </div>
   );

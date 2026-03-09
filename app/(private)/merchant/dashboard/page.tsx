@@ -15,6 +15,7 @@ import {
   useTodayAppointmentQuery,
   useWeeklyRevenueQuery,
 } from "@/redux/features/merchant/dashboardApi";
+import { useMerchantTransactionOverviewQuery } from "@/redux/features/merchant/transactionApi";
 
 export type TData = {
   name: string;
@@ -72,6 +73,12 @@ export default function DashboardPage() {
     isLoading: isTodayAppointmentLoading,
     isError: isTodayAppointmentError,
   } = useTodayAppointmentQuery({});
+
+  const {
+    data: transactionOverview,
+    isLoading: isTransactionOverviewLoading,
+    isError: isTransactionOverviewError,
+  } = useMerchantTransactionOverviewQuery({});
   // console.log('====================================');
   // console.log({ dashboardOverview });
   // console.log('====================================');
@@ -164,7 +171,7 @@ export default function DashboardPage() {
       </div>
       <div className="pt-4 flex xl:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
         <div className="w-full">
-          <RecentTransactions />
+          <RecentTransactions data={transactionOverview?.data} />
         </div>
         <div className="w-full xl:w-1/4">
           <QuickActionsComponents />

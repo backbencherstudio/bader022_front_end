@@ -56,14 +56,17 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+
+    // Change Password
     changePassword: builder.mutation({
-      query: (body) => ({
-        url: "/admin/passwordchange/1",
+      query: ({ id, body }) => ({
+        url: `/admin/passwordchange/${id}`,
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Auth"],
     }),
-  }),
+      }),
 });
 
 export const {

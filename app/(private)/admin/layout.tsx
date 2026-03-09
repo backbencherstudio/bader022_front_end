@@ -12,6 +12,9 @@ import {
   Crown,
 } from "lucide-react";
 import { Toaster } from "sonner";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { authorize } from "@/lib/auth";
 
 const MERCHANT_NAV_ITEMS = [
   {
@@ -61,6 +64,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { locale } = useI18n();
+  const router = useRouter();
+  useEffect(() => {
+    const auth = authorize(["Admin"]);
+    if (!auth.authorized) {
+      router.push("/login");
+    }
+  }, []);
   return (
     <div>
       <div>

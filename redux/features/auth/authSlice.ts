@@ -8,6 +8,7 @@ interface User {
   email: string;
   role: Role;
   website_domain:string
+  phone?:string
 }
 
 interface AuthState {

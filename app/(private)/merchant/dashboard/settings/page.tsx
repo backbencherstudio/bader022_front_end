@@ -10,6 +10,10 @@ import BusinessSetting from "../components/settings/Bussiness";
 import NotificationSettings from "../components/settings/Notifications";
 import LanguageSettings from "../components/settings/Languages";
 import SupportSettings from "../components/settings/Support";
+import { useAppSelector } from "@/redux/hooks";
+import { useForm } from "react-hook-form";
+import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
+import { toast } from "sonner";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -191,6 +195,28 @@ function MobileSidebar({
 
 // Information Form for Account
 function AccountSettingsForm() {
+  const { user } = useAppSelector((state) => state.auth);
+  const { register, handleSubmit } = useForm();
+
+  // console.log(user);
+  const [changePassword] = useChangePasswordMutation();
+
+  const onSubmit = async (data: any) => {
+    console.log("Submitted Data:", data);
+
+    const id = user?.id; // user id from auth or state
+
+    const payload = {
+      id,
+      body: data,
+    };
+
+    console.log("Submitted Data:", payload);
+
+    await changePassword(payload);
+    toast.success("Password Changed successfully");
+  };
+
   return (
     <div className="flex flex-col gap-8 p-6 w-full">
       <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
@@ -201,26 +227,26 @@ function AccountSettingsForm() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold">Full Name *</label>
-              <Input className="mt-2" placeholder="Enter full name" />
+              <Input className="mt-2" placeholder={user?.name} />
             </div>
             <div>
               <label className="block text-sm font-semibold">
                 Email Address *
               </label>
-              <Input className="mt-2" placeholder="john.doe@example.com" />
+              <Input className="mt-2" placeholder={user?.email} />
             </div>
             <div>
               <label className="block text-sm font-semibold">
                 Phone Number *
               </label>
-              <Input className="mt-2" placeholder="Enter phone number" />
+              <Input className="mt-2" placeholder={user?.phone} />
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Change Password Section */}
-      <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+      {/* <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
             Change Password
@@ -260,12 +286,69 @@ function AccountSettingsForm() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Save Change Button */}
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <Button className="cursor-pointer">Save Change</Button>
-      </div>
+      </div> */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Change Password Section */}
+        <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold">
+              Change Password
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold">
+                  Current Password *
+                </label>
+                <Input
+                  {...register("currentPassword")}
+                  className="mt-2"
+                  placeholder="Enter current password"
+                  type="password"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold">
+                  New Password *
+                </label>
+                <Input
+                  {...register("newPassword")}
+                  className="mt-2"
+                  placeholder="Enter new password"
+                  type="password"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold">
+                  Confirm New Password *
+                </label>
+                <Input
+                  {...register("confirmPassword")}
+                  className="mt-2"
+                  placeholder="Confirm new password"
+                  type="password"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Save Change Button */}
+        <div className="flex justify-end mt-4">
+          <Button type="submit" className="cursor-pointer">
+            Save Change
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

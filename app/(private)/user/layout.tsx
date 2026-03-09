@@ -9,6 +9,9 @@ import {
   Calendar,
   User,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { authorize } from "@/lib/auth";
+import { useEffect } from "react";
 
 const USER_NAV_ITEMS = [
   {
@@ -48,6 +51,14 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { locale } = useI18n();
+
+  const router = useRouter();
+  useEffect(() => {
+    const auth = authorize(["User"]);
+    if (!auth.authorized) {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div>

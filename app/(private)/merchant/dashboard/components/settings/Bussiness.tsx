@@ -1,5 +1,6 @@
-import { useForm, Controller } from "react-hook-form";
+"use client";
 
+import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,6 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useUpdateBusinessSettingMutation } from "@/redux/features/merchant/settingApi";
+import { toast } from "sonner";
 
 type WorkingHour = {
   day: string;
@@ -19,9 +22,9 @@ type WorkingHour = {
 };
 
 type FormData = {
-  businessName: string;
-  businessLogo: File | null;
-  businessCategory: string;
+  store_name: string;
+  // businessLogo: File | null;
+  business_category: string;
   businessAddress: string;
   country: string;
   city: string;
@@ -39,38 +42,70 @@ const DAYS = [
   "Saturday",
   "Sunday",
 ];
+
 export default function BusinessSetting() {
   const {
     control,
     handleSubmit,
     watch,
     register,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       workingHours: DAYS.map((day) => ({
         day,
         enabled: day !== "Saturday" && day !== "Sunday",
-        from: "08:00 AM",
-        to: "08:00 PM",
+        from: "09:00",
+        to: "18:00",
       })),
     },
   });
-  const [logo, setLogo] = useState<File | null>(null);
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-  };
+  // const [logo, setLogo] = useState<File | null>(null);
+
+  const [updateBusinessSetting] = useUpdateBusinessSettingMutation();
 
   const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
-    const hour24 = Math.floor(i / 2);
+    const hour = Math.floor(i / 2)
+      .toString()
+      .padStart(2, "0");
     const minute = i % 2 === 0 ? "00" : "30";
-
-    const hour12 = hour24 % 12 || 12;
-    const period = hour24 < 12 ? "AM" : "PM";
-
-    return `${hour12}:${minute} ${period}`;
+    return `${hour}:${minute}`;
   });
+
+  const onSubmit = async (data: FormData) => {
+    const business_hours: Record<string, { open: string; close: string }> = {};
+    data.workingHours.forEach((item) => {
+      if (item.enabled) {
+        const day = item.day.toLowerCase();
+
+        business_hours[day] = {
+          open: item.from,
+          close: item.to,
+        };
+      }
+    });
+
+    const payload = {
+      ...data,
+      business_hours,
+    };
+
+    // console.log("Final Payload:", payload);
+
+    try {
+      const response = await updateBusinessSetting(payload);
+      if (response.data.success === false) {
+        toast.error(response.data.message);
+      }
+      toast.success("Business Updated successfully");
+      reset();
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to Business Updated");
+      reset();
+    }
+  };
 
   return (
     <div className="container max-w-3xl mx-auto p-4">
@@ -78,37 +113,34 @@ export default function BusinessSetting() {
         <h2 className="text-xl font-semibold mb-4">
           Business / Store Settings
         </h2>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Business Name */}
           <div>
-            <label
-              htmlFor="businessName"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
+            <label className="block mb-2 text-sm font-medium text-muted-foreground">
               Business / Store Name
             </label>
+
             <Input
-              {...register("businessName", {
+              {...register("store_name", {
                 required: "Business name is required",
               })}
               placeholder="My Store"
               className="w-full"
             />
-            {errors.businessName && (
+
+            {errors.store_name && (
               <p className="text-red-500 text-xs">
-                {errors.businessName.message}
+                {errors.store_name.message}
               </p>
             )}
           </div>
-
           {/* Business Logo */}
-          <div>
-            <label
-              htmlFor="businessLogo"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
+          {/* <div>
+            <label className="block mb-2 text-sm font-medium text-muted-foreground">
               Business Logo
             </label>
+
             <div className="flex flex-col items-center border-2 p-4 rounded-md">
               <input
                 type="file"
@@ -116,23 +148,26 @@ export default function BusinessSetting() {
                 onChange={(e) => setLogo(e.target.files?.[0] || null)}
                 className="hidden"
               />
+
               <label htmlFor="businessLogo" className="cursor-pointer">
                 Click to upload or drag and drop
               </label>
+
               {logo && <p>{logo.name}</p>}
+
               <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
-          </div>
-
+          </div> */}
           {/* Working Hours */}
           <div className="space-y-3 overflow-x-auto">
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Working Hours
             </h3>
+
             {watch("workingHours")?.map((item, index) => (
               <div
                 key={index}
-                className="grid gap-3 grid-cols-[140px_1fr_1fr_1fr] items-center "
+                className="grid gap-3 grid-cols-[140px_1fr_1fr_1fr] items-center"
               >
                 {/* Day */}
                 <Controller
@@ -153,8 +188,7 @@ export default function BusinessSetting() {
                 {/* From */}
                 <Controller
                   control={control}
-                  name="businessCategory"
-                  defaultValue="8:00 AM"
+                  name={`workingHours.${index}.from`}
                   render={({ field }) => (
                     <Select
                       value={field.value}
@@ -164,6 +198,7 @@ export default function BusinessSetting() {
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
+
                       <SelectContent>
                         {TIME_OPTIONS.map((time) => (
                           <SelectItem key={time} value={time}>
@@ -174,14 +209,15 @@ export default function BusinessSetting() {
                     </Select>
                   )}
                 />
+
                 <span className="hidden sm:block text-xs text-gray-500">
                   to
                 </span>
+
                 {/* To */}
                 <Controller
                   control={control}
-                  name="businessCategory"
-                  defaultValue="8:00 PM"
+                  name={`workingHours.${index}.to`}
                   render={({ field }) => (
                     <Select
                       value={field.value}
@@ -191,6 +227,7 @@ export default function BusinessSetting() {
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
+
                       <SelectContent>
                         {TIME_OPTIONS.map((time) => (
                           <SelectItem key={time} value={time}>
@@ -204,7 +241,6 @@ export default function BusinessSetting() {
               </div>
             ))}
           </div>
-
           {/* Business Category */}
           <div>
             <label
@@ -213,19 +249,21 @@ export default function BusinessSetting() {
             >
               Business Category
             </label>
+
             <Controller
               control={control}
-              name="businessCategory"
-              defaultValue="Car Services"
+              name="business_category"
+              defaultValue="salon_beauty"
               render={({ field }) => (
-                <Select {...field}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Business Category" />
                   </SelectTrigger>
+
                   <SelectContent>
-                    <SelectItem value="Car Services">Car Services</SelectItem>
-                    <SelectItem value="Food">Food</SelectItem>
+                    <SelectItem value="salon_beauty">salon_beauty</SelectItem>
                     <SelectItem value="Retail">Retail</SelectItem>
+                    <SelectItem value="Food">Food</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -262,15 +300,17 @@ export default function BusinessSetting() {
             >
               Country
             </label>
+
             <Controller
               control={control}
               name="country"
               defaultValue="Saudi Arabia"
               render={({ field }) => (
-                <Select {...field}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Country" />
                   </SelectTrigger>
+
                   <SelectContent>
                     <SelectItem value="Saudi Arabia">Saudi Arabia</SelectItem>
                     <SelectItem value="USA">USA</SelectItem>
@@ -289,15 +329,17 @@ export default function BusinessSetting() {
             >
               City
             </label>
+
             <Controller
               control={control}
               name="city"
               defaultValue="Riyadh"
               render={({ field }) => (
-                <Select {...field}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="City" />
                   </SelectTrigger>
+
                   <SelectContent>
                     <SelectItem value="Riyadh">Riyadh</SelectItem>
                     <SelectItem value="Jeddah">Jeddah</SelectItem>
@@ -316,15 +358,17 @@ export default function BusinessSetting() {
             >
               Time Zone
             </label>
+
             <Controller
               control={control}
               name="timeZone"
               defaultValue="(GMT+3) Arabia Standard Time"
               render={({ field }) => (
-                <Select {...field}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Time Zone" />
                   </SelectTrigger>
+
                   <SelectContent>
                     <SelectItem value="(GMT+3) Arabia Standard Time">
                       (GMT+3) Arabia Standard Time
@@ -349,31 +393,26 @@ export default function BusinessSetting() {
             >
               Currency
             </label>
+
             <Controller
               control={control}
               name="currency"
-              defaultValue="SAR - Saudi Riyal"
+              defaultValue="SAR"
               render={({ field }) => (
-                <Select {...field}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Currency" />
                   </SelectTrigger>
+
                   <SelectContent>
-                    <SelectItem value="SAR - Saudi Riyal">
-                      SAR - Saudi Riyal
-                    </SelectItem>
-                    <SelectItem value="USD - US Dollar">
-                      USD - US Dollar
-                    </SelectItem>
-                    <SelectItem value="INR - Indian Rupee">
-                      INR - Indian Rupee
-                    </SelectItem>
+                    <SelectItem value="SAR">SAR</SelectItem>
+                    <SelectItem value="USD - US Dollar">USD</SelectItem>
+                    <SelectItem value="INR - Indian Rupee">INR</SelectItem>
                   </SelectContent>
                 </Select>
               )}
             />
           </div>
-
           {/* Save Button */}
           <div>
             <Button type="submit" className="w-full">

@@ -1,3 +1,4 @@
+"use client";
 import { DAYS_SHORT, TBooking } from "../../bookings/page";
 import {
   startOfMonth,

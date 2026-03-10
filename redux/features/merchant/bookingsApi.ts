@@ -1,7 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
 
-
-
 export const bookingsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     //  All Bookings
@@ -22,7 +20,8 @@ export const bookingsApi = baseApi.injectEndpoints({
       providesTags: ["Bookings"],
     }),
 
-   createBooking: builder.mutation({
+    // Create Booking 
+    createBooking: builder.mutation({
       query: (body) => ({
         url: "/admin/booking/store",
         method: "POST",
@@ -31,35 +30,33 @@ export const bookingsApi = baseApi.injectEndpoints({
       invalidatesTags: ["Bookings"],
     }),
 
-    // Create Service
-    // createService: builder.mutation<any, FormData>({
-    //       query: (formData) => ({
-    //         url: "/admin/service/store",
-    //         method: "POST",
-    //         body: formData,
-    //       }),
-    //       invalidatesTags: ["Bookings"],
-    //     }),
+    // Get Booking Schedule by service & date
+    getBookingSchedule: builder.query({
+      query: ({ service_id, date }: { service_id: number; date: string }) => ({
+        url: `/admin/booking/schedule`,
+        method: "GET",
+        params: { service_id, date },
+      }),
+      providesTags: ["Bookings"],
+    }),
 
-    // Update Service
-    // updateServiceById: builder.mutation<any, { id: string; formData: FormData }>({
-    //   query: ({ id, formData }) => ({
-    //     url: `/admin/service/update/${id}`,
-    //     method: "POST",
-    //     body: formData,
-    //   }),
-    //   invalidatesTags: ["Bookings"],
-    // }),
-
-    // Delete Service
-//     deleteServiceById: builder.mutation<any, string>({
-//     query: (id) => ({
-//       url: `/admin/service/delete/${id}`,
-//       method: "DELETE",
-//     }),
-//     invalidatesTags: ["Bookings"],
-//   }),
-    
+    // Get Booking Staff Schedule by service, date & time
+    getBookingStaffSchedule: builder.query({
+      query: ({
+        service_id,
+        date,
+        time,
+      }: {
+        service_id: number;
+        date: string;
+        time: string;
+      }) => ({
+        url: `/admin/booking/staff`,
+        method: "GET",
+        params: { service_id, date, time },
+      }),
+      providesTags: ["Bookings"],
+    }),
   }),
 });
 
@@ -67,6 +64,6 @@ export const {
   useAllBookingsQuery,
   useGetBookingByIdQuery,
   useCreateBookingMutation,
-//   useUpdateServiceByIdMutation,
-//   useDeleteServiceByIdMutation
+  useGetBookingScheduleQuery,
+  useGetBookingStaffScheduleQuery,
 } = bookingsApi;

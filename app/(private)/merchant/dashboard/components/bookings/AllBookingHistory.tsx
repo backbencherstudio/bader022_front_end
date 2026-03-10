@@ -223,7 +223,7 @@ export function RecentTransactionsCard({
                       colSpan={7}
                       className="py-10 text-center text-muted-foreground"
                     >
-                      No transactions.
+                      No Booking Found.
                     </TableCell>
                   </TableRow>
                 )}
@@ -265,7 +265,7 @@ export function RecentTransactionsCard({
 export default function AllBookingHistory({ data }: any) {
   const [page, setPage] = useState(1);
 
-  console.log(data?.data);
+  // console.log(data?.data);
 
   const {
     data: paginationData,

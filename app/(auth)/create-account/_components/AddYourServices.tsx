@@ -1,6 +1,5 @@
 "use client";
 
-import ServiceModal from "@/app/(private)/merchant/dashboard/components/modal/ServiceModal";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -203,13 +202,13 @@ export default function AddYourServices({
         </button>
       </div>
 
-      <ServiceModal
+      {/* <ServiceModal
         open={openModal}
         mode={mode}
         initialData={selectedService}
         onClose={() => setOpenModal(false)}
         onSubmitService={handleSubmitService}
-      />
+      /> */}
     </div>
   );
 }

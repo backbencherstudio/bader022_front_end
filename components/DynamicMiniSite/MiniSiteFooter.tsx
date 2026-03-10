@@ -1,12 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import {
+  FaEnvelope,
+  FaFacebookF,
+  FaInstagram,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaTwitter,
+} from "react-icons/fa";
 
 interface FooterData {
   branding_logo?: string;
   website_name?: string;
   footer_des?: string;
   turn_off?: boolean;
+  contact_email?: string;
+  country?: string;
+  home_url?: string;
+  home?: string;
+  about?: string;
+  why_choose_us?: string;
+  service?: string;
+  contact_info?: string;
+  contact_us?: string;
+  privacy_policy?: string;
+  terms_condition?: string;
+  contact_us_url?: string;
+  terms_condition_url?: string;
+  privacy_policy_url?: string;
 }
 
 interface MiniSiteFooterProps {
@@ -60,45 +82,109 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                              hover:bg-orange-500 hover:text-white
                              transition"
               >
-                {/* {Icon} */}Icon
+                {/* {Icon} */}
+                <FaFacebookF />
+              </Link>
+              <Link
+                href={"item.url"}
+                target="_blank"
+                className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                             flex items-center justify-center
+                             hover:bg-orange-500 hover:text-white
+                             transition"
+              >
+                {/* {Icon} */}
+                <FaInstagram />
+              </Link>
+              <Link
+                href={"item.url"}
+                target="_blank"
+                className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                             flex items-center justify-center
+                             hover:bg-orange-500 hover:text-white
+                             transition"
+              >
+                {/* {Icon} */}
+                <FaTwitter />
               </Link>
             </div>
           </div>
 
           {/* Navigation */}
           {/* <FooterLinks title="Navigation" links={footerData.navigation} /> */}
+          <div>
+            <h3 className="font-semibold mb-4">Navigation</h3>
+            <ul className="space-y-3 text-sm opacity-90">
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.home}
+                </Link>
+              </li>
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.about}
+                </Link>
+              </li>
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.why_choose_us}
+                </Link>
+              </li>
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.service}
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* Support */}
           {/* <FooterLinks title="Support" links={footerData.support} /> */}
+          <div>
+            <h3 className="font-semibold mb-4">Support</h3>
+            <ul className="space-y-3 text-sm opacity-90">
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.contact_us}
+                </Link>
+              </li>
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.privacy_policy}
+                </Link>
+              </li>
+              <li>
+                <Link href={""} className="hover:text-orange-500 transition">
+                  {data.global_setting.terms_condition}
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* Contact */}
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
             <ul className="space-y-4 text-sm opacity-90">
-              {/* {footerData.contact?.phone && (
-                <li className="flex items-center gap-3">
-                  <IconCircle>
-                    <FaPhoneAlt />
-                  </IconCircle>
-                  {footerData.contact.phone}
-                </li>
-              )} */}
-              {/* {footerData.contact?.email && (
-                <li className="flex items-center gap-3">
-                  <IconCircle>
-                    <FaEnvelope />
-                  </IconCircle>
-                  {footerData.contact.email}
-                </li>
-              )} */}
-              {/* {footerData.contact?.address && (
-                <li className="flex items-center gap-3">
-                  <IconCircle>
-                    <FaMapMarkerAlt />
-                  </IconCircle>
-                  {footerData.contact.address}
-                </li>
-              )} */}
+              <li className="flex items-center gap-3">
+                <IconCircle>
+                  <FaPhoneAlt />
+                </IconCircle>
+                {data.global_setting.contact_info}
+              </li>
+
+              <li className="flex items-center gap-3">
+                <IconCircle>
+                  <FaEnvelope />
+                </IconCircle>
+                {data.global_setting.contact_email}
+              </li>
+
+              <li className="flex items-center gap-3">
+                <IconCircle>
+                  <FaMapMarkerAlt />
+                </IconCircle>
+                {data.global_setting.country}
+              </li>
             </ul>
           </div>
         </div>
@@ -112,6 +198,17 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           Rights Reserved {data.global_setting.turn_off && "| Powered By Bokli"}
         </div>
       </footer>
+    </div>
+  );
+}
+
+function IconCircle({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                    flex items-center justify-center opacity-80"
+    >
+      {children}
     </div>
   );
 }

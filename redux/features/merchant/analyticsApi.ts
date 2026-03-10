@@ -8,6 +8,7 @@ export const analyticsApi = baseApi.injectEndpoints({
         url: "/admin/analytics/index",
         method: "GET",
       }),
+       providesTags: ["Analytics"],
     }),
     //  monthlyRevenue
     monthlyRevenue: builder.query({
@@ -15,6 +16,7 @@ export const analyticsApi = baseApi.injectEndpoints({
         url: "/admin/analytics/monthlyrevenue",
         method: "GET",
       }),
+      providesTags: ["Analytics"],
     }),
     //  weeklyRevenue
     weeklyRevenue: builder.query({
@@ -22,6 +24,7 @@ export const analyticsApi = baseApi.injectEndpoints({
         url: "/admin/analytics/weeklyrevenue",
         method: "GET",
       }),
+      providesTags: ["Analytics"],
     }),
     //  newReturn
     newReturn: builder.query({
@@ -29,6 +32,7 @@ export const analyticsApi = baseApi.injectEndpoints({
         url: "/admin/analytics/newreturn",
         method: "GET",
       }),
+      providesTags: ["Analytics"],
     }),
     //  staffPerformance
     staffPerformance: builder.query({
@@ -36,6 +40,7 @@ export const analyticsApi = baseApi.injectEndpoints({
         url: "/admin/analytics/staffPerformance",
         method: "GET",
       }),
+      providesTags: ["Analytics"],
     }),
 
   }),

@@ -14,16 +14,17 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { useGetPersonaltHistoryQuery } from "@/redux/features/admin/adminApi";
+import { getImageUrl } from "@/helper/formatImage";
+import { useAppSelector } from "@/redux/hooks";
+import Link from "next/link";
 
 export default function TopBar() {
-  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+  // const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 
-  const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
+  // const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
+  const { user } = useAppSelector((state) => state.auth);
+  // console.log(user);
 
-const ProfileImage =
-  data?.data?.image && imageBaseUrl
-    ? `${imageBaseUrl}/${data.data.image}`
-    : "/default-avatar.png";
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { setTheme } = useTheme();
 
@@ -78,26 +79,25 @@ const ProfileImage =
         <Dialog>
           <DialogTrigger asChild>
             <button
-              className="flex items-center cursor-pointer gap-2 p-3, pl-0 rounded-full transition"
+              className="flex items-center cursor-pointer gap-2 p-3, pl-0 pr-3 rounded-full transition "
               aria-label="Profile"
             >
               <Image
-                key={ProfileImage}
-                src={ProfileImage}
-                alt="User"
+                src={getImageUrl(user?.name) || "/images/user1.png"}
+                alt={user?.name || "User"}
                 width={48}
                 height={48}
-                unoptimized
+                unoptimized={true}
                 className="w-12 h-12 rounded-full object-cover"
               />
-              <div className="text-left sm:block hidden">
+              {/* <div className="text-left sm:block hidden">
                 <p className="text-black dark:text-white font-semibold">
-                  {data?.data?.name}
+                  {user?.name}
                 </p>
                 <p className="text-black dark:text-gray-300 text-[12px]">
-                  {data?.data?.email}
+                  {user?.email}
                 </p>
-              </div>
+              </div> */}
             </button>
           </DialogTrigger>
 
@@ -105,7 +105,7 @@ const ProfileImage =
           <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center mt-6">
-                <h2 className="text-black dark:text-white">Carlota Monteiro</h2>
+                <h2 className="text-black dark:text-white"> {user?.name}</h2>
                 <button className="text-[14px] block sm:hidden text-white rounded-full py-2 px-4 cursor-pointer transition underline">
                   Visit Website
                 </button>
@@ -117,26 +117,30 @@ const ProfileImage =
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-4">
                 <Image
-                  src={"/images/user1.png"}
+                  src={getImageUrl(user?.name) || "/images/user1.png"}
                   alt="User"
                   width={48}
                   height={48}
+                  unoptimized={true}
                   className="w-12 h-12 rounded-full"
                 />
                 <div className="text-left">
                   <p className="text-black dark:text-white font-semibold">
-                    Carlota Monteiro
+                    {user?.name}
                   </p>
                   <p className="text-black dark:text-gray-300 text-[12px]">
-                    calota22@gmail.com
+                    {user?.email}
                   </p>
                 </div>
               </div>
               <div>
-                <button className="flex items-center gap-2 text-blue-500 dark:text-blue-300">
+                <Link
+                  href={"/merchant/dashboard/settings"}
+                  className="flex items-center gap-2 text-blue-500 dark:text-blue-300 cursor-pointer"
+                >
                   <Edit className="w-4 h-4" />
                   Edit Profile
-                </button>
+                </Link>
               </div>
             </div>
           </DialogContent>

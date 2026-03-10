@@ -21,12 +21,14 @@ export default function page() {
   const {
     heroData,
     aboutData,
-    ctaBannerData,
     whyChooseUsData,
+    servicesPreviewData,
+    ctaBannerData,
     brandingData,
     colorSystemData,
     layoutSettingsData,
     typographyData,
+    footerData,
   } = useLandingPage();
 
   const [createMiniSite, { isLoading: isCreateMiniSiteLoading }] =
@@ -58,6 +60,18 @@ export default function page() {
       formData.append("cta_subtitle", ctaBannerData.ctaBannerSubTitle);
       formData.append("cta_overlay_color", ctaBannerData.ctaBannerOverlayColor);
       formData.append("cta_padding", ctaBannerData.padding as any);
+      formData.append(
+        "service_title",
+        servicesPreviewData.servicesPreviewTitle,
+      );
+      formData.append(
+        "service_description",
+        servicesPreviewData.servicesPreviewSubtitle,
+      );
+      formData.append(
+        "service_background",
+        servicesPreviewData.backgroundColor,
+      );
 
       formData.append("section_title", whyChooseUsData.whyChooseUsTitle);
       formData.append("section_subtitle", whyChooseUsData.whyChooseUsSubtitle);
@@ -87,10 +101,28 @@ export default function page() {
       formData.append("branding_logo", brandingData.logo);
       formData.append("logo_position", brandingData.position || "");
       formData.append("logo_size", String(brandingData.logoSize) || "");
-      formData.append("branding_logo", brandingData.logo);
+      formData.append("primary_color", colorSystemData.primaryColor || "");
+      formData.append("secondary_color", colorSystemData.secondaryColor || "");
+      formData.append("heading_color", colorSystemData.headingColor || "");
+      formData.append("button_color", colorSystemData.buttonColor || "");
+      formData.append("body_text_color", colorSystemData.bodyTextColor || "");
+      formData.append("typography_h1", String(typographyData.h1Size) || "");
+      formData.append("typography_h2", String(typographyData.h1Size) || "");
+      formData.append("body_text_size", String(typographyData.bodySize) || "");
+      formData.append("font_family", typographyData.fontFamily || "");
+      formData.append(
+        "layoutSettingsData",
+        String(layoutSettingsData.sectionSpacing) || "",
+      );
+      formData.append("website_name", footerData.footerTitle);
+      formData.append("branding_logo", footerData.footerLogo);
+      formData.append("footer_des", footerData.footerSubTitle);
+      formData.append("footer_background", footerData.footerBackground);
+      formData.append("footer_text_color", footerData.footerTextColor);
 
-      // await createMiniSite(formData).unwrap();
+      await createMiniSite(formData).unwrap();
       await createWhyChooseUs(formData).unwrap();
+      await createGlobalSetting(formData).unwrap();
 
       toast.success("MiniSite created successfully");
     } catch (error: any) {

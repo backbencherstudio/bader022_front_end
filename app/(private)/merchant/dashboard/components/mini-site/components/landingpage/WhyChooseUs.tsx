@@ -45,10 +45,9 @@ export default function WhyChooseUs() {
 
         {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {whyChooseUsData.featureCards.map((item, index) => (
-            <div key={index}>
-              <div
-                className="
+          <div>
+            <div
+              className="
                     flex flex-col items-center text-center gap-4
                     rounded-xl p-6
                     bg-white 
@@ -56,36 +55,113 @@ export default function WhyChooseUs() {
                     shadow-sm hover:shadow-md
                     transition
                   "
-              >
-                {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
-                  <Image
-                    src={item.image || "/icons/Icon.png"}
-                    alt={item.title || "Feature icon"}
-                    width={28}
-                    height={28}
-                  />
-                </div>
+            >
+              {/* Icon */}
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src={whyChooseUsData.cardImageOne || "/icons/Icon.png"}
+                  alt={whyChooseUsData.whyChooseUsTitleOne || "Feature icon"}
+                  width={28}
+                  height={28}
+                />
+              </div>
 
-                {/* Content */}
-                <div>
-                  <h3
-                    style={{ color: colorSystemData.headingColor }}
-                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
-                  >
-                    {item.title}
-                  </h3>
+              {/* Content */}
+              <div>
+                <h3
+                  style={{ color: colorSystemData.headingColor }}
+                  className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                >
+                  {whyChooseUsData.whyChooseUsTitleOne}
+                </h3>
 
-                  <p
-                    style={{ color: colorSystemData.bodyTextColor }}
-                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
-                  >
-                    {item.description}
-                  </p>
-                </div>
+                <p
+                  style={{ color: colorSystemData.bodyTextColor }}
+                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                >
+                  {whyChooseUsData.whyChooseUsDescriptionOne}
+                </p>
               </div>
             </div>
-          ))}
+          </div>
+          <div>
+            <div
+              className="
+                    flex flex-col items-center text-center gap-4
+                    rounded-xl p-6
+                    bg-white 
+                    border border-gray-200 dark:border-gray-700
+                    shadow-sm hover:shadow-md
+                    transition
+                  "
+            >
+              {/* Icon */}
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src={whyChooseUsData.cardImageTwo || "/icons/Icon.png"}
+                  alt={whyChooseUsData.whyChooseUsTitleTwo || "Feature icon"}
+                  width={28}
+                  height={28}
+                />
+              </div>
+
+              {/* Content */}
+              <div>
+                <h3
+                  style={{ color: colorSystemData.headingColor }}
+                  className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                >
+                  {whyChooseUsData.whyChooseUsTitleTwo}
+                </h3>
+
+                <p
+                  style={{ color: colorSystemData.bodyTextColor }}
+                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                >
+                  {whyChooseUsData.whyChooseUsDescriptionTwo}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              className="
+                    flex flex-col items-center text-center gap-4
+                    rounded-xl p-6
+                    bg-white 
+                    border border-gray-200 dark:border-gray-700
+                    shadow-sm hover:shadow-md
+                    transition
+                  "
+            >
+              {/* Icon */}
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src={whyChooseUsData.cardImageThree || "/icons/Icon.png"}
+                  alt={whyChooseUsData.whyChooseUsTitleThree || "Feature icon"}
+                  width={28}
+                  height={28}
+                />
+              </div>
+
+              {/* Content */}
+              <div>
+                <h3
+                  style={{ color: colorSystemData.headingColor }}
+                  className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                >
+                  {whyChooseUsData.whyChooseUsTitleThree}
+                </h3>
+
+                <p
+                  style={{ color: colorSystemData.bodyTextColor }}
+                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                >
+                  {whyChooseUsData.whyChooseUsDescriptionThree}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -67,8 +67,10 @@ export const MERCHANT_FOOTER_ITEMS = [
     href: "/",
     icon: (p: any) => <LogOut {...p} />,
     iconClassName: "text-red-400",
+    action: "logout",
   },
 ];
+
 export default function DashboardLayout({
   children,
 }: {
@@ -88,7 +90,7 @@ export default function DashboardLayout({
       <div>
         <AppSidebar
           navItems={MERCHANT_NAV_ITEMS}
-          footerItems={MERCHANT_FOOTER_ITEMS}
+          footerItems={MERCHANT_FOOTER_ITEMS as any}
           logoSrc="/images/image 259.png"
           title="Car wash"
           badgeText="premium"

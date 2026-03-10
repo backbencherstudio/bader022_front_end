@@ -76,7 +76,7 @@ export default function AllBookingHistory() {
 
   const { data, isLoading, error } = useDashboardbookingHistoryQuery({
     page,
-    service_name: serviceName, // service name filter
+    service_name: serviceName, 
   }) as { data?: DashboardBookingResponse; isLoading: boolean; error?: unknown };
 
   const bookings = data?.data ?? [];
@@ -85,13 +85,14 @@ export default function AllBookingHistory() {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 
+  console.log(bookings)
   const mappedBookings: TransactionRow[] = bookings.map((b) => ({
     bookingID: String(b.booking_id),
     customerName: b.customer,
     customerAvatar: b.customer_image ?? undefined,
-    service: b.service_name,
-    amountLabel: b.amount,
-    dateLabel: b.booking_date,
+    service: b?.service_name,
+    amountLabel: b?.amount,
+    dateLabel: b?.booking_date,
     status: b.status.toLowerCase() as TxStatus,
   }));
 

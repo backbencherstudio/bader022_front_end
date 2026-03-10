@@ -12,43 +12,43 @@ export default function FooterSettings() {
   const { footerData, setFooterData } = useLandingPage();
 
   // Update URL only for social link
-  const updateSocialLink = (index: number, value: string) => {
-    const updated = [...footerData.socialLinks];
-    updated[index] = { ...updated[index], url: value };
-    setFooterData({ ...footerData, socialLinks: updated });
-  };
+  // const updateSocialLink = (index: number, value: string) => {
+  //   const updated = [...footerData.socialLinks];
+  //   updated[index] = { ...updated[index], url: value };
+  //   setFooterData({ ...footerData, socialLinks: updated });
+  // };
 
-  const removeSocialLink = (index: number) => {
-    const updated = footerData.socialLinks.filter((_, i) => i !== index);
-    setFooterData({ ...footerData, socialLinks: updated });
-  };
+  // const removeSocialLink = (index: number) => {
+  //   const updated = footerData.socialLinks.filter((_, i) => i !== index);
+  //   setFooterData({ ...footerData, socialLinks: updated });
+  // };
 
-  const updateContact = (field: keyof ContactInfo, value: string) => {
-    setFooterData({
-      ...footerData,
-      contact: { ...footerData.contact, [field]: value },
-    });
-  };
+  // const updateContact = (field: keyof ContactInfo, value: string) => {
+  //   setFooterData({
+  //     ...footerData,
+  //     contact: { ...footerData.contact, [field]: value },
+  //   });
+  // };
 
-  const updateNavigation = (
-    index: number,
-    field: "label" | "href",
-    value: string
-  ) => {
-    const updated = [...footerData.navigation];
-    updated[index] = { ...updated[index], [field]: value };
-    setFooterData({ ...footerData, navigation: updated });
-  };
+  // const updateNavigation = (
+  //   index: number,
+  //   field: "label" | "href",
+  //   value: string
+  // ) => {
+  //   const updated = [...footerData.navigation];
+  //   updated[index] = { ...updated[index], [field]: value };
+  //   setFooterData({ ...footerData, navigation: updated });
+  // };
 
-  const updateSupport = (
-    index: number,
-    field: "label" | "href",
-    value: string
-  ) => {
-    const updated = [...footerData.support];
-    updated[index] = { ...updated[index], [field]: value };
-    setFooterData({ ...footerData, support: updated });
-  };
+  // const updateSupport = (
+  //   index: number,
+  //   field: "label" | "href",
+  //   value: string
+  // ) => {
+  //   const updated = [...footerData.support];
+  //   updated[index] = { ...updated[index], [field]: value };
+  //   setFooterData({ ...footerData, support: updated });
+  // };
 
   return (
     <section className="flex flex-col gap-4 text-balance p-2">
@@ -166,80 +166,88 @@ export default function FooterSettings() {
       {/* Social Links */}
       <div className="space-y-3">
         <h3 className="text-sm font-medium">Social Links</h3>
-        {footerData.socialLinks.map((item, index) => (
-          <div
-            key={index}
-            className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center"
-          >
-            <input
-              type="text"
-              value={item.icon}
-              readOnly
-              className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
-            />
-            <input
-              type="url"
-              placeholder="URL"
-              value={item.url}
-              onChange={(e) => updateSocialLink(index, e.target.value)}
-              className="w-full p-3 rounded-md border dark:bg-gray-700"
-            />
-            {footerData.socialLinks.length > 1 && (
-              <button
-                onClick={() => removeSocialLink(index)}
-                className="text-red-500 text-sm px-2"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        ))}
+        <div className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center">
+          <input
+            type="text"
+            value="Facebook"
+            readOnly
+            className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
+          />
+          <input
+            type="url"
+            placeholder="URL"
+            value={footerData.facebookUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                facebookUrl: e.target.value,
+              })
+            }
+            className="w-full p-3 rounded-md border dark:bg-gray-700"
+          />
+        </div>
       </div>
 
       {/* Navigation Links */}
       <div className="space-y-3">
         <h3 className="text-sm font-medium">Navigation Links</h3>
-        {footerData.navigation.map((nav, i) => (
-          <div key={i} className="grid grid-cols-2 gap-2 items-center">
-            <input
-              type="text"
-              placeholder="Label"
-              value={nav.label}
-              onChange={(e) => updateNavigation(i, "label", e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700"
-            />
-            <input
-              type="text"
-              placeholder="Href"
-              value={nav.href}
-              onChange={(e) => updateNavigation(i, "href", e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700"
-            />
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-2 items-center">
+          <input
+            type="text"
+            placeholder="About"
+            value={footerData.about}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                about: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder="Url"
+            value={footerData.aboutUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                aboutUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+        </div>
       </div>
 
       {/* Support Links */}
       <div className="space-y-3">
         <h3 className="text-sm font-medium">Support Links</h3>
-        {footerData.support.map((sup, i) => (
-          <div key={i} className="grid grid-cols-2 gap-2 items-center">
-            <input
-              type="text"
-              placeholder="Label"
-              value={sup.label}
-              onChange={(e) => updateSupport(i, "label", e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700"
-            />
-            <input
-              type="text"
-              placeholder="Href"
-              value={sup.href}
-              onChange={(e) => updateSupport(i, "href", e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700"
-            />
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-2 items-center">
+          <input
+            type="text"
+            value="Contact Us"
+            readOnly
+            // onChange={(e) =>
+            //   setFooterData({
+            //     ...footerData,
+            //     contact_us: e.target.value,
+            //   })
+            // }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder="Url"
+            value={footerData.contactUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                contactUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+        </div>
       </div>
 
       {/* Contact */}
@@ -248,22 +256,37 @@ export default function FooterSettings() {
         <input
           type="text"
           placeholder="Phone"
-          value={footerData.contact.phone}
-          onChange={(e) => updateContact("phone", e.target.value)}
+          value={footerData.contact_info}
+          onChange={(e) =>
+            setFooterData({
+              ...footerData,
+              contact_info: e.target.value,
+            })
+          }
           className="w-full p-2 border rounded dark:bg-gray-700"
         />
         <input
           type="email"
           placeholder="Email"
-          value={footerData.contact.email}
-          onChange={(e) => updateContact("email", e.target.value)}
+          value={footerData.contact_email}
+          onChange={(e) =>
+            setFooterData({
+              ...footerData,
+              contact_email: e.target.value,
+            })
+          }
           className="w-full p-2 border rounded dark:bg-gray-700"
         />
         <input
           type="text"
           placeholder="Address"
-          value={footerData.contact.address}
-          onChange={(e) => updateContact("address", e.target.value)}
+          value={footerData.address}
+          onChange={(e) =>
+            setFooterData({
+              ...footerData,
+              address: e.target.value,
+            })
+          }
           className="w-full p-2 border rounded dark:bg-gray-700"
         />
       </div>

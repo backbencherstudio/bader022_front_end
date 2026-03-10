@@ -4,6 +4,7 @@ import { cubicBezier, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useI18n } from "@/components/provider/I18nProvider";
+import Link from "next/link";
 
 /* ------------------ Variants ------------------ */
 
@@ -81,21 +82,27 @@ export default function Banner() {
             variants={itemVariants}
             className="mt-6 flex flex-col sm:flex-row justify-center gap-3"
           >
-            <div className="h-12 px-4 bg-linear-to-l justify-center from-indigo-500 to-blue-500 text-white rounded-md flex items-center font-medium cursor-pointer">
+            <Link
+              href={"/create-account"}
+              className="h-12 px-4 bg-linear-to-l justify-center from-indigo-500 to-blue-500 text-white rounded-md flex items-center font-medium cursor-pointer"
+            >
               {t("Banner.primaryBtn")}
               <ArrowUpRight
                 size={18}
                 className={`ml-1 ${locale === "ar" ? "rotate-270" : ""}`}
               />
-            </div>
+            </Link>
 
-            <div className="h-12 px-4 text-black border-[1.8px] justify-center cursor-pointer border-blue-500 rounded-md flex items-center font-medium">
+            <Link
+              href={"/create-account"}
+              className="h-12 px-4 text-black border-[1.8px] justify-center cursor-pointer border-blue-500 rounded-md flex items-center font-medium"
+            >
               {t("Banner.secondaryBtn")}
               <ArrowUpRight
                 size={18}
                 className={`ml-1 ${locale === "ar" ? "rotate-270" : ""}`}
               />
-            </div>
+            </Link>
           </motion.div>
         </div>
 

@@ -8,6 +8,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/mer-dashboard/index",
         method: "GET",
       }),
+      providesTags: ["Dashboard"],
     }),
     //  monthlyRevenue
     monthlyRevenue: builder.query({
@@ -15,6 +16,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/mer-dashboard/revenue",
         method: "GET",
       }),
+      providesTags: ["Dashboard"],
     }),
     //  weeklyRevenue
     weeklyRevenue: builder.query({
@@ -22,6 +24,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/mer-dashboard/weeklyrevenue",
         method: "GET",
       }),
+      providesTags: ["Dashboard"],
     }),
     //  todayAppointment
     todayAppointment: builder.query({
@@ -29,6 +32,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/mer-dashboard/today",
         method: "GET",
       }),
+      providesTags: ["Dashboard"],
     }),
   }),
 });

@@ -269,13 +269,13 @@ export default function AddYourTeam({ data, onNext, onPrevious }: Step3Props) {
         </button>
       </div>
 
-      <StaffModal
+      {/* <StaffModal
         open={openModal}
         mode={mode}
         initialData={selectedStaff}
         onClose={() => setOpenModal(false)}
         onSubmitStaff={handleSubmitStaff}
-      />
+      /> */}
     </div>
   );
 }

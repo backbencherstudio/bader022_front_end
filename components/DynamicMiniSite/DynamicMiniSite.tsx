@@ -19,6 +19,12 @@ interface MiniSiteData {
   about_title?: string;
   service_title?: string;
   service_description?: string;
+  hero_overlay_color?: string;
+  cta_overlay_color?: string;
+  cta_subtitle?: string;
+  cta_title?: string;
+  cta_padding?: string;
+  service_background?: string;
 }
 
 interface WhyChooseUs {
@@ -52,7 +58,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log(data);
+  console.log(data.minisite.about_padding);
   return (
     <div>
       {/* hero section  */}
@@ -75,34 +81,34 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: data.minisite.overlayColor,
+              backgroundColor: data.minisite.hero_overlay_color,
               opacity: 0.05,
             }}
           />
 
           {/* Logo */}
-          {/* <div
-                                className={`
+          <div
+            className={`
                         absolute top-4 md:top-6 z-20 w-full px-4 md:px-10
                         flex
                         ${
-                            brandingData.position === "center"
-                                ? "justify-center"
-                                : brandingData.position === "right"
-                                    ? "justify-end"
-                                    : "justify-start"
+                          data.global_setting.logo_position === "center"
+                            ? "justify-center"
+                            : data.global_setting.logo_position === "right"
+                              ? "justify-end"
+                              : "justify-start"
                         }
                     `}
-                            >
-                                <Image
-                                    src={brandingData.logo || "/images/image 259.png"}
-                                    alt="Logo"
-                                    width={brandingData.logoSize || 120}
-                                    height={brandingData.logoSize || 40}
-                                    className="object-contain"
-                                    priority
-                                />
-                            </div> */}
+          >
+            <Image
+              src={data.global_setting.logo || "/images/image 259.png"}
+              alt="Logo"
+              width={data.global_setting.logo_size || 120}
+              height={data.global_setting.logo_size || 40}
+              className="object-contain"
+              priority
+            />
+          </div>
 
           {/* Content */}
           <div
@@ -120,12 +126,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         "
             >
               <h3
-                style={
-                  {
-                    // color: colorSystemData.headingColor,
-                    // fontSize: typographyData.h2Size,
-                  }
-                }
+                style={{
+                  color: data.global_setting.heading_color,
+                  fontSize: data.global_setting.typography_h2,
+                }}
                 className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
               >
                 {data.minisite.hero_subtitle}
@@ -133,23 +137,19 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
               <h1
                 className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
-                style={
-                  {
-                    // fontSize: typographyData.h1Size,
-                    // color: colorSystemData.headingColor,
-                  }
-                }
+                style={{
+                  color: data.global_setting.heading_color,
+                  fontSize: data.global_setting.typography_h1,
+                }}
               >
                 {data.minisite.hero_title}
               </h1>
 
               <p
-                style={
-                  {
-                    // color: colorSystemData.bodyTextColor,
-                    // fontSize: typographyData.bodySize,
-                  }
-                }
+                style={{
+                  color: data.global_setting.body_text_color,
+                  fontSize: data.global_setting.body_text_size,
+                }}
                 className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
               >
                 {data.minisite.hero_description}
@@ -159,11 +159,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <Link href={"/user/bookings/add-booking"}>
                   <button
-                    style={
-                      {
-                        // backgroundColor: colorSystemData.primaryColor,
-                      }
-                    }
+                    style={{
+                      backgroundColor: data.global_setting.primary_color,
+                    }}
                     className="px-6 py-3 rounded-md text-white font-medium transition
                                  hover:opacity-90 cursor-pointer"
                   >
@@ -172,12 +170,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 </Link>
                 <Link href={"/user/bookings/add-booking"}>
                   <button
-                    style={
-                      {
-                        // color: colorSystemData.secondaryColor,
-                        // borderColor: colorSystemData.secondaryColor,
-                      }
-                    }
+                    style={{
+                      color: data.global_setting.secondary_color,
+                      borderColor: data.global_setting.secondary_color,
+                    }}
                     className="px-6 py-3 rounded-md border font-medium transition
                                  hover:text-white cursor-pointer"
                   >
@@ -193,10 +189,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
       {/* About Section  */}
       <section
         style={{
-          //   backgroundColor: data.minisite.background_color || "transparent",
-          //   marginTop: layoutSettingsData.sectionSpacing,
-          paddingTop: data.minisite.about_padding,
-          paddingBottom: data.minisite.about_padding,
+          backgroundColor: data.minisite.background_color || "transparent",
+          // marginTop: data.global_setting.section_spacing,
+          paddingTop: `${data.minisite.about_padding}px`,
+          paddingBottom: `${data.minisite.about_padding}px`,
         }}
         className="transition-colors dark:bg-gray-900"
       >
@@ -219,35 +215,29 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             {/* Content */}
             <div>
               <h3
-                style={
-                  {
-                    //   color: colorSystemData.headingColor,
-                    //   fontSize: typographyData.h1Size,
-                  }
-                }
+                style={{
+                  color: data.global_setting.heading_color,
+                  fontSize: data.global_setting.typography_h1,
+                }}
                 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white"
               >
                 {data.minisite.about_title}
               </h3>
 
               <p
-                style={
-                  {
-                    //   color: colorSystemData.bodyTextColor,
-                    //   fontSize: typographyData.bodySize,
-                  }
-                }
+                style={{
+                  color: data.global_setting.body_text_color,
+                  fontSize: data.global_setting.body_text_size,
+                }}
                 className="text-gray-600 dark:text-gray-300 mb-6"
               >
                 {data.minisite.about_description}
               </p>
 
               <button
-                style={
-                  {
-                    //   backgroundColor: colorSystemData.primaryColor,
-                  }
-                }
+                style={{
+                  backgroundColor: data.global_setting.primary_color,
+                }}
                 className="
                       px-6 py-3 rounded-md
                       text-white font-medium
@@ -263,23 +253,19 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
       {/* WhyChooseUs Section  */}
       <section
-        style={
-          {
-            //   backgroundColor: whyChooseUsData.backgroundColor,
-            //   marginTop: layoutSettingsData.sectionSpacing,
-          }
-        }
+        style={{
+          backgroundColor: data.minisite.background_color || "transparent",
+          // marginTop: data.global_setting.section_spacing,
+        }}
         className="py-16 transition-colors"
       >
         <div className="container mx-auto px-4">
           {/* Title */}
           <h3
-            style={
-              {
-                //   color: colorSystemData.headingColor,
-                //   fontSize: typographyData.h1Size,
-              }
-            }
+            style={{
+              color: data.global_setting.heading_color,
+              fontSize: data.global_setting.typography_h1,
+            }}
             className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white"
           >
             {data.why_choose_us.section_title}
@@ -287,12 +273,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
           {/* Subtitle */}
           <p
-            style={
-              {
-                //   color: colorSystemData.bodyTextColor,
-                //   fontSize: typographyData.bodySize,
-              }
-            }
+            style={{
+              color: data.global_setting.body_text_color,
+              fontSize: data.global_setting.body_text_size,
+            }}
             className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12"
           >
             {data.why_choose_us.section_subtitle}
@@ -326,17 +310,99 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 {/* Content */}
                 <div>
                   <h3
-                    //   style={{ color: colorSystemData.headingColor }}
+                    style={{ color: data.global_setting.heading_color }}
                     className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                   >
                     {data.why_choose_us.feature_one_title}
                   </h3>
 
                   <p
-                    //   style={{ color: colorSystemData.bodyTextColor }}
+                    style={{ color: data.global_setting.body_text_color }}
                     className="text-gray-600 dark:text-gray-300 line-clamp-2"
                   >
                     {data.why_choose_us.feature_one_des}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="
+                          flex flex-col items-center text-center gap-4
+                          rounded-xl p-6
+                          bg-white 
+                          border border-gray-200 dark:border-gray-700
+                          shadow-sm hover:shadow-md
+                          transition
+                        "
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                  <Image
+                    src={
+                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                    }
+                    alt={data.why_choose_us.feature_one_des || "Feature icon"}
+                    width={28}
+                    height={28}
+                  />
+                </div>
+
+                {/* Content */}
+                <div>
+                  <h3
+                    style={{ color: data.global_setting.heading_color }}
+                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                  >
+                    {data.why_choose_us.feature_two_title}
+                  </h3>
+
+                  <p
+                    style={{ color: data.global_setting.body_text_color }}
+                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  >
+                    {data.why_choose_us.feature_two_des}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="
+                          flex flex-col items-center text-center gap-4
+                          rounded-xl p-6
+                          bg-white 
+                          border border-gray-200 dark:border-gray-700
+                          shadow-sm hover:shadow-md
+                          transition
+                        "
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                  <Image
+                    src={
+                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                    }
+                    alt={data.why_choose_us.feature_two_des || "Feature icon"}
+                    width={28}
+                    height={28}
+                  />
+                </div>
+
+                {/* Content */}
+                <div>
+                  <h3
+                    style={{ color: data.global_setting.heading_color }}
+                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                  >
+                    {data.why_choose_us.feature_three_title}
+                  </h3>
+
+                  <p
+                    style={{ color: data.global_setting.body_text_color }}
+                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  >
+                    {data.why_choose_us.feature_three_des}
                   </p>
                 </div>
               </div>
@@ -348,12 +414,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
       {/* Services Section  */}
 
       <section
-        style={
-          {
-            //   backgroundColor: servicesPreviewData.backgroundColor,
-            //   marginTop: layoutSettingsData.sectionSpacing,
-          }
-        }
+        style={{
+          backgroundColor: data.minisite.service_background,
+          //   marginTop: layoutSettingsData.sectionSpacing,
+        }}
         className="py-16 transition-colors"
       >
         <div className="container mx-auto px-4">
@@ -361,12 +425,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           <div className="flex flex-col gap-4 mb-12">
             {/* Title */}
             <h3
-              style={
-                {
-                  // color: colorSystemData.headingColor,
-                  // fontSize: typographyData.h1Size,
-                }
-              }
+              style={{
+                color: data.global_setting.heading_color,
+                fontSize: data.global_setting.typography_h1,
+              }}
               className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
             >
               {data.minisite.service_title}
@@ -375,22 +437,18 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             <div className="flex flex-col md:flex-row gap-4 md:justify-between">
               {/* Subtitle */}
               <p
-                style={
-                  {
-                    //   color: colorSystemData.bodyTextColor,
-                    //   fontSize: typographyData.bodySize,
-                  }
-                }
-                className="text-gray-600 dark:text-gray-300 max-w-xl"
+                style={{
+                  color: data.global_setting.body_text_color,
+                  fontSize: data.global_setting.body_text_size,
+                }}
+                className="text-gray-600 dark:text-gray-300 max-w-4xl"
               >
                 {data.minisite.service_description}
               </p>
               <button
-                style={
-                  {
-                    //   backgroundColor: colorSystemData.primaryColor,
-                  }
-                }
+                style={{
+                  backgroundColor: data.global_setting.primary_color,
+                }}
                 className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
               >
@@ -454,11 +512,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     {/* Button */}
                     <Link href={"/user/bookings/add-booking"}>
                       <button
-                        style={
-                          {
-                            //   backgroundColor: colorSystemData.primaryColor,
-                          }
-                        }
+                        style={{
+                          backgroundColor: data.global_setting.primary_color,
+                        }}
                         className="
                 px-5 py-2 rounded-md
                 text-white font-medium
@@ -500,11 +556,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
           {/* Content */}
           <div
-            style={
-              {
-                //   padding: ctaBannerData.padding,
-              }
-            }
+            style={{
+              padding: data.minisite.cta_padding,
+            }}
             className="
             relative z-10
             flex flex-col items-center justify-center
@@ -515,36 +569,30 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           "
           >
             <h2
-              style={
-                {
-                  // color: colorSystemData.headingColor,
-                  // fontSize: typographyData.h1Size,
-                }
-              }
+              style={{
+                color: data.global_setting.heading_color,
+                fontSize: data.global_setting.typography_h1,
+              }}
               className="text-xl sm:text-2xl md:text-3xl font-bold"
             >
-              {/* {ctaBannerData.ctaBannerTitle} */} ctaBannerTitle
+              {data.minisite.cta_title}
             </h2>
 
             <p
-              style={
-                {
-                  //   color: colorSystemData.bodyTextColor,
-                  //   fontSize: typographyData.bodySize,
-                }
-              }
+              style={{
+                color: data.global_setting.body_text_color,
+                fontSize: data.global_setting.body_text_size,
+              }}
               className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
             >
-              {/* {ctaBannerData.ctaBannerSubTitle}*/}ctaBannerSubTitle
+              {data.minisite.cta_subtitle}
             </p>
 
             <Link href={"/user/bookings/add-booking"}>
               <button
-                style={
-                  {
-                    //   backgroundColor: colorSystemData.primaryColor,
-                  }
-                }
+                style={{
+                  backgroundColor: data.global_setting.primary_color,
+                }}
                 className="
               px-6 py-3 rounded-md
               text-white font-medium            
@@ -560,7 +608,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         <div
           className="absolute inset-0"
           style={{
-            // backgroundColor: ctaBannerData.ctaBannerOverlayColor,
+            backgroundColor: data.minisite.cta_overlay_color,
             opacity: 0.6,
           }}
         />

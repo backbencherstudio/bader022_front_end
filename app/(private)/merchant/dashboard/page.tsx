@@ -9,7 +9,13 @@ import {
 } from "./components/dashboard/TodaysAppoinments";
 import RecentTransactions from "./components/dashboard/RecentTransactions";
 import QuickActionsComponents from "./components/dashboard/QuickActions";
-import { useMerchantDashboardOverviewQuery, useMonthlyRevenueQuery, useTodayAppointmentQuery, useWeeklyRevenueQuery } from "@/redux/features/merchant/dashboardApi";
+import {
+  useMerchantDashboardOverviewQuery,
+  useMonthlyRevenueQuery,
+  useTodayAppointmentQuery,
+  useWeeklyRevenueQuery,
+} from "@/redux/features/merchant/dashboardApi";
+import { useMerchantTransactionOverviewQuery } from "@/redux/features/merchant/transactionApi";
 
 export type TData = {
   name: string;
@@ -70,9 +76,21 @@ export default function DashboardPage() {
               value={dashboardOverview?.revenue}
               Icon={SaudiRiyal}
             />
-            <StatCard title="Total Bookings" value={dashboardOverview?.total_bookings} Icon={Calendar} />
-            <StatCard title="Appointments" value={dashboardOverview?.appointments} Icon={TrendingUp} />
-            <StatCard title="Total Customers" value={dashboardOverview?.Total_Customers} Icon={Users} />
+            <StatCard
+              title="Total Bookings"
+              value={dashboardOverview?.total_bookings}
+              Icon={Calendar}
+            />
+            <StatCard
+              title="Appointments"
+              value={dashboardOverview?.appointments}
+              Icon={TrendingUp}
+            />
+            <StatCard
+              title="Total Customers"
+              value={dashboardOverview?.Total_Customers}
+              Icon={Users}
+            />
           </div>
           <div
             className="rounded-xl border dark:bg-gray-800
@@ -112,10 +130,16 @@ export default function DashboardPage() {
                   </TabsList>
                 </div>
                 <TabsContent value="weekly">
-                  <RevenueChart data={weeklyRevenueData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart
+                    data={weeklyRevenueData}
+                    CurrencyIcon={SaudiRiyal}
+                  />
                 </TabsContent>
                 <TabsContent value="monthly">
-                  <RevenueChart data={monthlyRevenueData} CurrencyIcon={SaudiRiyal} />
+                  <RevenueChart
+                    data={monthlyRevenueData}
+                    CurrencyIcon={SaudiRiyal}
+                  />
                 </TabsContent>
               </Tabs>
             </div>
@@ -125,7 +149,7 @@ export default function DashboardPage() {
       </div>
       <div className="pt-4 flex xl:flex-row flex-col justify-between md:pt-5 gap-4 lg:pt-6">
         <div className="w-full">
-          <RecentTransactions />
+          <RecentTransactions data={transactionOverview?.data} />
         </div>
         <div className="w-full xl:w-1/4">
           <QuickActionsComponents />

@@ -54,6 +54,7 @@ export const MERCHANT_FOOTER_ITEMS = [
     href: "/",
     icon: (p: any) => <LogOut {...p} />,
     iconClassName: "text-red-400",
+    action: "logout",
   },
 ];
 export default function DashboardLayout({
@@ -85,7 +86,7 @@ export default function DashboardLayout({
       <div>
         <AppSidebar
           navItems={MERCHANT_NAV_ITEMS}
-          footerItems={MERCHANT_FOOTER_ITEMS}
+          footerItems={MERCHANT_FOOTER_ITEMS as any}
           logoSrc="/images/image 259.png"
           // title="Car wash"
           // badgeText="premium"
@@ -95,7 +96,7 @@ export default function DashboardLayout({
           className={`pl-0 pt-17 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
         >
           <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9] dark:bg-gray-900 ">
-            <Toaster className="top-0 items-center"/>
+            <Toaster className="top-0 items-center" />
             {children}
           </div>
         </div>

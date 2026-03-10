@@ -1,4 +1,5 @@
 "use client";
+
 import { useI18n } from "@/components/provider/I18nProvider";
 import AppSidebar from "../components/AppSidebar";
 import TopBar from "../merchant/dashboard/components/shared/Topbar";
@@ -9,6 +10,9 @@ import {
   Calendar,
   User,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { authorize } from "@/lib/auth";
 
 const USER_NAV_ITEMS = [
   {
@@ -41,30 +45,54 @@ export const USER_FOOTER_ITEMS = [
     iconClassName: "text-red-400",
   },
 ];
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const { locale } = useI18n();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      const auth = authorize(["User"]);
+      if (!auth.authorized) {
+        router.push("/");
+      }
+    }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
-      <div>
-        <AppSidebar
-          navItems={USER_NAV_ITEMS}
-          footerItems={USER_FOOTER_ITEMS}
-          logoSrc="/images/image 259.png"
-          title="Car wash"
-          badgeText="premium"
-        />
-        <TopBar />
-        <div
-          className={`pl-0 pt-17 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
-        >
-          <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9] dark:bg-gray-900">
-            {children}
-          </div>
+      <AppSidebar
+        navItems={USER_NAV_ITEMS}
+        footerItems={USER_FOOTER_ITEMS}
+        logoSrc="/images/image 259.png"
+        // title="Car wash"
+        badgeText="premium"
+      />
+
+      <TopBar />
+
+      <div
+        className={`pl-0 pt-17 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
+      >
+        <div className="border-r min-h-[calc(100vh-70px)] p-4 md:p-5 lg:p-6 relative border-[#E9E9E9] dark:bg-gray-900">
+          {children}
         </div>
       </div>
     </div>

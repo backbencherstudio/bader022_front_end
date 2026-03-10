@@ -15,6 +15,14 @@ type StepperProps = {
   currentStep: number; // 1-based
 };
 
+type Service = {
+  id: number;
+  name: string;
+  duration: number;
+  price: number;
+  description?: string;
+};
+
 function Stepper({ steps, currentStep }: StepperProps) {
   return (
     <div className="w-full flex items-center gap-3 sm:gap-4">
@@ -30,12 +38,12 @@ function Stepper({ steps, currentStep }: StepperProps) {
               className={cn(
                 "h-5 w-5 p-5 rounded-full flex items-center justify-center text-sm font-semibold border",
                 isCompleted &&
-                  "bg-[#111827] dark:bg-green-800 border-[#111827] dark:border-[#016630] text-white",
+                "bg-[#111827] dark:bg-green-800 border-[#111827] dark:border-[#016630] text-white",
                 isActive &&
-                  "bg-white border-[#111827] dark:border-[#016630] text-[#111827]",
+                "bg-white border-[#111827] dark:border-[#016630] text-[#111827]",
                 !isCompleted &&
-                  !isActive &&
-                  "bg-[#F4F6F8] border-border text-[#637381]"
+                !isActive &&
+                "bg-[#F4F6F8] border-border text-[#637381]"
               )}
             >
               {isCompleted ? <Check className="h-5 w-5" /> : stepNumber}
@@ -59,7 +67,7 @@ function Stepper({ steps, currentStep }: StepperProps) {
   );
 }
 
-export default function BookingCheckoutStepper({}) {
+export default function BookingCheckoutStepper({ }) {
   const steps = [
     "Select Services",
     "Select Date",
@@ -67,11 +75,16 @@ export default function BookingCheckoutStepper({}) {
     "Card Info",
     "Confirmed",
   ];
+
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
-  const [selectedService, setSelectedService] = useState(""); 
-    const { data, isLoading, error } = useBookingServiceQuery(selectedService)
-    console.log(data?.data[0].id, "lkasdjfl;asdjflasjlfd=========1111111111111111111111111")
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedTime, setSelectedTime] = useState<string>("");
+  const { data, isLoading, error } = useBookingServiceQuery(
+    selectedService?.name || ""
+  );
+  
+// ========================step-2=
   return (
     <div className="w-full mx-auto py-8">
       {/* Stepper */}
@@ -82,33 +95,53 @@ export default function BookingCheckoutStepper({}) {
         {currentStep === 0 && "Select Services"}
         {currentStep === 1 && "Select Date Time & Staff"}
         {currentStep === 2 && "Payment Information"}
-        {currentStep === 3 && "Card Information"}
         {currentStep === 4 && "Booking Confirmed!"}
+        {currentStep === 3 && "Card Information"}
+      
       </h2>
 
       {/* Step Content */}
       <div className="mt-6">
-        {currentStep === 0 && <Step0 selectedService={selectedService} setSelectedService={setSelectedService} data={data}  onNext={() => setCurrentStep(1)} />}
-        {currentStep === 1 && (
+        {currentStep === 0 && (
+          <Step0
+            selectedService={selectedService}
+            setSelectedService={setSelectedService}
+            data={data}
+            onNext={() => setCurrentStep(1)}
+          />
+        )}
+
+        {currentStep === 1 && selectedService && (
           <Step1
             onNext={() => setCurrentStep(2)}
             onBack={() => setCurrentStep(0)}
-            serviceId={data?.data[0].id}
+            serviceId={selectedService.id}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
           />
         )}
-        {currentStep === 2 && (
+
+        {currentStep === 2 && selectedService && (
           <Step2
-            onNext={() => setCurrentStep(3)}
-            onBack={() => setCurrentStep(1)}
+            onNext={() => setCurrentStep(4)}
+            onBack={() => setCurrentStep(2)}
+            service={selectedService}
+            date={selectedDate}
+            time={selectedTime}
           />
         )}
-        {currentStep === 3 && (
+       {currentStep === 4 && <Step4 />}
+        {currentStep === 3 && selectedService && (
           <Step3
             onNext={() => setCurrentStep(4)}
             onBack={() => setCurrentStep(2)}
+            // service={selectedService}
           />
         )}
-        {currentStep === 4 && <Step4 />}
+
+       
       </div>
     </div>
   );

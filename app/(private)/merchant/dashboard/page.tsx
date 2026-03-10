@@ -51,12 +51,12 @@ export default function DashboardPage() {
     const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
     const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
     const { data: todayAppointmentData, isLoading: isTodayAppointmentLoading, isError: isTodayAppointmentError } = useTodayAppointmentQuery({});
-    console.log('====================================');
-    console.log({dashboardOverview});
-    console.log('====================================');
-    console.log('====================================');
-    console.log({todayAppointmentData});
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log({dashboardOverview});
+    // console.log('====================================');
+    // console.log('====================================');
+    // console.log({todayAppointmentData});
+    // console.log('====================================');
   return (
     <div>
       {/* Charts */}

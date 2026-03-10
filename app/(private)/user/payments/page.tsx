@@ -78,11 +78,15 @@ export function RecentTransactionsCard({
   pagination,
   page,
   setPage,
+  search,
+  setSearch
 }: {
   rows: TransactionRow[];
   pagination: any;
   page: number;
   setPage: (page: number) => void;
+  search: string;
+  setSearch: (value: string) => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -94,16 +98,26 @@ export function RecentTransactionsCard({
         <div className="mb-6 flex flex-wrap items-center gap-4">
           <div className="mr-2 text-base font-semibold">Filter by:</div>
 
-          <Select>
+          <Select
+            value={search || "all"}
+            onValueChange={(value) => {
+              const newValue = value === "all" ? "" : value;
+              console.log("selected:", newValue);
+
+              setSearch(newValue);
+              setPage(1);
+            }}
+          >
+            
             <SelectTrigger>
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="cancel">Cancel</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirm">Confirmed</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
+              <SelectItem value="failed">Failed</SelectItem>
+              <SelectItem value="due">Due</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -197,13 +211,7 @@ export function RecentTransactionsCard({
           </div>
         </div>
 
-        {/* <div className="flex gap-2">
-          <Button variant="outline">&lt;</Button>
-          <Button variant="outline">1</Button>
-          <Button variant="outline">2</Button>
-          <Button variant="outline">3</Button>
-          <Button variant="outline">&gt;</Button>
-        </div> */}
+    
       </div>
     </Card>
   );
@@ -212,10 +220,14 @@ export function RecentTransactionsCard({
 export default function UserPaymentHistory() {
 
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading, error } = useUserPaymentHistoryQuery({
+    search,
     page,
+   
   });
+  console.log("search:", search);
 
   const pagination = data?.pagination;
   const bookings: Booking[] = data?.data ?? [];
@@ -223,25 +235,32 @@ export default function UserPaymentHistory() {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 
-  const mappedBookings: TransactionRow[] = bookings.map((b) => ({
-    bookingID: Number(b.tx_id.replace(/\D/g, "")).toString(),
-    customerName: b.merchant_name,
-    customerAvatar: b.business_logo ?? undefined,
-    service: b.business_name,
-    amountLabel: b.amount,
-    dateLabel: b.date,
-    status:
-      b.status.toLowerCase() === "paid"
-        ? "paid"
-        : (b.status.toLowerCase() as TxStatus),
-  }));
+  const mappedBookings: TransactionRow[] = bookings.map((b) => {
+    const status = b.status.toLowerCase();
 
+    const safeStatus: TxStatus =
+      status === "paid" || status === "failed" || status === "due"
+        ? status
+        : "due";
+
+    return {
+      bookingID: Number(b.tx_id.replace(/\D/g, "")).toString(),
+      customerName: b.merchant_name,
+      customerAvatar: b.business_logo ?? undefined,
+      service: b.business_name,
+      amountLabel: b.amount,
+      dateLabel: b.date,
+      status: safeStatus,
+    };
+  });
   return (
     <RecentTransactionsCard
       rows={mappedBookings}
       pagination={pagination}
       page={page}
       setPage={setPage}
+      search={search}
+      setSearch={setSearch}
     />
   );
 }

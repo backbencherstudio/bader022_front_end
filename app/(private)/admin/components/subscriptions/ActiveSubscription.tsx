@@ -28,12 +28,14 @@ import { EditSubscriptionModal } from "./EditSubscriptionModal";
 import { ViewSubscriptionModal } from "./ViewSubscriptionModal";
 import { useState } from "react";
 
+// Type for package status
 type PackageStatus =
   | "active"
   | "pending"
   | "expired"
   | "cancelled";
 
+// Type for API data item
 type SubscriptionApiItem = {
   id: number;
   status: "active" | "pending";
@@ -52,12 +54,13 @@ type SubscriptionApiItem = {
     id: number;
     name: string;
     price: string;
-    package:string;
-    remaining_days:number;
-    plan_type:string;
+    package: string;
+    remaining_days: number;
+    plan_type: string;
   };
 };
 
+// Type for subscription row
 type SubscriptionRow = {
   id: string;
   businessName: string;
@@ -65,17 +68,19 @@ type SubscriptionRow = {
   packageName: string;
   plan_type: string;
   price: string;
-  start_date: string;
-  expiry_date: string;
-  remaining_days: number;
+  start_date: string; // Changed to snake case
+  expiry_date: string; // Changed to snake case
+  remaining_days: number; // Changed to snake case
   status: PackageStatus;
 };
 
+// Function to get initials of a name
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
 
+// Component to display the subscription status as a pill
 function StatusPill({ status }: { status: PackageStatus }) {
   const statusConfig = {
     active: {
@@ -112,20 +117,21 @@ function StatusPill({ status }: { status: PackageStatus }) {
 }
 
 export default function Packages() {
+  // State for filters
   const [filters, setFilters] = useState({
-    search: "",     
+    search: "",
     package: "",
     status: "",
     plan_type: "",
+    tab: "active_subscription", // To track the active tab
   });
+
+  // Fetch subscriptions data based on filters
   const { data, isLoading, isError } = useGetSubscriptionsQuery(filters);
 
+  // Map API data to row data for table
   const rows: SubscriptionRow[] = (data?.data || []).map(
     (item: SubscriptionApiItem) => {
-      const now = new Date();
-      const endDate = new Date(item.expiry_date);
-
-     
       return {
         id: String(item.id),
         businessName: item.user.business_name || item.user.name,
@@ -133,18 +139,29 @@ export default function Packages() {
         packageName: item.plan.package,
         planType: item.plan.plan_type,
         price: item.plan.price,
-        startDate: new Date(item.start_date).toLocaleDateString(),
-        expiryDate: new Date(item.expiry_date).toLocaleDateString(),
-        remainingDays: `${item.remaining_days} days`,
+        start_date: new Date(item.start_date).toLocaleDateString(),
+        expiry_date: new Date(item.expiry_date).toLocaleDateString(),
+        remaining_days: item.remaining_days,
         status: item?.status,
       };
     }
   );
 
+  const handleTabChange = (tab: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      tab: tab,
+      package: tab === "active_subscription" ? prev.package : "", // Clear package filter when switching tabs
+    }));
+  };
+
   return (
     <div>
       <div className="w-full rounded-xl p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-        <Tabs defaultValue="active_subscription">
+        <Tabs
+          defaultValue="active_subscription"
+          onValueChange={handleTabChange}
+        >
           <div className="flex justify-between">
             <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <TabsTrigger
@@ -163,95 +180,98 @@ export default function Packages() {
           </div>
 
           <div className="mb-6 flex flex-wrap justify-between items-center gap-4 pt-5">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-              <Input className="pl-8"
-                placeholder="Search anything"
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    package: e.target.value,
-                  }))
-                }
-              />
-            </div>
+            
 
-            <div className="flex flex-wrap items-center gap-2">
-              <Select
-                onValueChange={(value) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    package: value === "all" ? "" : value,
-                  }))
-                }
-              >
-                <SelectTrigger className="h-12 w-44">
-                  <SelectValue placeholder="Package" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="Basic">Basic</SelectItem>
-                  <SelectItem value="Premium">Premium</SelectItem>
-                </SelectContent>
-              </Select>
+            {filters.tab === "active_subscription" && (
+               <div className="flex justify-between w-full">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    className="pl-8"
+                    placeholder="Search anything"
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        search: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
 
-              <Select
-                onValueChange={(value) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    plan_type: value === "all" ? "" : value,
-                  }))
-                }
-              >
-                <SelectTrigger className="h-12 w-44">
-                  <SelectValue placeholder="Plan Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                  <SelectItem value="annual">Annual</SelectItem>
-                </SelectContent>
-              </Select>
+                  <Select
+                    onValueChange={(value) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        package: value === "all" ? "" : value,
+                      }))
+                    }
+                  >
+                    <SelectTrigger className="h-12 w-44">
+                      <SelectValue placeholder="Package" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="Basic">Basic</SelectItem>
+                      <SelectItem value="Premium">Premium</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-              <Select>
-                {/* <SelectTrigger className="h-12 w-44">
-                  <SelectValue placeholder="Subscription Status" />
-                </SelectTrigger> */}
-                <Select
-                  onValueChange={(value) =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      status: value === "all" ? "" : value,
-                    }))
-                  }
-                >
-                  <SelectTrigger className="h-12 w-44">
-                    <SelectValue placeholder="Subscription Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Select>
+                  <Select
+                    onValueChange={(value) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        plan_type: value === "all" ? "" : value,
+                      }))
+                    }
+                  >
+                    <SelectTrigger className="h-12 w-44">
+                      <SelectValue placeholder="Plan Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="monthly">Monthly</SelectItem>
+                      <SelectItem value="annual">Annual</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-              <Button
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() =>
-                  setFilters({
-                  search:"",
-                    package: "",
-                    status: "",
-                    plan_type: "",
-                  })
-                }
-              >
-                <RefreshCcw />
-              </Button>
-            </div>
+                  <Select
+                    onValueChange={(value) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        status: value === "all" ? "" : value,
+                      }))
+                    }
+                  >
+                    <SelectTrigger className="h-12 w-44">
+                      <SelectValue placeholder="Subscription Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setFilters({
+                        search: "",
+                        package: "",
+                        status: "",
+                        plan_type: "",
+                        tab: "active_subscription", // reset tab filter
+                      })
+                    }
+                  >
+                    <RefreshCcw />
+                  </Button>
+                </div>
+               </div>
+            )}
           </div>
 
           <TabsContent value="packages">
@@ -310,9 +330,9 @@ export default function Packages() {
                           </div>
                         </TableCell>
 
-                        <TableCell>{r.startDate}</TableCell>
-                        <TableCell>{r.expiryDate}</TableCell>
-                        <TableCell>{r.remainingDays}</TableCell>
+                        <TableCell>{r.start_date}</TableCell>
+                        <TableCell>{r.expiry_date}</TableCell>
+                        <TableCell>{r.remaining_days}</TableCell>
 
                         <TableCell>
                           <StatusPill status={r.status} />
@@ -323,7 +343,6 @@ export default function Packages() {
                             <ViewSubscriptionModal id={r.id} />
                             <EditSubscriptionModal id={r.id} businessName={r.businessName} />
                           </div>
-                          
                         </TableCell>
                       </TableRow>
                     ))}

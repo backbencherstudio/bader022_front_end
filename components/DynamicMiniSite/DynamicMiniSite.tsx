@@ -46,6 +46,7 @@ interface Service {
   image?: string;
   service_name?: string;
   description?: string;
+  duration?: string;
 }
 
 interface DynamicMiniSiteProps {
@@ -58,7 +59,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log(data.minisite.about_padding);
+  console.log(data.services);
   return (
     <div>
       {/* hero section  */}
@@ -492,7 +493,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         <span>{item.service_name}</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">
-                        25
+                        {item.duration}
                       </span>
                     </div>
 

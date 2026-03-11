@@ -53,7 +53,7 @@ export default function Footer() {
           </p>
 
           {/* Social Links */}
-          <div className="flex gap-3 mt-6">
+          {/* <div className="flex gap-3 mt-6">
             {footerData.socialLinks?.map((item, index) => {
               if (!item.url) return null;
 
@@ -74,43 +74,121 @@ export default function Footer() {
                 </Link>
               );
             })}
+          </div> */}
+
+          {/* Social Links */}
+          <div className="flex gap-3 mt-6">
+            <Link
+              href={`${footerData.facebookUrl}`}
+              target="_blank"
+              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                             flex items-center justify-center
+                             hover:bg-orange-500 hover:text-white
+                             transition"
+            >
+              {/* {Icon} */}
+              <FaFacebookF />
+            </Link>
+            <Link
+              href={`${footerData.instagramUrl}`}
+              target="_blank"
+              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                             flex items-center justify-center
+                             hover:bg-orange-500 hover:text-white
+                             transition"
+            >
+              {/* {Icon} */}
+              <FaInstagram />
+            </Link>
+            <Link
+              href={`${footerData.twitterUrl}`}
+              target="_blank"
+              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+                             flex items-center justify-center
+                             hover:bg-orange-500 hover:text-white
+                             transition"
+            >
+              {/* {Icon} */}
+              <FaTwitter />
+            </Link>
           </div>
         </div>
 
         {/* Navigation */}
-        <FooterLinks title="Navigation" links={footerData.navigation} />
+        {/* <FooterLinks title="Navigation" links={footerData.navigation} /> */}
+        <div>
+          <h3 className="font-semibold mb-4">Navigation</h3>
+          <ul className="space-y-3 text-sm opacity-90">
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.home}
+              </Link>
+            </li>
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.about}
+              </Link>
+            </li>
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.why_choose_us}
+              </Link>
+            </li>
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.service}
+              </Link>
+            </li>
+          </ul>
+        </div>
 
         {/* Support */}
-        <FooterLinks title="Support" links={footerData.support} />
+        {/* <FooterLinks title="Support" links={footerData.support} /> */}
+        <div>
+          <h3 className="font-semibold mb-4">Support</h3>
+          <ul className="space-y-3 text-sm opacity-90">
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.contact_us}
+              </Link>
+            </li>
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.privacy_policy}
+              </Link>
+            </li>
+            <li>
+              <Link href={""} className="hover:text-orange-500 transition">
+                {footerData.terms_condition}
+              </Link>
+            </li>
+          </ul>
+        </div>
 
         {/* Contact */}
         <div>
           <h3 className="font-semibold mb-4">Contact</h3>
           <ul className="space-y-4 text-sm opacity-90">
-            {footerData.contact?.phone && (
-              <li className="flex items-center gap-3">
-                <IconCircle>
-                  <FaPhoneAlt />
-                </IconCircle>
-                {footerData.contact.phone}
-              </li>
-            )}
-            {footerData.contact?.email && (
-              <li className="flex items-center gap-3">
-                <IconCircle>
-                  <FaEnvelope />
-                </IconCircle>
-                {footerData.contact.email}
-              </li>
-            )}
-            {footerData.contact?.address && (
-              <li className="flex items-center gap-3">
-                <IconCircle>
-                  <FaMapMarkerAlt />
-                </IconCircle>
-                {footerData.contact.address}
-              </li>
-            )}
+            <li className="flex items-center gap-3">
+              <IconCircle>
+                <FaPhoneAlt />
+              </IconCircle>
+              {footerData.contact_info}
+            </li>
+
+            <li className="flex items-center gap-3">
+              <IconCircle>
+                <FaEnvelope />
+              </IconCircle>
+              {footerData.contact_email}
+            </li>
+
+            <li className="flex items-center gap-3">
+              <IconCircle>
+                <FaMapMarkerAlt />
+              </IconCircle>
+              {footerData.address}
+            </li>
           </ul>
         </div>
       </div>

@@ -175,12 +175,52 @@ export default function FooterSettings() {
           />
           <input
             type="url"
-            placeholder="URL"
+            placeholder={footerData.facebookUrl}
             value={footerData.facebookUrl}
             onChange={(e) =>
               setFooterData({
                 ...footerData,
                 facebookUrl: e.target.value,
+              })
+            }
+            className="w-full p-3 rounded-md border dark:bg-gray-700"
+          />
+        </div>
+        <div className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center">
+          <input
+            type="text"
+            value="Instagram"
+            readOnly
+            className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
+          />
+          <input
+            type="url"
+            placeholder={footerData.instagramUrl}
+            value={footerData.instagramUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                instagramUrl: e.target.value,
+              })
+            }
+            className="w-full p-3 rounded-md border dark:bg-gray-700"
+          />
+        </div>
+        <div className="grid grid-cols-[1fr_1fr_auto] gap-3 items-center">
+          <input
+            type="text"
+            value="Twitter"
+            readOnly
+            className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
+          />
+          <input
+            type="url"
+            placeholder={footerData.twitterUrl}
+            value={footerData.twitterUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                twitterUrl: e.target.value,
               })
             }
             className="w-full p-3 rounded-md border dark:bg-gray-700"
@@ -192,6 +232,31 @@ export default function FooterSettings() {
       <div className="space-y-3">
         <h3 className="text-sm font-medium">Navigation Links</h3>
         <div className="grid grid-cols-2 gap-2 items-center">
+          <input
+            type="text"
+            placeholder="Home"
+            value={footerData.home}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                home: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder={footerData.homeUrl}
+            value={footerData.homeUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                homeUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+
           <input
             type="text"
             placeholder="About"
@@ -206,12 +271,62 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder="Url"
+            placeholder={footerData.aboutUrl}
             value={footerData.aboutUrl}
             onChange={(e) =>
               setFooterData({
                 ...footerData,
                 aboutUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+
+          <input
+            type="text"
+            placeholder="Why Choose Us"
+            value={footerData.why_choose_us}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                why_choose_us: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder={footerData.why_choose_usUrl}
+            value={footerData.why_choose_usUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                why_choose_usUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+
+          <input
+            type="text"
+            placeholder="Service"
+            value={footerData.service}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                service: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder={footerData.serviceUrl}
+            value={footerData.serviceUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                serviceUrl: e.target.value,
               })
             }
             className="w-full p-2 border rounded dark:bg-gray-700"
@@ -237,12 +352,48 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder="Url"
+            placeholder={footerData.contactUrl}
             value={footerData.contactUrl}
             onChange={(e) =>
               setFooterData({
                 ...footerData,
                 contactUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            value="Privacy Policy"
+            readOnly
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder={footerData.privacy_policyUrl}
+            value={footerData.privacy_policyUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                privacy_policyUrl: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            value="Terms & Conditions"
+            readOnly
+            className="w-full p-2 border rounded dark:bg-gray-700"
+          />
+          <input
+            type="text"
+            placeholder={footerData.terms_conditionUrl}
+            value={footerData.terms_conditionUrl}
+            onChange={(e) =>
+              setFooterData({
+                ...footerData,
+                terms_conditionUrl: e.target.value,
               })
             }
             className="w-full p-2 border rounded dark:bg-gray-700"

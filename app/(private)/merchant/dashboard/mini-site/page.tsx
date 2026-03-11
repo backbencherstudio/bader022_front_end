@@ -39,9 +39,7 @@ export default function page() {
     useCreateGlobalSettingMutation();
 
   const handleSubmit = async () => {
-    console.log("====================================");
-    console.log(brandingData);
-    console.log("====================================");
+    // console.log(brandingData);
 
     try {
       const formData = new FormData();

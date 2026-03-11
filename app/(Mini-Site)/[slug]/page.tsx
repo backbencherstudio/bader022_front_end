@@ -12,7 +12,7 @@ export default function DynamicMiniSitePage() {
   const params = useParams();
   const domain = params.slug;
 
-  console.log(domain);
+  // console.log(domain);
 
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 

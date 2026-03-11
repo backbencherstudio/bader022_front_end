@@ -1,6 +1,7 @@
 "use client";
 
 import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
+import { useAppSelector } from "@/redux/hooks";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 /* ---------- TYPES ---------- */
@@ -85,14 +86,13 @@ type LayoutSettingsData = {
   sectionSpacing?: number;
 };
 
-type SocialLinks = {
-  icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
-  url: string;
-};
+// type SocialLinks = {
+//   icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
+//   url: string;
+// };
 
-type NavigationLink = { label: string; href: string };
-type SupportLink = { label: string; href: string };
-type ContactInfo = { phone?: string; email?: string; address?: string };
+// type NavigationLink = { label: string; href: string };
+// type SupportLink = { label: string; href: string };
 
 type FooterData = {
   footerTitle: string;
@@ -122,12 +122,12 @@ type FooterData = {
   contact_info?: string;
   contact_email?: string;
   address?: string;
-  socialLinks: SocialLinks[];
-  navigation: NavigationLink[];
-  support: SupportLink[];
-  contact: ContactInfo;
+  // socialLinks: SocialLinks[];
+  // navigation: NavigationLink[];
+  // support: SupportLink[];
   showPoweredBy: boolean;
 };
+
 type LandingContextType = {
   heroData: HeroData;
   setHeroData: React.Dispatch<React.SetStateAction<HeroData>>;
@@ -174,31 +174,22 @@ export function LandingPageProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { data, isLoading, isError } = useMiniSiteByDomainNameQuery("habiba");
-
-  console.log(data);
+  const { user } = useAppSelector((state) => state.auth);
+  const domain = user?.website_domain;
+  const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
+  // console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
-    heroTitle: "Nourishing hair growth starts with a healthy",
-    heroSubtitle: "Care your hair",
-    heroDescription:
-      "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential",
-    primaryBtn: "Get Started",
-    secondaryBtn: "Book A Consultation",
+    heroTitle: "",
+    heroSubtitle: "",
+    heroDescription: "",
+    primaryBtn: "",
+    secondaryBtn: "",
     heroImage: "",
     imageLeft: true,
-    overlayColor: "#fff",
+    overlayColor: "",
     heroHeight: 48,
   });
-
-  // useEffect(() => {
-  //   if (data?.data?.minisite) {
-  //     setHeroData((prev) => ({
-  //       ...prev,
-  //       heroTitle: data.data.minisite.hero_title,
-  //     }));
-  //   }
-  // }, [data]);
 
   const [aboutData, setAboutData] = useState<AboutData>({
     aboutTitle: "Elevate Your Look with Bespoke Hair Care & Expert",
@@ -297,54 +288,124 @@ export function LandingPageProvider({
     footerLogo: "",
     footerBackground: "",
     footerTextColor: "",
-    facebookUrl: "",
+    facebookUrl: "www.facebook.com",
     twitterUrl: "",
     instagramUrl: "",
     linkedinUrl: "",
     pinterestUrl: "",
-    home: "",
+    home: "Home",
     homeUrl: "",
-    about: "",
+    about: "About",
     aboutUrl: "",
-    why_choose_us: "",
+    why_choose_us: "why_choose_us",
     why_choose_usUrl: "",
-    service: "",
+    service: "service",
     serviceUrl: "",
-    contact_us: "",
+    contact_us: "contact_us",
     contactUrl: "",
-    privacy_policy: "",
+    privacy_policy: "privacy_policy",
     privacy_policyUrl: "",
-    terms_condition: "",
+    terms_condition: "terms_condition",
     terms_conditionUrl: "",
-    contact_info: "",
-    contact_email: "",
-    address: "",
+    contact_info: "013456876294",
+    contact_email: "barik@example.com",
+    address: "UK",
 
-    socialLinks: [
-      { icon: "facebook", url: "www.facebook.com" },
-      { icon: "twitter", url: "www.twitter.com" },
-      { icon: "instagram", url: "www.instagram.com" },
-      { icon: "pinterest", url: "www.pinterest.com" },
-      { icon: "linkedin", url: "www.linkedin.com" },
-    ],
-    navigation: [
-      { label: "Home", href: "#" },
-      { label: "About Us", href: "#about" },
-      { label: "Why Choose Us", href: "#why-choose-us" },
-      { label: "Services", href: "#services" },
-    ],
-    support: [
-      { label: "Contact Us", href: "#contact-us" },
-      { label: "Privacy Policy", href: "#privace-policy" },
-      { label: "Terms & Conditions", href: "#terms-conditions" },
-    ],
-    contact: {
-      phone: "013456876294",
-      email: "barik@example.com",
-      address: "UK",
-    },
+    // socialLinks: [
+    //   { icon: "facebook", url: "www.facebook.com" },
+    //   { icon: "twitter", url: "www.twitter.com" },
+    //   { icon: "instagram", url: "www.instagram.com" },
+    //   { icon: "pinterest", url: "www.pinterest.com" },
+    //   { icon: "linkedin", url: "www.linkedin.com" },
+    // ],
+    // navigation: [
+    //   { label: "Home", href: "#" },
+    //   { label: "About Us", href: "#about" },
+    //   { label: "Why Choose Us", href: "#why-choose-us" },
+    //   { label: "Services", href: "#services" },
+    // ],
+    // support: [
+    //   { label: "Contact Us", href: "#contact-us" },
+    //   { label: "Privacy Policy", href: "#privace-policy" },
+    //   { label: "Terms & Conditions", href: "#terms-conditions" },
+    // ],
     showPoweredBy: true,
   });
+
+  useEffect(() => {
+    if (!data?.data) return;
+
+    const api = data.data;
+
+    /* HERO */
+    if (api.minisite) {
+      setHeroData((prev) => ({
+        ...prev,
+        heroTitle: api.minisite.hero_title || prev.heroTitle,
+        heroSubtitle: api.minisite.hero_subtitle || prev.heroSubtitle,
+        heroDescription: api.minisite.hero_description || prev.heroDescription,
+        primaryBtn: api.minisite.cta_button_text || prev.primaryBtn,
+        secondaryBtn: api.minisite.cta_button_text_two || prev.secondaryBtn,
+        // heroImage: api.minisite.hero_image || prev.heroImage,
+      }));
+    }
+
+    /* WHY CHOOSE US */
+    // if (api.why_choose_us) {
+    //   setWhyChooseUsData((prev) => ({
+    //     ...prev,
+    //     whyChooseUsTitle:
+    //       api.why_choose_us.section_title || prev.whyChooseUsTitle,
+    //     whyChooseUsSubtitle:
+    //       api.why_choose_us.section_subtitle || prev.whyChooseUsSubtitle,
+
+    //     cardImageOne: api.why_choose_us.feature_one_image,
+    //     whyChooseUsTitleOne: api.why_choose_us.feature_one_title || "",
+    //     whyChooseUsDescriptionOne:
+    //       api.why_choose_us.feature_one_description || "",
+
+    //     cardImageTwo: api.why_choose_us.feature_two_image,
+    //     whyChooseUsTitleTwo: api.why_choose_us.feature_two_title || "",
+    //     whyChooseUsDescriptionTwo:
+    //       api.why_choose_us.feature_two_description || "",
+
+    //     cardImageThree: api.why_choose_us.feature_three_image,
+    //     whyChooseUsTitleThree: api.why_choose_us.feature_three_title || "",
+    //     whyChooseUsDescriptionThree:
+    //       api.why_choose_us.feature_three_description || "",
+    //   }));
+    // }
+
+    /* SERVICES */
+    // if (api.services) {
+    //   setServicesPreviewData((prev) => ({
+    //     ...prev,
+    //     servicesCards: api.services.map((service: any) => ({
+    //       image: service.image || null,
+    //       title: service.name,
+    //       description: service.description,
+    //     })),
+    //   }));
+    // }
+
+    /* GLOBAL BRANDING */
+    // if (api.global_setting) {
+    //   setBrandingData((prev) => ({
+    //     ...prev,
+    //     logo: api.global_setting.branding_logo || "",
+    //     position: api.global_setting.logo_position || "center",
+    //     logoSize: Number(api.global_setting.logo_size) || 100,
+    //   }));
+    // }
+
+    /* FOOTER */
+    // setFooterData((prev) => ({
+    //   ...prev,
+    //   contact_email: api.email || prev.contact_email,
+    //   contact_info: api.phone || prev.contact_info,
+    //   address: api.address || prev.address,
+    // }));
+  }, [data]);
 
   return (
     <LandingPageContext.Provider

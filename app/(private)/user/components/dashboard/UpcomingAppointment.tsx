@@ -127,7 +127,7 @@ export default function UpcomingAppointment() {
             </div>
           </div>
 
-          <Button
+          <Button className="cursor-pointer"
             onClick={() => {
               if (booking?.booking_id) {
                 setSelectedBookingId(booking.booking_id);

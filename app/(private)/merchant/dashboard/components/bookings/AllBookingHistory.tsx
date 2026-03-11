@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import Pagination from "@/components/reusable/Pagination";
 import { useDashboardbookingHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
+import { Button } from "@/components/ui/button";
+import { BookingDetailsModal } from "./BookingViewModal";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
 
@@ -73,6 +75,7 @@ function StatusPill({ status }: { status: TxStatus }) {
 export default function AllBookingHistory() {
   const [page, setPage] = useState(1);
   const [serviceName, setServiceName] = useState("");
+  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
 
   const { data, isLoading, error } = useDashboardbookingHistoryQuery({
     page,
@@ -133,30 +136,23 @@ export default function AllBookingHistory() {
               {mappedBookings.map((r) => (
                 <TableRow key={r.bookingID}>
                   <TableCell>{r.bookingID}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-9 w-9">
-                        <AvatarImage src={r.customerAvatar} alt={r.customerName} />
-                        <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
-                      </Avatar>
-                      <span>{r.customerName}</span>
-                    </div>
-                  </TableCell>
+                  <TableCell>{r.customerName}</TableCell>
                   <TableCell>{r.service}</TableCell>
-                  <TableCell className="flex items-center gap-1"><SaudiRiyal size={14} />{r.amountLabel}</TableCell>
+                  <TableCell>{r.amountLabel}</TableCell>
                   <TableCell>{r.dateLabel}</TableCell>
                   <TableCell><StatusPill status={r.status} /></TableCell>
-                  <TableCell>View Details</TableCell>
 
-           
-
+                  <TableCell>
+                    <Button className="cursor-pointer"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setSelectedBooking(r.bookingID)} 
+                    >
+                      View Details
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
-              {mappedBookings.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center py-10">No bookings found.</TableCell>
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </div>
@@ -171,6 +167,13 @@ export default function AllBookingHistory() {
           </div>
         )}
       </CardContent>
+      {selectedBooking && (
+        <BookingDetailsModal
+          bookingId={selectedBooking}
+          open={!!selectedBooking}
+          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        />
+      )}
     </Card>
   );
 }

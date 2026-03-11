@@ -83,6 +83,7 @@ export default function BookingCheckoutStepper({ }) {
   const { data, isLoading, error } = useBookingServiceQuery(
     selectedService?.name || ""
   );
+  console.log(data);
   
 // ========================step-2=
   return (
@@ -126,7 +127,7 @@ export default function BookingCheckoutStepper({ }) {
         {currentStep === 2 && selectedService && (
           <Step2
             onNext={() => setCurrentStep(4)}
-            onBack={() => setCurrentStep(2)}
+            onBack={() => setCurrentStep(1)}
             service={selectedService}
             date={selectedDate}
             time={selectedTime}

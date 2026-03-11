@@ -23,6 +23,7 @@ export default function ProfileSection() {
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 
   const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
+  console.log
   const [updateInformation, { isLoading: isUpdating }] =
     useUpdateInformationMutation();
 
@@ -40,11 +41,11 @@ export default function ProfileSection() {
     },
   });
 
-  // Backend image full URL using helper
-  const profileImageUrl = data?.data?.image
-    ? getImageUrl(data.data.image) // Using helper function
-    : "/default-avatar.png";
 
+  const profileImageUrl = data?.data?.image
+    ? getImageUrl(data.data.image) 
+    : "/default-avatar.png";
+// console.log(profileImageUrl,"dfdfdfdefdfd");
   // Handle image change
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -102,7 +103,7 @@ export default function ProfileSection() {
               src={previewImage || profileImageUrl}
               alt="Profile"
               fill
-              unoptimized
+              unoptimized={true}
               className="rounded-full object-cover border"
             />
 

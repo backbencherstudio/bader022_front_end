@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { getImageUrl } from "@/helper/formatImage";
 import { FileClock } from "lucide-react";
+import Image from "next/image";
 
 interface Step0Props {
   selectedService: any;
@@ -45,6 +47,14 @@ export default function Step0({
           >
             <div className="relative h-48">
               {/* Image section */}
+              <Image
+                src={getImageUrl(service.image)}
+                alt={service.name}
+                height={300}
+                width={500}
+                unoptimized={true}
+                className=" w-full h-full object-center"
+              />
             </div>
 
             <div className="p-5 space-y-3">

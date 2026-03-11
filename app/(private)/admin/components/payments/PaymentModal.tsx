@@ -57,7 +57,7 @@ export function PaymentModal({
               dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10
               flex items-center justify-center cursor-pointer"
             >
-              <Download className="h-5 w-5 text-muted-foreground dark:text-white/70" />
+              {/* <Download className="h-5 w-5 text-muted-foreground dark:text-white/70" /> */}
             </button>
           </div>
         </DialogHeader>
@@ -181,13 +181,13 @@ export function PaymentModal({
 
               {/* Buttons */}
               <div className="grid grid-cols-2 gap-4 pt-2">
-                <Button className="h-12 rounded-xl bg-black text-white dark:bg-white dark:text-black">
+                <Button className="h-12 rounded-xl bg-black text-white dark:bg-white dark:text-black cursor-pointer">
                   Download Receipt
                 </Button>
 
                 <Button
                   variant="outline"
-                  className="h-12 rounded-xl dark:bg-white/5 dark:border-white/10"
+                  className="h-12 rounded-xl dark:bg-white/5 dark:border-white/10 cursor-pointer"
                 >
                   Send Email
                 </Button>

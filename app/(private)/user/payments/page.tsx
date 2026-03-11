@@ -225,7 +225,6 @@ export default function UserPaymentHistory() {
   const { data, isLoading, error } = useUserPaymentHistoryQuery({
     search,
     page,
-   
   });
   console.log("search:", search);
 

@@ -84,7 +84,7 @@ export default function DashboardLayout({
           navItems={USER_NAV_ITEMS}
           footerItems={USER_FOOTER_ITEMS as any}
           logoSrc="/images/image 259.png"
-          title="Car wash"
+          // title="Car wash"
           badgeText="premium"
         />
         <TopBar />

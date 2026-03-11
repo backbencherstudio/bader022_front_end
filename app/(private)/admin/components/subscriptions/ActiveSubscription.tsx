@@ -22,26 +22,19 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { useGetSubscriptionsQuery } from "@/redux/features/admin/adminApi";
-import { AddPlan } from "./AddPlan";
 import PackageTab from "./PackageTab";
 import { EditSubscriptionModal } from "./EditSubscriptionModal";
 import { ViewSubscriptionModal } from "./ViewSubscriptionModal";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-// Type for package status
-type PackageStatus =
-  | "active"
-  | "pending"
-  | "expired"
-  | "cancelled";
+type PackageStatus = "active" | "pending" | "expired" | "cancelled";
 
-// Type for API data item
 type SubscriptionApiItem = {
   id: number;
   status: "active" | "pending";
-  starts_at: string;
-  expiry_date: string;
   start_date: string;
+  expiry_date: string;
   remaining_days: number;
   user: {
     id: number;
@@ -55,53 +48,45 @@ type SubscriptionApiItem = {
     name: string;
     price: string;
     package: string;
-    remaining_days: number;
     plan_type: string;
   };
 };
 
-// Type for subscription row
 type SubscriptionRow = {
   id: string;
   businessName: string;
   businessAvatar?: string;
   packageName: string;
-  plan_type: string;
+  planType: string;
   price: string;
-  start_date: string; // Changed to snake case
-  expiry_date: string; // Changed to snake case
-  remaining_days: number; // Changed to snake case
+  startDate: string;
+  expiryDate: string;
+  remainingDays: string;
   status: PackageStatus;
 };
 
-// Function to get initials of a name
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
 
-// Component to display the subscription status as a pill
 function StatusPill({ status }: { status: PackageStatus }) {
   const statusConfig = {
     active: {
       label: "Active",
-      className:
-        "border-emerald-500 bg-emerald-50 text-emerald-700",
+      className: "border-emerald-500 bg-emerald-50 text-emerald-700",
     },
     pending: {
       label: "Pending",
-      className:
-        "border-amber-500 bg-amber-50 text-amber-700",
+      className: "border-amber-500 bg-amber-50 text-amber-700",
     },
     expired: {
       label: "Expired",
-      className:
-        "border-red-500 bg-red-50 text-red-600",
+      className: "border-red-500 bg-red-50 text-red-600",
     },
     cancelled: {
       label: "Cancelled",
-      className:
-        "border-gray-500 bg-gray-100 text-gray-600",
+      className: "border-gray-500 bg-gray-100 text-gray-600",
     },
   } as const;
 
@@ -117,51 +102,42 @@ function StatusPill({ status }: { status: PackageStatus }) {
 }
 
 export default function Packages() {
-  // State for filters
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const activeTab = searchParams.get("tab") || "packages";
+
+  const handleTabChange = (value: string) => {
+    router.push(`?tab=${value}`);
+  };
   const [filters, setFilters] = useState({
     search: "",
     package: "",
     status: "",
     plan_type: "",
-    tab: "active_subscription", // To track the active tab
   });
 
-  // Fetch subscriptions data based on filters
-  const { data, isLoading, isError } = useGetSubscriptionsQuery(filters);
+  const { data } = useGetSubscriptionsQuery(filters);
 
-  // Map API data to row data for table
   const rows: SubscriptionRow[] = (data?.data || []).map(
-    (item: SubscriptionApiItem) => {
-      return {
-        id: String(item.id),
-        businessName: item.user.business_name || item.user.name,
-        businessAvatar: item.user.business_logo || undefined,
-        packageName: item.plan.package,
-        planType: item.plan.plan_type,
-        price: item.plan.price,
-        start_date: new Date(item.start_date).toLocaleDateString(),
-        expiry_date: new Date(item.expiry_date).toLocaleDateString(),
-        remaining_days: item.remaining_days,
-        status: item?.status,
-      };
-    }
+    (item: SubscriptionApiItem) => ({
+      id: String(item.id),
+      businessName: item.user.business_name || item.user.name,
+      businessAvatar: item.user.business_logo || undefined,
+      packageName: item.plan.package,
+      planType: item.plan.plan_type,
+      price: item.plan.price,
+      startDate: new Date(item.start_date).toLocaleDateString(),
+      expiryDate: new Date(item.expiry_date).toLocaleDateString(),
+      remainingDays: `${item.remaining_days} days`,
+      status: item.status,
+    })
   );
-
-  const handleTabChange = (tab: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      tab: tab,
-      package: tab === "active_subscription" ? prev.package : "", // Clear package filter when switching tabs
-    }));
-  };
 
   return (
     <div>
       <div className="w-full rounded-xl p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-        <Tabs
-          defaultValue="active_subscription"
-          onValueChange={handleTabChange}
-        >
+        <Tabs value={activeTab} onValueChange={handleTabChange}>
           <div className="flex justify-between">
             <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <TabsTrigger
@@ -170,6 +146,7 @@ export default function Packages() {
               >
                 Packages
               </TabsTrigger>
+
               <TabsTrigger
                 value="active_subscription"
                 className="data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black"
@@ -179,132 +156,131 @@ export default function Packages() {
             </TabsList>
           </div>
 
-          <div className="mb-6 flex flex-wrap justify-between items-center gap-4 pt-5">
-            
-
-            {filters.tab === "active_subscription" && (
-               <div className="flex justify-between w-full">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    className="pl-8"
-                    placeholder="Search anything"
-                    onChange={(e) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        search: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-
-                  <Select
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        package: value === "all" ? "" : value,
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="h-12 w-44">
-                      <SelectValue placeholder="Package" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="Basic">Basic</SelectItem>
-                      <SelectItem value="Premium">Premium</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        plan_type: value === "all" ? "" : value,
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="h-12 w-44">
-                      <SelectValue placeholder="Plan Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="annual">Annual</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        status: value === "all" ? "" : value,
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="h-12 w-44">
-                      <SelectValue placeholder="Subscription Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Button
-                    variant="outline"
-                    className="cursor-pointer"
-                    onClick={() =>
-                      setFilters({
-                        search: "",
-                        package: "",
-                        status: "",
-                        plan_type: "",
-                        tab: "active_subscription", // reset tab filter
-                      })
-                    }
-                  >
-                    <RefreshCcw />
-                  </Button>
-                </div>
-               </div>
-            )}
-          </div>
+          {/* PACKAGES TAB */}
 
           <TabsContent value="packages">
-            <div className="mb-4 flex items-end justify-end">
-              <button className="px-4 py-2 cursor-pointer">
-                <AddPlan />
-              </button>
-            </div>
             <PackageTab />
           </TabsContent>
 
+          {/* ACTIVE SUBSCRIPTION TAB */}
+
           <TabsContent value="active_subscription">
+            {/* FILTERS */}
+
+            <div className="mb-6 flex flex-wrap justify-between items-center gap-4 pt-5">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  className="pl-8"
+                  placeholder="Search anything"
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      package: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Select
+                  onValueChange={(value) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      package: value === "all" ? "" : value,
+                    }))
+                  }
+                >
+                  <SelectTrigger className="h-12 w-44">
+                    <SelectValue placeholder="Package" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="Basic">Basic</SelectItem>
+                    <SelectItem value="Premium">Premium</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  onValueChange={(value) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      plan_type: value === "all" ? "" : value,
+                    }))
+                  }
+                >
+                  <SelectTrigger className="h-12 w-44">
+                    <SelectValue placeholder="Plan Type" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                    <SelectItem value="annual">Annual</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  onValueChange={(value) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      status: value === "all" ? "" : value,
+                    }))
+                  }
+                >
+                  <SelectTrigger className="h-12 w-44">
+                    <SelectValue placeholder="Subscription Status" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() =>
+                    setFilters({
+                      search: "",
+                      package: "",
+                      status: "",
+                      plan_type: "",
+                    })
+                  }
+                >
+                  <RefreshCcw />
+                </Button>
+              </div>
+            </div>
+
+            {/* TABLE */}
+
             <div className="overflow-hidden rounded-2xl border border-muted/40">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/30">
-                      <TableHead className="pl-8">Business Name</TableHead>
-                      <TableHead>Package</TableHead>
-                      <TableHead>Plan Type</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Start Date</TableHead>
-                      <TableHead>Expiry date</TableHead>
-                      <TableHead className="pr-8">Remaining Days</TableHead>
-                      <TableHead className="pr-8">
+                      <TableHead className="pl-8 text-[#777980]">Business Name</TableHead>
+                      <TableHead className="text-[#777980]">Package</TableHead>
+                      <TableHead className="text-[#777980]">Plan Type</TableHead>
+                      <TableHead className="text-[#777980]">Price</TableHead>
+                      <TableHead className="text-[#777980]">Start Date</TableHead>
+                      <TableHead className="text-[#777980]">Expiry date</TableHead>
+                      <TableHead className="pr-8 text-[#777980]">Remaining Days</TableHead>
+                      <TableHead className="pr-8 text-[#777980]">
                         Subscription Status
                       </TableHead>
-                      <TableHead className="pr-8">Action</TableHead>
+                      <TableHead className="pr-8 text-[#777980]">Action</TableHead>
                     </TableRow>
                   </TableHeader>
 
                   <TableBody>
-                    {rows.map((r: any) => (
+                    {rows.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell>
                           <div className="flex items-center gap-3">
@@ -314,6 +290,7 @@ export default function Packages() {
                                 {initials(r.businessName)}
                               </AvatarFallback>
                             </Avatar>
+
                             <span className="font-medium">
                               {r.businessName}
                             </span>
@@ -330,9 +307,9 @@ export default function Packages() {
                           </div>
                         </TableCell>
 
-                        <TableCell>{r.start_date}</TableCell>
-                        <TableCell>{r.expiry_date}</TableCell>
-                        <TableCell>{r.remaining_days}</TableCell>
+                        <TableCell>{r.startDate}</TableCell>
+                        <TableCell>{r.expiryDate}</TableCell>
+                        <TableCell>{r.remainingDays}</TableCell>
 
                         <TableCell>
                           <StatusPill status={r.status} />
@@ -341,7 +318,10 @@ export default function Packages() {
                         <TableCell className="pr-8">
                           <div className="flex gap-3">
                             <ViewSubscriptionModal id={r.id} />
-                            <EditSubscriptionModal id={r.id} businessName={r.businessName} />
+                            <EditSubscriptionModal
+                              id={r.id}
+                              businessName={r.businessName}
+                            />
                           </div>
                         </TableCell>
                       </TableRow>

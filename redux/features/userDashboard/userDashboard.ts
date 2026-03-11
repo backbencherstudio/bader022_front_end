@@ -38,6 +38,13 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
 
+    //single bokk details
+    getSingleBooking: builder.query({
+      query: (id) => ({
+        url: `/admin/dashboard/show/${id}`,
+        method: "GET",
+      }),
+    }),
     //upcomming
 
     Upcomming: builder.query({
@@ -114,6 +121,7 @@ export const {
   useDashboardActivityQuery,
   useUserPaymentHistoryQuery,
   useDashboardbookingHistoryQuery,
+  useGetSingleBookingQuery,
   useUpcommingQuery,
   useOrderDetailsQuery,
   useRescheduleAppointmentQuery,

@@ -225,11 +225,10 @@ export default function Page() {
                         // className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
                         className={`
     h-8 cursor-pointer transition-colors
-    ${
-      isMonthly
-        ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white bg-white  dark:bg-black!"
-    }
+    ${isMonthly
+                            ? "bg-black dark:bg-white dark:text-black!"
+                            : "text-black dark:text-white bg-white  dark:bg-black!"
+                          }
   `}
                         onClick={() => setView("monthly")}
                       >
@@ -240,11 +239,10 @@ export default function Page() {
                         size="sm"
                         className={`
     h-8 cursor-pointer transition-colors
-    ${
-      isWeekly
-        ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white hover:text-white bg-gray-100 dark:bg-gray-800"
-    }
+    ${isWeekly
+                            ? "bg-black dark:bg-white dark:text-black!"
+                            : "text-black dark:text-white hover:text-white bg-gray-100 dark:bg-gray-800"
+                          }
   `}
                         onClick={() => setView("weekly")}
                       >
@@ -280,13 +278,10 @@ export default function Page() {
                         // variant={view === "monthly" ? "default" : "ghost"}
                         size="sm"
                         // className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
-                        className={`
-    h-8 cursor-pointer transition-colors
-    ${
-      isMonthly
-        ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
-    }
+                        className={`h-8 cursor-pointer transition-colors${isMonthly
+                            ? "bg-black dark:bg-white dark:text-black!"
+                            : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
+                          }
   `}
                         onClick={() => setView("monthly")}
                       >
@@ -294,15 +289,12 @@ export default function Page() {
                       </Button>
                       <Button
                         // variant={view === "monthly" ? "ghost" : "default"}
-                        size="sm"
-                        className={`
-    h-8 cursor-pointer transition-colors
-    ${
-      isWeekly
-        ? "bg-black dark:bg-white dark:text-black!"
-        : "text-black dark:text-white  dark:bg-black!"
-    }
-  `}
+                        size="sm" 
+                        className={`h-8 cursor-pointer transition-colors${isWeekly
+                            ? "bg-black dark:bg-white dark:text-black!"
+                            : "text-black dark:text-white  dark:bg-black!"
+                          }
+`}
                         onClick={() => setView("weekly")}
                       >
                         Weekly
@@ -354,7 +346,7 @@ export default function Page() {
       <AddBookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        // onSubmit={handleAddBooking}
+      // onSubmit={handleAddBooking}
       />
     </div>
   );

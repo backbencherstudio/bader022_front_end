@@ -21,6 +21,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit } from "lucide-react";
 import { useUpdatePlanByIdMutation, useUpdateSubscriptionsByIdMutation } from "@/redux/features/admin/adminApi";
+import { toast } from "sonner";
 
 type FormValues = {
     packageStatus: "active" | "inactive";
@@ -40,9 +41,11 @@ export function PackagePlanUpdateModal({ id, businessName }: { id: number; busin
                 id,
                 data: { status: values.packageStatus },
             }).unwrap();
+            
 
             setOpen(false);
             form.reset({ packageStatus: values.packageStatus });
+            toast.success("Subscription plan updated successfully!");
         } catch (error) {
             console.error("Update failed:", error);
         }

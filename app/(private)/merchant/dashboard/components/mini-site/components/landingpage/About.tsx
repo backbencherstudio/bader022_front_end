@@ -1,20 +1,21 @@
 import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function About() {
   const { aboutData, colorSystemData, layoutSettingsData, typographyData } =
     useLandingPage();
 
-  if (!aboutData?.aboutTitle) return null;
+  console.log(aboutData.padding);
 
   return (
     <section
       style={{
         backgroundColor: aboutData.backgroundColor || "transparent",
         marginTop: layoutSettingsData.sectionSpacing,
-        paddingTop: aboutData.padding,
-        paddingBottom: aboutData.padding,
+        paddingTop: Number(aboutData.padding),
+        paddingBottom: Number(aboutData.padding),
       }}
       className="transition-colors dark:bg-gray-900"
     >
@@ -22,13 +23,25 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* Image */}
           <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
-            <Image
-              src={aboutData.aboutImage || "/images/mini-site/aboutus.png"}
-              alt="About Us"
-              fill
-              className="object-cover"
-              priority
-            />
+            {aboutData.aboutPreviewImage ? (
+              <Image
+                src={aboutData.aboutPreviewImage}
+                alt="About Us"
+                fill
+                className="object-cover"
+                priority
+                unoptimized={true}
+              />
+            ) : (
+              <Image
+                src={getImageUrl(aboutData.aboutImage)}
+                alt="About Us"
+                fill
+                className="object-cover"
+                priority
+                unoptimized={true}
+              />
+            )}
           </div>
 
           {/* Content */}

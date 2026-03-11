@@ -39,7 +39,7 @@ export default function page() {
     useCreateGlobalSettingMutation();
 
   const handleSubmit = async () => {
-    // console.log(brandingData);
+    console.log(heroData.heroImageFile);
 
     try {
       const formData = new FormData();
@@ -49,9 +49,18 @@ export default function page() {
       formData.append("hero_description", heroData.heroDescription);
       formData.append("cta_button_text", heroData.primaryBtn);
       formData.append("cta_button_text_two", heroData.secondaryBtn);
+      // if (heroData.heroImageFile && heroData.heroImageFile.length > 0) {
+      //   formData.append("hero_image", heroData.heroImageFile[0]);
+      // }
+      if (heroData.heroImageFile) {
+        formData.append("hero_image", heroData.heroImageFile);
+      }
       formData.append("hero_overlay_color", heroData.overlayColor);
       formData.append("about_title", aboutData.aboutTitle);
       formData.append("about_description", aboutData.aboutDescription);
+      if (aboutData.aboutImageFile) {
+        formData.append("about_hero_image", aboutData.aboutImageFile);
+      }
       formData.append("background_color", aboutData.backgroundColor);
       formData.append("about_padding", aboutData.padding as any);
       formData.append("cta_title", ctaBannerData.ctaBannerTitle);

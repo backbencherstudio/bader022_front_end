@@ -12,6 +12,8 @@ type HeroData = {
   primaryBtn: string;
   secondaryBtn: string;
   heroImage: string;
+  heroPreviewImage: string;
+  heroImageFile?: File | null;
   imageLeft: boolean;
   overlayColor: string;
   heroHeight: number;
@@ -21,8 +23,10 @@ type AboutData = {
   aboutTitle: string;
   aboutDescription: string;
   aboutImage: string;
+  aboutPreviewImage: string;
+  aboutImageFile?: File | null;
   backgroundColor: string;
-  padding: number;
+  padding: string;
 };
 
 type WhyChooseUsData = {
@@ -44,6 +48,7 @@ type ServicesCard = {
   image: string | null;
   title: string;
   description: string;
+  duration?: string;
 };
 type ServicesPreviewData = {
   servicesPreviewTitle: string;
@@ -177,7 +182,7 @@ export function LandingPageProvider({
   const { user } = useAppSelector((state) => state.auth);
   const domain = user?.website_domain;
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
-  // console.log(data);
+  console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
     heroTitle: "",
@@ -186,18 +191,21 @@ export function LandingPageProvider({
     primaryBtn: "",
     secondaryBtn: "",
     heroImage: "",
+    heroPreviewImage: "",
+    heroImageFile: null,
     imageLeft: true,
     overlayColor: "",
     heroHeight: 48,
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
-    aboutTitle: "Elevate Your Look with Bespoke Hair Care & Expert",
-    aboutDescription:
-      "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication.",
+    aboutTitle: "",
+    aboutDescription: "",
     aboutImage: "",
-    backgroundColor: "#f7f7f7",
-    padding: 30,
+    aboutPreviewImage: "",
+    aboutImageFile: null,
+    backgroundColor: "",
+    padding: "",
   });
 
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData>({
@@ -218,31 +226,11 @@ export function LandingPageProvider({
 
   const [servicesPreviewData, setServicesPreviewData] =
     useState<ServicesPreviewData>({
-      servicesPreviewTitle: "Customized Hair Treatments & Styling to Suit You",
-      servicesPreviewSubtitle:
-        "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health",
+      servicesPreviewTitle: "",
+      servicesPreviewSubtitle: "",
       serviceViewBtn: "",
-      backgroundColor: "#f7f7f7",
-      servicesCards: [
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-      ],
+      backgroundColor: "",
+      servicesCards: [],
     });
 
   const [ctaBannerData, setCtaBannerData] = useState<CtaBannerData>({
@@ -346,7 +334,21 @@ export function LandingPageProvider({
         heroDescription: api.minisite.hero_description || prev.heroDescription,
         primaryBtn: api.minisite.cta_button_text || prev.primaryBtn,
         secondaryBtn: api.minisite.cta_button_text_two || prev.secondaryBtn,
-        // heroImage: api.minisite.hero_image || prev.heroImage,
+        overlayColor: api.minisite.hero_overlay_color || prev.overlayColor,
+        heroImage: api.minisite.hero_image || prev.heroImage,
+      }));
+    }
+
+    /* ABOUT */
+    if (api.minisite) {
+      setAboutData((prev) => ({
+        ...prev,
+        aboutTitle: api.minisite.about_title || prev.aboutTitle,
+        aboutDescription:
+          api.minisite.about_description || prev.aboutDescription,
+        aboutImage: api.minisite.about_hero_image || prev.aboutImage,
+        backgroundColor: api.minisite.background_color || prev.backgroundColor,
+        padding: api.minisite.about_padding || prev.padding,
       }));
     }
 
@@ -377,16 +379,23 @@ export function LandingPageProvider({
     // }
 
     /* SERVICES */
-    // if (api.services) {
-    //   setServicesPreviewData((prev) => ({
-    //     ...prev,
-    //     servicesCards: api.services.map((service: any) => ({
-    //       image: service.image || null,
-    //       title: service.name,
-    //       description: service.description,
-    //     })),
-    //   }));
-    // }
+    if (api.services || api.minisite) {
+      setServicesPreviewData((prev) => ({
+        ...prev,
+        servicesPreviewTitle:
+          api.minisite.service_title || prev.servicesPreviewTitle,
+        servicesPreviewSubtitle:
+          api.minisite.service_description || prev.servicesPreviewSubtitle,
+        backgroundColor:
+          api.minisite.service_background || prev.backgroundColor,
+        servicesCards: api.services.map((service: any) => ({
+          image: service.image || null,
+          title: service.name,
+          description: service.description,
+          duration: service.duration,
+        })),
+      }));
+    }
 
     /* GLOBAL BRANDING */
     // if (api.global_setting) {

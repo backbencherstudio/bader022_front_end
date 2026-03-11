@@ -1,24 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLandingPage } from "../../context/LandingBuilderContext";
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
 
-  if (!heroData.heroTitle) return null;
-
   return (
     <section className="relative w-full">
       <div className="relative w-full overflow-hidden rounded-md">
         {/* Background Image */}
-        <Image
-          src={heroData.heroImage || "/images/mini-site/heroImage.png"}
-          alt="Hero background"
-          fill
-          className="object-cover"
-          priority
-        />
+        {heroData.heroPreviewImage ? (
+          <Image
+            src={heroData.heroPreviewImage}
+            alt="Hero preview"
+            fill
+            className="object-cover"
+            priority
+          />
+        ) : (
+          <Image
+            src={getImageUrl(heroData.heroImage)}
+            alt="Hero background"
+            fill
+            className="object-cover"
+            priority
+            unoptimized={true}
+          />
+        )}
 
         {/* Overlay */}
         <div

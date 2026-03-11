@@ -1,3 +1,5 @@
+"use client";
+
 import {
   format,
   startOfMonth,
@@ -27,23 +29,27 @@ export default function DayCell({
   bookings: TBooking[];
   onOpenMore: (day: Date, dayBookings: TBooking[]) => void;
 }) {
-  const dayBookings = bookings.filter((b) => isSameDay(toDate(b.startAt), day));
+  const dayBookings = bookings.filter((b: any) =>
+    isSameDay(toDate(b.created_at), day),
+  );
   const maxVisible = 1;
   const overflow = Math.max(0, dayBookings.length - maxVisible);
+
+  // console.log({ dayBookings });
 
   return (
     <div
       className={cn(
         "relative min-h-29.5 border-l border-t p-2",
         !isSameMonth(day, currentMonth) && "bg-muted/20",
-        isToday(day) && "bg-muted/30"
+        isToday(day) && "bg-muted/30",
       )}
     >
       <div className="flex items-center justify-between">
         <div
           className={cn(
             "text-xs font-medium",
-            !isSameMonth(day, currentMonth) && "text-muted-foreground"
+            !isSameMonth(day, currentMonth) && "text-muted-foreground",
           )}
         >
           {format(day, "dd")}

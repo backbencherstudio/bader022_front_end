@@ -13,7 +13,12 @@ import {
 } from "lucide-react";
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
+=======
+import { useEffect } from "react";
+import { authorize } from "@/lib/auth";
+>>>>>>> 2a5d0b605647fb2b26c7f39e8e0dec65bda817d6
 
 const MERCHANT_NAV_ITEMS = [
   {
@@ -63,6 +68,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { locale } = useI18n();
+<<<<<<< HEAD
 
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -81,6 +87,15 @@ export default function DashboardLayout({
     return <p>Loading...</p>;
   }
 
+=======
+  const router = useRouter();
+  useEffect(() => {
+    const auth = authorize(["Admin"]);
+    if (!auth.authorized) {
+      router.push("/login");
+    }
+  }, []);
+>>>>>>> 2a5d0b605647fb2b26c7f39e8e0dec65bda817d6
   return (
     <div>
       <div>

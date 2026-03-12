@@ -53,38 +53,16 @@ const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
   serviceName: "Haircut & Styling",
 }));
 export default function DashboardPage() {
-  const {
-    data: dashboardOverview,
-    isLoading,
-    isError,
-  } = useMerchantDashboardOverviewQuery({});
-  const {
-    data: monthlyRevenueData,
-    isLoading: isMonthlyLoading,
-    isError: isMonthlyError,
-  } = useMonthlyRevenueQuery({});
-  const {
-    data: weeklyRevenueData,
-    isLoading: isWeeklyLoading,
-    isError: isWeeklyError,
-  } = useWeeklyRevenueQuery({});
-  const {
-    data: todayAppointmentData,
-    isLoading: isTodayAppointmentLoading,
-    isError: isTodayAppointmentError,
-  } = useTodayAppointmentQuery({});
-
-  const {
-    data: transactionOverview,
-    isLoading: isTransactionOverviewLoading,
-    isError: isTransactionOverviewError,
-  } = useMerchantTransactionOverviewQuery({});
-  // console.log('====================================');
-  // console.log({ dashboardOverview });
-  // console.log('====================================');
-  // console.log('====================================');
-  // console.log({todayAppointmentData});
-  // console.log('====================================');
+    const { data: dashboardOverview, isLoading, isError } = useMerchantDashboardOverviewQuery({});
+    const { data: monthlyRevenueData, isLoading: isMonthlyLoading, isError: isMonthlyError } = useMonthlyRevenueQuery({});
+    const { data: weeklyRevenueData, isLoading: isWeeklyLoading, isError: isWeeklyError } = useWeeklyRevenueQuery({});
+    const { data: todayAppointmentData, isLoading: isTodayAppointmentLoading, isError: isTodayAppointmentError } = useTodayAppointmentQuery({});
+    // console.log('====================================');
+    // console.log({dashboardOverview});
+    // console.log('====================================');
+    // console.log('====================================');
+    // console.log({todayAppointmentData});
+    // console.log('====================================');
   return (
     <div>
       {/* Charts */}

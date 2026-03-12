@@ -32,12 +32,12 @@ export function DataPagination({
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex  justify-between w-full">
             <p className="text-sm text-muted-foreground">
                 Showing {startItem}-{endItem} of {totalItems} Results
             </p>
 
-            <Pagination>
+            <Pagination className="w-full flex justify-end">
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious

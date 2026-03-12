@@ -28,8 +28,9 @@ import {
 } from "@/components/ui/table";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
 
-export type TxStatus = "completed" | "cancel" | "pending" | "confirm";
+export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
 
 export type TransactionRow = {
   bookingID: string;
@@ -74,6 +75,8 @@ function StatusPill({ status }: { status: TxStatus }) {
     cancel: "border-red-500 bg-red-50 text-red-600",
     pending: "border-amber-500 bg-amber-50 text-amber-700",
     confirm: "border-sky-500 bg-sky-50 text-sky-700",
+    rescheduled: "border-sky-500 bg-sky-50 text-sky-700",
+
   };
 
   const statusLabels: Record<TxStatus, string> = {
@@ -81,6 +84,7 @@ function StatusPill({ status }: { status: TxStatus }) {
     cancel: "Cancelled",
     pending: "Pending",
     confirm: "Confirmed",
+    rescheduled:"rescheduled"
   };
 
   return (
@@ -98,6 +102,8 @@ export default function AllBookingHistory() {
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+
 const [service, setService] = useState("");
   // RTK Query
   const { data, isLoading, error } = useBookingHistoryQuery({
@@ -152,7 +158,7 @@ const [service, setService] = useState("");
           </div>
 
           <Link href="/user/bookings/add-booking">
-            <Button>Book Now</Button>
+            <Button className="cursor-pointer">Book Now</Button>
           </Link>
         </div>
       </CardHeader>
@@ -200,8 +206,11 @@ const [service, setService] = useState("");
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="confirm">Confirmed</SelectItem>
               <SelectItem value="cancel">Canceled</SelectItem>
+              <SelectItem value="rescheduled">Rescheduled</SelectItem>
+
             </SelectContent>
           </Select>
+
         </div>
 
         {/* Table */}
@@ -246,9 +255,13 @@ const [service, setService] = useState("");
                   </TableCell>
                   <TableCell>
                     {/* `/user/bookings/${r.bookingID}` */}
-                    <Link href="#">
-                      <span className="cursor-pointer underline">View Details</span>
-                    </Link>
+                    <Button className="cursor-pointer"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setSelectedBooking(r.bookingID)}
+                    >
+                      View Details
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -273,6 +286,14 @@ const [service, setService] = useState("");
           />
         </div>
       </CardContent>
+
+      {selectedBooking && (
+        <BookingDetailsModal
+          bookingId={selectedBooking}
+          open={!!selectedBooking}
+          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        />
+      )}
     </Card>
   );
 }

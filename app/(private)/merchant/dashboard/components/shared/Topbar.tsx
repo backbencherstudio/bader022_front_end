@@ -23,7 +23,7 @@ export default function TopBar() {
 
   // const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
   const { user } = useAppSelector((state) => state.auth);
-  // console.log(user);
+  console.log(user);
 
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { setTheme } = useTheme();
@@ -83,7 +83,7 @@ export default function TopBar() {
               aria-label="Profile"
             >
               <Image
-                src={getImageUrl(user?.name) || "/images/user1.png"}
+                src={getImageUrl(user?.image) || "/images/user1.png"}
                 alt={user?.name || "User"}
                 width={48}
                 height={48}

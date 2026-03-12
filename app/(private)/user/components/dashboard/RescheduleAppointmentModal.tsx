@@ -1,9 +1,10 @@
+"use client";
+
+import { Card } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -11,156 +12,168 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
 
-export function RescheduleAppointmentModal() {
-  const [selectedTime, setSelectedTime] = useState("12:00 AM");
+import {
+  useUseRescheduleAppointmentMutation,
+  useSheduleQuery,
+  useSheduleStaffQuery,
+} from "@/redux/features/userDashboard/userDashboard";
+import { toast } from "sonner";
 
-  const timeSlots = [
-    "8:00 AM",
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
-    "6:00 PM",
-    "7:00 PM",
-    "8:00 PM",
-    "9:00 PM",
-    "10:00 PM",
-    "11:00 PM",
-    "12:00 PM",
-  ];
+interface RescheduleProps {
+  serviceId: number;
+  bookingId: number;
+  currentDate?: string;
+  onConfirm: (newDate: string, newTime: string, selectedStaff: string) => void;
+}
+
+export default function RescheduleAppointmentModal({
+  serviceId,
+  bookingId,
+  currentDate,
+  onConfirm,
+}: RescheduleProps) {
+
+  const [selectedDate, setSelectedDate] = useState(currentDate || "");
+  const [dateObj, setDateObj] = useState<Date>(
+    currentDate ? new Date(currentDate) : new Date()
+  );
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedStaff, setSelectedStaff] = useState("");
+
+  const formattedDate = selectedDate
+    ? new Date(selectedDate).toISOString().split("T")[0]
+    : "";
+  // schedule api
+  const { data, isLoading } = useSheduleQuery(
+    { service_id: serviceId, date: formattedDate },
+    { skip: !formattedDate }
+  );
+
+  const timeSlots = data?.available_times || [];
+
+  // staff api
+  const { data: staffData } = useSheduleStaffQuery(
+    { service_id: serviceId, date: formattedDate, time: selectedTime },
+    { skip: !selectedTime }
+  );
+
+  const staffs = staffData?.available_staff || [];
+
+  // mutation
+  const [reschedule, { isLoading: isRescheduleLoading }] =
+    useUseRescheduleAppointmentMutation();
+
+  const handleDateChange = (date: Date | undefined) => {
+    if (!date) return;
+
+    setDateObj(date);
+    setSelectedDate(date.toISOString().split("T")[0]);
+    setSelectedTime("");
+  };
+
+  const handleRescheduleConfirm = async () => {
+    if (!selectedDate || !selectedTime || !selectedStaff) {
+      alert("Please select a valid date, time, and staff");
+      return;
+    }
+
+    try {
+      await reschedule({
+        booking_id: bookingId,
+        date: selectedDate,
+        time: selectedTime,
+        staff_id: selectedStaff
+      }).unwrap();
+
+      onConfirm(selectedDate, selectedTime, selectedStaff);
+      toast.success("Appointment rescheduled successfully");
+    } catch (err) {
+      console.log("Reschedule Error:", err);
+      // alert("Error: " + (err.message || "Failed to reschedule"));
+    }
+  };
 
   return (
-    <DialogContent className="sm:max-w-225 p-0 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-      {/* Header */}
-      <DialogHeader className="flex flex-row items-start justify-between px-5 sm:px-7 py-4 sm:py-5 border-b border-border">
-        <div>
-          <DialogTitle className="text-base sm:text-lg font-semibold ">
-            Reschedule Appointment
-          </DialogTitle>
-          <p className="text-xs sm:text-sm text-[#637381] mt-1">
-            Haircut & Styling
-          </p>
-        </div>
-      </DialogHeader>
+    <Card className="rounded-2xl p-6 space-y-6">
 
-      {/* Body */}
-      <div className="px-5 sm:px-7 py-5 sm:py-6 w-full overflow-y-auto max-h-[calc(90vh-80px)]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
-          {/* LEFT - Calendar */}
-          <div className="rounded-xl border">
-            <div className="rounded-t-xl px-5 sm:px-6 py-4 text-sm font-semibold">
-              Select Date
-            </div>
+      <div className="flex flex-col lg:flex-row gap-6">
 
-            <div className="px-5 sm:px-6 py-5">
-              {/* Calendar Header */}
-              <div className="flex items-center justify-between mb-5">
-                <button className="p-2 rounded-md hover:bg-black/5 transition">
-                  <ChevronLeft className="h-5 w-5 " />
-                </button>
+        {/* Calendar */}
+        <div className="flex-1">
 
-                <p className="text-sm font-semibold ">February 2026</p>
+          <h3 className="font-semibold mb-2">Select New Date</h3>
 
-                <button className="p-2 rounded-md hover:bg-black/5 transition">
-                  <ChevronRight className="h-5 w-5 " />
-                </button>
-              </div>
+          <Calendar
+            mode="single"
+            selected={dateObj}
+            onSelect={handleDateChange}
+          />
 
-              {/* Week Days */}
-              <div className="grid grid-cols-7 text-[11px] sm:text-xs font-medium text-[#637381] mb-3">
-                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-                  <p key={d} className="text-center">
-                    {d}
-                  </p>
+          <div className="mt-4">
+
+            <h3 className="font-semibold mb-2">Select Staff</h3>
+
+            <Select onValueChange={setSelectedStaff}>
+
+              <SelectTrigger>
+                <SelectValue placeholder="Select Staff" />
+              </SelectTrigger>
+
+              <SelectContent>
+
+                {staffs.map((staff) => (
+                  <SelectItem key={staff.id} value={String(staff.id)}>
+                    {staff.name}
+                  </SelectItem>
                 ))}
-              </div>
 
-              {/* Days */}
-              <div className="grid grid-cols-7 gap-y-4 sm:gap-y-5 text-sm ">
-                {Array.from({ length: 28 }, (_, i) => i + 1).map((day) => (
-                  <button
-                    key={day}
-                    className={`h-9 w-9 sm:h-10 sm:w-10 mx-auto rounded-lg flex items-center justify-center transition
-                      ${
-                        day === 19
-                          ? "bg-[#111827] text-white font-semibold"
-                          : " hover:bg-black/5"
-                      }
-                      ${day < 8 ? "text-[#B0B7C3]" : ""}
-                    `}
-                  >
-                    {String(day).padStart(2, "0")}
-                  </button>
-                ))}
-              </div>
-            </div>
+              </SelectContent>
+            </Select>
+
           </div>
+        </div>
 
-          {/* RIGHT - Available Times */}
-          <div className="rounded-xl border border-border overflow-hidden">
-            <div className=" px-5 sm:px-6 py-4 text-sm font-semibold ">
-              Available Times
-            </div>
+        {/* Time Slots */}
+        <div className="flex-1 flex flex-col justify-between">
 
-            <div className="px-5 sm:px-6 py-5">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div>
+
+            <h3 className="font-semibold mb-2">Available Times</h3>
+
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+
                 {timeSlots.map((time) => (
                   <button
                     key={time}
                     onClick={() => setSelectedTime(time)}
-                    className={`h-11 rounded-lg border text-sm font-medium transition
-                      ${
-                        selectedTime === time
-                          ? "border-[#111827] "
-                          : "border-border text-[#637381] hover:border-[#111827]/50"
-                      }
-                    `}
+                    className={cn(
+                      "h-10 rounded-lg border",
+                      selectedTime === time && "bg-gray-200"
+                    )}
                   >
                     {time}
                   </button>
                 ))}
+
               </div>
-            </div>
+            )}
+
           </div>
 
-          {/* Bottom Left - Staff Select */}
-          <div className="rounded-xl border border-border overflow-hidden">
-            <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 text-sm font-semibold ">
-              Select Staff
-            </div>
+          <Button
+            className="mt-4"
+            disabled={!selectedTime || !selectedStaff || isRescheduleLoading}
+            onClick={handleRescheduleConfirm}
+          >
+            {isRescheduleLoading ? "Rescheduling..." : "Confirm Reschedule"}
+          </Button>
 
-            <div className="px-5 sm:px-6 py-5">
-              <Select defaultValue="no-preference">
-                <SelectTrigger className="h-11 rounded-lg border-border text-sm">
-                  <SelectValue placeholder="Select staff" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  <SelectItem value="no-preference">No preference</SelectItem>
-                  <SelectItem value="guy-hawkins">Guy Hawkins</SelectItem>
-                  <SelectItem value="jacob-jones">Jacob Jones</SelectItem>
-                  <SelectItem value="darrell-steward">
-                    Darrell Steward
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Bottom Right - Confirm Button */}
-          <div className="flex items-end">
-            <Button className="w-full h-12 rounded-lg bg-[#111827] hover:bg-[#0B1220] text-white font-semibold">
-              Confirm Reschedule
-            </Button>
-          </div>
         </div>
       </div>
-    </DialogContent>
+    </Card>
   );
 }

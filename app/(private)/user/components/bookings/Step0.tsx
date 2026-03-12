@@ -21,7 +21,7 @@ export default function Step0({
       <div className="flex items-center gap-4 mb-4">
         <p>Filter by:</p>
         <select
-          className="border p-1"
+          className="border p-1 rounded-md px-2"
           value={selectedService?.name || ""}
           onChange={(e) => {
             const selected = data?.data?.find(
@@ -30,9 +30,11 @@ export default function Step0({
             setSelectedService(selected);
           }}
         >
-          <option value="">Select Service</option>
+          <option value="" className="bg-white dark:bg-gray-800 ">
+            Select Service
+          </option>
           {data?.data?.map((item: any) => (
-            <option key={item.id} value={item.name}>
+            <option className="bg-white dark:bg-gray-800" key={item.id} value={item.name}>
               {item.name}
             </option>
           ))}

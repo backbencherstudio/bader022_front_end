@@ -1,6 +1,8 @@
 "use client";
 
 import { Eye, Pencil, Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,14 +17,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDebounce } from "@/lib/useDebounce";
-import { useGetAllMerchantsQuery } from "@/redux/features/admin/adminApi";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { EditProfileDialog } from "./ProfileEditModal";
+import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
+import { useGetAllMerchantsQuery } from "@/redux/features/admin/adminApi";
 
-type MerchantStatus = "active"| "pending" | "expired" | "cancelled";
+type MerchantStatus = "active" | "pending" | "expired" | "cancelled";
 
 export type MerchantRow = {
   id: string;
@@ -71,25 +71,34 @@ function StatusPill({ status }: { status: MerchantStatus }) {
     </span>
   );
 }
+
 export function MerchantManagementCard({
   rows,
   className,
-  onViewAll,
-  onView,
-  onEdit,
   search,
   setSearch,
+  totalItems,
+  currentPage,
+  pageSize,
+  onPageChange,
 }: {
   rows: MerchantRow[];
   className?: string;
-  onViewAll?: () => void;
-  onView?: (row: MerchantRow) => void;
-  onEdit?: (id: string) => void;
   search: string;
   setSearch: (value: string) => void;
+  totalItems: number;
+  currentPage: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
 }) {
   const navigate = useRouter();
   const [openId, setOpenId] = useState<string | null>(null);
+
+  // Calculate paginated data
+  const paginatedRows = rows.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <Card
@@ -101,7 +110,7 @@ export function MerchantManagementCard({
       <CardHeader>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <CardTitle className="text-xl font-semibold">
-            Marchant Management
+            Merchant Management
           </CardTitle>
 
           <div className="flex items-center gap-4">
@@ -111,7 +120,7 @@ export function MerchantManagementCard({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search anything"
-                className="h-12 rounded-xl pl-10"
+                className="h-12 rounded-xl pl-10 w-64"
               />
             </div>
 
@@ -162,7 +171,7 @@ export function MerchantManagementCard({
               </TableHeader>
 
               <TableBody>
-                {rows?.map((r) => (
+                {paginatedRows?.map((r) => (
                   <TableRow key={r.id} className="h-19.5">
                     {/* Business name + avatar */}
                     <TableCell className="pl-8">
@@ -209,7 +218,6 @@ export function MerchantManagementCard({
                     {/* Actions */}
                     <TableCell className="pr-8">
                       <div className="flex items-center gap-1">
-
                         {/* View Button */}
                         <button
                           type="button"
@@ -219,7 +227,7 @@ export function MerchantManagementCard({
                           <Eye className="h-5 w-5" />
                         </button>
 
-                        {/* ✅ Edit Dialog */}
+                        {/* Edit Dialog */}
                         <Dialog
                           open={openId === r.id}
                           onOpenChange={(open) => setOpenId(open ? r.id : null)}
@@ -239,13 +247,12 @@ export function MerchantManagementCard({
                             onClose={() => setOpenId(null)}
                           />
                         </Dialog>
-
                       </div>
                     </TableCell>
                   </TableRow>
                 ))}
 
-                {rows?.length === 0 && (
+                {paginatedRows?.length === 0 && (
                   <TableRow>
                     <TableCell
                       colSpan={8}
@@ -261,31 +268,14 @@ export function MerchantManagementCard({
         </div>
       </CardContent>
 
-      {/* Pagination UI (same as your old one) */}
-      <div className="flex flex-col gap-2 sm:flex-row justify-between items-center px-6 pb-4 border-t border-muted/40">
-        <div className="text-sm text-muted-foreground">
-          Showing 01-12 of 400 Results
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &lt;
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            1
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            2
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            3
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            4
-          </Button>
-          <Button variant="outline" className="rounded-xl px-4 py-2">
-            &gt;
-          </Button>
-        </div>
+      {/* Pagination */}
+      <div className="px-6 pb-6">
+        <DataPagination
+          totalItems={totalItems}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          onPageChange={onPageChange}
+        />
       </div>
     </Card>
   );
@@ -293,40 +283,40 @@ export function MerchantManagementCard({
 
 export default function MerchantManagement() {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 500);
+  const [page, setPage] = useState(1);
+  const pageSize = 10; // You can adjust this value
+
   const { data, isLoading, isError } = useGetAllMerchantsQuery({
-    search: debouncedSearch,
+    search,
   });
-  console.log(data,"proper"
-  )
+
+  console.log(data, "proper");
 
   // Transform backend response → MerchantRow[]
   const merchants: MerchantRow[] =
     data?.data?.map((item: any) => {
-      const isExpired = item.ends_at && new Date(item.ends_at) < new Date();
-
       return {
         id: String(item.id),
-
         businessName: item.user?.name ?? "N/A",
-
         businessAvatar: item.user?.image ?? undefined,
-
         businessType: item.user?.business_category ?? "N/A",
-
         email: item.user?.email ?? "N/A",
-
         package: item.plan?.name ?? "N/A",
-
         planType: item.plan?.package ?? "N/A",
-
         expireDate: item.ends_at
           ? new Date(item.ends_at).toLocaleDateString()
           : "N/A",
-
         status: item?.status ?? "inactive",
       };
     }) ?? [];
+
+  // Get total items from the full merchants array
+  const totalItems = merchants.length;
+
+  // Reset page when search changes
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
 
   if (isLoading) {
     return (
@@ -349,7 +339,10 @@ export default function MerchantManagement() {
       rows={merchants}
       search={search}
       setSearch={setSearch}
+      totalItems={totalItems}
+      currentPage={page}
+      pageSize={pageSize}
+      onPageChange={setPage}
     />
-  
   );
 }

@@ -21,7 +21,7 @@ export default function PaymentHistory() {
   const [selectedPayment, setSelectedPayment] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const pageSize = 4;
+  const pageSize = 10;
 
   // Combine all filters for API query
   const filters = {
@@ -46,16 +46,10 @@ export default function PaymentHistory() {
     setPage(1);
   }, [search, packageFilter, statusFilter]);
 
-
-  useEffect(() => { 
-    setSearch(statusFilter);
-  }, [statusFilter]);
-
-  useEffect(() => {
-    setSearch(packageFilter );
-  }, [packageFilter]);
-
-
+  // Remove the incorrect useEffect hooks that were setting search state
+  // The following useEffect hooks are incorrect and should be removed:
+  // useEffect(() => { setSearch(statusFilter); }, [statusFilter]);
+  // useEffect(() => { setSearch(packageFilter); }, [packageFilter]);
 
   // Map API data to table rows
   const rows =
@@ -75,6 +69,9 @@ export default function PaymentHistory() {
             ? "failed"
             : "pending",
     })) ?? [];
+
+
+    const pagginatedData = rows.slice((page - 1) * pageSize, page * pageSize)
 
   if (isLoading)
     return <div className="p-6 text-center">Loading payments...</div>;
@@ -109,7 +106,10 @@ export default function PaymentHistory() {
             />
           </div>
 
-          <Select onValueChange={(value) => setPackageFilter(value === "all" ? "" : value)}>
+          <Select
+            value={packageFilter || "all"}
+            onValueChange={(value) => setPackageFilter(value === "all" ? "" : value)}
+          >
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Package" />
             </SelectTrigger>
@@ -120,7 +120,10 @@ export default function PaymentHistory() {
             </SelectContent>
           </Select>
 
-          <Select onValueChange={(value) => setStatusFilter(value === "all" ? "" : value)}>
+          <Select
+            value={statusFilter || "all"}
+            onValueChange={(value) => setStatusFilter(value === "all" ? "" : value)}
+          >
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -139,7 +142,7 @@ export default function PaymentHistory() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/30 text-[#777980] ">
-                  <TableHead className="pl-8  text-[#777980]">TX ID</TableHead>
+                  <TableHead className="pl-8 text-[#777980]">TX ID</TableHead>
                   <TableHead className="text-[#777980]">Merchant Name</TableHead>
                   <TableHead className="text-[#777980]">Business Name</TableHead>
                   <TableHead className="text-[#777980]">Package</TableHead>
@@ -152,7 +155,7 @@ export default function PaymentHistory() {
               </TableHeader>
 
               <TableBody>
-                {rows.map((r: any) => (
+                {pagginatedData.map((r: any) => (
                   <TableRow key={r.id}>
                     <TableCell className="pl-8 font-medium">{r.id}</TableCell>
                     <TableCell>{r.merchantName}</TableCell>
@@ -168,10 +171,10 @@ export default function PaymentHistory() {
                     <TableCell>
                       <span
                         className={`px-4 py-2 rounded-xl text-sm font-semibold border ${r.status === "successful"
-                          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                          : r.status === "failed"
-                            ? "border-red-500 bg-red-50 text-red-600"
-                            : "border-yellow-500 bg-yellow-50 text-yellow-700"
+                            ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                            : r.status === "failed"
+                              ? "border-red-500 bg-red-50 text-red-600"
+                              : "border-yellow-500 bg-yellow-50 text-yellow-700"
                           }`}
                       >
                         {r.status === "successful"
@@ -190,7 +193,7 @@ export default function PaymentHistory() {
                           }}
                           className="h-10 w-10 rounded-xl border flex items-center justify-center cursor-pointer"
                         >
-                          <Eye className="h-5 w-5 " />
+                          <Eye className="h-5 w-5" />
                         </button>
                         <button className="h-10 w-10 rounded-xl border flex items-center justify-center cursor-pointer">
                           <Download className="h-5 w-5" />
@@ -214,17 +217,17 @@ export default function PaymentHistory() {
             </Table>
           </div>
         </div>
-      </CardContent>
 
-      {/* Pagination */}
-      <div className="px-6 pb-6">
-        <DataPagination
-          totalItems={totalItems}
-          currentPage={page}
-          pageSize={pageSize}
-          onPageChange={setPage}
-        />
-      </div>
+        {/* Pagination - Moved inside CardContent */}
+        <div className="mt-6">
+          <DataPagination
+            totalItems={totalItems}
+            currentPage={page}
+            pageSize={pageSize}
+            onPageChange={setPage}
+          />
+        </div>
+      </CardContent>
 
       {/* Payment Modal */}
       <PaymentModal
@@ -235,4 +238,3 @@ export default function PaymentHistory() {
     </Card>
   );
 }
-

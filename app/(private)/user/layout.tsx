@@ -10,14 +10,10 @@ import {
   Calendar,
   User,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-<<<<<<< HEAD
+
 import { useEffect, useState } from "react";
 import { authorize } from "@/lib/auth";
-=======
-import { authorize } from "@/lib/auth";
-import { useEffect } from "react";
->>>>>>> 2a5d0b605647fb2b26c7f39e8e0dec65bda817d6
+import { useRouter } from "next/navigation";
 
 const USER_NAV_ITEMS = [
   {
@@ -61,12 +57,12 @@ export default function DashboardLayout({
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      const auth = authorize(["User"]);
-      if (!auth.authorized) {
-        router.push("/");
-      }
-    }, []);
+  useEffect(() => {
+    const auth = authorize(["User"]);
+    if (!auth.authorized) {
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -81,14 +77,6 @@ export default function DashboardLayout({
   if (loading) {
     return <p>Loading...</p>;
   }
-
-  const router = useRouter();
-  useEffect(() => {
-    const auth = authorize(["User"]);
-    if (!auth.authorized) {
-      router.push("/login");
-    }
-  }, []);
 
   return (
     <div>

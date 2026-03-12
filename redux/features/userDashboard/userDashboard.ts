@@ -14,11 +14,11 @@ export const dashboardApi = baseApi.injectEndpoints({
     // payment history
 
     userPaymentHistory: builder.query({
-      query: ({ page = 1, search = "" }) => ({
+      query: ({ page = 1, status = "" }) => ({
         url: "/admin/dashboard/payment-history",
         method: "GET",
         params: {
-          search,
+          status,
           page,
         },
       }),

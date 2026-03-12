@@ -25,8 +25,9 @@ import { useGetSubscriptionsQuery } from "@/redux/features/admin/adminApi";
 import PackageTab from "./PackageTab";
 import { EditSubscriptionModal } from "./EditSubscriptionModal";
 import { ViewSubscriptionModal } from "./ViewSubscriptionModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
 
 type PackageStatus = "active" | "pending" | "expired" | "cancelled";
 
@@ -110,12 +111,16 @@ export default function Packages() {
   const handleTabChange = (value: string) => {
     router.push(`?tab=${value}`);
   };
+
   const [filters, setFilters] = useState({
     search: "",
     package: "",
     status: "",
     plan_type: "",
   });
+
+  const [page, setPage] = useState(1);
+  const pageSize = 10; // You can adjust this value
 
   const { data } = useGetSubscriptionsQuery(filters);
 
@@ -133,6 +138,19 @@ export default function Packages() {
       status: item.status,
     })
   );
+
+ 
+  const totalItems = rows.length;
+
+ 
+  const paginatedRows = rows.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+
+  useEffect(() => {
+    setPage(1);
+  }, [filters]);
 
   return (
     <div>
@@ -176,7 +194,7 @@ export default function Packages() {
                   onChange={(e) =>
                     setFilters((prev) => ({
                       ...prev,
-                      package: e.target.value,
+                      search: e.target.value,
                     }))
                   }
                 />
@@ -280,7 +298,7 @@ export default function Packages() {
                   </TableHeader>
 
                   <TableBody>
-                    {rows.map((r) => (
+                    {paginatedRows.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell>
                           <div className="flex items-center gap-3">
@@ -327,7 +345,7 @@ export default function Packages() {
                       </TableRow>
                     ))}
 
-                    {rows.length === 0 && (
+                    {paginatedRows.length === 0 && (
                       <TableRow>
                         <TableCell colSpan={9} className="py-10 text-center">
                           No subscription found.
@@ -337,6 +355,16 @@ export default function Packages() {
                   </TableBody>
                 </Table>
               </div>
+            </div>
+
+            {/* PAGINATION */}
+            <div className="mt-6">
+              <DataPagination
+                totalItems={totalItems}
+                currentPage={page}
+                pageSize={pageSize}
+                onPageChange={setPage}
+              />
             </div>
           </TabsContent>
         </Tabs>

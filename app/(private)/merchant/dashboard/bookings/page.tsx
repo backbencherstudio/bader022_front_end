@@ -218,7 +218,6 @@ export default function Page() {
 
             {/* Calendar Grid */}
             {view === "monthly" ? (
-<<<<<<< HEAD
               <>
                 <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
@@ -320,18 +319,6 @@ export default function Page() {
                 </div>
                 <WeeklyGrid monthLabel={monthLabel} />
               </>
-=======
-              <MonthGrid
-                month={month}
-                bookings={filteredBookings || []}
-                onOpenMore={onOpenMore}
-              />
-            ) : (
-              <WeeklyGrid
-                monthLabel={monthLabel}
-                bookings={filteredBookings || []}
-              />
->>>>>>> 2a5d0b605647fb2b26c7f39e8e0dec65bda817d6
             )}
           </div>
         </TabsContent>
@@ -347,10 +334,7 @@ export default function Page() {
       <AddBookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-<<<<<<< HEAD
       // onSubmit={handleAddBooking}
-=======
->>>>>>> 2a5d0b605647fb2b26c7f39e8e0dec65bda817d6
       />
     </div>
   );

@@ -22,11 +22,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { useUserPaymentHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
 import Pagination from "@/components/reusable/Pagination";
+import { downloadPdf } from "@/helper/downloadPdf";
 
-export type TxStatus = "paid" | "failed" | "due" ;
+export type TxStatus = "paid" | "failed" | "due" | "refunded" | "refund_failed";
 
 export type TransactionRow = {
-  bookingID: string;
+  bookingID: number;
   customerName: string;
   customerAvatar?: string;
   service: string;
@@ -36,12 +37,16 @@ export type TransactionRow = {
 };
 
 type Booking = {
+  booking_id: number;
+  store_name: string;
+  store_logo: string | null;
   tx_id: string;
   merchant_name: string;
   business_logo: string | null;
   business_name: string;
+  service: string;
   amount: string;
-  date: string;
+  date_time: string;
   status: string;
 };
 
@@ -51,6 +56,8 @@ function StatusPill({ status }: { status: TxStatus }) {
     paid: "border-emerald-500 bg-emerald-50 text-emerald-700",
     failed: "border-red-500 bg-red-50 text-red-600",
     due: "border-amber-500 bg-amber-50 text-amber-700",
+    refunded: "border-blue-500 bg-blue-50 text-blue-700",
+    refund_failed: "border-purple-500 bg-purple-50 text-purple-700",
     // confirm: "border-sky-500 bg-sky-50 text-sky-700",
   };
 
@@ -58,6 +65,8 @@ function StatusPill({ status }: { status: TxStatus }) {
     paid: "Paid",
     failed: "Failed",
     due: "due",
+    refunded: "refunded",
+    refund_failed :"refund_failed",
     // confirm: "Confirmed",
   };
 
@@ -93,7 +102,9 @@ export function RecentTransactionsCard({
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardContent className="pb-8">
-
+                     <div className="text-lg font-medium pb-4">
+                      Payment History
+                     </div>
         {/* Filter */}
         <div className="mb-6 flex flex-wrap items-center gap-4">
           <div className="mr-2 text-base font-semibold">Filter by:</div>
@@ -118,6 +129,8 @@ export function RecentTransactionsCard({
               <SelectItem value="paid">Paid</SelectItem>
               <SelectItem value="failed">Failed</SelectItem>
               <SelectItem value="due">Due</SelectItem>
+              <SelectItem value="refunded">refunded</SelectItem>
+              <SelectItem value="refund_failed">refund_failed</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -127,8 +140,8 @@ export function RecentTransactionsCard({
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30 ">
-                <TableHead className="text-muted-foreground">Booking Id</TableHead>
-                <TableHead className="text-muted-foreground">Merchant</TableHead>
+                <TableHead className="text-muted-foreground">Booking ID</TableHead>
+                <TableHead className="text-muted-foreground">Business Name</TableHead>
                 <TableHead className="text-muted-foreground">Service</TableHead>
                 <TableHead className="text-muted-foreground">Date & Time</TableHead>
                 <TableHead className="text-muted-foreground">Amount</TableHead>
@@ -173,10 +186,30 @@ export function RecentTransactionsCard({
                   </TableCell>
 
                   <TableCell
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                      console.log("Download clicked for booking:", r.bookingID);
+
+                      // const pdfRows = [
+                      //   { label: "Booking ID", value: r.bookingID },
+                      //   { label: "Customer Name", value: r.customerName },
+                      //   { label: "Service", value: r.service },
+                      //   { label: "Amount", value: r.amountLabel },
+                      //   { label: "Date & Time", value: r.dateLabel },
+                      //   { label: "Status", value: r.status },
+                      // ];
+
+                      // console.log("Rows prepared for PDF:", pdfRows);
+
+                      // try {
+                      //   downloadPdf(`Transaction ${r.bookingID}`, pdfRows, `transaction_${r.bookingID}`);
+                      //   console.log("PDF generation started");
+                      // } catch (err) {
+                      //   console.error("PDF generation failed:", err);
+                      // }
+                    }}
                     className="cursor-pointer underline"
                   >
-                    <Download className="text- text-muted-foreground w-5"/>
+                    <Download className="text-muted-foreground w-5" />
                   </TableCell>
                 </TableRow>
               ))}
@@ -223,13 +256,14 @@ export default function UserPaymentHistory() {
   const [search, setSearch] = useState("");
 
   const { data, isLoading, error } = useUserPaymentHistoryQuery({
-    search,
+    status: search,
     page,
   });
-  console.log("search:", search);
+  console.log("status",);
 
   const pagination = data?.pagination;
   const bookings: Booking[] = data?.data ?? [];
+  console.log(bookings,"dfdfffffffffffffffffff===")
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
@@ -238,17 +272,17 @@ export default function UserPaymentHistory() {
     const status = b.status.toLowerCase();
 
     const safeStatus: TxStatus =
-      status === "paid" || status === "failed" || status === "due"
+      status === "paid" || status === "failed" || status === "due" || status === "refunded" || status === "refund_failed"
         ? status
         : "due";
 
     return {
-      bookingID: Number(b.tx_id.replace(/\D/g, "")).toString(),
-      customerName: b.merchant_name,
-      customerAvatar: b.business_logo ?? undefined,
-      service: b.business_name,
+      bookingID: b.booking_id,
+      customerName: b.store_name,
+      customerAvatar: b.store_logo ?? undefined,
+      service: b.service,
       amountLabel: b.amount,
-      dateLabel: b.date,
+      dateLabel: b.date_time,
       status: safeStatus,
     };
   });

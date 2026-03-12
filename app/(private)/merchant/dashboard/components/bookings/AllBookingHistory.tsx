@@ -1,7 +1,14 @@
 "use client";
 import { SaudiRiyal, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import Pagination from "@/components/reusable/Pagination";
@@ -9,7 +16,12 @@ import { useDashboardbookingHistoryQuery } from "@/redux/features/userDashboard/
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
 
-export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
+export type TxStatus =
+  | "completed"
+  | "cancel"
+  | "pending"
+  | "confirm"
+  | "rescheduled";
 
 export type TransactionRow = {
   bookingID: string;
@@ -62,11 +74,13 @@ function StatusPill({ status }: { status: TxStatus }) {
     cancel: "Cancelled",
     pending: "Pending",
     confirm: "Confirmed",
-    rescheduled:"Rescheduled"
+    rescheduled: "Rescheduled",
   };
 
   return (
-    <span className={`inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border ${statusStyles[status]}`}>
+    <span
+      className={`inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border ${statusStyles[status]}`}
+    >
       {statusLabels[status]}
     </span>
   );
@@ -79,8 +93,12 @@ export default function AllBookingHistory() {
 
   const { data, isLoading, error } = useDashboardbookingHistoryQuery({
     page,
-    service_name: serviceName, 
-  }) as { data?: DashboardBookingResponse; isLoading: boolean; error?: unknown };
+    service_name: serviceName,
+  }) as {
+    data?: DashboardBookingResponse;
+    isLoading: boolean;
+    error?: unknown;
+  };
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
@@ -88,7 +106,7 @@ export default function AllBookingHistory() {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 
-  console.log(bookings)
+  console.log(bookings);
   const mappedBookings: TransactionRow[] = bookings.map((b) => ({
     bookingID: String(b.booking_id),
     customerName: b.customer,
@@ -102,18 +120,28 @@ export default function AllBookingHistory() {
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardHeader className="flex justify-between items-center">
-        <CardTitle className="text-xl font-semibold">All Booking History</CardTitle>
+        <CardTitle className="text-xl font-semibold">
+          All Booking History
+        </CardTitle>
 
         <div className="relative w-full max-w-xs gap-3 flex">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search
+            size={16}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+          />
           <input
             type="text"
             placeholder="Filter by service name"
             value={serviceName}
-            onChange={(e) => { setServiceName(e.target.value); setPage(1); }}
+            onChange={(e) => {
+              setServiceName(e.target.value);
+              setPage(1);
+            }}
             className="h-10  rounded-xl border border-gray-300 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-        <button className="text-white bg-black px-2 rounded-lg">View all</button>
+          <button className="text-white bg-black px-2 rounded-lg">
+            View all
+          </button>
         </div>
       </CardHeader>
 
@@ -129,7 +157,6 @@ export default function AllBookingHistory() {
                 <TableHead>Date</TableHead>
                 <TableHead className="">Status</TableHead>
                 <TableHead>Actions</TableHead>
-
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -140,13 +167,16 @@ export default function AllBookingHistory() {
                   <TableCell>{r.service}</TableCell>
                   <TableCell>{r.amountLabel}</TableCell>
                   <TableCell>{r.dateLabel}</TableCell>
-                  <TableCell><StatusPill status={r.status} /></TableCell>
+                  <TableCell>
+                    <StatusPill status={r.status} />
+                  </TableCell>
 
                   <TableCell>
-                    <Button className="cursor-pointer"
+                    <Button
+                      className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)} 
+                      onClick={() => setSelectedBooking(r.bookingID)}
                     >
                       View Details
                     </Button>
@@ -171,7 +201,9 @@ export default function AllBookingHistory() {
         <BookingDetailsModal
           bookingId={selectedBooking}
           open={!!selectedBooking}
-          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+          onOpenChange={(open) => {
+            if (!open) setSelectedBooking(null);
+          }}
         />
       )}
     </Card>

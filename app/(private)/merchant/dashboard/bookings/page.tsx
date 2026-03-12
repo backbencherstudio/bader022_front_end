@@ -43,7 +43,7 @@ export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function Page() {
   const { data: allBookings, isLoading } = useAllBookingsQuery({});
-  // console.log({ allBookings });
+  console.log({ allBookings });
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");
   const [month, setMonth] = useState(() => new Date(2026, 0, 1));
@@ -88,7 +88,7 @@ export default function Page() {
     return matchesSearch && matchesScope;
   });
 
-  // console.log({ filteredBookings });
+  console.log({ filteredBookings });
 
   return (
     <div className="w-full py-4">
@@ -175,7 +175,7 @@ export default function Page() {
 
           {/* Calendar Header + View Toggle */}
           <div className="mt-4">
-            <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            {/* <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <div className="text-sm font-semibold">
                   {format(month, "MMMM yyyy")}
@@ -214,7 +214,7 @@ export default function Page() {
                   </Button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Calendar Grid */}
             {view === "monthly" ? (
@@ -240,10 +240,11 @@ export default function Page() {
                         // className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
                         className={`
     h-8 cursor-pointer transition-colors
-    ${isMonthly
-                            ? "bg-black dark:bg-white dark:text-black!"
-                            : "text-black dark:text-white bg-white  dark:bg-black!"
-                          }
+    ${
+      isMonthly
+        ? "bg-black dark:bg-white dark:text-black!"
+        : "text-black dark:text-white bg-white  dark:bg-black!"
+    }
   `}
                         onClick={() => setView("monthly")}
                       >
@@ -254,10 +255,11 @@ export default function Page() {
                         size="sm"
                         className={`
     h-8 cursor-pointer transition-colors
-    ${isWeekly
-                            ? "bg-black dark:bg-white dark:text-black!"
-                            : "text-black dark:text-white hover:text-white bg-gray-100 dark:bg-gray-800"
-                          }
+    ${
+      isWeekly
+        ? "bg-black dark:bg-white dark:text-black!"
+        : "text-black dark:text-white hover:text-white bg-gray-100 dark:bg-gray-800"
+    }
   `}
                         onClick={() => setView("weekly")}
                       >
@@ -268,7 +270,7 @@ export default function Page() {
                 </div>
                 <MonthGrid
                   month={month}
-                  bookings={bookings}
+                  bookings={filteredBookings}
                   onOpenMore={onOpenMore}
                 />
               </>
@@ -293,10 +295,11 @@ export default function Page() {
                         // variant={view === "monthly" ? "default" : "ghost"}
                         size="sm"
                         // className="h-8 bg-white text-black hover:bg-white dark:bg-gray-800 hover:dark:bg-gray-900 dark:text-white cursor-pointer"
-                        className={`h-8 cursor-pointer transition-colors${isMonthly
+                        className={`h-8 cursor-pointer transition-colors${
+                          isMonthly
                             ? "bg-black dark:bg-white dark:text-black!"
                             : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
-                          }
+                        }
   `}
                         onClick={() => setView("monthly")}
                       >
@@ -304,11 +307,12 @@ export default function Page() {
                       </Button>
                       <Button
                         // variant={view === "monthly" ? "ghost" : "default"}
-                        size="sm" 
-                        className={`h-8 cursor-pointer transition-colors${isWeekly
+                        size="sm"
+                        className={`h-8 cursor-pointer transition-colors${
+                          isWeekly
                             ? "bg-black dark:bg-white dark:text-black!"
                             : "text-black dark:text-white  dark:bg-black!"
-                          }
+                        }
 `}
                         onClick={() => setView("weekly")}
                       >
@@ -325,7 +329,8 @@ export default function Page() {
 
         {/* Table Tab */}
         <TabsContent value="table" className="mt-6">
-          <AllBookingHistory data={allBookings || []} />
+          {/* <AllBookingHistory data={allBookings || []} /> */}
+          <AllBookingHistory />
           <BookingPopup isPopup={isPopup} setIsPopup={setIsPopup} />
         </TabsContent>
       </Tabs>
@@ -334,7 +339,7 @@ export default function Page() {
       <AddBookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-      // onSubmit={handleAddBooking}
+        // onSubmit={handleAddBooking}
       />
     </div>
   );

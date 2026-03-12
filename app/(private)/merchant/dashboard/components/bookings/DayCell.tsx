@@ -29,11 +29,11 @@ export default function DayCell({
   bookings: TBooking[];
   onOpenMore: (day: Date, dayBookings: TBooking[]) => void;
 }) {
-  const dayBookings = bookings.filter((b: any) =>
+  const dayBookings = bookings?.filter((b: any) =>
     isSameDay(toDate(b.created_at), day),
   );
   const maxVisible = 1;
-  const overflow = Math.max(0, dayBookings.length - maxVisible);
+  const overflow = Math.max(0, dayBookings?.length - maxVisible);
 
   // console.log({ dayBookings });
 
@@ -57,7 +57,7 @@ export default function DayCell({
       </div>
 
       <div className="mt-2 space-y-2">
-        {dayBookings.slice(0, maxVisible).map((b) => (
+        {dayBookings?.slice(0, maxVisible).map((b) => (
           <MiniBookingPill key={b.id} booking={b} />
         ))}
 

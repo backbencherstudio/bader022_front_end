@@ -1,4 +1,5 @@
 "use client";
+
 import { useI18n } from "@/components/provider/I18nProvider";
 import AppSidebar from "../components/AppSidebar";
 import TopBar from "../merchant/dashboard/components/shared/Topbar";
@@ -9,9 +10,10 @@ import {
   Calendar,
   User,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+
+import { useEffect, useState } from "react";
 import { authorize } from "@/lib/auth";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const USER_NAV_ITEMS = [
   {
@@ -45,20 +47,36 @@ export const USER_FOOTER_ITEMS = [
     action: "logout",
   },
 ];
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const { locale } = useI18n();
-
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const auth = authorize(["User"]);
     if (!auth.authorized) {
-      router.push("/login");
+      router.push("/");
     }
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
@@ -67,7 +85,7 @@ export default function DashboardLayout({
           navItems={USER_NAV_ITEMS}
           footerItems={USER_FOOTER_ITEMS as any}
           logoSrc="/images/image 259.png"
-          title="Car wash"
+          // title="Car wash"
           badgeText="premium"
         />
         <TopBar />

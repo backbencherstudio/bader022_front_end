@@ -14,12 +14,11 @@ import {
   BadgeDollarSign,
   X,
 } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { OrderDetailsDialog } from "./OrderDetailsModal";
 import { CancelAppointmentModal } from "./CancelAppointmentModal";
-import { RescheduleAppointmentModal } from "./RescheduleAppointmentModal";
+import RescheduleAppointmentModal from "./RescheduleAppointmentModal";
 import { useDashboardActivityQuery, useUpcommingQuery } from "@/redux/features/userDashboard/userDashboard";
-
 
 // --------------------
 // Types
@@ -39,6 +38,7 @@ type UpcomingBooking = {
   booking_date: string;
   booking_id: number;
   booking_time: string;
+  service_id: number;
   merchant_category: string;
   merchant_phone: string;
   service_name: string;
@@ -51,10 +51,10 @@ type UpcomingResponse = {
   success: boolean;
   data: UpcomingBooking;
 };
+
 // --------------------
 // Component
 // --------------------
-
 
 export default function UpcomingAppointment() {
   const {
@@ -83,35 +83,27 @@ export default function UpcomingAppointment() {
   const activities: Activity[] = data?.data ?? [];
 
   const getIcon = (title: string) => {
-    if (title.toLowerCase().includes("cancel"))
-      return <X size={22} />;
-    if (title.toLowerCase().includes("reschedule"))
-      return <Calendar size={22} />;
-    if (title.toLowerCase().includes("payment"))
-      return <BadgeDollarSign size={22} />;
+    if (title.toLowerCase().includes("cancel")) return <X size={22} />;
+    if (title.toLowerCase().includes("reschedule")) return <Calendar size={22} />;
+    if (title.toLowerCase().includes("payment")) return <BadgeDollarSign size={22} />;
     return <Check size={22} />;
   };
 
   return (
     <div className="my-3">
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-
         {/* LEFT CARD */}
         <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-
           <div className="flex items-start justify-between">
             <h2 className="text-[26px] font-semibold text-black dark:text-white">
               Upcoming Appointment
             </h2>
-
             <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
               {booking?.status}
             </span>
           </div>
 
-          <h3 className="text-[20px] font-semibold">
-            {booking?.service_name}
-          </h3>
+          <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
 
           <div className="space-y-4 text-[18px] text-gray-600 mt-4">
             <div className="flex items-center gap-4 text-black dark:text-white">
@@ -135,11 +127,12 @@ export default function UpcomingAppointment() {
             </div>
           </div>
 
-          <Button
-            className="cursor-pointer py-5 mt-6"
+          <Button className="cursor-pointer"
             onClick={() => {
-              setSelectedBookingId(booking?.booking_id ?? null);
-              setOrderOpen(true);
+              if (booking?.booking_id) {
+                setSelectedBookingId(booking.booking_id);
+                setOrderOpen(true);
+              }
             }}
           >
             View Order Details
@@ -148,53 +141,28 @@ export default function UpcomingAppointment() {
 
         {/* RIGHT CARD */}
         <Card className="rounded-[18px] px-7 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-
           <h2 className="text-[22px] font-semibold text-black dark:text-white">
             Recent Activity
           </h2>
 
           <div className="space-y-7 mt-6">
-
-            {isLoading && (
-              <p className="text-gray-400 text-sm">
-                Loading activity...
-              </p>
-            )}
-
-            {/* {error && (
-              <p className="text-red-500 text-sm">
-                Failed to load activity
-              </p>
-            )} */}
-
-            {!isLoading && activities.length === 0 && (
-              <p className="text-gray-400 text-sm">
-                No recent activity found
-              </p>
-            )}
-
+            {isLoading && <p className="text-gray-400 text-sm">Loading activity...</p>}
+            {!isLoading && activities.length === 0 && <p className="text-gray-400 text-sm">No recent activity found</p>}
             {activities.map((item: Activity, index: number) => (
-              <div
-                key={index}
-                className="flex items-center justify-between"
-              >
+              <div key={index} className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-[14px] flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                     {getIcon(item.title)}
                   </div>
-
-                  <p className="text-[16px] font-medium text-black dark:text-white">
-                    {item.title}
-                  </p>
+                  <p className="text-[16px] font-medium text-black dark:text-white">{item.title}</p>
                 </div>
-
-                <p className="text-[14px] text-gray-400">
-                  {item.time}
-                </p>
+                <p className="text-[14px] text-gray-400">{item.time}</p>
               </div>
             ))}
           </div>
         </Card>
+
+       
       </div>
 
       {/* Dialogs */}
@@ -203,19 +171,40 @@ export default function UpcomingAppointment() {
           booking_id={selectedBookingId}
           onReschedule={() => {
             setOrderOpen(false);
-            setTimeout(() => setRescheduleOpen(true), 150);
+            setTimeout(() => {
+              setRescheduleOpen(true);
+            }, 150);
           }}
           onCancel={() => {
             setOrderOpen(false);
-            setTimeout(() => setCancelOpen(true), 150);
+            setTimeout(() => {
+              setCancelOpen(true);
+            }, 150);
           }}
         />
       </Dialog>
 
+      {/* Reschedule Modal */}
       <Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
-        <RescheduleAppointmentModal />
+        <DialogContent style={{ maxWidth: '50rem' }}> 
+          <DialogHeader>
+            <DialogTitle>Reschedule Appointment</DialogTitle>
+            <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
+          </DialogHeader>
+
+          <RescheduleAppointmentModal
+            bookingId={selectedBookingId!}
+            serviceId={booking?.service_id!}
+            currentDate={booking?.booking_date}
+            onConfirm={(newDate, newTime, selectedStaff) => {
+              console.log("Reschedule Confirmed:", newDate, newTime, selectedStaff);
+              setRescheduleOpen(false);
+            }}
+          />
+        </DialogContent>
       </Dialog>
 
+      {/* Cancel Appointment Modal */}
       <Dialog open={cancelOpen} onOpenChange={setCancelOpen}>
         <CancelAppointmentModal />
       </Dialog>

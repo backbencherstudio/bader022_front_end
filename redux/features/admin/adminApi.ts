@@ -80,37 +80,37 @@ export const adminApi = baseApi.injectEndpoints({
     }),
 
     // redux/features/admin/adminApi.ts
- getSubscriptions: builder.query({
-  query: (params) => {
-    const searchParams = new URLSearchParams();
+    getSubscriptions: builder.query({
+      query: (params) => {
+        const searchParams = new URLSearchParams();
 
-    if (params?.package) {
-      searchParams.append("package", params.package);
-    }
+        if (params?.package) {
+          searchParams.append("package", params.package);
+        }
 
-    if (params?.plan_type) {
-      searchParams.append("plan_type", params.plan_type);
-    }
+        if (params?.plan_type) {
+          searchParams.append("plan_type", params.plan_type);
+        }
 
-    if (params?.status) {
-      searchParams.append("status", params.status);
-    }
+        if (params?.status) {
+          searchParams.append("status", params.status);
+        }
 
-    if (params?.search) {
-      searchParams.append("search", params.search); // 🔥 add this
-    }
+        if (params?.search) {
+          searchParams.append("search", params.search);
+        }
 
-    const queryString = searchParams.toString();
+        const queryString = searchParams.toString();
 
-    return {
-      url: queryString
-        ? `/admin/subscription/index?${queryString}`
-        : `/admin/subscription/index`,
-      method: "GET",
-    };
-  },
-  providesTags: ["Subscription"],
-}),
+        return {
+          url: queryString
+            ? `/admin/subscription/index?${queryString}`
+            : `/admin/subscription/index`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Subscription"],
+    }),
 
     // show subscription by id
     getSubscriptionsId: builder.query({
@@ -131,11 +131,14 @@ export const adminApi = baseApi.injectEndpoints({
       invalidatesTags: ["Subscription"],
     }),
 
-    // get subscription plan
+    // get subscription plan======qqqqqqqqqqqq
     getSubscriptionsPlan: builder.query({
-      query: () => ({
-        url: `/admin/plan/index`,
+      query: ({ search = "" }) => ({
+        url: `/admin/plan/index?name=${search}`,
         method: "GET",
+        // params: {
+        //   search,
+        // },
       }),
       providesTags: ["Plan"],
     }),
@@ -181,14 +184,16 @@ export const adminApi = baseApi.injectEndpoints({
 
     //Tap key update
     updateTapkey: builder.mutation({
-      query: ({ body }) => ({
-        url: `admin/setting/update`,
-        method: "POST",
-        body,
-      }),
+      query: ({ body }) => {
+        console.log("body in adminApi", body); // <-- log here
+        return {
+          url: `admin/setting/update`,
+          method: "POST",
+          body,
+        };
+      },
       invalidatesTags: ["Tapkey"],
     }),
-
     //subcription card data
     getsubcriptionSumary: builder.query({
       query: () => ({
@@ -225,6 +230,15 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["information"],
     }),
+
+    //buesness analytics
+    getBuesnessAnalytics: builder.query({
+      query: () => ({
+        url: `/admin/businessTypeAnalytics`,
+        method: "GET",
+      }),
+      // providesTags: ["information"],
+    }),
   }),
 });
 
@@ -249,4 +263,5 @@ export const {
   useGetPersonaltHistoryQuery,
   useUpdateInformationMutation,
   useGetsubcriptionSumaryQuery,
+  useGetBuesnessAnalyticsQuery,
 } = adminApi;

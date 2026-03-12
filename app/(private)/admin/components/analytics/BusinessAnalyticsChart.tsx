@@ -1,18 +1,35 @@
 "use client";
 
+import { useGetBuesnessAnalyticsQuery } from "@/redux/features/admin/adminApi";
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 
-const chartData = [
-  { name: "Salon Beauty", value: 45, color: "#7D4CB5" },
-  { name: "Home Services", value: 38, color: "#F6C000" },
-  { name: "Health", value: 28, color: "#2E3DBB" },
-  { name: "Fitness Pro Gym", value: 20, color: "#0A1423" },
-  { name: "Others", value: 15, color: "#E6E6E6" },
+type BusinessCategory = {
+  business_category: string;
+  total: number;
+};
+
+type BusinessAnalyticsResponse = {
+  total_merchants: number;
+  categories: BusinessCategory[];
+};
+
+const COLORS = [
+  "#7D4CB5",
+  "#F6C000",
+  "#2E3DBB",
+  "#0A1423",
+  "#E6E6E6",
 ];
 
-const totalMerchants = 156;
+// snake_case → Title Case
+const formatCategory = (text: string) => {
+  return text
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
-//  Custom slice label (rounded pill)
+//  Custom slice label
 const renderSliceLabel = ({
   cx,
   cy,
@@ -23,6 +40,7 @@ const renderSliceLabel = ({
 }: any) => {
   const RADIAN = Math.PI / 180;
   const radius = innerRadius + (outerRadius - innerRadius) / 2;
+
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -48,12 +66,29 @@ const renderSliceLabel = ({
 };
 
 export default function BusinessTypeAnalyticsChart() {
+  const { data, isLoading } = useGetBuesnessAnalyticsQuery({}) as {
+    data?: BusinessAnalyticsResponse;
+    isLoading: boolean;
+  };
+
+  const analyticsData: BusinessCategory[] = data?.categories || [];
+
+  const chartData = analyticsData.map((item: BusinessCategory, index: number) => ({
+    name: formatCategory(item.business_category),
+    value: item.total,
+    color: COLORS[index % COLORS.length],
+  }));
+
+  const totalMerchants = data?.total_merchants || 0;
+
   return (
     <div className="w-full bg-white p-4 dark:bg-gray-800">
-      {/*  Title */}
-      <h2 className="text-xl font-medium mb-6">Business Type Analytics</h2>
+      {/* Title */}
+      <h2 className="text-xl font-medium mb-6">
+        Business Type Analytics
+      </h2>
 
-      {/*  Chart Container */}
+      {/* Chart */}
       <div className="w-full h-80 flex justify-center items-center">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -72,7 +107,7 @@ export default function BusinessTypeAnalyticsChart() {
               ))}
             </Pie>
 
-            {/*  Center Text */}
+            {/* Center Text */}
             <text
               x="50%"
               y="47%"
@@ -100,7 +135,7 @@ export default function BusinessTypeAnalyticsChart() {
         </ResponsiveContainer>
       </div>
 
-      {/*  Legend (Manual, same as screenshot) */}
+      {/* Legend */}
       <div className="mt-10 flex items-center flex-wrap gap-4">
         {chartData.map((item, idx) => (
           <div

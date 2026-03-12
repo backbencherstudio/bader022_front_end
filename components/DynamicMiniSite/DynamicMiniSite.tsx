@@ -14,7 +14,7 @@ interface MiniSiteData {
   cta_button_text_two?: string;
   background_color?: string;
   about_padding?: string;
-  about_hero_image?: string | null;
+  about_hero_image?: string;
   about_description?: string;
   about_title?: string;
   service_title?: string;
@@ -46,6 +46,7 @@ interface Service {
   image?: string;
   service_name?: string;
   description?: string;
+  duration?: string;
 }
 
 interface DynamicMiniSiteProps {
@@ -58,7 +59,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log(data.minisite.about_padding);
+  // console.log(data?.minisite?.hero_image);
   return (
     <div>
       {/* hero section  */}
@@ -66,10 +67,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         <div className="relative w-full h-[70vh] overflow-hidden">
           {/* Background Image */}
           <Image
-            src={
-              //   getImageUrl(data?.minisite?.hero_image) ||
-              "/images/mini-site/heroImage.png"
-            }
+            src={getImageUrl(data?.minisite?.hero_image)}
             alt="Hero background"
             fill
             className="object-cover"
@@ -107,6 +105,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               height={data.global_setting.logo_size || 40}
               className="object-contain"
               priority
+              unoptimized={true}
             />
           </div>
 
@@ -201,14 +200,12 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             {/* Image */}
             <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
               <Image
-                src={
-                  data.minisite.about_hero_image ||
-                  "/images/mini-site/aboutus.png"
-                }
+                src={getImageUrl(data?.minisite?.about_hero_image)}
                 alt="About Us"
                 fill
                 className="object-cover"
                 priority
+                unoptimized={true}
               />
             </div>
 
@@ -296,14 +293,17 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_one_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_one_des || "Feature icon"}
-                    width={28}
-                    height={28}
+                    alt={data.why_choose_us.feature_one_title || "Feature icon"}
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -337,14 +337,17 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_two_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_one_des || "Feature icon"}
-                    width={28}
-                    height={28}
+                    alt={data.why_choose_us.feature_two_title || "Feature icon"}
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -378,14 +381,19 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_three_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_two_des || "Feature icon"}
-                    width={28}
-                    height={28}
+                    alt={
+                      data.why_choose_us.feature_three_title || "Feature icon"
+                    }
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -477,6 +485,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                       alt={item.service_name || "title"}
                       fill
                       className="object-cover"
+                      unoptimized={true}
                     />
                   </div>
 
@@ -492,7 +501,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         <span>{item.service_name}</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">
-                        25
+                        {item.duration}
                       </span>
                     </div>
 
@@ -549,6 +558,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             fill
             className="object-cover"
             priority
+            unoptimized={true}
           />
 
           {/* Overlay (light + dark) */}

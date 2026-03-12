@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function ServicesPreview() {
   const {
@@ -11,7 +12,7 @@ export default function ServicesPreview() {
     typographyData,
   } = useLandingPage();
 
-  if (!servicesPreviewData.servicesPreviewTitle) return null;
+  // console.log(servicesPreviewData.servicesCards);
 
   return (
     <section
@@ -64,20 +65,24 @@ export default function ServicesPreview() {
             <div key={index}>
               <div
                 className="
-                    rounded-2xl overflow-hidden
-                    bg-white dark:bg-gray-800
-                    border border-gray-200 dark:border-gray-700
-                    shadow-sm hover:shadow-md
-                    transition
-                  "
+          rounded-2xl overflow-hidden
+          bg-white dark:bg-gray-800
+          border border-gray-200 dark:border-gray-700
+          shadow-sm hover:shadow-md
+          transition
+        "
               >
                 {/* Image */}
                 <div className="relative h-48 w-full">
                   <Image
-                    src={item.image || "/images/mini-site/service1.png"}
-                    alt={item.title}
+                    src={
+                      getImageUrl(item.image as string) ||
+                      "/placeholder-image.png"
+                    }
+                    alt={item.title || "Service"}
                     fill
                     className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -90,16 +95,17 @@ export default function ServicesPreview() {
                   <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-2">
                       <span>⏱</span>
-                      <span>{item.title}</span>
+                      <span>{item.title || "Service"}</span>
                     </div>
+
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      25
+                      {item.duration}
                     </span>
                   </div>
 
                   {/* Title */}
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {item.title}
+                    {item.title || "Service"}
                   </h3>
 
                   {/* Description */}
@@ -111,7 +117,7 @@ export default function ServicesPreview() {
                   </p>
 
                   {/* Button */}
-                  <Link href={"/user/bookings/add-booking"}>
+                  <Link href="/user/bookings/add-booking">
                     <button
                       style={{
                         backgroundColor: colorSystemData.primaryColor,

@@ -39,7 +39,7 @@ export default function AboutSection() {
         />
       </div>
       {/* About Image Upload */}
-      <div>
+      {/* <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Hero Image
         </label>
@@ -57,6 +57,37 @@ export default function AboutSection() {
               if (!file) return;
               const url = URL.createObjectURL(file);
               setAboutData({ ...aboutData, aboutImage: url });
+            }}
+          />
+        </label>
+      </div> */}
+      <div>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          About Image
+        </label>
+
+        <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed rounded-lg py-8 cursor-pointer border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <FiImage size={26} className="text-gray-400" />
+
+          <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+            Click to upload
+          </span>
+
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+
+              const preview = URL.createObjectURL(file);
+
+              setAboutData((prev) => ({
+                ...prev,
+                aboutPreviewImage: preview,
+                aboutImageFile: file,
+              }));
             }}
           />
         </label>
@@ -105,7 +136,7 @@ export default function AboutSection() {
           onChange={(e) =>
             setAboutData({
               ...aboutData,
-              padding: Number(e.target.value),
+              padding: e.target.value,
             })
           }
           className="w-full mt-2 cursor-pointer"

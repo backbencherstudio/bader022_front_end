@@ -39,9 +39,7 @@ export default function page() {
     useCreateGlobalSettingMutation();
 
   const handleSubmit = async () => {
-    console.log("====================================");
-    console.log(brandingData);
-    console.log("====================================");
+    console.log(heroData.heroImageFile);
 
     try {
       const formData = new FormData();
@@ -51,13 +49,25 @@ export default function page() {
       formData.append("hero_description", heroData.heroDescription);
       formData.append("cta_button_text", heroData.primaryBtn);
       formData.append("cta_button_text_two", heroData.secondaryBtn);
+      // if (heroData.heroImageFile && heroData.heroImageFile.length > 0) {
+      //   formData.append("hero_image", heroData.heroImageFile[0]);
+      // }
+      if (heroData.heroImageFile) {
+        formData.append("hero_image", heroData.heroImageFile);
+      }
       formData.append("hero_overlay_color", heroData.overlayColor);
       formData.append("about_title", aboutData.aboutTitle);
       formData.append("about_description", aboutData.aboutDescription);
+      if (aboutData.aboutImageFile) {
+        formData.append("about_hero_image", aboutData.aboutImageFile);
+      }
       formData.append("background_color", aboutData.backgroundColor);
       formData.append("about_padding", aboutData.padding as any);
       formData.append("cta_title", ctaBannerData.ctaBannerTitle);
       formData.append("cta_subtitle", ctaBannerData.ctaBannerSubTitle);
+      if (ctaBannerData.ctaBannerFile) {
+        formData.append("cta_image", ctaBannerData.ctaBannerFile);
+      }
       formData.append("cta_overlay_color", ctaBannerData.ctaBannerOverlayColor);
       formData.append("cta_padding", ctaBannerData.padding as any);
       formData.append(
@@ -75,16 +85,28 @@ export default function page() {
 
       formData.append("section_title", whyChooseUsData.whyChooseUsTitle);
       formData.append("section_subtitle", whyChooseUsData.whyChooseUsSubtitle);
+      if (whyChooseUsData.cardImageOneFile) {
+        formData.append("feature_one_image", whyChooseUsData.cardImageOneFile);
+      }
       formData.append("feature_one_title", whyChooseUsData.whyChooseUsTitleOne);
       formData.append(
         "feature_one_des",
         whyChooseUsData.whyChooseUsDescriptionOne,
       );
+      if (whyChooseUsData.cardImageTwoFile) {
+        formData.append("feature_two_image", whyChooseUsData.cardImageTwoFile);
+      }
       formData.append("feature_two_title", whyChooseUsData.whyChooseUsTitleTwo);
       formData.append(
         "feature_two_des",
         whyChooseUsData.whyChooseUsDescriptionTwo,
       );
+      if (whyChooseUsData.cardImageThreeFile) {
+        formData.append(
+          "feature_three_image",
+          whyChooseUsData.cardImageThreeFile,
+        );
+      }
       formData.append(
         "feature_three_title",
         whyChooseUsData.whyChooseUsTitleThree,

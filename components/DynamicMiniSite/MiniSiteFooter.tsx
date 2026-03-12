@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/helper/formatImage";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -29,6 +30,9 @@ interface FooterData {
   contact_us_url?: string;
   terms_condition_url?: string;
   privacy_policy_url?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  twitter_url?: string;
 }
 
 interface MiniSiteFooterProps {
@@ -38,7 +42,7 @@ interface MiniSiteFooterProps {
 }
 
 export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
-  console.log(data.global_setting);
+  // console.log(data.global_setting);
 
   return (
     <div>
@@ -59,12 +63,13 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             <div className="flex items-center gap-3">
               <Image
                 src={
-                  //   data.global_setting.branding_logo ||
+                  getImageUrl(data.global_setting.branding_logo) ||
                   "/images/image 259.png"
                 }
                 alt={data.global_setting.website_name || ""}
                 width={40}
                 height={40}
+                unoptimized={true}
               />
             </div>
 
@@ -75,7 +80,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             {/* Social Links */}
             <div className="flex gap-3 mt-6">
               <Link
-                href={"item.url"}
+                href={`${data.global_setting.facebook_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center
@@ -86,7 +91,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <FaFacebookF />
               </Link>
               <Link
-                href={"item.url"}
+                href={`${data.global_setting.instagram_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center
@@ -97,7 +102,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <FaInstagram />
               </Link>
               <Link
-                href={"item.url"}
+                href={`${data.global_setting.twitter_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center

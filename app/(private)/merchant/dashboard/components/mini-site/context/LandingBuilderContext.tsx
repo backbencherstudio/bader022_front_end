@@ -1,6 +1,7 @@
 "use client";
 
 import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
+import { useAppSelector } from "@/redux/hooks";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 /* ---------- TYPES ---------- */
@@ -11,6 +12,8 @@ type HeroData = {
   primaryBtn: string;
   secondaryBtn: string;
   heroImage: string;
+  heroPreviewImage: string;
+  heroImageFile?: File | null;
   imageLeft: boolean;
   overlayColor: string;
   heroHeight: number;
@@ -20,29 +23,38 @@ type AboutData = {
   aboutTitle: string;
   aboutDescription: string;
   aboutImage: string;
+  aboutPreviewImage: string;
+  aboutImageFile?: File | null;
   backgroundColor: string;
-  padding: number;
+  padding: string;
 };
 
 type WhyChooseUsData = {
   whyChooseUsTitle: string;
   whyChooseUsSubtitle: string;
   backgroundColor: string;
-  cardImageOne: string | null;
+  cardImageOne: string;
   whyChooseUsTitleOne: string;
   whyChooseUsDescriptionOne: string;
-  cardImageTwo: string | null;
+  cardImageTwo: string;
   whyChooseUsTitleTwo: string;
   whyChooseUsDescriptionTwo: string;
-  cardImageThree: string | null;
+  cardImageThree: string;
   whyChooseUsTitleThree: string;
   whyChooseUsDescriptionThree: string;
+  cardPreviewImageOne: string;
+  cardImageOneFile: File | null;
+  cardPreviewImageTwo: string;
+  cardImageTwoFile: File | null;
+  cardPreviewImageThree: string;
+  cardImageThreeFile: File | null;
 };
 
 type ServicesCard = {
   image: string | null;
   title: string;
   description: string;
+  duration?: string;
 };
 type ServicesPreviewData = {
   servicesPreviewTitle: string;
@@ -56,9 +68,11 @@ type CtaBannerData = {
   ctaBannerTitle: string;
   ctaBannerSubTitle: string;
   ctaBannerImage: string;
+  ctaPreviewImage: string;
+  ctaBannerFile: File | null;
   backgroundColor: string;
   ctaBannerOverlayColor: string;
-  padding: number;
+  padding: string;
 };
 type BrandingData = {
   logo: string;
@@ -85,14 +99,13 @@ type LayoutSettingsData = {
   sectionSpacing?: number;
 };
 
-type SocialLinks = {
-  icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
-  url: string;
-};
+// type SocialLinks = {
+//   icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
+//   url: string;
+// };
 
-type NavigationLink = { label: string; href: string };
-type SupportLink = { label: string; href: string };
-type ContactInfo = { phone?: string; email?: string; address?: string };
+// type NavigationLink = { label: string; href: string };
+// type SupportLink = { label: string; href: string };
 
 type FooterData = {
   footerTitle: string;
@@ -122,12 +135,12 @@ type FooterData = {
   contact_info?: string;
   contact_email?: string;
   address?: string;
-  socialLinks: SocialLinks[];
-  navigation: NavigationLink[];
-  support: SupportLink[];
-  contact: ContactInfo;
+  // socialLinks: SocialLinks[];
+  // navigation: NavigationLink[];
+  // support: SupportLink[];
   showPoweredBy: boolean;
 };
+
 type LandingContextType = {
   heroData: HeroData;
   setHeroData: React.Dispatch<React.SetStateAction<HeroData>>;
@@ -174,94 +187,74 @@ export function LandingPageProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { data, isLoading, isError } = useMiniSiteByDomainNameQuery("habiba");
-
+  const { user } = useAppSelector((state) => state.auth);
+  const domain = user?.website_domain;
+  const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
   console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
-    heroTitle: "Nourishing hair growth starts with a healthy",
-    heroSubtitle: "Care your hair",
-    heroDescription:
-      "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential",
-    primaryBtn: "Get Started",
-    secondaryBtn: "Book A Consultation",
+    heroTitle: "",
+    heroSubtitle: "",
+    heroDescription: "",
+    primaryBtn: "",
+    secondaryBtn: "",
     heroImage: "",
+    heroPreviewImage: "",
+    heroImageFile: null,
     imageLeft: true,
-    overlayColor: "#fff",
+    overlayColor: "",
     heroHeight: 48,
   });
 
-  // useEffect(() => {
-  //   if (data?.data?.minisite) {
-  //     setHeroData((prev) => ({
-  //       ...prev,
-  //       heroTitle: data.data.minisite.hero_title,
-  //     }));
-  //   }
-  // }, [data]);
-
   const [aboutData, setAboutData] = useState<AboutData>({
-    aboutTitle: "Elevate Your Look with Bespoke Hair Care & Expert",
-    aboutDescription:
-      "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication.",
+    aboutTitle: "",
+    aboutDescription: "",
     aboutImage: "",
-    backgroundColor: "#f7f7f7",
-    padding: 30,
+    aboutPreviewImage: "",
+    aboutImageFile: null,
+    backgroundColor: "",
+    padding: "",
   });
 
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData>({
-    whyChooseUsTitle: "Why We’re Right Choice",
-    whyChooseUsSubtitle:
-      "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results",
-    backgroundColor: "#f7f7f7",
-    cardImageOne: null,
+    whyChooseUsTitle: "",
+    whyChooseUsSubtitle: "",
+    backgroundColor: "",
+    cardImageOne: "",
+    cardPreviewImageOne: "",
+    cardImageOneFile: null,
     whyChooseUsTitleOne: "",
     whyChooseUsDescriptionOne: "",
-    cardImageTwo: null,
+    cardImageTwo: "",
+    cardPreviewImageTwo: "",
+    cardImageTwoFile: null,
     whyChooseUsTitleTwo: "",
     whyChooseUsDescriptionTwo: "",
-    cardImageThree: null,
+    cardPreviewImageThree: "",
+    cardImageThreeFile: null,
+    cardImageThree: "",
     whyChooseUsTitleThree: "",
     whyChooseUsDescriptionThree: "",
   });
 
   const [servicesPreviewData, setServicesPreviewData] =
     useState<ServicesPreviewData>({
-      servicesPreviewTitle: "Customized Hair Treatments & Styling to Suit You",
-      servicesPreviewSubtitle:
-        "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health",
+      servicesPreviewTitle: "",
+      servicesPreviewSubtitle: "",
       serviceViewBtn: "",
-      backgroundColor: "#f7f7f7",
-      servicesCards: [
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-        {
-          image: null,
-          title: "Hair Treatment",
-          description:
-            "Improvement Rule	How Small Consistency Leads to Monumental Results.",
-        },
-      ],
+      backgroundColor: "",
+      servicesCards: [],
     });
 
   const [ctaBannerData, setCtaBannerData] = useState<CtaBannerData>({
-    ctaBannerTitle: "Your Hair Deserves the Best Care",
-    ctaBannerSubTitle:
-      "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment",
+    ctaBannerTitle: "",
+    ctaBannerSubTitle: "",
     ctaBannerImage: "",
+    ctaPreviewImage: "",
+    ctaBannerFile: null,
     backgroundColor: "",
-    ctaBannerOverlayColor: "#f7f7f7",
-    padding: 72,
+    ctaBannerOverlayColor: "",
+    padding: "",
   });
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({
@@ -297,54 +290,158 @@ export function LandingPageProvider({
     footerLogo: "",
     footerBackground: "",
     footerTextColor: "",
-    facebookUrl: "",
+    facebookUrl: "www.facebook.com",
     twitterUrl: "",
     instagramUrl: "",
     linkedinUrl: "",
     pinterestUrl: "",
-    home: "",
+    home: "Home",
     homeUrl: "",
-    about: "",
+    about: "About",
     aboutUrl: "",
-    why_choose_us: "",
+    why_choose_us: "why_choose_us",
     why_choose_usUrl: "",
-    service: "",
+    service: "service",
     serviceUrl: "",
-    contact_us: "",
+    contact_us: "contact_us",
     contactUrl: "",
-    privacy_policy: "",
+    privacy_policy: "privacy_policy",
     privacy_policyUrl: "",
-    terms_condition: "",
+    terms_condition: "terms_condition",
     terms_conditionUrl: "",
-    contact_info: "",
-    contact_email: "",
-    address: "",
+    contact_info: "013456876294",
+    contact_email: "barik@example.com",
+    address: "UK",
 
-    socialLinks: [
-      { icon: "facebook", url: "www.facebook.com" },
-      { icon: "twitter", url: "www.twitter.com" },
-      { icon: "instagram", url: "www.instagram.com" },
-      { icon: "pinterest", url: "www.pinterest.com" },
-      { icon: "linkedin", url: "www.linkedin.com" },
-    ],
-    navigation: [
-      { label: "Home", href: "#" },
-      { label: "About Us", href: "#about" },
-      { label: "Why Choose Us", href: "#why-choose-us" },
-      { label: "Services", href: "#services" },
-    ],
-    support: [
-      { label: "Contact Us", href: "#contact-us" },
-      { label: "Privacy Policy", href: "#privace-policy" },
-      { label: "Terms & Conditions", href: "#terms-conditions" },
-    ],
-    contact: {
-      phone: "013456876294",
-      email: "barik@example.com",
-      address: "UK",
-    },
+    // socialLinks: [
+    //   { icon: "facebook", url: "www.facebook.com" },
+    //   { icon: "twitter", url: "www.twitter.com" },
+    //   { icon: "instagram", url: "www.instagram.com" },
+    //   { icon: "pinterest", url: "www.pinterest.com" },
+    //   { icon: "linkedin", url: "www.linkedin.com" },
+    // ],
+    // navigation: [
+    //   { label: "Home", href: "#" },
+    //   { label: "About Us", href: "#about" },
+    //   { label: "Why Choose Us", href: "#why-choose-us" },
+    //   { label: "Services", href: "#services" },
+    // ],
+    // support: [
+    //   { label: "Contact Us", href: "#contact-us" },
+    //   { label: "Privacy Policy", href: "#privace-policy" },
+    //   { label: "Terms & Conditions", href: "#terms-conditions" },
+    // ],
     showPoweredBy: true,
   });
+
+  useEffect(() => {
+    if (!data?.data) return;
+
+    const api = data.data;
+
+    /* HERO */
+    if (api.minisite) {
+      setHeroData((prev) => ({
+        ...prev,
+        heroTitle: api.minisite.hero_title || prev.heroTitle,
+        heroSubtitle: api.minisite.hero_subtitle || prev.heroSubtitle,
+        heroDescription: api.minisite.hero_description || prev.heroDescription,
+        primaryBtn: api.minisite.cta_button_text || prev.primaryBtn,
+        secondaryBtn: api.minisite.cta_button_text_two || prev.secondaryBtn,
+        overlayColor: api.minisite.hero_overlay_color || prev.overlayColor,
+        heroImage: api.minisite.hero_image || prev.heroImage,
+      }));
+    }
+
+    /* ABOUT */
+    if (api.minisite) {
+      setAboutData((prev) => ({
+        ...prev,
+        aboutTitle: api.minisite.about_title || prev.aboutTitle,
+        aboutDescription:
+          api.minisite.about_description || prev.aboutDescription,
+        aboutImage: api.minisite.about_hero_image || prev.aboutImage,
+        backgroundColor: api.minisite.background_color || prev.backgroundColor,
+        padding: api.minisite.about_padding || prev.padding,
+      }));
+    }
+
+    /* WHY CHOOSE US */
+    if (api.why_choose_us) {
+      setWhyChooseUsData((prev) => ({
+        ...prev,
+        whyChooseUsTitle:
+          api.why_choose_us.section_title || prev.whyChooseUsTitle,
+        whyChooseUsSubtitle:
+          api.why_choose_us.section_subtitle || prev.whyChooseUsSubtitle,
+        backgroundColor:
+          api.why_choose_us.background_color || prev.backgroundColor,
+
+        cardImageOne: api.why_choose_us.feature_one_image,
+        whyChooseUsTitleOne: api.why_choose_us.feature_one_title || "",
+        whyChooseUsDescriptionOne: api.why_choose_us.feature_one_des || "",
+
+        cardImageTwo: api.why_choose_us.feature_two_image,
+        whyChooseUsTitleTwo: api.why_choose_us.feature_two_title || "",
+        whyChooseUsDescriptionTwo: api.why_choose_us.feature_two_des || "",
+
+        cardImageThree: api.why_choose_us.feature_three_image,
+        whyChooseUsTitleThree: api.why_choose_us.feature_three_title || "",
+        whyChooseUsDescriptionThree: api.why_choose_us.feature_three_des || "",
+      }));
+    }
+
+    /* SERVICES */
+    if (api.services || api.minisite) {
+      setServicesPreviewData((prev) => ({
+        ...prev,
+        servicesPreviewTitle:
+          api.minisite.service_title || prev.servicesPreviewTitle,
+        servicesPreviewSubtitle:
+          api.minisite.service_description || prev.servicesPreviewSubtitle,
+        backgroundColor:
+          api.minisite.service_background || prev.backgroundColor,
+        servicesCards: api.services.map((service: any) => ({
+          image: service.image || null,
+          title: service.name,
+          description: service.description,
+          duration: service.duration,
+        })),
+      }));
+    }
+
+    /* cta Banner */
+    if (api.minisite) {
+      setCtaBannerData((prev) => ({
+        ...prev,
+        ctaBannerTitle: api.minisite.cta_title || prev.ctaBannerTitle,
+        ctaBannerSubTitle: api.minisite.cta_subtitle || prev.ctaBannerSubTitle,
+        ctaBannerImage: api.minisite.cta_image || prev.ctaBannerImage,
+        // backgroundColor: api.minisite.cta_button_url || prev.backgroundColor,
+        ctaBannerOverlayColor:
+          api.minisite.cta_overlay_color || prev.ctaBannerOverlayColor,
+        padding: api.minisite.cta_padding || prev.padding,
+      }));
+    }
+
+    /* GLOBAL BRANDING */
+    // if (api.global_setting) {
+    //   setBrandingData((prev) => ({
+    //     ...prev,
+    //     logo: api.global_setting.branding_logo || "",
+    //     position: api.global_setting.logo_position || "center",
+    //     logoSize: Number(api.global_setting.logo_size) || 100,
+    //   }));
+    // }
+
+    /* FOOTER */
+    // setFooterData((prev) => ({
+    //   ...prev,
+    //   contact_email: api.email || prev.contact_email,
+    //   contact_info: api.phone || prev.contact_info,
+    //   address: api.address || prev.address,
+    // }));
+  }, [data]);
 
   return (
     <LandingPageContext.Provider

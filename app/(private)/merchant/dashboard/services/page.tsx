@@ -62,7 +62,7 @@ export default function ServicesPage() {
 
   const handleSubmitService = async (data: any) => {
     if (mode === "add") {
-      // console.log("Add Service:", data);
+      // console.log("Add Service:", data.image);
       try {
         const formData = new FormData();
 

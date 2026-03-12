@@ -58,11 +58,14 @@ export default function CTABanner() {
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              const url = URL.createObjectURL(file);
-              setCtaBannerData({
-                ...ctaBannerData,
-                ctaBannerImage: url,
-              });
+
+              const preview = URL.createObjectURL(file);
+
+              setCtaBannerData((prev) => ({
+                ...prev,
+                ctaPreviewImage: preview,
+                ctaBannerFile: file,
+              }));
             }}
           />
         </label>
@@ -111,7 +114,7 @@ export default function CTABanner() {
           onChange={(e) =>
             setCtaBannerData({
               ...ctaBannerData,
-              padding: Number(e.target.value),
+              padding: e.target.value,
             })
           }
           className="w-full"

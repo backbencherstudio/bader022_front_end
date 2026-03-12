@@ -202,6 +202,14 @@ export const adminApi = baseApi.injectEndpoints({
       }),
     }),
 
+
+   data: builder.query({
+    query: (body)=>({
+      url:`/add`,
+      method:"POST",
+      body,
+    })
+   }),
     //setting personal
 
     getPersonaltHistory: builder.query({

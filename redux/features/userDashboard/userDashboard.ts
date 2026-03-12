@@ -24,6 +24,16 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
 
+    //invoice download
+    invoiceDownload: builder.query({
+      query: (bookingID: number) => ({
+        url: `/admin/dashboard/invoice/${bookingID}`,
+        method: "GET",
+      }),
+    }),
+
+
+
     DashboardbookingHistory: builder.query({
       query: ({
         page = 1,
@@ -115,11 +125,29 @@ export const dashboardApi = baseApi.injectEndpoints({
         invalidatesTags: ["Reschedule"],
       }),
     }),
+    //cancel appointment
+    cancelAppoitment: builder.query({
+      query: ({ booking_id }) => ({
+        url: `/admin/dashboard/cancel-preview/${booking_id}`,
+        method: "GET",
+      }),
+      providesTags: ["Reschedule"],
+    }),
+
+    //confirm cancel appointment
+    confirmCancelAppointment: builder.mutation({
+      query: ({ booking_id }: { booking_id: number }) => ({
+        url: `/admin/dashboard/cancel-booking/${booking_id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Reschedule"],
+    }),
   }),
 });
 export const {
   useDashboardActivityQuery,
   useUserPaymentHistoryQuery,
+  useLazyInvoiceDownloadQuery,
   useDashboardbookingHistoryQuery,
   useGetSingleBookingQuery,
   useUpcommingQuery,
@@ -127,5 +155,7 @@ export const {
   useRescheduleAppointmentQuery,
   useSheduleQuery,
   useSheduleStaffQuery,
-useUseRescheduleAppointmentMutation,
+  useUseRescheduleAppointmentMutation,
+  useCancelAppoitmentQuery,
+  useConfirmCancelAppointmentMutation,
 } = dashboardApi;

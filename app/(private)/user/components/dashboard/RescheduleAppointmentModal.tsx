@@ -95,24 +95,25 @@ export default function RescheduleAppointmentModal({
   };
 
   return (
-    <Card className="rounded-2xl p-6 space-y-6">
+    <div className="rounded-2x p-1 space-y-6 ]">
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 w-full">
 
         {/* Calendar */}
-        <div className="flex-1">
+        <div className="flex-1 outline outline-[#E5E7EB] p-4 rounded-2xl w-full">
 
           <h3 className="font-semibold mb-2">Select New Date</h3>
 
           <Calendar
+            className=" w-full"
             mode="single"
             selected={dateObj}
             onSelect={handleDateChange}
           />
 
-          <div className="mt-4">
+          <div className="mt-4 outline outline-[#E5E7EB] p-2 rounded-lg">
 
-            <h3 className="font-semibold mb-2">Select Staff</h3>
+            <h3 className="font-semibold mb-2 bg-gray-100 p-2 rounded-t-lg mb-4">Select Staff</h3>
 
             <Select onValueChange={setSelectedStaff}>
 
@@ -135,7 +136,7 @@ export default function RescheduleAppointmentModal({
         </div>
 
         {/* Time Slots */}
-        <div className="flex-1 flex flex-col justify-between">
+        <div className="flex-1 flex flex-col justify-between outline outline-[#E5E7EB] p-4 rounded-2xl">
 
           <div>
 
@@ -174,6 +175,6 @@ export default function RescheduleAppointmentModal({
 
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

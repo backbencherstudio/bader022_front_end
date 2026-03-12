@@ -10,6 +10,7 @@ import { Download, Eye, SaudiRiyal, Search } from "lucide-react";
 import { useGetPaymentHistoryQuery } from "@/redux/features/admin/adminApi";
 import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
 import { PaymentModal } from "./PaymentModal";
+import Link from "next/link";
 
 type PaymentStatus = "successful" | "failed" | "pending";
 
@@ -195,9 +196,9 @@ export default function PaymentHistory() {
                         >
                           <Eye className="h-5 w-5" />
                         </button>
-                        <button className="h-10 w-10 rounded-xl border flex items-center justify-center cursor-pointer">
-                          <Download className="h-5 w-5" />
-                        </button>
+                       <Link href={`/admin/payments/${r.id}`}>
+                         <Download className="h-5 w-5" />
+                       </Link>
                       </div>
                     </TableCell>
                   </TableRow>

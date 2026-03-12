@@ -108,16 +108,16 @@ export function OrderDetailsDialog({
         {/* Footer Buttons */}
         <div className="flex flex-row flex-wrap gap-4 justify-between pt-2">
           <Button
-            className="mt-4"
+            className="py-3"
             onClick={() => onReschedule(serviceId)} 
           >
-            Reschedule Appointment {serviceId}
+            Reschedule Appointment 
           </Button>
 
           <Button
             onClick={onCancel}
             variant="outline"
-            className="cursor-pointer py-5"
+            className="cursor-pointer py-3"
           >
             Cancel Booking
           </Button>

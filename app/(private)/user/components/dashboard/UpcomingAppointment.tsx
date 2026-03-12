@@ -45,16 +45,16 @@ type UpcomingBooking = {
   service_price: string;
   status: string;
   address?: string;
+  bookingID?: number;
 };
 
 type UpcomingResponse = {
   success: boolean;
   data: UpcomingBooking;
+  
 };
 
-// --------------------
-// Component
-// --------------------
+
 
 export default function UpcomingAppointment() {
   const {
@@ -72,6 +72,7 @@ export default function UpcomingAppointment() {
       data?: DashboardActivityResponse;
       isLoading: boolean;
       error?: unknown;
+    
     };
 
   const [orderOpen, setOrderOpen] = useState<boolean>(false);
@@ -186,7 +187,7 @@ export default function UpcomingAppointment() {
 
       {/* Reschedule Modal */}
       <Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
-        <DialogContent style={{ maxWidth: '50rem' }}> 
+        <DialogContent style={{ maxWidth: '70rem' }}> 
           <DialogHeader>
             <DialogTitle>Reschedule Appointment</DialogTitle>
             <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
@@ -206,7 +207,13 @@ export default function UpcomingAppointment() {
 
       {/* Cancel Appointment Modal */}
       <Dialog open={cancelOpen} onOpenChange={setCancelOpen}>
-        <CancelAppointmentModal />
+        <CancelAppointmentModal
+          bookingID={selectedBookingId!}
+          onClose={() => setCancelOpen(false)}
+          onCancelSuccess={() => {
+            refetchBookings();
+          }}
+        />
       </Dialog>
     </div>
   );

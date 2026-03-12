@@ -23,6 +23,8 @@ import { useState } from "react";
 import { useUserPaymentHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
 import Pagination from "@/components/reusable/Pagination";
 import { downloadPdf } from "@/helper/downloadPdf";
+import Link from "next/link";
+import { userDashboardApi } from "@/redux/features/userDashboard/invoice";
 
 export type TxStatus = "paid" | "failed" | "due" | "refunded" | "refund_failed";
 
@@ -88,7 +90,8 @@ export function RecentTransactionsCard({
   page,
   setPage,
   search,
-  setSearch
+  setSearch,
+  handleDownload, // ✅ add this
 }: {
   rows: TransactionRow[];
   pagination: any;
@@ -96,6 +99,7 @@ export function RecentTransactionsCard({
   setPage: (page: number) => void;
   search: string;
   setSearch: (value: string) => void;
+  handleDownload: (bookingID: number) => void; // ✅ type
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -186,27 +190,7 @@ export function RecentTransactionsCard({
                   </TableCell>
 
                   <TableCell
-                    onClick={() => {
-                      console.log("Download clicked for booking:", r.bookingID);
-
-                      // const pdfRows = [
-                      //   { label: "Booking ID", value: r.bookingID },
-                      //   { label: "Customer Name", value: r.customerName },
-                      //   { label: "Service", value: r.service },
-                      //   { label: "Amount", value: r.amountLabel },
-                      //   { label: "Date & Time", value: r.dateLabel },
-                      //   { label: "Status", value: r.status },
-                      // ];
-
-                      // console.log("Rows prepared for PDF:", pdfRows);
-
-                      // try {
-                      //   downloadPdf(`Transaction ${r.bookingID}`, pdfRows, `transaction_${r.bookingID}`);
-                      //   console.log("PDF generation started");
-                      // } catch (err) {
-                      //   console.error("PDF generation failed:", err);
-                      // }
-                    }}
+                    onClick={() => handleDownload(r.bookingID)}
                     className="cursor-pointer underline"
                   >
                     <Download className="text-muted-foreground w-5" />
@@ -251,7 +235,6 @@ export function RecentTransactionsCard({
 }
 
 export default function UserPaymentHistory() {
-
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
@@ -259,22 +242,54 @@ export default function UserPaymentHistory() {
     status: search,
     page,
   });
-  console.log("status",);
 
   const pagination = data?.pagination;
   const bookings: Booking[] = data?.data ?? [];
-  console.log(bookings,"dfdfffffffffffffffffff===")
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 
-  const mappedBookings: TransactionRow[] = bookings.map((b) => {
-    const status = b.status.toLowerCase();
+  const handleDownload = async (bookingID: number) => {
+    try {
+      const { data } = await userDashboardApi.endpoints.invoiceDownload.initiate(bookingID);
 
-    const safeStatus: TxStatus =
-      status === "paid" || status === "failed" || status === "due" || status === "refunded" || status === "refund_failed"
-        ? status
-        : "due";
+      if (!data) {
+        console.error("Invoice download failed: No data received");
+        return;
+      }
+
+      if (!data.success) {
+        console.error("Invoice download failed:", data.message);
+        return;
+      }
+
+      const invoice = data.data;
+      console.log("Invoice fetched:", invoice);
+
+      const pdfRows = [
+        { label: "Booking ID", value: invoice.invoice_info.booking_id },
+        { label: "Invoice No", value: invoice.invoice_info.invoice_no },
+        { label: "Customer Name", value: invoice.customer.name },
+        { label: "Email", value: invoice.customer.email },
+        { label: "Phone", value: invoice.customer.phone },
+        { label: "Service", value: invoice.service.service_name },
+        { label: "Amount", value: invoice.summary.total + " " + invoice.summary.currency },
+        { label: "Payment Status", value: invoice.payment.status },
+        { label: "Date", value: invoice.invoice_info.date },
+      ];
+
+      downloadPdf(
+        `Invoice_${invoice.invoice_info.invoice_no}`,
+        pdfRows,
+        `invoice_${invoice.invoice_info.invoice_no}`
+      );
+    } catch (err) {
+      console.error("Error fetching invoice:", err);
+    }
+  };
+
+  const mappedBookings: TransactionRow[] = bookings.map((b) => {
+    const status = b.status.toLowerCase() as TxStatus;
 
     return {
       bookingID: b.booking_id,
@@ -283,9 +298,17 @@ export default function UserPaymentHistory() {
       service: b.service,
       amountLabel: b.amount,
       dateLabel: b.date_time,
-      status: safeStatus,
+      status:
+        status === "paid" ||
+          status === "failed" ||
+          status === "due" ||
+          status === "refunded" ||
+          status === "refund_failed"
+          ? status
+          : "due",
     };
   });
+
   return (
     <RecentTransactionsCard
       rows={mappedBookings}
@@ -294,6 +317,7 @@ export default function UserPaymentHistory() {
       setPage={setPage}
       search={search}
       setSearch={setSearch}
+      handleDownload={handleDownload} // ✅ pass as prop
     />
   );
 }

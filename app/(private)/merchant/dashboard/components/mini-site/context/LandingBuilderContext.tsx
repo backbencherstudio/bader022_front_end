@@ -62,9 +62,11 @@ type CtaBannerData = {
   ctaBannerTitle: string;
   ctaBannerSubTitle: string;
   ctaBannerImage: string;
+  ctaPreviewImage: string;
+  ctaBannerFile: File | null;
   backgroundColor: string;
   ctaBannerOverlayColor: string;
-  padding: number;
+  padding: string;
 };
 type BrandingData = {
   logo: string;
@@ -234,13 +236,14 @@ export function LandingPageProvider({
     });
 
   const [ctaBannerData, setCtaBannerData] = useState<CtaBannerData>({
-    ctaBannerTitle: "Your Hair Deserves the Best Care",
-    ctaBannerSubTitle:
-      "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment",
+    ctaBannerTitle: "",
+    ctaBannerSubTitle: "",
     ctaBannerImage: "",
+    ctaPreviewImage: "",
+    ctaBannerFile: null,
     backgroundColor: "",
-    ctaBannerOverlayColor: "#f7f7f7",
-    padding: 72,
+    ctaBannerOverlayColor: "",
+    padding: "",
   });
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({
@@ -394,6 +397,20 @@ export function LandingPageProvider({
           description: service.description,
           duration: service.duration,
         })),
+      }));
+    }
+
+    /* cta Banner */
+    if (api.minisite) {
+      setCtaBannerData((prev) => ({
+        ...prev,
+        ctaBannerTitle: api.minisite.cta_title || prev.ctaBannerTitle,
+        ctaBannerSubTitle: api.minisite.cta_subtitle || prev.ctaBannerSubTitle,
+        ctaBannerImage: api.minisite.cta_image || prev.ctaBannerImage,
+        // backgroundColor: api.minisite.cta_button_url || prev.backgroundColor,
+        ctaBannerOverlayColor:
+          api.minisite.cta_overlay_color || prev.ctaBannerOverlayColor,
+        padding: api.minisite.cta_padding || prev.padding,
       }));
     }
 

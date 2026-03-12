@@ -2,12 +2,11 @@ import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function CTABanner() {
   const { ctaBannerData, colorSystemData, layoutSettingsData, typographyData } =
     useLandingPage();
-
-  if (!ctaBannerData.ctaBannerTitle) return null;
 
   return (
     <section
@@ -16,16 +15,31 @@ export default function CTABanner() {
     >
       <div className="relative min-h-[360px] sm:min-h-[320px]">
         {/* Background Image */}
-        <Image
-          src={
-            ctaBannerData.ctaBannerImage ||
-            "/images/mini-site/ctaBannerImage.png"
-          }
-          alt="CTA"
-          fill
-          className="object-cover"
-          priority
-        />
+        {ctaBannerData.ctaPreviewImage ? (
+          <Image
+            src={
+              ctaBannerData.ctaPreviewImage ||
+              "/images/mini-site/ctaBannerImage.png"
+            }
+            alt="CTA"
+            fill
+            className="object-cover"
+            priority
+            unoptimized={true}
+          />
+        ) : (
+          <Image
+            src={
+              getImageUrl(ctaBannerData.ctaBannerImage) ||
+              "/images/mini-site/ctaBannerImage.png"
+            }
+            alt="CTA"
+            fill
+            className="object-cover"
+            priority
+            unoptimized={true}
+          />
+        )}
 
         {/* Overlay (light + dark) */}
         <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
@@ -33,7 +47,7 @@ export default function CTABanner() {
         {/* Content */}
         <div
           style={{
-            padding: ctaBannerData.padding,
+            padding: Number(ctaBannerData.padding),
           }}
           className="
             relative z-10

@@ -2,6 +2,7 @@
 import LandingPage from "@/app/(private)/merchant/dashboard/components/mini-site/components/LandingPage";
 import { LandingPageProvider } from "@/app/(private)/merchant/dashboard/components/mini-site/context/LandingBuilderContext";
 import DynamicMiniSite from "@/components/DynamicMiniSite/DynamicMiniSite";
+import NotFoundPage from "@/components/NotFoundPage";
 import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +21,11 @@ export default function DynamicMiniSitePage() {
 
   return (
     <div>
-      {data ? <DynamicMiniSite data={data?.data} /> : <div>Not Fount Page</div>}
+      {data?.status === true ? (
+        <DynamicMiniSite data={data?.data} />
+      ) : (
+        <NotFoundPage />
+      )}
     </div>
   );
 }

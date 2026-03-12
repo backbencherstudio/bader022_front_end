@@ -65,6 +65,9 @@ export default function page() {
       formData.append("about_padding", aboutData.padding as any);
       formData.append("cta_title", ctaBannerData.ctaBannerTitle);
       formData.append("cta_subtitle", ctaBannerData.ctaBannerSubTitle);
+      if (ctaBannerData.ctaBannerFile) {
+        formData.append("cta_image", ctaBannerData.ctaBannerFile);
+      }
       formData.append("cta_overlay_color", ctaBannerData.ctaBannerOverlayColor);
       formData.append("cta_padding", ctaBannerData.padding as any);
       formData.append(

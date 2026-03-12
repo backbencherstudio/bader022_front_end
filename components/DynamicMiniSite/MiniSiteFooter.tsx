@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/helper/formatImage";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -41,7 +42,7 @@ interface MiniSiteFooterProps {
 }
 
 export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
-  console.log(data.global_setting);
+  // console.log(data.global_setting);
 
   return (
     <div>
@@ -62,12 +63,13 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             <div className="flex items-center gap-3">
               <Image
                 src={
-                  //   data.global_setting.branding_logo ||
+                  getImageUrl(data.global_setting.branding_logo) ||
                   "/images/image 259.png"
                 }
                 alt={data.global_setting.website_name || ""}
                 width={40}
                 height={40}
+                unoptimized={true}
               />
             </div>
 

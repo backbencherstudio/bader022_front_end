@@ -14,7 +14,7 @@ interface MiniSiteData {
   cta_button_text_two?: string;
   background_color?: string;
   about_padding?: string;
-  about_hero_image?: string | null;
+  about_hero_image?: string;
   about_description?: string;
   about_title?: string;
   service_title?: string;
@@ -59,7 +59,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log(data.services);
+  // console.log(data?.minisite?.hero_image);
   return (
     <div>
       {/* hero section  */}
@@ -67,10 +67,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         <div className="relative w-full h-[70vh] overflow-hidden">
           {/* Background Image */}
           <Image
-            src={
-              //   getImageUrl(data?.minisite?.hero_image) ||
-              "/images/mini-site/heroImage.png"
-            }
+            src={getImageUrl(data?.minisite?.hero_image)}
             alt="Hero background"
             fill
             className="object-cover"
@@ -108,6 +105,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               height={data.global_setting.logo_size || 40}
               className="object-contain"
               priority
+              unoptimized={true}
             />
           </div>
 
@@ -202,14 +200,12 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             {/* Image */}
             <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
               <Image
-                src={
-                  data.minisite.about_hero_image ||
-                  "/images/mini-site/aboutus.png"
-                }
+                src={getImageUrl(data?.minisite?.about_hero_image)}
                 alt="About Us"
                 fill
                 className="object-cover"
                 priority
+                unoptimized={true}
               />
             </div>
 
@@ -305,6 +301,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     alt={data.why_choose_us.feature_one_des || "Feature icon"}
                     width={28}
                     height={28}
+                    unoptimized={true}
                   />
                 </div>
 
@@ -346,6 +343,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     alt={data.why_choose_us.feature_one_des || "Feature icon"}
                     width={28}
                     height={28}
+                    unoptimized={true}
                   />
                 </div>
 
@@ -387,6 +385,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     alt={data.why_choose_us.feature_two_des || "Feature icon"}
                     width={28}
                     height={28}
+                    unoptimized={true}
                   />
                 </div>
 
@@ -478,6 +477,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                       alt={item.service_name || "title"}
                       fill
                       className="object-cover"
+                      unoptimized={true}
                     />
                   </div>
 
@@ -550,6 +550,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             fill
             className="object-cover"
             priority
+            unoptimized={true}
           />
 
           {/* Overlay (light + dark) */}

@@ -293,15 +293,17 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_one_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_one_des || "Feature icon"}
-                    width={28}
-                    height={28}
-                    unoptimized={true}
+                    alt={data.why_choose_us.feature_one_title || "Feature icon"}
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -335,15 +337,17 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_two_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_one_des || "Feature icon"}
-                    width={28}
-                    height={28}
-                    unoptimized={true}
+                    alt={data.why_choose_us.feature_two_title || "Feature icon"}
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -377,15 +381,19 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         "
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <Image
                     src={
-                      data.why_choose_us.feature_one_image || "/icons/Icon.png"
+                      getImageUrl(
+                        data.why_choose_us.feature_three_image as string,
+                      ) || "/icons/Icon.png"
                     }
-                    alt={data.why_choose_us.feature_two_des || "Feature icon"}
-                    width={28}
-                    height={28}
-                    unoptimized={true}
+                    alt={
+                      data.why_choose_us.feature_three_title || "Feature icon"
+                    }
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 

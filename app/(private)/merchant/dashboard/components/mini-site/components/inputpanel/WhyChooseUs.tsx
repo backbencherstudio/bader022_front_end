@@ -87,12 +87,19 @@ export default function WhyChooseUs() {
           </span>
           <input
             type="file"
+            accept="image/*"
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              const url = URL.createObjectURL(file);
-              setWhyChooseUsData({ ...whyChooseUsData, cardImageOne: url });
+
+              const preview = URL.createObjectURL(file);
+
+              setWhyChooseUsData((prev) => ({
+                ...prev,
+                cardPreviewImageOne: preview,
+                cardImageOneFile: file,
+              }));
             }}
           />
         </label>
@@ -142,12 +149,19 @@ export default function WhyChooseUs() {
           </span>
           <input
             type="file"
+            accept="image/*"
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              const url = URL.createObjectURL(file);
-              setWhyChooseUsData({ ...whyChooseUsData, cardImageTwo: url });
+
+              const preview = URL.createObjectURL(file);
+
+              setWhyChooseUsData((prev) => ({
+                ...prev,
+                cardPreviewImageTwo: preview,
+                cardImageTwoFile: file,
+              }));
             }}
           />
         </label>
@@ -197,12 +211,19 @@ export default function WhyChooseUs() {
           </span>
           <input
             type="file"
+            accept="image/*"
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              const url = URL.createObjectURL(file);
-              setWhyChooseUsData({ ...whyChooseUsData, cardImageThree: url });
+
+              const preview = URL.createObjectURL(file);
+
+              setWhyChooseUsData((prev) => ({
+                ...prev,
+                cardPreviewImageThree: preview,
+                cardImageThreeFile: file,
+              }));
             }}
           />
         </label>

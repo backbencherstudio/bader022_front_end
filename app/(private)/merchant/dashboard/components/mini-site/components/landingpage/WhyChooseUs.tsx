@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function WhyChooseUs() {
   const {
@@ -56,13 +57,17 @@ export default function WhyChooseUs() {
                     transition
                   "
             >
-              {/* Icon */}
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+              <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                 <Image
-                  src={whyChooseUsData.cardImageOne || "/icons/Icon.png"}
+                  src={
+                    whyChooseUsData.cardPreviewImageOne
+                      ? whyChooseUsData.cardPreviewImageOne
+                      : getImageUrl(whyChooseUsData.cardImageOne)
+                  }
                   alt={whyChooseUsData.whyChooseUsTitleOne || "Feature icon"}
-                  width={28}
-                  height={28}
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
 
@@ -96,12 +101,17 @@ export default function WhyChooseUs() {
                   "
             >
               {/* Icon */}
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+              <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                 <Image
-                  src={whyChooseUsData.cardImageTwo || "/icons/Icon.png"}
+                  src={
+                    whyChooseUsData.cardPreviewImageTwo
+                      ? whyChooseUsData.cardPreviewImageTwo
+                      : getImageUrl(whyChooseUsData.cardImageTwo)
+                  }
                   alt={whyChooseUsData.whyChooseUsTitleTwo || "Feature icon"}
-                  width={28}
-                  height={28}
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
 
@@ -135,12 +145,17 @@ export default function WhyChooseUs() {
                   "
             >
               {/* Icon */}
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700">
+              <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                 <Image
-                  src={whyChooseUsData.cardImageThree || "/icons/Icon.png"}
+                  src={
+                    whyChooseUsData.cardPreviewImageThree
+                      ? whyChooseUsData.cardPreviewImageThree
+                      : getImageUrl(whyChooseUsData.cardImageThree)
+                  }
                   alt={whyChooseUsData.whyChooseUsTitleThree || "Feature icon"}
-                  width={28}
-                  height={28}
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
 

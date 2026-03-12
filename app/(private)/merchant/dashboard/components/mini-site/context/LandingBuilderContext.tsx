@@ -33,15 +33,21 @@ type WhyChooseUsData = {
   whyChooseUsTitle: string;
   whyChooseUsSubtitle: string;
   backgroundColor: string;
-  cardImageOne: string | null;
+  cardImageOne: string;
   whyChooseUsTitleOne: string;
   whyChooseUsDescriptionOne: string;
-  cardImageTwo: string | null;
+  cardImageTwo: string;
   whyChooseUsTitleTwo: string;
   whyChooseUsDescriptionTwo: string;
-  cardImageThree: string | null;
+  cardImageThree: string;
   whyChooseUsTitleThree: string;
   whyChooseUsDescriptionThree: string;
+  cardPreviewImageOne: string;
+  cardImageOneFile: File | null;
+  cardPreviewImageTwo: string;
+  cardImageTwoFile: File | null;
+  cardPreviewImageThree: string;
+  cardImageThreeFile: File | null;
 };
 
 type ServicesCard = {
@@ -211,17 +217,22 @@ export function LandingPageProvider({
   });
 
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData>({
-    whyChooseUsTitle: "Why We’re Right Choice",
-    whyChooseUsSubtitle:
-      "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results",
-    backgroundColor: "#f7f7f7",
-    cardImageOne: null,
+    whyChooseUsTitle: "",
+    whyChooseUsSubtitle: "",
+    backgroundColor: "",
+    cardImageOne: "",
+    cardPreviewImageOne: "",
+    cardImageOneFile: null,
     whyChooseUsTitleOne: "",
     whyChooseUsDescriptionOne: "",
-    cardImageTwo: null,
+    cardImageTwo: "",
+    cardPreviewImageTwo: "",
+    cardImageTwoFile: null,
     whyChooseUsTitleTwo: "",
     whyChooseUsDescriptionTwo: "",
-    cardImageThree: null,
+    cardPreviewImageThree: "",
+    cardImageThreeFile: null,
+    cardImageThree: "",
     whyChooseUsTitleThree: "",
     whyChooseUsDescriptionThree: "",
   });
@@ -356,30 +367,29 @@ export function LandingPageProvider({
     }
 
     /* WHY CHOOSE US */
-    // if (api.why_choose_us) {
-    //   setWhyChooseUsData((prev) => ({
-    //     ...prev,
-    //     whyChooseUsTitle:
-    //       api.why_choose_us.section_title || prev.whyChooseUsTitle,
-    //     whyChooseUsSubtitle:
-    //       api.why_choose_us.section_subtitle || prev.whyChooseUsSubtitle,
+    if (api.why_choose_us) {
+      setWhyChooseUsData((prev) => ({
+        ...prev,
+        whyChooseUsTitle:
+          api.why_choose_us.section_title || prev.whyChooseUsTitle,
+        whyChooseUsSubtitle:
+          api.why_choose_us.section_subtitle || prev.whyChooseUsSubtitle,
+        backgroundColor:
+          api.why_choose_us.background_color || prev.backgroundColor,
 
-    //     cardImageOne: api.why_choose_us.feature_one_image,
-    //     whyChooseUsTitleOne: api.why_choose_us.feature_one_title || "",
-    //     whyChooseUsDescriptionOne:
-    //       api.why_choose_us.feature_one_description || "",
+        cardImageOne: api.why_choose_us.feature_one_image,
+        whyChooseUsTitleOne: api.why_choose_us.feature_one_title || "",
+        whyChooseUsDescriptionOne: api.why_choose_us.feature_one_des || "",
 
-    //     cardImageTwo: api.why_choose_us.feature_two_image,
-    //     whyChooseUsTitleTwo: api.why_choose_us.feature_two_title || "",
-    //     whyChooseUsDescriptionTwo:
-    //       api.why_choose_us.feature_two_description || "",
+        cardImageTwo: api.why_choose_us.feature_two_image,
+        whyChooseUsTitleTwo: api.why_choose_us.feature_two_title || "",
+        whyChooseUsDescriptionTwo: api.why_choose_us.feature_two_des || "",
 
-    //     cardImageThree: api.why_choose_us.feature_three_image,
-    //     whyChooseUsTitleThree: api.why_choose_us.feature_three_title || "",
-    //     whyChooseUsDescriptionThree:
-    //       api.why_choose_us.feature_three_description || "",
-    //   }));
-    // }
+        cardImageThree: api.why_choose_us.feature_three_image,
+        whyChooseUsTitleThree: api.why_choose_us.feature_three_title || "",
+        whyChooseUsDescriptionThree: api.why_choose_us.feature_three_des || "",
+      }));
+    }
 
     /* SERVICES */
     if (api.services || api.minisite) {

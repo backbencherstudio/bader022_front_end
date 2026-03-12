@@ -85,16 +85,28 @@ export default function page() {
 
       formData.append("section_title", whyChooseUsData.whyChooseUsTitle);
       formData.append("section_subtitle", whyChooseUsData.whyChooseUsSubtitle);
+      if (whyChooseUsData.cardImageOneFile) {
+        formData.append("feature_one_image", whyChooseUsData.cardImageOneFile);
+      }
       formData.append("feature_one_title", whyChooseUsData.whyChooseUsTitleOne);
       formData.append(
         "feature_one_des",
         whyChooseUsData.whyChooseUsDescriptionOne,
       );
+      if (whyChooseUsData.cardImageTwoFile) {
+        formData.append("feature_two_image", whyChooseUsData.cardImageTwoFile);
+      }
       formData.append("feature_two_title", whyChooseUsData.whyChooseUsTitleTwo);
       formData.append(
         "feature_two_des",
         whyChooseUsData.whyChooseUsDescriptionTwo,
       );
+      if (whyChooseUsData.cardImageThreeFile) {
+        formData.append(
+          "feature_three_image",
+          whyChooseUsData.cardImageThreeFile,
+        );
+      }
       formData.append(
         "feature_three_title",
         whyChooseUsData.whyChooseUsTitleThree,

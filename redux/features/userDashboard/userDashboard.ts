@@ -24,15 +24,18 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
 
+    
+
     //invoice download
-    invoiceDownload: builder.query({
-      query: (bookingID: number) => ({
-        url: `/admin/dashboard/invoice/${bookingID}`,
+    // userDashboardApi.ts
+    invoiceDownload: builder.query<Blob, number>({
+      query: (id) => ({
+        url: `/admin/booking/invoice/${id}`,
         method: "GET",
+        responseHandler: (response) => response.blob(), 
       }),
+
     }),
-
-
 
     DashboardbookingHistory: builder.query({
       query: ({
@@ -158,4 +161,5 @@ export const {
   useUseRescheduleAppointmentMutation,
   useCancelAppoitmentQuery,
   useConfirmCancelAppointmentMutation,
+  
 } = dashboardApi;

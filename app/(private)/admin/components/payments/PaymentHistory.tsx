@@ -196,8 +196,8 @@ export default function PaymentHistory() {
                         >
                           <Eye className="h-5 w-5" />
                         </button>
-                       <Link href={`/admin/payments/${r.id}`}>
-                         <Download className="h-5 w-5" />
+                       <Link href="#">
+                         <Download className="h-5 w-5 mt-1" />
                        </Link>
                       </div>
                     </TableCell>

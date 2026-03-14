@@ -21,7 +21,7 @@ export const userDashboardApi = createApi({
         url: `/invoice/download/${bookingID}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // বা যেখানে আপনার token আছে
+          Authorization: `Bearer ${localStorage.getItem("token")}`, 
         },
       }),
     }),

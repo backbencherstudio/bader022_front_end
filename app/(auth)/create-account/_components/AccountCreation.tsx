@@ -6,6 +6,7 @@ import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useMerchantRegMutation } from "@/redux/features/merchant/merchantRegitraion";
 
 export type FormValues = {
   fullName: string;
@@ -26,6 +27,8 @@ export default function AccountCreation({
   const { register, handleSubmit, control } = useForm<FormValues>({
     defaultValues,
   });
+
+  const [createUser, { data, isLoading, isError }] = useMerchantRegMutation();
 
   const [showPassword, setShowPassword] = useState(false);
   const { locale, t } = useI18n();

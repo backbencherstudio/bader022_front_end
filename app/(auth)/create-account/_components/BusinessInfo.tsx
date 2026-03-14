@@ -8,19 +8,14 @@ import {
   HeartPulse,
   Leaf,
   Home,
-  Car,
-  PawPrint,
-  GraduationCap,
-  Wrench,
-  MoreHorizontal,
 } from "lucide-react";
 import { useI18n } from "@/components/provider/I18nProvider";
 
 type Step1Data = {
-  businessName: string;
-  businessAddress: string;
-  category: string;
-  branches: "1" | "2-5" | "6+";
+  business_name: string;
+  address: string;
+  business_category: string;
+  number_of_branches: "1" | "2-5" | "6+";
 };
 
 interface Step1Props {
@@ -30,17 +25,13 @@ interface Step1Props {
 }
 
 const CATEGORIES = [
-  { key: "beautySpa", label: "Beauty & Spa", icon: Scissors },
-  { key: "fitness", label: "Fitness", icon: Dumbbell },
-  { key: "healthcare", label: "Healthcare", icon: HeartPulse },
-  { key: "wellness", label: "Wellness", icon: Leaf },
-  { key: "homeServices", label: "Home Services", icon: Home },
-  { key: "automotive", label: "Automotive", icon: Car },
-  { key: "petServices", label: "Pet Services", icon: PawPrint },
-  { key: "education", label: "Education & Training", icon: GraduationCap },
-  { key: "maintenance", label: "Maintenance", icon: Wrench },
-  { key: "other", label: "Other", icon: MoreHorizontal },
+  { key: "salon_beauty", label: "salon_beauty", icon: Scissors },
+  { key: "salon_beauty", label: "salon_beauty", icon: Dumbbell },
+  { key: "salon_beauty", label: "salon_beauty", icon: HeartPulse },
+  { key: "fitness_pro_gym", label: "fitness_pro_gym", icon: Leaf },
+  { key: "others", label: "others", icon: Home },
 ];
+
 const BRANCH_OPTIONS = [
   { key: "1", label: "1 Branch" },
   { key: "2-5", label: "2–5 Branches" },
@@ -59,7 +50,9 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
   });
 
   const { t } = useI18n();
-  const selectedCategory = watch("category");
+
+  const selectedCategory = watch("business_category");
+  const selectedBranches = watch("number_of_branches");
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-6">
@@ -69,11 +62,9 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           {t("BusinessInfo.businessName")} *
         </label>
         <input
-          {...register("businessName", { required: true })}
+          {...register("business_name", { required: true })}
           placeholder={t("BusinessInfo.businessNamePlaceholder")}
-          className="w-full rounded-md border border-gray-300 bg-white p-3
-            text-sm
-            dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -83,11 +74,9 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           {t("BusinessInfo.businessAddress")} *
         </label>
         <input
-          {...register("businessAddress", { required: true })}
+          {...register("address", { required: true })}
           placeholder={t("BusinessInfo.businessAddressPlaceholder")}
-          className="w-full rounded-md border border-gray-300 bg-white p-3
-            text-sm 
-            dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -106,23 +95,32 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                 key={key}
                 type="button"
                 onClick={() =>
-                  setValue("category", key, { shouldValidate: true })
+                  setValue("business_category", key, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
                 }
                 className={`flex flex-col items-center justify-center gap-2 rounded-lg border p-3 text-sm transition
-                  ${
-                    active
-                      ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
-                      : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                  ${active
+                    ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
+                    : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                   }`}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-xs font-medium text-center">{label}</span>
+                <span className="text-xs font-medium text-center">
+                  {t(`BusinessInfo.${label}`)}
+                </span>
               </button>
             );
           })}
         </div>
 
-        {errors.category && (
+        <input
+          type="hidden"
+          {...register("business_category", { required: true })}
+        />
+
+        {errors.business_category && (
           <p className="mt-1 text-xs text-red-500">
             {t("BusinessInfo.selectCategory")}
           </p>
@@ -137,21 +135,23 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
 
         <div className="grid grid-cols-3 gap-3">
           {BRANCH_OPTIONS.map(({ key, label }) => {
-            const active = watch("branches") === key;
+            const active = selectedBranches === key;
 
             return (
               <button
                 key={key}
                 type="button"
                 onClick={() =>
-                  setValue("branches", key, { shouldValidate: true })
+                  setValue("number_of_branches", key, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
                 }
                 className={`flex items-center justify-center rounded-lg border p-4 text-sm font-medium transition
-            ${
-              active
-                ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
-                : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-            }`}
+                  ${active
+                    ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
+                    : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                  }`}
               >
                 {label}
               </button>
@@ -159,7 +159,12 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           })}
         </div>
 
-        {errors.branches && (
+        <input
+          type="hidden"
+          {...register("number_of_branches", { required: true })}
+        />
+
+        {errors.number_of_branches && (
           <p className="mt-1 text-xs text-red-500">
             {t("BusinessInfo.selectBranches")}
           </p>
@@ -178,8 +183,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
 
         <button
           type="submit"
-          className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500
-            px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
+          className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
         >
           {t("BusinessInfo.submit")}
         </button>

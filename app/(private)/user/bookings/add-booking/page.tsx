@@ -9,6 +9,7 @@ import Step3 from "../../components/bookings/Step3";
 import Step4 from "../../components/bookings/Step4";
 import Step0 from "../../components/bookings/Step0";
 import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
+import BookingSuccess from "@/app/booking-success/page";
 
 type StepperProps = {
   steps: string[];
@@ -133,7 +134,7 @@ export default function BookingCheckoutStepper({ }) {
             time={selectedTime}
           />
         )}
-       {currentStep === 4 && <Step4 />}
+        {currentStep === 4 && <BookingSuccess booking_id={bookingId} />}
         {currentStep === 3 && selectedService && (
           <Step3
             onNext={() => setCurrentStep(4)}

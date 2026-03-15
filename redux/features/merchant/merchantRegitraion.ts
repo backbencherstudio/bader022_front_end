@@ -1,10 +1,8 @@
 import { baseApi } from "@/redux/api/baseApi";
 
-
-export const MerchantRegistraion = baseApi.injectEndpoints({
+export const merchantRegistrationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    //  merchant registraion
-    MerchantReg: builder.mutation({
+    merchantReg: builder.mutation({
       query: (body) => ({
         url: "/marchant/register",
         method: "POST",
@@ -15,4 +13,4 @@ export const MerchantRegistraion = baseApi.injectEndpoints({
   }),
 });
 
-export const { useMerchantRegMutation } = MerchantRegistraion;
+export const { useMerchantRegMutation } = merchantRegistrationApi;

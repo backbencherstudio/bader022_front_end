@@ -5,20 +5,37 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import AccountSuccess from "../_components/AccountSuccess";
 import Image from "next/image";
+import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 
 type FormValues = {
   password: string;
+  password_confirmation: string; // Ensure it's a string for password comparison
 };
 
 export default function ResetPasswordPage() {
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [successful, setSuccessful] = useState(false);
 
-  const onSubmit = (data: FormValues) => {
-    setSuccessful(true);
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    // Prepare the payload for password reset
+    const payload = {
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+    };
+
+    try {
+      // Assuming you have a mutation for resetting the password
+      const response = await resetPassword(payload).unwrap();
+      console.log("Password reset successful:", response);
+      setSuccessful(true); // Show success message after successful password reset
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      alert("Password reset failed. Please try again.");
+    }
   };
 
   return (
@@ -39,10 +56,10 @@ export default function ResetPasswordPage() {
 
           {/* Title */}
           <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-            Login to Bokli
+            Reset Your Password
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
-            Your all-in-one booking management platform
+            Enter your new password below
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -72,7 +89,8 @@ export default function ResetPasswordPage() {
                 </button>
               </div>
             </div>
-            {/*Confirm Password */}
+
+            {/* Confirm Password */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                 Confirm Password *
@@ -82,7 +100,7 @@ export default function ResetPasswordPage() {
                 <input
                   type={confirmPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  {...register("password", { required: true })}
+                  {...register("password_confirmation", { required: true })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600

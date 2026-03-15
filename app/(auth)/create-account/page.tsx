@@ -1,60 +1,46 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import AccountCreation, { FormValues } from "./_components/AccountCreation";
+import BusinessInfo from "./_components/BusinessInfo";
+import ChooseyourPlan from "./_components/ChooseyourPlan";
+import { useMerchantRegMutation } from "@/redux/features/merchant/merchantRegitraion";
+import { useI18n } from "@/components/provider/I18nProvider";
+import FinalizingYourWebsite from "./_components/FinalizingYourWebsite";
+import CompleteYourProfile from "./_components/CompliteYourProfile";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-
-import { useCreateAccount } from "./context/CreateAccount";
-import { useI18n } from "@/components/provider/I18nProvider";
-
-import AccountCreation from "./_components/AccountCreation";
-import BusinessInfo from "./_components/BusinessInfo";
-import ChooseyourPlan from "./_components/ChooseyourPlan";
-import FinalizingYourWebsite from "./_components/FinalizingYourWebsite";
-import CompleteYourProfile from "./_components/CompliteYourProfile";
+import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { authorize } from "@/lib/auth";
-
-interface CreateAccountData {
-  step1: {
-    fullName: string;
-    email: string;
-    phone: string;
-    password: string;
-    category: string;
-  };
-  step2: {
-    businessName: string;
-    businessAddress: string;
-    category: string;
-    branches: "1" | "2-5" | "6+";
-  };
-  step3: {
-    serviceName: string;
-  };
-  step4: {
-    serviceName: string;
-  };
-  step5: {
-    serviceName: string;
-  };
-}
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
   ar: { label: "Arabic", flag: "/images/arabic_flag.png" },
 } as const;
 
+type CreateAccountData = {
+  step1: FormValues;
+  step2: {
+    business_name: string;
+    address: string;
+    business_category: string;
+    number_of_branches: "1" | "2-5" | "6+";
+  };
+  step3: {
+    plan_id: number;
+  };
+};
+
 export default function CreateAccountPage() {
-  const { locale, setLocale, t } = useI18n();
-  const { step, setStep } = useCreateAccount();
-  const router = useRouter();
+  const { t, locale, setLocale } = useI18n(); // localization
+  const [step, setStep] = useState(1);
+   const router = useRouter();
   useEffect(() => {
     const auth = authorize(["Merchant"]);
     if (auth.authorized) {
@@ -62,63 +48,79 @@ export default function CreateAccountPage() {
     }
   }, []);
 
-  const steps = [
-    {
-      key: "step1",
-      label: t("createAccount.steps.accountCreation"),
-    },
-    {
-      key: "step2",
-      label: t("createAccount.steps.basicBusinessInfo"),
-    },
-    {
-      key: "step3",
-      label: t("createAccount.steps.choosePlan"),
-    },
-  ];
-
-  const TOTAL_STEPS = steps.length;
-
-  const [createAccountData, setCreateAccountData] = useState<CreateAccountData>(
-    {
-      step1: {
-        fullName: "",
-        email: "",
-        phone: "",
-        password: "",
-        category: "",
-      },
+  const [createAccountData, setCreateAccountData] =
+    useState<CreateAccountData>({
+      step1: { fullName: "", email: "", phone: "", password: "" },
       step2: {
-        businessName: "",
-        businessAddress: "",
-        category: "",
-        branches: "1",
+        business_name: "",
+        address: "",
+        business_category: "",
+        number_of_branches: "1",
       },
-      step3: { serviceName: "" },
-      step4: { serviceName: "" },
-      step5: { serviceName: "" },
-    },
-  );
+      step3: { plan_id: 3 },
+    });
 
-  useEffect(() => {
-    // console.log("Create Account Data Updated:", createAccountData);
-  }, [createAccountData]);
+  const [registerMerchant, { isLoading }] = useMerchantRegMutation();
 
   const handleNext = <K extends keyof CreateAccountData>(
     stepKey: K,
-    data: Partial<CreateAccountData[K]>,
+    data: Partial<CreateAccountData[K]>
   ) => {
     setCreateAccountData((prev) => ({
       ...prev,
       [stepKey]: { ...prev[stepKey], ...data },
     }));
-
-    if (step < 5) setStep(step + 1);
+    setStep((prev) => prev + 1);
   };
 
-  const handlePrevious = () => {
-    if (step > 1) setStep(step - 1);
+  const handlePrevious = () => setStep((prev) => Math.max(prev - 1, 1));
+
+  const resetForm = () => {
+    setStep(1);
+    setCreateAccountData({
+      step1: { fullName: "", email: "", phone: "", password: "" },
+      step2: {
+        business_name: "",
+        address: "",
+        business_category: "",
+        number_of_branches: "1",
+      },
+      step3: { plan_id: 3 },
+    });
   };
+
+  const handleSubmit = async (step3Data?: { plan_id: number }) => {
+    const finalPlanId = step3Data?.plan_id ?? createAccountData.step3.plan_id;
+
+    const body = {
+      name: createAccountData.step1.fullName,
+      email: createAccountData.step1.email,
+      phone: createAccountData.step1.phone,
+      password: createAccountData.step1.password,
+      password_confirmation: createAccountData.step1.password,
+      business_name: createAccountData.step2.business_name,
+      address: createAccountData.step2.address,
+      business_category: createAccountData.step2.business_category,
+      number_of_branches: createAccountData.step2.number_of_branches,
+      plan_id: finalPlanId,
+    };
+
+    try {
+      const response = await registerMerchant(body).unwrap();
+      console.log("Merchant Registered:", response);
+      alert("Registration Successful!");
+      resetForm();
+    } catch (err: any) {
+      alert(err?.data?.message || "Registration Failed!");
+    }
+  };
+
+  const steps = [
+    { key: "step1", label: t("createAccount.steps.accountCreation") },
+    { key: "step2", label: t("createAccount.steps.accountCreation") },
+    { key: "step3", label: t("createAccount.steps.choosePlan") },
+  ];
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -141,10 +143,15 @@ export default function CreateAccountPage() {
       case 3:
         return (
           <ChooseyourPlan
-            data={createAccountData.step3}
-            onNext={(data) => handleNext("step3", data)}
+            defaultPlan={createAccountData.step3.plan_id}
+            onNext={(data) => {
+              setCreateAccountData((prev) => ({
+                ...prev,
+                step3: data,
+              }));
+              handleSubmit(data);
+            }}
             onPrevious={handlePrevious}
-            
           />
         );
 
@@ -159,13 +166,9 @@ export default function CreateAccountPage() {
     }
   };
 
-  const handleFormSubmit = () => {
-    alert("Form submit ")
-  }
-
   return (
-    <div className="max-w-4xl mx-auto p-5  rounded-md shadow bg-white px-4 py-6 sm:px-6 dark:bg-gray-900">
-      {/* Header */}
+    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-md shadow">
+      {/* Header Section */}
       {step <= 3 && (
         <div className="flex items-center justify-between pb-4">
           <div className="flex flex-col gap-2">
@@ -173,45 +176,41 @@ export default function CreateAccountPage() {
               {step === 1 && t("createAccount.step1Title")}
               {step === 2 && t("createAccount.step2Title")}
               {step === 3 && t("createAccount.step3Title")}
-              {/* {step === 4 && t("createAccount.step4Title")} */}
             </h1>
             <p className="font-inter text-base text-[#777980] dark:text-[#a1a4ad]">
               {step === 1 &&
-                t("createAccount.step1Desc", { step, total: TOTAL_STEPS })}
+                t("createAccount.step1Desc", { step, total: 3 })}
 
               {step === 2 &&
-                t("createAccount.step2Desc", { step, total: TOTAL_STEPS })}
+                t("createAccount.step2Desc", { step, total: 3 })}
 
               {step === 3 &&
-                t("createAccount.step3Desc", { step, total: TOTAL_STEPS })}
-
-              {/* {step === 4 &&
-                t("createAccount.step4Desc", { step, total: TOTAL_STEPS })} */}
+                t("createAccount.step3Desc", { step, total: 3 })}
             </p>
           </div>
 
-          {/* Language Switcher */}
-          {step === 1 ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
-                  <Image
-                    src={LANGS[locale].flag}
-                    alt={LANGS[locale].label}
-                    width={22}
-                    height={22}
-                  />
-                  <span className="uppercase">{locale}</span>
-                  <ChevronDown size={14} />
-                </button>
-              </DropdownMenuTrigger>
+          {/* Language Dropdown for Step 1 */}
+          <div className="flex justify-end mb-4">
+            {step === 1 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
+                    <Image
+                      src={LANGS[locale].flag}
+                      alt={LANGS[locale].label}
+                      width={22}
+                      height={22}
+                    />
+                    <span className="uppercase">{locale}</span>
+                    <ChevronDown size={14} />
+                  </button>
+                </DropdownMenuTrigger>
 
-              <DropdownMenuContent
-                align="end"
-                className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
-              >
-                {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map(
-                  (key) => (
+                <DropdownMenuContent
+                  align="end"
+                  className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
+                >
+                  {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map((key) => (
                     <DropdownMenuItem
                       key={key}
                       onClick={() => setLocale(key)}
@@ -225,100 +224,58 @@ export default function CreateAccountPage() {
                       />
                       <span>{LANGS[key].label}</span>
                     </DropdownMenuItem>
-                  ),
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <>
-              {locale === "ar" ? (
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
-                  <Image
-                    src={LANGS[locale].flag}
-                    alt={LANGS[locale].label}
-                    width={22}
-                    height={22}
-                  />
-                  <span className="">Arabic</span>
-                </button>
-              ) : (
-                <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
-                  <Image
-                    src={LANGS[locale].flag}
-                    alt={LANGS[locale].label}
-                    width={22}
-                    height={22}
-                  />
-                  <span className="">English</span>
-                </button>
-              )}
-            </>
-          )}
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </div>
       )}
-      {/* Progress */}
-      <div className="max-w-xl mx-auto">
-        {step <= steps.length && (
-          <div className="w-full flex items-start mb-8">
-            {steps.map((item, index) => {
-              const currentStep = index + 1;
-              const isActive = step === currentStep;
-              const isCompleted = step > currentStep;
 
-              return (
+      {/* Progress Bar */}
+      <div className="flex items-center justify-between mb-6">
+        {steps.map((s, i) => {
+          const isActive = step === i + 1;
+          const isCompleted = step > i + 1;
+
+          return (
+            <div key={s.key} className="flex-1 relative flex items-center">
+              <div
+                className={`h-10 w-10 flex items-center justify-center rounded-full text-sm font-medium
+                  ${isCompleted || isActive
+                    ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+                    : "border border-gray-300 text-gray-400 bg-white dark:bg-gray-900 dark:border-gray-600"
+                  }`}
+              >
+                {isCompleted ? "✓" : i + 1}
+              </div>
+
+              {i !== steps.length - 1 && (
                 <div
-                  key={item.key}
-                  className="flex flex-1 items-center relative"
-                >
-                  {/* Step */}
-                  <div className="relative flex flex-col items-center">
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium
-                  ${
-                    isCompleted || isActive
-                      ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
-                      : "border border-gray-300 dark:border-gray-600 text-gray-400 bg-white dark:bg-gray-900"
-                  }
-                `}
-                    >
-                      {isCompleted ? "✓" : currentStep}
-                    </div>
+                  className={`flex-1 h-2.5 ${isCompleted
+                    ? "bg-linear-to-r from-purple-500 to-indigo-500"
+                    : "bg-gray-200 dark:bg-gray-700"
+                    }`}
+                />
+              )}
 
-                    {/* Label */}
-                    <span
-                      className={`absolute hidden md:block top-12 w-max text-xs text-center
-                  ${
-                    isActive || isCompleted
-                      ? "text-gray-900 dark:text-gray-100"
-                      : "text-gray-400"
-                  }
-                `}
-                    >
-                      {item.label}
-                    </span>
-                  </div>
-
-                  {/* Connector */}
-                  {index !== steps.length - 1 && (
-                    <div
-                      className={`flex-1 h-2.5 
-                  ${
-                    isCompleted
-                      ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
-                      : "bg-gray-200 dark:bg-gray-700"
-                  }
-                `}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
+              <span
+                className={`absolute top-12 text-xs ${isActive || isCompleted
+                  ? "text-gray-900 dark:text-white"
+                  : "text-gray-400"
+                  }`}
+              >
+                {s.label}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Step Content */}
-      {renderStep()}
+      <div className={isLoading ? "opacity-70 pointer-events-none" : ""}>
+        {renderStep()}
+      </div>
     </div>
   );
 }

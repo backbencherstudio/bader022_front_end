@@ -12,7 +12,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     //  Login
-    
+
     login: builder.mutation({
       query: (body) => ({
         url: "/login",
@@ -40,18 +40,21 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     //  Forgot Password
-    forgotPassword: builder.mutation({
-      query: (body) => ({
-        url: "/forgot-password",
-        method: "POST",
-        body,
-      }),
-    }),
-
+ forgotPassword: builder.mutation({
+  query: (body) => {
+    // console.log(body);
+    return {
+      url: "/forgot-password",
+      method: "POST",
+      body,
+    };
+  },
+}),
+ 
     //  Reset Password
     resetPassword: builder.mutation({
       query: (body) => ({
-        url: "/auth/reset-password",
+        url: "/reset-password",
         method: "POST",
         body,
       }),
@@ -66,7 +69,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
-      }),
+  }),
 });
 
 export const {

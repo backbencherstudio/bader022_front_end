@@ -144,12 +144,19 @@ export default function page() {
       formData.append("instagram_url", footerData.instagramUrl || "");
       formData.append("linkedin_url", footerData.linkedinUrl || "");
       formData.append("pinterest_url", footerData.pinterestUrl || "");
+      formData.append("home", footerData.home || "");
       formData.append("home_url", footerData.homeUrl || "");
+      formData.append("about", footerData.about || "");
       formData.append("about_url", footerData.aboutUrl || "");
+      formData.append("why_choose_us", footerData.why_choose_us || "");
       formData.append("why_choose_us_url", footerData.why_choose_usUrl || "");
+      formData.append("service", footerData.service || "");
       formData.append("service_url", footerData.serviceUrl || "");
+      formData.append("contact_us", footerData.contact_us || "");
       formData.append("contact_url", footerData.contactUrl || "");
+      formData.append("privacy_policy", footerData.privacy_policy || "");
       formData.append("privacy_policy_url", footerData.privacy_policyUrl || "");
+      formData.append("terms_condition", footerData?.terms_condition || "");
       formData.append(
         "terms_conditionUrl",
         footerData?.terms_conditionUrl || "",

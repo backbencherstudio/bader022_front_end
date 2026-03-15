@@ -181,7 +181,7 @@ export function LandingPageProvider({
   const { user } = useAppSelector((state) => state.auth);
   const domain = user?.website_domain;
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
-  console.log(data);
+  // console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
     heroTitle: "",
@@ -418,7 +418,6 @@ export function LandingPageProvider({
         buttonColor: api.global_setting.button_color || prev.buttonColor,
       }));
     }
-
     /*  Typography */
     if (api.global_setting) {
       setTypographyData((prev) => ({
@@ -427,6 +426,14 @@ export function LandingPageProvider({
         h2Size: api.global_setting.typography_h2 || prev.h2Size,
         bodySize: api.global_setting.body_text_size || prev.bodySize,
         fontFamily: api.global_setting.font_family || prev.fontFamily,
+      }));
+    }
+    /*  LayoutSettings */
+    if (api.global_setting) {
+      setLayoutSettingsData((prev) => ({
+        ...prev,
+        sectionSpacing:
+          api.global_setting.section_spacing || prev.sectionSpacing,
       }));
     }
     /* FOOTER */

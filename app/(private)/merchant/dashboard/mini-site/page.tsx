@@ -120,7 +120,6 @@ export default function page() {
       if (brandingData.brandingLogoFile) {
         formData.append("branding_logo", brandingData.brandingLogoFile);
       }
-      // formData.append("branding_logo", brandingData.logo);
       formData.append("logo_position", brandingData.position || "");
       formData.append("logo_size", String(brandingData.logoSize) || "");
       formData.append("primary_color", colorSystemData.primaryColor || "");
@@ -133,13 +132,10 @@ export default function page() {
       formData.append("body_text_size", String(typographyData.bodySize) || "");
       formData.append("font_family", typographyData.fontFamily || "");
       formData.append(
-        "layoutSettingsData",
+        "section_spacing",
         String(layoutSettingsData.sectionSpacing) || "",
       );
       formData.append("website_name", footerData.footerTitle);
-      // if (footerData.footerLogoFile) {
-      //   formData.append("branding_logo", footerData.footerLogoFile);
-      // }
       formData.append("footer_des", footerData.footerSubTitle);
       formData.append("footer_background", footerData.footerBackground);
       formData.append("footer_text_color", footerData.footerTextColor);

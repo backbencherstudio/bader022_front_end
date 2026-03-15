@@ -6,6 +6,8 @@ import { useLandingPage } from "../../../context/LandingBuilderContext";
 export default function LayoutSettings() {
   const { layoutSettingsData, setLayoutSettingsData } = useLandingPage();
 
+  console.log(layoutSettingsData.sectionSpacing);
+
   const update = (key: string, value: number) => {
     setLayoutSettingsData({
       ...layoutSettingsData,

@@ -268,7 +268,7 @@ export function LandingPageProvider({
     h1Size: 26,
     h2Size: 10,
     bodySize: 16,
-    fontFamily: "Inter",
+    fontFamily: "",
   });
 
   const [layoutSettingsData, setLayoutSettingsData] =
@@ -404,6 +404,16 @@ export function LandingPageProvider({
         logo: api.global_setting.branding_logo || prev.logo,
         position: api.global_setting.logo_position || prev.position,
         logoSize: Number(api.global_setting.logo_size) || prev.logoSize,
+      }));
+    }
+    /*  Typography */
+    if (api.global_setting) {
+      setTypographyData((prev) => ({
+        ...prev,
+        h1Size: api.global_setting.typography_h1 || prev.h1Size,
+        h2Size: api.global_setting.typography_h2 || prev.h2Size,
+        bodySize: api.global_setting.body_text_size || prev.bodySize,
+        fontFamily: api.global_setting.font_family || prev.fontFamily,
       }));
     }
 

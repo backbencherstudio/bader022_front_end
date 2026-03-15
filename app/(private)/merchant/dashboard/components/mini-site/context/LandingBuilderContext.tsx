@@ -76,7 +76,9 @@ type CtaBannerData = {
 };
 type BrandingData = {
   logo: string;
-  position?: "left" | "center" | "right";
+  brandingLogoPreview: string;
+  brandingLogoFile: File | null;
+  position?: string;
   logoSize: number;
 };
 
@@ -99,20 +101,10 @@ type LayoutSettingsData = {
   sectionSpacing?: number;
 };
 
-// type SocialLinks = {
-//   icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
-//   url: string;
-// };
-
-// type NavigationLink = { label: string; href: string };
-// type SupportLink = { label: string; href: string };
-
 type FooterData = {
   footerTitle: string;
   footerSubTitle: string;
   footerLogo: string;
-  footerLogoPreview: string;
-  footerLogoFile: File | null;
   footerBackground: string;
   footerTextColor: string;
   facebookUrl?: string;
@@ -137,9 +129,6 @@ type FooterData = {
   contact_info?: string;
   contact_email?: string;
   address?: string;
-  // socialLinks: SocialLinks[];
-  // navigation: NavigationLink[];
-  // support: SupportLink[];
   showPoweredBy: boolean | string;
 };
 
@@ -261,8 +250,10 @@ export function LandingPageProvider({
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({
     logo: "",
-    position: "center",
-    logoSize: 100,
+    brandingLogoPreview: "",
+    brandingLogoFile: null,
+    position: "",
+    logoSize: 0,
   });
 
   const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({
@@ -289,8 +280,6 @@ export function LandingPageProvider({
     footerTitle: "",
     footerSubTitle: "",
     footerLogo: "",
-    footerLogoPreview: "",
-    footerLogoFile: null,
     footerBackground: "",
     footerTextColor: "",
     facebookUrl: "",
@@ -409,14 +398,14 @@ export function LandingPageProvider({
     }
 
     /* GLOBAL BRANDING */
-    // if (api.global_setting) {
-    //   setBrandingData((prev) => ({
-    //     ...prev,
-    //     logo: api.global_setting.branding_logo || "",
-    //     position: api.global_setting.logo_position || "center",
-    //     logoSize: Number(api.global_setting.logo_size) || 100,
-    //   }));
-    // }
+    if (api.global_setting) {
+      setBrandingData((prev) => ({
+        ...prev,
+        logo: api.global_setting.branding_logo || prev.logo,
+        position: api.global_setting.logo_position || prev.position,
+        logoSize: Number(api.global_setting.logo_size) || prev.logoSize,
+      }));
+    }
 
     /* FOOTER */
     if (api.global_setting) {

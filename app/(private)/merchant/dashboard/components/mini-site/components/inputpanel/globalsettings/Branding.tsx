@@ -25,12 +25,19 @@ export default function Branding() {
           </span>
           <input
             type="file"
+            accept="image/*"
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              const url = URL.createObjectURL(file);
-              setBrandingData({ ...brandingData, logo: url });
+
+              const preview = URL.createObjectURL(file);
+
+              setBrandingData((prev) => ({
+                ...prev,
+                brandingLogoPreview: preview,
+                brandingLogoFile: file,
+              }));
             }}
           />
         </label>

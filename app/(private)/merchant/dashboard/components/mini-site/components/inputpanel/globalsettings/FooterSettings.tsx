@@ -5,9 +5,8 @@ import { useLandingPage } from "../../../context/LandingBuilderContext";
 export default function FooterSettings() {
   const { footerData, setFooterData } = useLandingPage();
 
-  console.log("====================================");
-  console.log(footerData);
-  console.log("====================================");
+  // console.log(footerData);
+
   return (
     <section className="flex flex-col gap-4 text-balance p-2">
       {/* Footer Title */}
@@ -41,7 +40,7 @@ export default function FooterSettings() {
       </div>
 
       {/* Footer Logo */}
-      <div>
+      {/* <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Logo
         </label>
@@ -50,17 +49,6 @@ export default function FooterSettings() {
           <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
             Click to upload
           </span>
-          {/* <input
-            type="file"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-              const url = URL.createObjectURL(file);
-              setFooterData({ ...footerData, footerLogo: url });
-            }}
-          /> */}
-
           <input
             type="file"
             accept="image/*"
@@ -79,7 +67,7 @@ export default function FooterSettings() {
             }}
           />
         </label>
-      </div>
+      </div> */}
       {/* Footer Background Color  */}
       <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">

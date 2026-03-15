@@ -117,7 +117,10 @@ export default function page() {
         whyChooseUsData.backgroundColor,
       );
 
-      formData.append("branding_logo", brandingData.logo);
+      if (brandingData.brandingLogoFile) {
+        formData.append("branding_logo", brandingData.brandingLogoFile);
+      }
+      // formData.append("branding_logo", brandingData.logo);
       formData.append("logo_position", brandingData.position || "");
       formData.append("logo_size", String(brandingData.logoSize) || "");
       formData.append("primary_color", colorSystemData.primaryColor || "");
@@ -134,9 +137,9 @@ export default function page() {
         String(layoutSettingsData.sectionSpacing) || "",
       );
       formData.append("website_name", footerData.footerTitle);
-      if (footerData.footerLogoFile) {
-        formData.append("branding_logo", footerData.footerLogoFile);
-      }
+      // if (footerData.footerLogoFile) {
+      //   formData.append("branding_logo", footerData.footerLogoFile);
+      // }
       formData.append("footer_des", footerData.footerSubTitle);
       formData.append("footer_background", footerData.footerBackground);
       formData.append("footer_text_color", footerData.footerTextColor);

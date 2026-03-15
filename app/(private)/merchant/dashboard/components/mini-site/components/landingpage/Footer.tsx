@@ -19,9 +19,7 @@ import { getImageUrl } from "@/helper/formatImage";
 export default function Footer() {
   const { footerData, layoutSettingsData } = useLandingPage();
 
-  console.log("====================================");
-  console.log(footerData.footerLogo);
-  console.log("====================================");
+  // console.log(footerData.footerLogo);
 
   return (
     <footer
@@ -38,11 +36,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Image
-              src={
-                footerData.footerLogoPreview
-                  ? footerData.footerLogoPreview
-                  : getImageUrl(footerData.footerLogo)
-              }
+              src={footerData.footerLogo}
               alt={footerData.footerTitle}
               width={40}
               height={40}

@@ -6,6 +6,9 @@ import { getImageUrl } from "@/helper/formatImage";
 export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
+  console.log("====================================");
+  console.log(brandingData.logo);
+  console.log("====================================");
 
   return (
     <section className="relative w-full">
@@ -29,7 +32,6 @@ export default function Hero() {
             unoptimized={true}
           />
         )}
-
         {/* Overlay */}
         <div
           className="absolute inset-0"
@@ -38,7 +40,6 @@ export default function Hero() {
             opacity: 0.05,
           }}
         />
-
         {/* Logo */}
         <div
           className={`
@@ -54,15 +55,19 @@ export default function Hero() {
           `}
         >
           <Image
-            src={brandingData.logo || "/images/image 259.png"}
+            src={
+              brandingData.brandingLogoPreview
+                ? brandingData.brandingLogoPreview
+                : brandingData.logo
+            }
             alt="Logo"
             width={brandingData.logoSize || 120}
             height={brandingData.logoSize || 40}
             className="object-contain"
             priority
+            unoptimized
           />
         </div>
-
         {/* Content */}
         <div
           className="
@@ -89,7 +94,6 @@ export default function Hero() {
                 {heroData.heroSubtitle}
               </h3>
             )}
-
             <h1
               className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
               style={{
@@ -99,7 +103,6 @@ export default function Hero() {
             >
               {heroData.heroTitle}
             </h1>
-
             {heroData.heroDescription && (
               <p
                 style={{
@@ -111,7 +114,6 @@ export default function Hero() {
                 {heroData.heroDescription}
               </p>
             )}
-
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               {heroData.primaryBtn && (

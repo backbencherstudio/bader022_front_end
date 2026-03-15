@@ -2,54 +2,12 @@ import React from "react";
 import { FiImage } from "react-icons/fi";
 import { useLandingPage } from "../../../context/LandingBuilderContext";
 
-type ContactInfo = {
-  phone: string;
-  email: string;
-  address: string;
-};
-
 export default function FooterSettings() {
   const { footerData, setFooterData } = useLandingPage();
 
-  // Update URL only for social link
-  // const updateSocialLink = (index: number, value: string) => {
-  //   const updated = [...footerData.socialLinks];
-  //   updated[index] = { ...updated[index], url: value };
-  //   setFooterData({ ...footerData, socialLinks: updated });
-  // };
-
-  // const removeSocialLink = (index: number) => {
-  //   const updated = footerData.socialLinks.filter((_, i) => i !== index);
-  //   setFooterData({ ...footerData, socialLinks: updated });
-  // };
-
-  // const updateContact = (field: keyof ContactInfo, value: string) => {
-  //   setFooterData({
-  //     ...footerData,
-  //     contact: { ...footerData.contact, [field]: value },
-  //   });
-  // };
-
-  // const updateNavigation = (
-  //   index: number,
-  //   field: "label" | "href",
-  //   value: string
-  // ) => {
-  //   const updated = [...footerData.navigation];
-  //   updated[index] = { ...updated[index], [field]: value };
-  //   setFooterData({ ...footerData, navigation: updated });
-  // };
-
-  // const updateSupport = (
-  //   index: number,
-  //   field: "label" | "href",
-  //   value: string
-  // ) => {
-  //   const updated = [...footerData.support];
-  //   updated[index] = { ...updated[index], [field]: value };
-  //   setFooterData({ ...footerData, support: updated });
-  // };
-
+  console.log("====================================");
+  console.log(footerData);
+  console.log("====================================");
   return (
     <section className="flex flex-col gap-4 text-balance p-2">
       {/* Footer Title */}
@@ -92,7 +50,7 @@ export default function FooterSettings() {
           <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
             Click to upload
           </span>
-          <input
+          {/* <input
             type="file"
             className="hidden"
             onChange={(e) => {
@@ -100,6 +58,24 @@ export default function FooterSettings() {
               if (!file) return;
               const url = URL.createObjectURL(file);
               setFooterData({ ...footerData, footerLogo: url });
+            }}
+          /> */}
+
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+
+              const preview = URL.createObjectURL(file);
+
+              setFooterData((prev) => ({
+                ...prev,
+                footerLogoPreview: preview,
+                footerLogoFile: file,
+              }));
             }}
           />
         </label>
@@ -174,8 +150,8 @@ export default function FooterSettings() {
             className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
           />
           <input
-            type="url"
-            placeholder={footerData.facebookUrl}
+            type="text"
+            placeholder="https://www.facebook.com"
             value={footerData.facebookUrl}
             onChange={(e) =>
               setFooterData({
@@ -194,8 +170,8 @@ export default function FooterSettings() {
             className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
           />
           <input
-            type="url"
-            placeholder={footerData.instagramUrl}
+            type="text"
+            placeholder="https://www.instagram.com"
             value={footerData.instagramUrl}
             onChange={(e) =>
               setFooterData({
@@ -214,8 +190,8 @@ export default function FooterSettings() {
             className="w-full p-3 rounded-md border dark:bg-gray-700 bg-gray-100 cursor-not-allowed"
           />
           <input
-            type="url"
-            placeholder={footerData.twitterUrl}
+            type="text"
+            placeholder="https://www.twitter.com"
             value={footerData.twitterUrl}
             onChange={(e) =>
               setFooterData({
@@ -246,7 +222,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.homeUrl}
+            placeholder="#home"
             value={footerData.homeUrl}
             onChange={(e) =>
               setFooterData({
@@ -271,7 +247,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.aboutUrl}
+            placeholder="#about"
             value={footerData.aboutUrl}
             onChange={(e) =>
               setFooterData({
@@ -296,7 +272,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.why_choose_usUrl}
+            placeholder="#why-choose-us"
             value={footerData.why_choose_usUrl}
             onChange={(e) =>
               setFooterData({
@@ -321,7 +297,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.serviceUrl}
+            placeholder="#service"
             value={footerData.serviceUrl}
             onChange={(e) =>
               setFooterData({
@@ -342,17 +318,11 @@ export default function FooterSettings() {
             type="text"
             value="Contact Us"
             readOnly
-            // onChange={(e) =>
-            //   setFooterData({
-            //     ...footerData,
-            //     contact_us: e.target.value,
-            //   })
-            // }
             className="w-full p-2 border rounded dark:bg-gray-700"
           />
           <input
             type="text"
-            placeholder={footerData.contactUrl}
+            placeholder="#contact-us"
             value={footerData.contactUrl}
             onChange={(e) =>
               setFooterData({
@@ -370,7 +340,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.privacy_policyUrl}
+            placeholder="#privacy-policy"
             value={footerData.privacy_policyUrl}
             onChange={(e) =>
               setFooterData({
@@ -388,7 +358,7 @@ export default function FooterSettings() {
           />
           <input
             type="text"
-            placeholder={footerData.terms_conditionUrl}
+            placeholder="#terms-conditions"
             value={footerData.terms_conditionUrl}
             onChange={(e) =>
               setFooterData({
@@ -406,7 +376,7 @@ export default function FooterSettings() {
         <h3 className="text-sm font-medium">Contact Info</h3>
         <input
           type="text"
-          placeholder="Phone"
+          placeholder="Contact Number"
           value={footerData.contact_info}
           onChange={(e) =>
             setFooterData({
@@ -449,7 +419,7 @@ export default function FooterSettings() {
           onClick={() =>
             setFooterData({
               ...footerData,
-              showPoweredBy: !footerData.showPoweredBy,
+              showPoweredBy: !footerData.showPoweredBy as unknown as string,
             })
           }
           className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${

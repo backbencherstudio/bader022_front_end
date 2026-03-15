@@ -111,6 +111,8 @@ type FooterData = {
   footerTitle: string;
   footerSubTitle: string;
   footerLogo: string;
+  footerLogoPreview: string;
+  footerLogoFile: File | null;
   footerBackground: string;
   footerTextColor: string;
   facebookUrl?: string;
@@ -138,7 +140,7 @@ type FooterData = {
   // socialLinks: SocialLinks[];
   // navigation: NavigationLink[];
   // support: SupportLink[];
-  showPoweredBy: boolean;
+  showPoweredBy: boolean | string;
 };
 
 type LandingContextType = {
@@ -285,12 +287,13 @@ export function LandingPageProvider({
 
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
-    footerSubTitle:
-      "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,",
+    footerSubTitle: "",
     footerLogo: "",
+    footerLogoPreview: "",
+    footerLogoFile: null,
     footerBackground: "",
     footerTextColor: "",
-    facebookUrl: "www.facebook.com",
+    facebookUrl: "",
     twitterUrl: "",
     instagramUrl: "",
     linkedinUrl: "",
@@ -299,39 +302,20 @@ export function LandingPageProvider({
     homeUrl: "",
     about: "About",
     aboutUrl: "",
-    why_choose_us: "why_choose_us",
+    why_choose_us: "Why Choose Us",
     why_choose_usUrl: "",
-    service: "service",
+    service: "Services",
     serviceUrl: "",
-    contact_us: "contact_us",
+    contact_us: "Contact Us",
     contactUrl: "",
-    privacy_policy: "privacy_policy",
+    privacy_policy: "Privacy Policy",
     privacy_policyUrl: "",
-    terms_condition: "terms_condition",
+    terms_condition: "Terms & Conditions",
     terms_conditionUrl: "",
-    contact_info: "013456876294",
-    contact_email: "barik@example.com",
-    address: "UK",
-
-    // socialLinks: [
-    //   { icon: "facebook", url: "www.facebook.com" },
-    //   { icon: "twitter", url: "www.twitter.com" },
-    //   { icon: "instagram", url: "www.instagram.com" },
-    //   { icon: "pinterest", url: "www.pinterest.com" },
-    //   { icon: "linkedin", url: "www.linkedin.com" },
-    // ],
-    // navigation: [
-    //   { label: "Home", href: "#" },
-    //   { label: "About Us", href: "#about" },
-    //   { label: "Why Choose Us", href: "#why-choose-us" },
-    //   { label: "Services", href: "#services" },
-    // ],
-    // support: [
-    //   { label: "Contact Us", href: "#contact-us" },
-    //   { label: "Privacy Policy", href: "#privace-policy" },
-    //   { label: "Terms & Conditions", href: "#terms-conditions" },
-    // ],
-    showPoweredBy: true,
+    contact_info: "",
+    contact_email: "",
+    address: "",
+    showPoweredBy: false,
   });
 
   useEffect(() => {
@@ -435,12 +419,37 @@ export function LandingPageProvider({
     // }
 
     /* FOOTER */
-    // setFooterData((prev) => ({
-    //   ...prev,
-    //   contact_email: api.email || prev.contact_email,
-    //   contact_info: api.phone || prev.contact_info,
-    //   address: api.address || prev.address,
-    // }));
+    if (api.global_setting) {
+      setFooterData((prev) => ({
+        ...prev,
+        footerTitle: api.global_setting.website_name || prev.footerTitle,
+        footerSubTitle: api.global_setting.footer_des || prev.footerSubTitle,
+        footerLogo: api.global_setting.branding_logo || prev.footerLogo,
+        footerBackground:
+          api.global_setting.footer_background || prev.footerBackground,
+        footerTextColor:
+          api.global_setting.footer_text_color || prev.footerTextColor,
+        facebookUrl: api.global_setting.facebook_url || prev.facebookUrl,
+        twitterUrl: api.global_setting.twitter_url || prev.twitterUrl,
+        instagramUrl: api.global_setting.instagram_url || prev.instagramUrl,
+        linkedinUrl: api.global_setting.linkedin_url || prev.linkedinUrl,
+        pinterestUrl: api.global_setting.pinterest_url || prev.pinterestUrl,
+        homeUrl: api.global_setting.home_url || prev.homeUrl,
+        aboutUrl: api.global_setting.about_url || prev.aboutUrl,
+        why_choose_usUrl:
+          api.global_setting.why_choose_us_url || prev.why_choose_usUrl,
+        serviceUrl: api.global_setting.service_url || prev.serviceUrl,
+        contactUrl: api.global_setting.contact_url || prev.contactUrl,
+        privacy_policyUrl:
+          api.global_setting.privacy_policy_url || prev.privacy_policyUrl,
+        terms_conditionUrl:
+          api.global_setting.terms_condition_url || prev.terms_conditionUrl,
+        contact_info: api.global_setting.contact_info || prev.contact_info,
+        contact_email: api.global_setting.contact_email || prev.contact_email,
+        address: api.global_setting.country || prev.address,
+        showPoweredBy: api.global_setting.turn_off || prev.showPoweredBy,
+      }));
+    }
   }, [data]);
 
   return (

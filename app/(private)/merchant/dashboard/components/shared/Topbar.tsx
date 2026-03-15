@@ -19,11 +19,9 @@ import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 
 export default function TopBar() {
-  // const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
-
   // const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
+  // console.log(user);
 
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { setTheme } = useTheme();
@@ -83,7 +81,7 @@ export default function TopBar() {
               aria-label="Profile"
             >
               <Image
-                src={getImageUrl(user?.image) || "/images/user1.png"}
+                src={getImageUrl(user?.image as string) || "/images/user1.png"}
                 alt={user?.name || "User"}
                 width={48}
                 height={48}

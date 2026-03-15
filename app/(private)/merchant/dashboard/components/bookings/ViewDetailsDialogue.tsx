@@ -19,19 +19,19 @@ import { TxStatus } from "./AllBookingHistory";
 import { Card } from "@/components/ui/card";
 
 // Status colors mapping
-const statusStyles: Record<TxStatus, string> = {
-  completed: "border-emerald-500 bg-emerald-50 text-emerald-700",
-  cancel: "border-red-500 bg-red-50 text-red-600",
-  pending: "border-amber-500 bg-amber-50 text-amber-700",
-  confirm: "border-sky-500 bg-sky-50 text-sky-700",
-};
+// const statusStyles: Record<TxStatus, string> = {
+//   completed: "border-emerald-500 bg-emerald-50 text-emerald-700",
+//   cancel: "border-red-500 bg-red-50 text-red-600",
+//   pending: "border-amber-500 bg-amber-50 text-amber-700",
+//   confirm: "border-sky-500 bg-sky-50 text-sky-700",
+// };
 
-const statusLabels: Record<TxStatus, string> = {
-  completed: "Completed",
-  cancel: "Cancelled",
-  pending: "Pending",
-  confirm: "Confirmed",
-};
+// const statusLabels: Record<TxStatus, string> = {
+//   completed: "Completed",
+//   cancel: "Cancelled",
+//   pending: "Pending",
+//   confirm: "Confirmed",
+// };
 
 export default function BookingViewDetailDialogue({
   isOpen,
@@ -79,13 +79,13 @@ export default function BookingViewDetailDialogue({
                   <p>Staff: {booking.staff}</p>
                   <p>Price: {booking.price}</p>
                   <div>
-                    <span
+                    {/* <span
                       className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border ${
-                        statusStyles[booking.status]
+                        statusStyles[booking.status] 
                       }`}
                     >
                       {statusLabels[booking.status]}
-                    </span>
+                    </span> */}
                   </div>
                 </Card>
               </div>
@@ -101,7 +101,7 @@ export default function BookingViewDetailDialogue({
               onValueChange={(value) => onChangeStatus(value as TxStatus)}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={statusLabels[booking.status]} />
+                {/* <SelectValue placeholder={statusLabels[booking.status]} /> */}
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="completed">Completed</SelectItem>

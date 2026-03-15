@@ -9,6 +9,7 @@ interface User {
   role: Role;
   website_domain:string
   phone?:string
+  image?: String;
 }
 
 interface AuthState {

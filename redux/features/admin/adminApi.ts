@@ -62,7 +62,7 @@ export const adminApi = baseApi.injectEndpoints({
     //   }),
     // }),
     getPaymentHistory: builder.query({
-      query: ({ search = "" }) => ({
+      query: ({ search }) => ({
         url: `/admin/payment-history/index?search=${search}`,
         method: "GET",
         params: {
@@ -76,6 +76,16 @@ export const adminApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/admin/payment-history/show/${id}`,
         method: "GET",
+      }),
+    }),
+
+    // payment invoice download
+
+    AdmininvoiceDownload: builder.query<Blob, number>({
+      query: (id) => ({
+        url: `/admin/payment-history/admin-invoice/${id}`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
       }),
     }),
 
@@ -202,14 +212,13 @@ export const adminApi = baseApi.injectEndpoints({
       }),
     }),
 
-
-   data: builder.query({
-    query: (body)=>({
-      url:`/add`,
-      method:"POST",
-      body,
-    })
-   }),
+    data: builder.query({
+      query: (body) => ({
+        url: `/add`,
+        method: "POST",
+        body,
+      }),
+    }),
     //setting personal
 
     getPersonaltHistory: builder.query({
@@ -259,6 +268,7 @@ export const {
   useUpdateMerchantByIdMutation,
   useGetPaymentHistoryQuery,
   useGetSinglePaymentHistoryQuery,
+  useLazyAdmininvoiceDownloadQuery,
   useGetSubscriptionsQuery,
   useGetSubscriptionsIdQuery,
   useUpdateSubscriptionsByIdMutation,

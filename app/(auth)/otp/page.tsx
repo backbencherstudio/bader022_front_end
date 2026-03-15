@@ -3,7 +3,7 @@
 import { useVerifyOtpMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -11,7 +11,7 @@ type FormValues = {
 };
 
 export default function OTPPage() {
-  const [Otp, { isLoading }] = useVerifyOtpMutation({});
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const router = useRouter();
   const { handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: { otp: ["", "", "", "", "", ""] },
@@ -19,11 +19,29 @@ export default function OTPPage() {
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const otpValues = watch("otp");
+  const [error, setError] = useState<string>("");
 
-  const onSubmit = () => {
-    const otp = otpValues.join("");
-    console.log("OTP:", otp);
-    router.push("/reset-password");
+  const onSubmit = async () => {
+    const otp = otpValues.join(""); 
+    const email = localStorage.getItem("resetEmail");
+
+    const body = {
+      email,
+      otp,
+    };
+
+    try {
+      const response = await verifyOtp(body).unwrap();
+      console.log("OTP verified:", response);
+      router.push("/reset-password");
+    } catch (error: any) {
+      console.error("Error verifying OTP:", error);
+      if (error?.data?.message === "OTP expired") {
+        setError("The OTP has expired. Please request a new one.");
+      } else {
+        setError("Invalid OTP. Please try again.");
+      }
+    }
   };
 
   const handleChange = (value: string, index: number) => {
@@ -67,6 +85,10 @@ export default function OTPPage() {
           We have sent a code to your registered email address
         </p>
 
+        {error && (
+          <div className="text-center text-red-500 mb-4">{error}</div>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
           <div className="flex justify-center gap-3">
@@ -78,14 +100,12 @@ export default function OTPPage() {
                 }}
                 maxLength={1}
                 inputMode="numeric"
-                className="
-                  w-12 h-12 text-center text-lg font-semibold
+                className="w-12 h-12 text-center text-lg font-semibold
                   rounded-md border
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
                   text-gray-900 dark:text-white
-                  focus:outline-none focus:ring-2 focus:ring-blue-500
-                "
+                  focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={otpValues[index]}
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleBackspace(e, index)}
@@ -105,6 +125,10 @@ export default function OTPPage() {
           <button
             type="button"
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
+            onClick={() => {
+              // Trigger OTP resend logic here
+              alert("Resend OTP functionality is not yet implemented.");
+            }}
           >
             Resend OTP
           </button>

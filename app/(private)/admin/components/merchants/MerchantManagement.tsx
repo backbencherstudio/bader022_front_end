@@ -172,7 +172,7 @@ export function MerchantManagementCard({
 
               <TableBody>
                 {paginatedRows?.map((r) => (
-                  <TableRow key={r.id} className="h-19.5">
+                  <TableRow key={r.id} className="h-15.5">
                     {/* Business name + avatar */}
                     <TableCell className="pl-8">
                       <div className="flex items-center gap-3">
@@ -185,29 +185,29 @@ export function MerchantManagementCard({
                             {initials(r.businessName)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-base font-medium text-foreground">
+                        <span className="  ">
                           {r.businessName}
                         </span>
                       </div>
                     </TableCell>
 
-                    <TableCell className="text-base text-foreground">
+                    <TableCell className="">
                       {r.businessType}
                     </TableCell>
 
-                    <TableCell className="text-base text-foreground">
+                    <TableCell className="">
                       {r.email}
                     </TableCell>
 
-                    <TableCell className="text-base text-foreground">
+                    <TableCell className="">
                       {r.package}
                     </TableCell>
 
-                    <TableCell className="text-base text-foreground">
+                    <TableCell className="">
                       {r.planType}
                     </TableCell>
 
-                    <TableCell className="text-base text-foreground">
+                    <TableCell className="">
                       {r.expireDate}
                     </TableCell>
 

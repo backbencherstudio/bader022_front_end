@@ -119,7 +119,7 @@ export default function PackageTab() {
           </div>
 
           {/* Filter Selects */}
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <Select
               onValueChange={(value) =>
                 setFilters((prev) => ({
@@ -188,7 +188,7 @@ export default function PackageTab() {
             >
               <RefreshCcw />
             </Button>
-          </div>
+          </div> */}
 
           <div className="mb-4 flex items-end justify-end">
             <button className="px-4 py-2 cursor-pointer">
@@ -217,7 +217,7 @@ export default function PackageTab() {
             <TableBody>
               {paginatedPlans.map((plan: SubscriptionPlan) => (
                 <TableRow key={plan.id}>
-                  <TableCell className="pl-8 font-medium">
+                  <TableCell className="pl-8 ">
                     {plan.name}
                   </TableCell>
 
@@ -225,7 +225,7 @@ export default function PackageTab() {
 
                   <TableCell>{plan.day} Days</TableCell>
 
-                  <TableCell className="font-semibold">
+                  <TableCell className="">
                     <div className="flex items-center gap-1">
                       <SaudiRiyal size={14} />
                       {plan.price}

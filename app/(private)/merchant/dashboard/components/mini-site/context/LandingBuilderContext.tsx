@@ -257,11 +257,11 @@ export function LandingPageProvider({
   });
 
   const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({
-    primaryColor: "#d98526",
-    secondaryColor: "#235115",
-    headingColor: "#221551",
-    bodyTextColor: "#111927",
-    buttonColor: "#10239F",
+    primaryColor: "",
+    secondaryColor: "",
+    headingColor: "",
+    bodyTextColor: "",
+    buttonColor: "",
   });
 
   const [typographyData, setTypographyData] = useState<TypographyData>({
@@ -406,6 +406,19 @@ export function LandingPageProvider({
         logoSize: Number(api.global_setting.logo_size) || prev.logoSize,
       }));
     }
+    /*  ColorSystem */
+    if (api.global_setting) {
+      setColorSystemData((prev) => ({
+        ...prev,
+        primaryColor: api.global_setting.primary_color || prev.primaryColor,
+        secondaryColor:
+          api.global_setting.secondary_color || prev.secondaryColor,
+        headingColor: api.global_setting.heading_color || prev.headingColor,
+        bodyTextColor: api.global_setting.body_text_color || prev.bodyTextColor,
+        buttonColor: api.global_setting.button_color || prev.buttonColor,
+      }));
+    }
+
     /*  Typography */
     if (api.global_setting) {
       setTypographyData((prev) => ({
@@ -416,7 +429,6 @@ export function LandingPageProvider({
         fontFamily: api.global_setting.font_family || prev.fontFamily,
       }));
     }
-
     /* FOOTER */
     if (api.global_setting) {
       setFooterData((prev) => ({

@@ -76,7 +76,9 @@ type CtaBannerData = {
 };
 type BrandingData = {
   logo: string;
-  position?: "left" | "center" | "right";
+  brandingLogoPreview: string;
+  brandingLogoFile: File | null;
+  position?: string;
   logoSize: number;
 };
 
@@ -98,14 +100,6 @@ type TypographyData = {
 type LayoutSettingsData = {
   sectionSpacing?: number;
 };
-
-// type SocialLinks = {
-//   icon: "facebook" | "twitter" | "instagram" | "pinterest" | "linkedin";
-//   url: string;
-// };
-
-// type NavigationLink = { label: string; href: string };
-// type SupportLink = { label: string; href: string };
 
 type FooterData = {
   footerTitle: string;
@@ -135,10 +129,7 @@ type FooterData = {
   contact_info?: string;
   contact_email?: string;
   address?: string;
-  // socialLinks: SocialLinks[];
-  // navigation: NavigationLink[];
-  // support: SupportLink[];
-  showPoweredBy: boolean;
+  showPoweredBy: boolean | string;
 };
 
 type LandingContextType = {
@@ -190,7 +181,7 @@ export function LandingPageProvider({
   const { user } = useAppSelector((state) => state.auth);
   const domain = user?.website_domain;
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
-  console.log(data);
+  // console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({
     heroTitle: "",
@@ -259,23 +250,25 @@ export function LandingPageProvider({
   // Global Settings
   const [brandingData, setBrandingData] = useState<BrandingData>({
     logo: "",
-    position: "center",
-    logoSize: 100,
+    brandingLogoPreview: "",
+    brandingLogoFile: null,
+    position: "",
+    logoSize: 0,
   });
 
   const [colorSystemData, setColorSystemData] = useState<ColorSystemData>({
-    primaryColor: "#d98526",
-    secondaryColor: "#235115",
-    headingColor: "#221551",
-    bodyTextColor: "#111927",
-    buttonColor: "#10239F",
+    primaryColor: "",
+    secondaryColor: "",
+    headingColor: "",
+    bodyTextColor: "",
+    buttonColor: "",
   });
 
   const [typographyData, setTypographyData] = useState<TypographyData>({
     h1Size: 26,
     h2Size: 10,
     bodySize: 16,
-    fontFamily: "Inter",
+    fontFamily: "",
   });
 
   const [layoutSettingsData, setLayoutSettingsData] =
@@ -285,12 +278,11 @@ export function LandingPageProvider({
 
   const [footerData, setFooterData] = useState<FooterData>({
     footerTitle: "",
-    footerSubTitle:
-      "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,",
+    footerSubTitle: "",
     footerLogo: "",
     footerBackground: "",
     footerTextColor: "",
-    facebookUrl: "www.facebook.com",
+    facebookUrl: "",
     twitterUrl: "",
     instagramUrl: "",
     linkedinUrl: "",
@@ -299,39 +291,20 @@ export function LandingPageProvider({
     homeUrl: "",
     about: "About",
     aboutUrl: "",
-    why_choose_us: "why_choose_us",
+    why_choose_us: "Why Choose Us",
     why_choose_usUrl: "",
-    service: "service",
+    service: "Services",
     serviceUrl: "",
-    contact_us: "contact_us",
+    contact_us: "Contact Us",
     contactUrl: "",
-    privacy_policy: "privacy_policy",
+    privacy_policy: "Privacy Policy",
     privacy_policyUrl: "",
-    terms_condition: "terms_condition",
+    terms_condition: "Terms & Conditions",
     terms_conditionUrl: "",
-    contact_info: "013456876294",
-    contact_email: "barik@example.com",
-    address: "UK",
-
-    // socialLinks: [
-    //   { icon: "facebook", url: "www.facebook.com" },
-    //   { icon: "twitter", url: "www.twitter.com" },
-    //   { icon: "instagram", url: "www.instagram.com" },
-    //   { icon: "pinterest", url: "www.pinterest.com" },
-    //   { icon: "linkedin", url: "www.linkedin.com" },
-    // ],
-    // navigation: [
-    //   { label: "Home", href: "#" },
-    //   { label: "About Us", href: "#about" },
-    //   { label: "Why Choose Us", href: "#why-choose-us" },
-    //   { label: "Services", href: "#services" },
-    // ],
-    // support: [
-    //   { label: "Contact Us", href: "#contact-us" },
-    //   { label: "Privacy Policy", href: "#privace-policy" },
-    //   { label: "Terms & Conditions", href: "#terms-conditions" },
-    // ],
-    showPoweredBy: true,
+    contact_info: "",
+    contact_email: "",
+    address: "",
+    showPoweredBy: false,
   });
 
   useEffect(() => {
@@ -425,22 +398,76 @@ export function LandingPageProvider({
     }
 
     /* GLOBAL BRANDING */
-    // if (api.global_setting) {
-    //   setBrandingData((prev) => ({
-    //     ...prev,
-    //     logo: api.global_setting.branding_logo || "",
-    //     position: api.global_setting.logo_position || "center",
-    //     logoSize: Number(api.global_setting.logo_size) || 100,
-    //   }));
-    // }
-
+    if (api.global_setting) {
+      setBrandingData((prev) => ({
+        ...prev,
+        logo: api.global_setting.branding_logo || prev.logo,
+        position: api.global_setting.logo_position || prev.position,
+        logoSize: Number(api.global_setting.logo_size) || prev.logoSize,
+      }));
+    }
+    /*  ColorSystem */
+    if (api.global_setting) {
+      setColorSystemData((prev) => ({
+        ...prev,
+        primaryColor: api.global_setting.primary_color || prev.primaryColor,
+        secondaryColor:
+          api.global_setting.secondary_color || prev.secondaryColor,
+        headingColor: api.global_setting.heading_color || prev.headingColor,
+        bodyTextColor: api.global_setting.body_text_color || prev.bodyTextColor,
+        buttonColor: api.global_setting.button_color || prev.buttonColor,
+      }));
+    }
+    /*  Typography */
+    if (api.global_setting) {
+      setTypographyData((prev) => ({
+        ...prev,
+        h1Size: api.global_setting.typography_h1 || prev.h1Size,
+        h2Size: api.global_setting.typography_h2 || prev.h2Size,
+        bodySize: api.global_setting.body_text_size || prev.bodySize,
+        fontFamily: api.global_setting.font_family || prev.fontFamily,
+      }));
+    }
+    /*  LayoutSettings */
+    if (api.global_setting) {
+      setLayoutSettingsData((prev) => ({
+        ...prev,
+        sectionSpacing:
+          api.global_setting.section_spacing || prev.sectionSpacing,
+      }));
+    }
     /* FOOTER */
-    // setFooterData((prev) => ({
-    //   ...prev,
-    //   contact_email: api.email || prev.contact_email,
-    //   contact_info: api.phone || prev.contact_info,
-    //   address: api.address || prev.address,
-    // }));
+    if (api.global_setting) {
+      setFooterData((prev) => ({
+        ...prev,
+        footerTitle: api.global_setting.website_name || prev.footerTitle,
+        footerSubTitle: api.global_setting.footer_des || prev.footerSubTitle,
+        footerLogo: api.global_setting.branding_logo || prev.footerLogo,
+        footerBackground:
+          api.global_setting.footer_background || prev.footerBackground,
+        footerTextColor:
+          api.global_setting.footer_text_color || prev.footerTextColor,
+        facebookUrl: api.global_setting.facebook_url || prev.facebookUrl,
+        twitterUrl: api.global_setting.twitter_url || prev.twitterUrl,
+        instagramUrl: api.global_setting.instagram_url || prev.instagramUrl,
+        linkedinUrl: api.global_setting.linkedin_url || prev.linkedinUrl,
+        pinterestUrl: api.global_setting.pinterest_url || prev.pinterestUrl,
+        homeUrl: api.global_setting.home_url || prev.homeUrl,
+        aboutUrl: api.global_setting.about_url || prev.aboutUrl,
+        why_choose_usUrl:
+          api.global_setting.why_choose_us_url || prev.why_choose_usUrl,
+        serviceUrl: api.global_setting.service_url || prev.serviceUrl,
+        contactUrl: api.global_setting.contact_url || prev.contactUrl,
+        privacy_policyUrl:
+          api.global_setting.privacy_policy_url || prev.privacy_policyUrl,
+        terms_conditionUrl:
+          api.global_setting.terms_condition_url || prev.terms_conditionUrl,
+        contact_info: api.global_setting.contact_info || prev.contact_info,
+        contact_email: api.global_setting.contact_email || prev.contact_email,
+        address: api.global_setting.country || prev.address,
+        showPoweredBy: api.global_setting.turn_off || prev.showPoweredBy,
+      }));
+    }
   }, [data]);
 
   return (

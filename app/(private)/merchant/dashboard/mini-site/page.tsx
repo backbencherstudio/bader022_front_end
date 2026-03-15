@@ -39,7 +39,7 @@ export default function page() {
     useCreateGlobalSettingMutation();
 
   const handleSubmit = async () => {
-    console.log(heroData.heroImageFile);
+    // console.log(footerData?.showPoweredBy);
 
     try {
       const formData = new FormData();
@@ -49,9 +49,6 @@ export default function page() {
       formData.append("hero_description", heroData.heroDescription);
       formData.append("cta_button_text", heroData.primaryBtn);
       formData.append("cta_button_text_two", heroData.secondaryBtn);
-      // if (heroData.heroImageFile && heroData.heroImageFile.length > 0) {
-      //   formData.append("hero_image", heroData.heroImageFile[0]);
-      // }
       if (heroData.heroImageFile) {
         formData.append("hero_image", heroData.heroImageFile);
       }
@@ -120,7 +117,9 @@ export default function page() {
         whyChooseUsData.backgroundColor,
       );
 
-      formData.append("branding_logo", brandingData.logo);
+      if (brandingData.brandingLogoFile) {
+        formData.append("branding_logo", brandingData.brandingLogoFile);
+      }
       formData.append("logo_position", brandingData.position || "");
       formData.append("logo_size", String(brandingData.logoSize) || "");
       formData.append("primary_color", colorSystemData.primaryColor || "");
@@ -133,14 +132,39 @@ export default function page() {
       formData.append("body_text_size", String(typographyData.bodySize) || "");
       formData.append("font_family", typographyData.fontFamily || "");
       formData.append(
-        "layoutSettingsData",
+        "section_spacing",
         String(layoutSettingsData.sectionSpacing) || "",
       );
       formData.append("website_name", footerData.footerTitle);
-      formData.append("branding_logo", footerData.footerLogo);
       formData.append("footer_des", footerData.footerSubTitle);
       formData.append("footer_background", footerData.footerBackground);
       formData.append("footer_text_color", footerData.footerTextColor);
+      formData.append("facebook_url", footerData.facebookUrl || "");
+      formData.append("twitter_url", footerData.twitterUrl || "");
+      formData.append("instagram_url", footerData.instagramUrl || "");
+      formData.append("linkedin_url", footerData.linkedinUrl || "");
+      formData.append("pinterest_url", footerData.pinterestUrl || "");
+      formData.append("home", footerData.home || "");
+      formData.append("home_url", footerData.homeUrl || "");
+      formData.append("about", footerData.about || "");
+      formData.append("about_url", footerData.aboutUrl || "");
+      formData.append("why_choose_us", footerData.why_choose_us || "");
+      formData.append("why_choose_us_url", footerData.why_choose_usUrl || "");
+      formData.append("service", footerData.service || "");
+      formData.append("service_url", footerData.serviceUrl || "");
+      formData.append("contact_us", footerData.contact_us || "");
+      formData.append("contact_url", footerData.contactUrl || "");
+      formData.append("privacy_policy", footerData.privacy_policy || "");
+      formData.append("privacy_policy_url", footerData.privacy_policyUrl || "");
+      formData.append("terms_condition", footerData?.terms_condition || "");
+      formData.append(
+        "terms_conditionUrl",
+        footerData?.terms_conditionUrl || "",
+      );
+      formData.append("contact_info", footerData?.contact_info || "");
+      formData.append("contact_email", footerData?.contact_email || "");
+      formData.append("country", footerData?.address || "");
+      formData.append("turn_off", footerData?.showPoweredBy ? "1" : "0");
 
       await createMiniSite(formData).unwrap();
       await createWhyChooseUs(formData).unwrap();

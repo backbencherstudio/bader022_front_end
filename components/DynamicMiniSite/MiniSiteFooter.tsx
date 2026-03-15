@@ -33,6 +33,8 @@ interface FooterData {
   facebook_url?: string;
   instagram_url?: string;
   twitter_url?: string;
+  footer_background?: string;
+  footer_text_color?: string;
 }
 
 interface MiniSiteFooterProps {
@@ -47,13 +49,10 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
   return (
     <div>
       <footer
-        style={
-          {
-            //   backgroundColor: footerData.footerBackground || undefined,
-            //   color: footerData.footerTextColor || undefined,
-            //   marginTop: layoutSettingsData.sectionSpacing,
-          }
-        }
+        style={{
+          backgroundColor: data.global_setting.footer_background || undefined,
+          color: data.global_setting.footer_text_color || undefined,
+        }}
         className="dark:bg-gray-900 transition-colors"
       >
         {/* Top Section */}
@@ -62,10 +61,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src={
-                  getImageUrl(data.global_setting.branding_logo) ||
-                  "/images/image 259.png"
-                }
+                src={data.global_setting.branding_logo as string}
                 alt={data.global_setting.website_name || ""}
                 width={40}
                 height={40}

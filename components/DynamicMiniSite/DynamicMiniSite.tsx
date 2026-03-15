@@ -99,7 +99,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     `}
           >
             <Image
-              src={data.global_setting.logo || "/images/image 259.png"}
+              src={data.global_setting.branding_logo}
               alt="Logo"
               width={data.global_setting.logo_size || 120}
               height={data.global_setting.logo_size || 40}

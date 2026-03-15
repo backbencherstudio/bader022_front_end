@@ -46,12 +46,12 @@ export type TData = {
 //   { name: "Fri", revenue: 500 },
 // ];
 
-const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
-  id: String(i),
-  datetimeLabel: "Feb 1t 2024, 10:30 AM",
-  customerName: "Sarah Johnson",
-  serviceName: "Haircut & Styling",
-}));
+// const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
+//   id: String(i),
+//   datetimeLabel: "Feb 1t 2024, 10:30 AM",
+//   customerName: "Sarah Johnson",
+//   serviceName: "Haircut & Styling",
+// }));
 export default function DashboardPage() {
   const {
     data: dashboardOverview,
@@ -82,8 +82,18 @@ export default function DashboardPage() {
   // console.log({dashboardOverview});
   // console.log('====================================');
   // console.log('====================================');
-  // console.log({todayAppointmentData});
+  // console.log({ todayAppointmentData });
   // console.log('====================================');
+
+  const appointments =
+    todayAppointmentData?.data?.map((item: any) => ({
+      id: String(item.id),
+      datetimeLabel: item.date_time,
+      customerName: item.customer_name,
+      serviceName: item.service.service_name,
+    })) || [];
+  // console.log(appointments);
+
   return (
     <div>
       {/* Charts */}

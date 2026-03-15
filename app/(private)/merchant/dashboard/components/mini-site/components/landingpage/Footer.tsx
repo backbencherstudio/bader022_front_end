@@ -14,17 +14,12 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { useLandingPage } from "../../context/LandingBuilderContext";
-
-const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
-  facebook: <FaFacebookF />,
-  twitter: <FaTwitter />,
-  instagram: <FaInstagram />,
-  linkedin: <FaLinkedinIn />,
-  pinterest: <FaPinterestP />,
-};
+import { getImageUrl } from "@/helper/formatImage";
 
 export default function Footer() {
   const { footerData, layoutSettingsData } = useLandingPage();
+
+  // console.log(footerData.footerLogo);
 
   return (
     <footer
@@ -41,41 +36,17 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Image
-              src={footerData.footerLogo || "/images/image 259.png"}
+              src={footerData.footerLogo}
               alt={footerData.footerTitle}
               width={40}
               height={40}
+              unoptimized
             />
           </div>
 
           <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
             {footerData.footerSubTitle}
           </p>
-
-          {/* Social Links */}
-          {/* <div className="flex gap-3 mt-6">
-            {footerData.socialLinks?.map((item, index) => {
-              if (!item.url) return null;
-
-              const Icon = SOCIAL_ICON_MAP[item.icon];
-              if (!Icon) return null;
-
-              return (
-                <Link
-                  key={index}
-                  href={item.url}
-                  target="_blank"
-                  className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
-                             flex items-center justify-center
-                             hover:bg-orange-500 hover:text-white
-                             transition"
-                >
-                  {Icon}
-                </Link>
-              );
-            })}
-          </div> */}
-
           {/* Social Links */}
           <div className="flex gap-3 mt-6">
             <Link

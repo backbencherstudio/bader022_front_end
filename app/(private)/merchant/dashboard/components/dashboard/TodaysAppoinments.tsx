@@ -9,6 +9,8 @@ export type Appointment = {
 };
 
 function AppointmentRow({ item }: { item: Appointment }) {
+  console.log(item);
+
   return (
     <div className="relative flex gap-4">
       {/* Dot */}
@@ -62,7 +64,7 @@ export function TodaysAppointments({
           {/* Timeline line */}
           <div className="pointer-events-none absolute top-0 h-full w-px bg-muted/40" />
 
-          <div className="space-y-0">
+          {/* <div className="space-y-0">
             {items.map((item, idx) => (
               <div
                 key={item.id}
@@ -71,6 +73,30 @@ export function TodaysAppointments({
                 <AppointmentRow item={item} />
               </div>
             ))}
+          </div> */}
+          <div className="space-y-0">
+            {items.length === 0 ? (
+              <div className="relative flex gap-4">
+                <div className="relative z-10 mt-[2px] flex h-6 w-6 items-center justify-center rounded-full bg-muted/40">
+                  <div className="h-2 w-2 rounded-full bg-foreground" />
+                </div>
+
+                <div className="pb-6">
+                  <p className="text-xs text-muted-foreground">
+                    No appointments today
+                  </p>
+                </div>
+              </div>
+            ) : (
+              items.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className={idx === items.length - 1 ? "pb-2" : ""}
+                >
+                  <AppointmentRow item={item} />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </CardContent>

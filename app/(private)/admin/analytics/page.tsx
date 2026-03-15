@@ -38,9 +38,9 @@ export default function Page() {
   const { data: monthlyApiData } = useMonthlypaymentCountQuery({});
   const { data: dashboardOverview } = useDashboardOverviewQuery({});
 
-  console.log('====================================');
-  console.log(weeklyApiData);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(weeklyApiData);
+  // console.log('====================================');
 
   
   const monthlyRevenueData =

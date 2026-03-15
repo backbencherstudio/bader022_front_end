@@ -123,7 +123,7 @@ export default function RescheduleAppointmentModal({
 
               <SelectContent>
 
-                {staffs.map((staff) => (
+                {staffs.map((staff:any) => (
                   <SelectItem key={staff.id} value={String(staff.id)}>
                     {staff.name}
                   </SelectItem>
@@ -147,7 +147,7 @@ export default function RescheduleAppointmentModal({
             ) : (
               <div className="grid grid-cols-2 gap-2">
 
-                {timeSlots.map((time) => (
+                {timeSlots.map((time:any) => (
                   <button
                     key={time}
                     onClick={() => setSelectedTime(time)}

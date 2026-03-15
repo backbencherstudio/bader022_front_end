@@ -6,9 +6,9 @@ import { getImageUrl } from "@/helper/formatImage";
 export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
-  console.log("====================================");
-  console.log(brandingData.logo);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log(brandingData.logo);
+  // console.log("====================================");
 
   return (
     <section className="relative w-full">

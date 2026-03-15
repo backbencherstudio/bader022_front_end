@@ -76,7 +76,7 @@ export default function page() {
   // console.log('monthlyRevenueData:', monthlyRevenueData)
   // console.log('weeklyRevenueData:', weeklyRevenueData)
   // console.log('newReturnData:', newReturnData)
-  console.log("staffPerformanceData:", staffPerformanceData?.data);
+  // console.log("staffPerformanceData:", staffPerformanceData?.data);
 
   return (
     <div>

@@ -211,7 +211,7 @@ export default function UpcomingAppointment() {
           bookingID={selectedBookingId!}
           onClose={() => setCancelOpen(false)}
           onCancelSuccess={() => {
-            refetchBookings();
+            // refetchBookings();
           }}
         />
       </Dialog>

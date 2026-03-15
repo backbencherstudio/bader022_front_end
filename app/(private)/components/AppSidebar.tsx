@@ -157,7 +157,7 @@ function SidebarInner({
   return (
     <>
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 gap-3 px-4 pb-5 border-b border-white/10 dark:border-[#555] dark:mt-6">
+      <div className="bg-white dark:bg-gray-900 gap-3 px-4 pb-5 border-b border-white/10 dark:border-[#555]">
         {logoSrc && (
           <>
             {" "}
@@ -174,7 +174,7 @@ function SidebarInner({
               alt="Logo"
               width={150}
               height={100}
-              className="rounded hidden dark:block ml-5"
+              className="rounded hidden dark:block mt-5"
               priority
             />
           </>

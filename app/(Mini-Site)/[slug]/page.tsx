@@ -17,7 +17,7 @@ export default function DynamicMiniSitePage() {
 
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>

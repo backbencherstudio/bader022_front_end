@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Pagination from "@/components/reusable/Pagination";
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
@@ -57,6 +57,8 @@ type DashboardBookingResponse = {
   pagination: PaginationType;
 };
 
+const PAGE_SIZE = 10;
+
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "U";
@@ -89,6 +91,7 @@ function StatusPill({ status }: { status: TxStatus }) {
 }
 
 export default function AllBookingHistory({ data }: { data: any[] }) {
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [serviceName, setServiceName] = useState("");
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
@@ -108,6 +111,22 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
 
   // console.log(mappedBookings);
 
+  const filtered = useMemo(() => {
+    const keyword = search.toLowerCase();
+
+    return mappedBookings.filter((r) => {
+      const service = r.service?.toLowerCase() ?? "";
+      return service.includes(keyword);
+    });
+  }, [mappedBookings, search]);
+
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, page]);
+
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardHeader className="flex justify-between items-center">
@@ -123,9 +142,9 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
           <input
             type="text"
             placeholder="Filter by service name"
-            value={serviceName}
+            value={search}
             onChange={(e) => {
-              setServiceName(e.target.value);
+              setSearch(e.target.value);
               setPage(1);
             }}
             className="h-10  rounded-xl border border-gray-300 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -150,34 +169,84 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {mappedBookings.map((r: any) => (
-                <TableRow key={r.bookingID}>
-                  <TableCell>{r.bookingID}</TableCell>
-                  <TableCell>{r.customerName}</TableCell>
-                  <TableCell>{r.service}</TableCell>
-                  <TableCell>{r.amountLabel}</TableCell>
-                  <TableCell>{r.dateLabel}</TableCell>
-                  <TableCell>
-                    <StatusPill status={r.status} />
-                  </TableCell>
+            {paginated?.length !== 0 ? (
+              <TableBody>
+                {paginated.map((r: any) => (
+                  <TableRow key={r.bookingID}>
+                    <TableCell>{r.bookingID}</TableCell>
+                    <TableCell>{r.customerName}</TableCell>
+                    <TableCell>{r.service}</TableCell>
+                    <TableCell>{r.amountLabel}</TableCell>
+                    <TableCell>{r.dateLabel}</TableCell>
+                    <TableCell>
+                      <StatusPill status={r.status} />
+                    </TableCell>
 
-                  <TableCell>
-                    <Button
-                      className="cursor-pointer"
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setSelectedBooking(r)}
-                    >
-                      View Details
-                    </Button>
+                    <TableCell>
+                      <Button
+                        className="cursor-pointer"
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setSelectedBooking(r)}
+                      >
+                        View Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-10">
+                    No bookings found.
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
+              </TableBody>
+            )}
           </Table>
         </div>
       </CardContent>
+
+      {/* Pagination */}
+      <div className="flex flex-col sm:flex-row justify-between items-center px-6 pb-4 border-t pt-4">
+        <div className="text-sm text-muted-foreground">
+          Showing {(page - 1) * PAGE_SIZE + 1}-
+          {Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length}
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            className="rounded-xl px-4 py-2"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            &lt;
+          </Button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <Button
+              key={i}
+              variant={page === i + 1 ? "default" : "outline"}
+              className="rounded-xl px-4 py-2"
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+
+          <Button
+            variant="outline"
+            className="rounded-xl px-4 py-2"
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            &gt;
+          </Button>
+        </div>
+      </div>
+
       {selectedBooking && (
         <BookingDetailsModal
           booking={selectedBooking}

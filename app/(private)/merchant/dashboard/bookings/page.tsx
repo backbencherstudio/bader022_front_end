@@ -88,7 +88,7 @@ export default function Page() {
     return matchesSearch && matchesScope;
   });
 
-  console.log({ filteredBookings });
+  // console.log({ filteredBookings });
 
   return (
     <div className="w-full py-4">

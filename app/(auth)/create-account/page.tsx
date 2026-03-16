@@ -162,7 +162,18 @@ export default function CreateAccountPage() {
           />
         );
       case 4:
-        return <FinalizingYourWebsite />;
+        return (
+          <FinalizingYourWebsite
+            data={{
+              business_name: "Example Business",
+              address: "123 Main St",
+              business_category: "fitness_pro_gym",
+              number_of_branches: "1",
+            }}
+            onNext={(data) => handleNext("step2", data)}
+            onPrevious={handlePrevious}
+          />
+        );
       case 5:
         return <CompleteYourProfile />;
       default:

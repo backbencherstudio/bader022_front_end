@@ -289,10 +289,15 @@ const [service, setService] = useState("");
 
       {selectedBooking && (
         <BookingDetailsModal
-          bookingId={selectedBooking}
+          booking={selectedBooking}  
           open={!!selectedBooking}
           onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
         />
+        // <BookingDetailsModal
+        //   bookingId={selectedBooking}
+        //   open={!!selectedBooking}
+        //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        // />
       )}
     </Card>
   );

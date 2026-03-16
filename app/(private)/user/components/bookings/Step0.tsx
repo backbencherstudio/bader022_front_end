@@ -22,10 +22,10 @@ export default function Step0({
         <p>Filter by:</p>
         <select
           className="border p-1 rounded-md px-2"
-          value={selectedService?.name || ""}
+          value={selectedService?.service_name || ""}
           onChange={(e) => {
             const selected = data?.data?.find(
-              (item: any) => item.name === e.target.value
+              (item: any) => item.service_name === e.target.value
             );
             setSelectedService(selected);
           }}
@@ -34,8 +34,8 @@ export default function Step0({
             Select Service
           </option>
           {data?.data?.map((item: any) => (
-            <option className="bg-white dark:bg-gray-800" key={item.id} value={item.name}>
-              {item.name}
+            <option className="bg-white dark:bg-gray-800" key={item.id} value={item.service_name}>
+              {item.service_name}
             </option>
           ))}
         </select>
@@ -70,7 +70,7 @@ export default function Step0({
                 </span>
               </div>
 
-              <h3 className="font-semibold">{service.name}</h3>
+              <h3 className="font-semibold">{service.service_name}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>

@@ -4,8 +4,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiCheckCircle, FiTool } from "react-icons/fi";
 import { useCreateAccount } from "../context/CreateAccount";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useRouter } from "next/navigation";
 
-export default function FinalizingYourWebsite() {
+type Step1Data = {
+  business_name: string;
+  address: string;
+  business_category: string;
+  number_of_branches: "1" | "3" | "6";
+};
+interface Step4Props {
+  data: Step1Data;
+  onNext: (values: Step1Data) => void;
+  onPrevious: () => void;
+}
+
+export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props) {
+
+  const router = useRouter();
+
   const { step, setStep } = useCreateAccount();
   const { t } = useI18n();
 
@@ -34,6 +50,10 @@ export default function FinalizingYourWebsite() {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(()=>{
+    router.push("/login");
+  },[2000])
 
   // move to next step when complete
   useEffect(() => {
@@ -99,10 +119,30 @@ export default function FinalizingYourWebsite() {
               >
                 {label}
               </span>
+             
             </div>
           );
         })}
       </div>
+      <button 
+        type="button"
+        onClick={onPrevious}
+        className="rounded-md cursor-pointer border px-6 py-2 text-sm text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+      >
+        Back
+      </button>
+
+      <button onClick={() => onNext({
+        business_name: "Example Business",
+        address: "123 Street",
+        business_category: "fitness_pro_gym",
+        number_of_branches: "1",
+      })}
+        type="submit"
+        className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
+      >
+        {t("BusinessInfo.submit")}
+      </button>
     </div>
   );
 }

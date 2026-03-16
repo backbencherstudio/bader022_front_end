@@ -20,7 +20,7 @@ export const bookingsApi = baseApi.injectEndpoints({
       providesTags: ["Bookings"],
     }),
 
-    // Create Booking 
+    // Create Booking
     createBooking: builder.mutation({
       query: (body) => ({
         url: "/admin/booking/store",
@@ -51,7 +51,7 @@ export const bookingsApi = baseApi.injectEndpoints({
         date: string;
         time: string;
       }) => ({
-        url: `/admin/booking/staff`,
+        url: `/admin/service/index`,
         method: "GET",
         params: { service_id, date, time },
       }),

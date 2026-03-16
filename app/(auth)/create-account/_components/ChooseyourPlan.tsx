@@ -96,15 +96,18 @@ export default function ChooseyourPlan({
 
   const handleBasicPlan = () => {
     onNext({ plan_id: 1 });
+    // onNext({ plan_id: 3 });
   };
 
   const handlePremiumPlan = () => {
-    setOpen(true);
+
+    window.location.href = "https://checkout.tap.company/?mode=page&themeMode=&language=en&token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY5YjY0ZWFjYzY3OTdhNTQ3ZjZkZjQzNSJ9.fBHtE1hQvo_M1hLSad345aUOqfajI-KO4PpU2FoL36s";
   };
 
   const handlePremiumNext = () => {
     setOpen(false);
     onNext({ plan_id: 3 });
+    setTimeout(() => onNext({ plan_id: 4 }), 500);
   };
 
   return (
@@ -142,22 +145,19 @@ export default function ChooseyourPlan({
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 {basic?.name}
               </h3>
-
               <p className="py-3 text-slate-700 dark:text-gray-400">
                 {basic?.desc}
               </p>
-
               <p className="text-gray-900 dark:text-white">
                 <span className="text-4xl font-bold">{basicPrice}</span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
-
               <div className="inline-block p-0.5 rounded-md bg-linear-to-r from-[#3CB3FF] to-[#7153FF] my-5">
                 <button
                   type="button"
-                  onClick={handleBasicPlan}
+                  onClick={handleBasicPlan} // Trigger step 4 directly after basic plan
                   className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
                 >
                   {basic?.cta} free
@@ -192,30 +192,27 @@ export default function ChooseyourPlan({
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 {premium?.name}
               </h3>
-
               <p className="py-3 text-slate-700 dark:text-gray-400">
                 {premium?.desc}
               </p>
-
               <p className="text-gray-900 dark:text-white">
                 <span className="text-4xl font-bold">{premiumPrice}</span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
-
               <button
                 type="button"
-                onClick={handlePremiumPlan}
+                onClick={handlePremiumPlan} // Proceed with Premium plan
                 className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
               >
+                prmium
                 {premium?.cta}
                 <MdArrowOutward
                   className={locale === "ar" ? "rotate-270" : ""}
                 />
               </button>
             </div>
-
             <div className="p-5 space-y-3">
               {premiumFeatures.map((f, idx) => (
                 <p key={idx} className="flex gap-2 items-center text-white">
@@ -244,6 +241,7 @@ export default function ChooseyourPlan({
         onClose={() => setOpen(false)}
         onNext={handlePremiumNext}
       />
+
     </section>
   );
 }

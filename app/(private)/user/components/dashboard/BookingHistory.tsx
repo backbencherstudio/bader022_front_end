@@ -29,7 +29,6 @@ import {
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
-import { UserBookingDetailsModal } from "./UserBookingViewModal";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
 
@@ -97,7 +96,7 @@ function StatusPill({ status }: { status: TxStatus }) {
   );
 }
 
-export default function AllBookingHistory() {
+export default function BookingHistory() {
   const [page, setPage] = useState(1);
   const [dateFilter, setDateFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -148,7 +147,8 @@ const [service, setService] = useState("");
         <CardTitle className="text-xl font-semibold">All Booking History</CardTitle>
 
         <div className="flex items-center gap-4">
-          <div className="relative">
+         <div className="flex gap-3">
+             <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Search anything"
@@ -156,63 +156,21 @@ const [service, setService] = useState("");
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+           
           </div>
+                      <div className="flex justify-center items-center">
+                      <button className="bg-black text-white px-2 py-1 rounded-sm ">View
+                          All</button>
+          </div>
+         </div>
 
-          <Link href="/user/bookings/add-booking">
-            <Button className="cursor-pointer">Book Now</Button>
-          </Link>
+         
         </div>
       </CardHeader>
 
       {/* Filters */}
       <CardContent className="pb-4">
-        <div className="mb-6 flex flex-wrap items-center gap-2">
-          <div className="text-base font-semibold mr-2">Filter by:</div>
-
-          <Select onValueChange={(v) => setDateFilter(v === "all" ? "" : v)}>
-            <SelectTrigger>
-              <SelectValue placeholder="All Dates" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Dates</SelectItem>
-              <SelectItem value="7_days">Last 7 days</SelectItem>
-              <SelectItem value="30_days">Last 30 days</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={(v) => setServiceFilter(v === "all" ? "" : v)}>
-            <SelectTrigger>
-              <SelectValue placeholder="All Services" />
-            </SelectTrigger>
-            {
-              bookings.length > 0 && (
-                <SelectContent>
-                  <SelectItem value="all">All Services</SelectItem>
-                  {Array.from(new Set(bookings.map((b) => b.service_name))).map((service) => (
-                    <SelectItem key={service} value={service}>
-                      {service}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              )
-            }
-          </Select>
-
-          <Select onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)}>
-            <SelectTrigger>
-              <SelectValue placeholder="All Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirm">Confirmed</SelectItem>
-              <SelectItem value="cancel">Canceled</SelectItem>
-              <SelectItem value="rescheduled">Rescheduled</SelectItem>
-
-            </SelectContent>
-          </Select>
-
-        </div>
+      
 
         {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-muted/40">
@@ -288,18 +246,7 @@ const [service, setService] = useState("");
         </div>
       </CardContent>
 
-      {selectedBooking && (
-        <UserBookingDetailsModal
-          booking={selectedBooking}  
-          open={!!selectedBooking}
-          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
-        />
-        // <BookingDetailsModal
-        //   bookingId={selectedBooking}
-        //   open={!!selectedBooking}
-        //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
-        // />
-      )}
+     
     </Card>
   );
 }

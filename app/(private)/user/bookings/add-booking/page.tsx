@@ -200,7 +200,9 @@ type Service = {
   duration: number;
   price: number;
   description?: string;
+  service_name: string;
 };
+
 
 function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number }) {
   return (
@@ -239,6 +241,7 @@ function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number 
 }
 
 export default function BookingCheckoutStepper() {
+ 
   const router = useRouter(); // Use Next.js router
   const steps = [
     "Select Services",
@@ -253,7 +256,8 @@ export default function BookingCheckoutStepper() {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const { data, isLoading, error } = useBookingServiceQuery(
-    selectedService?.name || ""
+    selectedService?.service_name || "",
+    // { skip: !selectedService } 
   );
 
   const handleBooking = async () => {

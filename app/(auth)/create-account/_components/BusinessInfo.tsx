@@ -15,7 +15,7 @@ type Step1Data = {
   business_name: string;
   address: string;
   business_category: string;
-  number_of_branches: "1" | "2-5" | "6+";
+  number_of_branches: "1" | "3" | "6";
 };
 
 interface Step1Props {
@@ -26,16 +26,16 @@ interface Step1Props {
 
 const CATEGORIES = [
   { key: "salon_beauty", label: "salon_beauty", icon: Scissors },
-  { key: "salon_beauty", label: "salon_beauty", icon: Dumbbell },
-  { key: "salon_beauty", label: "salon_beauty", icon: HeartPulse },
+  { key: "home_services", label: "home_services", icon: Dumbbell },
+  { key: "health", label: "health", icon: HeartPulse },
   { key: "fitness_pro_gym", label: "fitness_pro_gym", icon: Leaf },
   { key: "others", label: "others", icon: Home },
 ];
 
 const BRANCH_OPTIONS = [
   { key: "1", label: "1 Branch" },
-  { key: "2-5", label: "2–5 Branches" },
-  { key: "6+", label: "6+ Branches" },
+  { key: "3", label: "2–5 Branches" },
+  { key: "6", label: "6+ Branches" },
 ] as const;
 
 export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {

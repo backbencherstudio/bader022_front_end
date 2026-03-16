@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiCheckCircle, FiTool } from "react-icons/fi";
 import { useCreateAccount } from "../context/CreateAccount";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useRouter } from "next/navigation";
 
 type Step1Data = {
   business_name: string;
@@ -18,6 +19,9 @@ interface Step4Props {
 }
 
 export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props) {
+
+  const router = useRouter();
+
   const { step, setStep } = useCreateAccount();
   const { t } = useI18n();
 
@@ -46,6 +50,10 @@ export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(()=>{
+    router.push("/login");
+  },[2000])
 
   // move to next step when complete
   useEffect(() => {

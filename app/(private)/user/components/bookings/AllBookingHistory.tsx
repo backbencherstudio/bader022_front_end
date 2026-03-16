@@ -29,6 +29,7 @@ import {
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
+import { UserBookingDetailsModal } from "./UserBookingViewModal";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
 
@@ -288,7 +289,7 @@ const [service, setService] = useState("");
       </CardContent>
 
       {selectedBooking && (
-        <BookingDetailsModal
+        <UserBookingDetailsModal
           booking={selectedBooking}  
           open={!!selectedBooking}
           onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}

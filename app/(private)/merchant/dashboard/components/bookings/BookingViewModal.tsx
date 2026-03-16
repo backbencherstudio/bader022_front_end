@@ -19,7 +19,7 @@ export function BookingDetailsModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  console.log(booking);
+  // console.log(booking);
 
   if (!booking) return null;
 

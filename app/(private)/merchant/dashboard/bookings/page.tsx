@@ -43,7 +43,7 @@ export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function Page() {
   const { data: allBookings, isLoading } = useAllBookingsQuery({});
-  console.log({ allBookings });
+  // console.log({ allBookings });
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");
   const [month, setMonth] = useState(() => new Date(2026, 0, 1));
@@ -82,7 +82,7 @@ export default function Page() {
     const matchesScope =
       scope === "all"
         ? true
-        : scope === "upcoming"
+        : scope === "past"
           ? new Date(b.created_at) >= new Date()
           : new Date(b.created_at) < new Date();
     return matchesSearch && matchesScope;

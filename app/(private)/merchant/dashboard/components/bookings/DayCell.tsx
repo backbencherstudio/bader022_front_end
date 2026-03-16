@@ -35,7 +35,7 @@ export default function DayCell({
   const maxVisible = 1;
   const overflow = Math.max(0, dayBookings?.length - maxVisible);
 
-  // console.log({ dayBookings });
+  // console.log({ bookings, day, dayBookings, overflow });
 
   return (
     <div

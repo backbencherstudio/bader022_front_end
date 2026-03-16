@@ -220,7 +220,7 @@ export default function StaffPage() {
             <div className="mt-5 flex items-center gap-3">
               <button
                 className={`flex-1 py-2 rounded-lg text-sm font-medium ${
-                  staff.status === "Active"
+                  staff.status === 1
                     ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
                     : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
                 }`}

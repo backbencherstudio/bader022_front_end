@@ -280,7 +280,12 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-                <WeeklyGrid monthLabel={monthLabel} />
+                <WeeklyGrid
+                  month={month}
+                  bookings={filteredBookings}
+                  onOpenMore={onOpenMore}
+                  monthLabel={monthLabel}
+                />
               </>
             )}
           </div>

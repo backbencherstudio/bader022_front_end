@@ -95,19 +95,19 @@ export default function ChooseyourPlan({
     billing === "monthly" ? premium?.priceMonthly : premium?.priceAnnual;
 
   const handleBasicPlan = () => {
-    onNext({ plan_id: 1 });  
+    onNext({ plan_id: 1 });
     // onNext({ plan_id: 3 });
   };
 
   const handlePremiumPlan = () => {
-    
-    window.location.href = "https://checkout.tap.company/?mode=page&themeMode=&language=en&token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY5YjY0ZWFjYzY3OTdhNTQ3ZjZkZjQzNSJ9.fBHtE1hQvo_M1hLSad345aUOqfajI-KO4PpU2FoL36s"; 
+
+    window.location.href = "https://checkout.tap.company/?mode=page&themeMode=&language=en&token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY5YjY0ZWFjYzY3OTdhNTQ3ZjZkZjQzNSJ9.fBHtE1hQvo_M1hLSad345aUOqfajI-KO4PpU2FoL36s";
   };
 
   const handlePremiumNext = () => {
     setOpen(false);
-    onNext({ plan_id: 3 }); 
-    setTimeout(() => onNext({ plan_id: 4 }), 500);  
+    onNext({ plan_id: 3 });
+    setTimeout(() => onNext({ plan_id: 4 }), 500);
   };
 
   return (
@@ -236,7 +236,7 @@ export default function ChooseyourPlan({
         </div>
       </div>
 
-      {/* <PaymentDetailsModal
+      <PaymentDetailsModal
         open={open}
         onClose={() => setOpen(false)}
         onNext={handlePremiumNext}

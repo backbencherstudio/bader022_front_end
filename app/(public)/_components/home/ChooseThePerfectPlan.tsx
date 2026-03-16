@@ -4,6 +4,8 @@ import { useI18n } from "@/components/provider/I18nProvider";
 import { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { motion, cubicBezier } from "framer-motion";
+import { MdArrowOutward } from "react-icons/md";
+import Link from "next/link";
 
 type Billing = "monthly" | "annual";
 
@@ -74,7 +76,7 @@ export default function ChooseThePerfectPlan() {
   const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
 
-  /* ✅ USE get() FOR OBJECTS */
+  /*  USE get() FOR OBJECTS */
   const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
 
   const premium = useMemo(
@@ -142,6 +144,15 @@ export default function ChooseThePerfectPlan() {
                 <span className="text-4xl font-bold">{basicPrice}</span>
                 <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>
+              <Link href={"/create-account"}>
+                <button
+                  type="button"
+                  className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
+                >
+                  {basic?.cta} free
+                  <MdArrowOutward />
+                </button>
+              </Link>
             </div>
 
             <div className="p-6 space-y-5">
@@ -176,6 +187,15 @@ export default function ChooseThePerfectPlan() {
                 <span className="text-4xl font-bold">{premiumPrice}</span>
                 <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>
+              <Link href={"/create-account"}>
+                <button
+                  type="button"
+                  className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
+                >
+                  {premium?.cta}
+                  <MdArrowOutward />
+                </button>
+              </Link>
             </div>
 
             <div className="p-6 space-y-5">

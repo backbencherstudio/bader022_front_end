@@ -14,6 +14,7 @@ import { useMemo, useState } from "react";
 import Pagination from "@/components/reusable/Pagination";
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
+import { useLazyGetDownloadInvoiceByIdQuery } from "@/redux/features/merchant/bookingsApi";
 
 export type TxStatus =
   | "completed"
@@ -127,6 +128,25 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
     return filtered.slice(start, start + PAGE_SIZE);
   }, [filtered, page]);
 
+  const [getDownloadInvoiceById] = useLazyGetDownloadInvoiceByIdQuery();
+  const handleDownload = async (bookingId: string) => {
+    try {
+      const blob = await getDownloadInvoiceById(bookingId).unwrap();
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `invoice_${bookingId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      // console.error(err);
+    }
+  };
+
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardHeader className="flex justify-between items-center">
@@ -183,14 +203,25 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
                     </TableCell>
 
                     <TableCell>
-                      <Button
-                        className="cursor-pointer"
-                        size="sm"
-                        variant="outline"
-                        onClick={() => setSelectedBooking(r)}
-                      >
-                        View Details
-                      </Button>
+                      <div className="flex gap-2">
+                        {" "}
+                        <Button
+                          className="cursor-pointer"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setSelectedBooking(r)}
+                        >
+                          View Details
+                        </Button>
+                        <Button
+                          className="cursor-pointer"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDownload(r.bookingID)}
+                        >
+                          Download
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

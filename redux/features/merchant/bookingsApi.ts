@@ -57,6 +57,16 @@ export const bookingsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Bookings"],
     }),
+
+        // Download Invoice ById
+        getDownloadInvoiceById: builder.query<Blob, number | string>({
+          query: (id) => ({
+            url: `/admin/booking/invoice-by-merchant/${id}`,
+            method: "GET",
+            responseHandler: (response) => response.blob(), 
+          }),
+          providesTags: ["Bookings"],
+        }),
   }),
 });
 
@@ -66,4 +76,5 @@ export const {
   useCreateBookingMutation,
   useGetBookingScheduleQuery,
   useGetBookingStaffScheduleQuery,
+  useLazyGetDownloadInvoiceByIdQuery,
 } = bookingsApi;

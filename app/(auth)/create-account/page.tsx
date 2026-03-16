@@ -40,7 +40,7 @@ type CreateAccountData = {
 export default function CreateAccountPage() {
   const { t, locale, setLocale } = useI18n(); // localization
   const [step, setStep] = useState(1);
-   const router = useRouter();
+  const router = useRouter();
   useEffect(() => {
     const auth = authorize(["Merchant"]);
     if (auth.authorized) {
@@ -48,8 +48,8 @@ export default function CreateAccountPage() {
     }
   }, []);
 
-  const [createAccountData, setCreateAccountData] =
-    useState<CreateAccountData>({
+  const [createAccountData, setCreateAccountData] = useState<CreateAccountData>(
+    {
       step1: { fullName: "", email: "", phone: "", password: "" },
       step2: {
         business_name: "",
@@ -58,13 +58,14 @@ export default function CreateAccountPage() {
         number_of_branches: "1",
       },
       step3: { plan_id: 3 },
-    });
+    },
+  );
 
   const [registerMerchant, { isLoading }] = useMerchantRegMutation();
 
   const handleNext = <K extends keyof CreateAccountData>(
     stepKey: K,
-    data: Partial<CreateAccountData[K]>
+    data: Partial<CreateAccountData[K]>,
   ) => {
     setCreateAccountData((prev) => ({
       ...prev,
@@ -178,14 +179,11 @@ export default function CreateAccountPage() {
               {step === 3 && t("createAccount.step3Title")}
             </h1>
             <p className="font-inter text-base text-[#777980] dark:text-[#a1a4ad]">
-              {step === 1 &&
-                t("createAccount.step1Desc", { step, total: 3 })}
+              {step === 1 && t("createAccount.step1Desc", { step, total: 3 })}
 
-              {step === 2 &&
-                t("createAccount.step2Desc", { step, total: 3 })}
+              {step === 2 && t("createAccount.step2Desc", { step, total: 3 })}
 
-              {step === 3 &&
-                t("createAccount.step3Desc", { step, total: 3 })}
+              {step === 3 && t("createAccount.step3Desc", { step, total: 3 })}
             </p>
           </div>
 
@@ -210,21 +208,23 @@ export default function CreateAccountPage() {
                   align="end"
                   className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
                 >
-                  {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map((key) => (
-                    <DropdownMenuItem
-                      key={key}
-                      onClick={() => setLocale(key)}
-                      className="flex cursor-pointer items-center gap-2 py-1"
-                    >
-                      <Image
-                        src={LANGS[key].flag}
-                        alt={LANGS[key].label}
-                        width={22}
-                        height={22}
-                      />
-                      <span>{LANGS[key].label}</span>
-                    </DropdownMenuItem>
-                  ))}
+                  {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map(
+                    (key) => (
+                      <DropdownMenuItem
+                        key={key}
+                        onClick={() => setLocale(key)}
+                        className="flex cursor-pointer items-center gap-2 py-1"
+                      >
+                        <Image
+                          src={LANGS[key].flag}
+                          alt={LANGS[key].label}
+                          width={22}
+                          height={22}
+                        />
+                        <span>{LANGS[key].label}</span>
+                      </DropdownMenuItem>
+                    ),
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -242,9 +242,10 @@ export default function CreateAccountPage() {
             <div key={s.key} className="flex-1 relative flex items-center">
               <div
                 className={`h-10 w-10 flex items-center justify-center rounded-full text-sm font-medium
-                  ${isCompleted || isActive
-                    ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
-                    : "border border-gray-300 text-gray-400 bg-white dark:bg-gray-900 dark:border-gray-600"
+                  ${
+                    isCompleted || isActive
+                      ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+                      : "border border-gray-300 text-gray-400 bg-white dark:bg-gray-900 dark:border-gray-600"
                   }`}
               >
                 {isCompleted ? "✓" : i + 1}
@@ -252,18 +253,20 @@ export default function CreateAccountPage() {
 
               {i !== steps.length - 1 && (
                 <div
-                  className={`flex-1 h-2.5 ${isCompleted
-                    ? "bg-linear-to-r from-purple-500 to-indigo-500"
-                    : "bg-gray-200 dark:bg-gray-700"
-                    }`}
+                  className={`flex-1 h-2.5 ${
+                    isCompleted
+                      ? "bg-linear-to-r from-purple-500 to-indigo-500"
+                      : "bg-gray-200 dark:bg-gray-700"
+                  }`}
                 />
               )}
 
               <span
-                className={`absolute top-12 text-xs ${isActive || isCompleted
-                  ? "text-gray-900 dark:text-white"
-                  : "text-gray-400"
-                  }`}
+                className={`absolute top-12 text-xs ${
+                  isActive || isCompleted
+                    ? "text-gray-900 dark:text-white"
+                    : "text-gray-400"
+                }`}
               >
                 {s.label}
               </span>

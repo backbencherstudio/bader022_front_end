@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Building, Languages, ShieldQuestionMark, User } from "lucide-react";
+import {
+  Building,
+  KeyRound,
+  Languages,
+  ShieldQuestionMark,
+  User,
+} from "lucide-react";
 import { MdNotifications } from "react-icons/md";
 import BusinessSetting from "../components/settings/Bussiness";
 import NotificationSettings from "../components/settings/Notifications";
@@ -14,6 +20,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
+import MerchantTapkey from "../components/settings/MerchantTapkey";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -106,6 +113,21 @@ function Sidebar({
             Support
           </div>
         </li>
+        {/* Tap-key */}
+        <li
+          className={cn(
+            "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+            activeSection === "tapkey"
+              ? "bg-gray-300 text-black"
+              : "text-muted-foreground hover:bg-muted/30",
+          )}
+          onClick={() => setActiveSection("tapkey")}
+        >
+          <div className="flex items-center gap-2">
+            <KeyRound size={18} />
+            Tap-key
+          </div>
+        </li>
       </ul>
     </div>
   );
@@ -186,6 +208,21 @@ function MobileSidebar({
             onClick={() => setActiveSection("support")}
           >
             Support
+          </li>
+          <li
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "tapkey"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30",
+            )}
+            onClick={() => {
+              setActiveSection("tapkey");
+              setIsOpen(false);
+            }}
+          >
+            <KeyRound size={18} className="inline mr-2" />
+            Tap-key
           </li>
         </ul>
       )}
@@ -324,11 +361,7 @@ function AccountSettingsForm() {
 function getActiveSectionContent(activeSection: string) {
   switch (activeSection) {
     case "business":
-      return (
-        <div>
-          <BusinessSetting />
-        </div>
-      );
+      return <BusinessSetting />;
     // case "notifications":
     //   return (
     //     <div>
@@ -336,17 +369,11 @@ function getActiveSectionContent(activeSection: string) {
     //     </div>
     //   );
     case "language":
-      return (
-        <div>
-          <LanguageSettings />
-        </div>
-      );
+      return <LanguageSettings />;
     case "support":
-      return (
-        <div>
-          <SupportSettings />
-        </div>
-      );
+      return <SupportSettings />;
+    case "tapkey":
+      return <MerchantTapkey />;
     case "account":
     default:
       return <AccountSettingsForm />;

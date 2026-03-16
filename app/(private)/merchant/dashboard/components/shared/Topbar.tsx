@@ -74,7 +74,7 @@ export default function TopBar() {
         </button>
 
         {/* Profile Icon and User Name */}
-        <Dialog>
+        {/* <Dialog>
           <DialogTrigger asChild>
             <button
               className="flex items-center cursor-pointer gap-2 p-3, pl-0 pr-3 rounded-full transition "
@@ -88,18 +88,18 @@ export default function TopBar() {
                 unoptimized={true}
                 className="w-12 h-12 rounded-full object-cover"
               />
-              {/* <div className="text-left sm:block hidden">
+              <div className="text-left sm:block hidden">
                 <p className="text-black dark:text-white font-semibold">
                   {user?.name}
                 </p>
                 <p className="text-black dark:text-gray-300 text-[12px]">
                   {user?.email}
                 </p>
-              </div> */}
+              </div>
             </button>
           </DialogTrigger>
 
-          {/* User Profile Dialog */}
+  
           <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center mt-6">
@@ -142,7 +142,7 @@ export default function TopBar() {
               </div>
             </div>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
     </header>
   );

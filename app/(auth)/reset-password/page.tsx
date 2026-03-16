@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import AccountSuccess from "../_components/AccountSuccess";
 import Image from "next/image";
 import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   password: string;
@@ -13,6 +14,10 @@ type FormValues = {
 };
 
 export default function ResetPasswordPage() {
+  const router = useRouter();
+
+  const email = localStorage.getItem("resetEmail");
+
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const { register, handleSubmit } = useForm<FormValues>();
@@ -21,17 +26,24 @@ export default function ResetPasswordPage() {
   const [successful, setSuccessful] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    // Prepare the payload for password reset
+    const email = localStorage.getItem("resetEmail");
+
+    if (!email) {
+      alert("Email is required.");
+      return;
+    }
+
     const payload = {
+      email,  
       password: data.password,
       password_confirmation: data.password_confirmation,
     };
 
     try {
-      // Assuming you have a mutation for resetting the password
       const response = await resetPassword(payload).unwrap();
       console.log("Password reset successful:", response);
-      setSuccessful(true); // Show success message after successful password reset
+     
+      setSuccessful(true);
     } catch (error) {
       console.error("Error resetting password:", error);
       alert("Password reset failed. Please try again.");

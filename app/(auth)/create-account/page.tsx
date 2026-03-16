@@ -30,7 +30,7 @@ type CreateAccountData = {
     business_name: string;
     address: string;
     business_category: string;
-    number_of_branches: "1" | "2-5" | "6+";
+    number_of_branches: "1" | "3" | "6";
   };
   step3: {
     plan_id: number;
@@ -40,7 +40,7 @@ type CreateAccountData = {
 export default function CreateAccountPage() {
   const { t, locale, setLocale } = useI18n(); // localization
   const [step, setStep] = useState(1);
-   const router = useRouter();
+  const router = useRouter();
   useEffect(() => {
     const auth = authorize(["Merchant"]);
     if (auth.authorized) {
@@ -101,17 +101,21 @@ export default function CreateAccountPage() {
       business_name: createAccountData.step2.business_name,
       address: createAccountData.step2.address,
       business_category: createAccountData.step2.business_category,
-      number_of_branches: createAccountData.step2.number_of_branches,
+
+      number_of_branches: Number(createAccountData.step2.number_of_branches), 
+
       plan_id: finalPlanId,
     };
 
     try {
       const response = await registerMerchant(body).unwrap();
       console.log("Merchant Registered:", response);
-      alert("Registration Successful!");
+
+      // setStep(4);  
+
       resetForm();
     } catch (err: any) {
-      alert(err?.data?.message || "Registration Failed!");
+
     }
   };
 
@@ -130,7 +134,6 @@ export default function CreateAccountPage() {
             onNext={(data) => handleNext("step1", data)}
           />
         );
-
       case 2:
         return (
           <BusinessInfo
@@ -139,28 +142,29 @@ export default function CreateAccountPage() {
             onPrevious={handlePrevious}
           />
         );
-
       case 3:
         return (
           <ChooseyourPlan
             defaultPlan={createAccountData.step3.plan_id}
-            onNext={(data) => {
-              setCreateAccountData((prev) => ({
-                ...prev,
+            onNext={async (data) => {
+              const updatedData = {
+                ...createAccountData,
                 step3: data,
-              }));
-              handleSubmit(data);
+              };
+
+              setCreateAccountData(updatedData);
+
+              await handleSubmit(data); 
+
+              setStep(4);              
             }}
             onPrevious={handlePrevious}
           />
         );
-
       case 4:
         return <FinalizingYourWebsite />;
-
       case 5:
         return <CompleteYourProfile />;
-
       default:
         return null;
     }

@@ -74,7 +74,7 @@ export default function TopBar() {
         </button>
 
         {/* Profile Icon and User Name */}
-        {/* <Dialog>
+        <Dialog>
           <DialogTrigger asChild>
             <button
               className="flex items-center cursor-pointer gap-2 p-3, pl-0 pr-3 rounded-full transition "
@@ -100,7 +100,7 @@ export default function TopBar() {
           </DialogTrigger>
 
   
-          <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
+          {/* <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center mt-6">
                 <h2 className="text-black dark:text-white"> {user?.name}</h2>
@@ -141,8 +141,8 @@ export default function TopBar() {
                 </Link>
               </div>
             </div>
-          </DialogContent>
-        </Dialog> */}
+          </DialogContent> */}
+        </Dialog>
       </div>
     </header>
   );

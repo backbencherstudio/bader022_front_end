@@ -114,7 +114,7 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
   const filtered = useMemo(() => {
     const keyword = search.toLowerCase();
 
-    return mappedBookings.filter((r) => {
+    return mappedBookings.filter((r:any) => {
       const service = r.service?.toLowerCase() ?? "";
       return service.includes(keyword);
     });

@@ -12,9 +12,34 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Setting"],
     }),
+
+    //Tap key
+    getMerchantTapkey: builder.query({
+      query: () => ({
+        url: `/admin/tap-payment/show`,
+        method: "GET",
+      }),
+      providesTags: ["Setting"],
+    }),
+
+    //Tap key update
+    updateMerchantTapkey: builder.mutation({
+      query: ({ body }) => {
+        // console.log("body in adminApi", body);
+        return {
+          url: "admin/tap-payment/upsert",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["Setting"],
+    }),
   }),
 });
 
 export const {
   useUpdateBusinessSettingMutation,
+  useGetMerchantTapkeyQuery,
+  useUpdateMerchantTapkeyMutation,
+
 } = settingApi;

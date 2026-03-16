@@ -38,17 +38,15 @@ export default function Page() {
   const { data: monthlyApiData } = useMonthlypaymentCountQuery({});
   const { data: dashboardOverview } = useDashboardOverviewQuery({});
 
-  console.log('====================================');
-  console.log(weeklyApiData);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(weeklyApiData);
+  // console.log('====================================');
 
-  
   const monthlyRevenueData =
     monthlyApiData?.map((item: MonthlyPaymentItem) => ({
       name: item.month,
       revenue: item.revenue,
     })) || [];
-
 
   const weeklyRevenueData =
     weeklyApiData?.map((item: WeeklyPaymentItem) => ({
@@ -134,9 +132,7 @@ export default function Page() {
         <div className="w-full">
           <Card className="border dark:border-gray-700 dark:bg-gray-800 shadow-sm">
             <CardHeader className="flex items-center justify-between mt-5">
-              <h1 className="text-xl font-medium">
-                Subscription Analytics
-              </h1>
+              <h1 className="text-xl font-medium">Subscription Analytics</h1>
 
               <Select defaultValue="2026">
                 <SelectTrigger>
@@ -148,16 +144,13 @@ export default function Page() {
                       <SelectItem key={year} value={year.toString()}>
                         {year}
                       </SelectItem>
-                    )
+                    ),
                   )}
                 </SelectContent>
               </Select>
             </CardHeader>
 
-            <RevenueChart
-              CurrencyIcon={SaudiRiyal}
-              data={monthlyRevenueData}
-            />
+            <RevenueChart CurrencyIcon={SaudiRiyal} data={monthlyRevenueData} />
           </Card>
         </div>
 
@@ -216,7 +209,7 @@ export default function Page() {
 // export default function page() {
 //    const { data } = useWeeklyPaymentCountQuery({});
 //     const { data: monthlyData } = useMonthlypaymentCountQuery({});
-    
+
 //     const { data: dashboardOverview } = useDashboardOverviewQuery({});
 //     console.log(dashboardOverview);
 //     const weeklyRevenueData: TData[] = data;
@@ -232,7 +225,7 @@ export default function Page() {
 //           <FaFileExport />
 //           Export
 //         </Button>
-       
+
 //       </div>
 //       {/* Statistics Cards */}
 //       <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">

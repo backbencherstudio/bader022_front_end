@@ -12,7 +12,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import Pagination from "@/components/reusable/Pagination";
-import { useDashboardbookingHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
 
@@ -35,9 +34,12 @@ export type TransactionRow = {
 
 type Booking = {
   booking_id: string;
-  customer: string;
+  customer_name: string;
   customer_image: string | null;
   service_name: string;
+  service: {
+    price: string;
+  };
   amount: string;
   booking_date: string;
   status: string;
@@ -86,36 +88,25 @@ function StatusPill({ status }: { status: TxStatus }) {
   );
 }
 
-export default function AllBookingHistory() {
+export default function AllBookingHistory({ data }: { data: any[] }) {
   const [page, setPage] = useState(1);
   const [serviceName, setServiceName] = useState("");
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
-
-  const { data, isLoading, error } = useDashboardbookingHistoryQuery({
-    page,
-    service_name: serviceName,
-  }) as {
-    data?: DashboardBookingResponse;
-    isLoading: boolean;
-    error?: unknown;
-  };
-
-  const bookings = data?.data ?? [];
-  const pagination = data?.pagination;
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Something went wrong</p>;
-
-  console.log(bookings);
-  const mappedBookings: TransactionRow[] = bookings.map((b) => ({
-    bookingID: String(b.booking_id),
-    customerName: b.customer,
-    customerAvatar: b.customer_image ?? undefined,
-    service: b?.service_name,
-    amountLabel: b?.amount,
-    dateLabel: b?.booking_date,
-    status: b.status.toLowerCase() as TxStatus,
+  // console.log(data);
+  const mappedBookings: TransactionRow[] = data?.map((b: any) => ({
+    bookingID: String(b.id),
+    customerName: b.customer_name,
+    customerAvatar: b.user?.image ?? undefined,
+    email: b.email ?? undefined,
+    phone: b.phone ?? undefined,
+    staff: b.staff?.name ?? undefined,
+    service: b.service?.service_name,
+    amountLabel: b.service?.price,
+    dateLabel: b.date_time,
+    status: b.status?.toLowerCase() as TxStatus,
   }));
+
+  // console.log(mappedBookings);
 
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
@@ -160,7 +151,7 @@ export default function AllBookingHistory() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mappedBookings.map((r) => (
+              {mappedBookings.map((r: any) => (
                 <TableRow key={r.bookingID}>
                   <TableCell>{r.bookingID}</TableCell>
                   <TableCell>{r.customerName}</TableCell>
@@ -176,7 +167,7 @@ export default function AllBookingHistory() {
                       className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)}
+                      onClick={() => setSelectedBooking(r)}
                     >
                       View Details
                     </Button>
@@ -186,20 +177,10 @@ export default function AllBookingHistory() {
             </TableBody>
           </Table>
         </div>
-
-        {pagination && (
-          <div className="mt-4 flex justify-end">
-            <Pagination
-              currentPage={page}
-              lastPage={pagination.last_page}
-              onPageChange={setPage}
-            />
-          </div>
-        )}
       </CardContent>
       {selectedBooking && (
         <BookingDetailsModal
-          bookingId={selectedBooking}
+          booking={selectedBooking}
           open={!!selectedBooking}
           onOpenChange={(open) => {
             if (!open) setSelectedBooking(null);

@@ -366,7 +366,7 @@ export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
 
             {paginated.length === 0 && (
               <div className="py-10 text-center text-muted-foreground">
-                No transactions.
+                No Staff Performance data available.
               </div>
             )}
           </div>

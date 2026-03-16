@@ -71,7 +71,6 @@ export default function page() {
     isLoading: isStaffPerformanceLoading,
     isError: isStaffPerformanceError,
   } = useStaffPerformanceQuery({});
-  // console.log('====================================');
   // console.log('analyticsData:', analyticsData)
   // console.log('monthlyRevenueData:', monthlyRevenueData)
   // console.log('weeklyRevenueData:', weeklyRevenueData)

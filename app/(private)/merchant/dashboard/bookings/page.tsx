@@ -175,47 +175,6 @@ export default function Page() {
 
           {/* Calendar Header + View Toggle */}
           <div className="mt-4">
-            {/* <div className="flex border rounded-t-xl p-3 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <div className="text-sm font-semibold">
-                  {format(month, "MMMM yyyy")}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  {format(startOfMonth(month), "MMM d, yyyy")} -{" "}
-                  {format(endOfMonth(month), "MMM d, yyyy")}
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                <MonthPicker value={month} onChange={setMonth} />
-
-                <div className="flex items-center bg-[#F5F5F5] dark:bg-gray-800 rounded-lg gap-1 border p-1">
-                  <Button
-                    size="sm"
-                    className={`h-8 cursor-pointer transition-colors ${
-                      isMonthly
-                        ? "bg-black dark:bg-white dark:text-black!"
-                        : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
-                    }`}
-                    onClick={() => setView("monthly")}
-                  >
-                    Monthly
-                  </Button>
-                  <Button
-                    size="sm"
-                    className={`h-8 cursor-pointer transition-colors ${
-                      isWeekly
-                        ? "bg-black dark:bg-white dark:text-black!"
-                        : "text-black dark:text-white hover:text-white dark:bg-gray-800 bg-gray-100"
-                    }`}
-                    onClick={() => setView("weekly")}
-                  >
-                    Weekly
-                  </Button>
-                </div>
-              </div>
-            </div> */}
-
             {/* Calendar Grid */}
             {view === "monthly" ? (
               <>
@@ -329,9 +288,8 @@ export default function Page() {
 
         {/* Table Tab */}
         <TabsContent value="table" className="mt-6">
-          {/* <AllBookingHistory data={allBookings || []} /> */}
-          <AllBookingHistory />
-          <BookingPopup isPopup={isPopup} setIsPopup={setIsPopup} />
+          <AllBookingHistory data={filteredBookings || []} />
+          {/* <BookingPopup isPopup={isPopup} setIsPopup={setIsPopup} /> */}
         </TabsContent>
       </Tabs>
 

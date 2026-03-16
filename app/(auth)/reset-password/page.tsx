@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import AccountSuccess from "../_components/AccountSuccess";
@@ -15,8 +15,11 @@ type FormValues = {
 
 export default function ResetPasswordPage() {
   const router = useRouter();
-
-  const email = localStorage.getItem("resetEmail");
+  const [email, setEmail] = useState<string | null>(null);
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("resetEmail");
+    setEmail(storedEmail);
+  }, []);
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
@@ -26,15 +29,13 @@ export default function ResetPasswordPage() {
   const [successful, setSuccessful] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    const email = localStorage.getItem("resetEmail");
-
     if (!email) {
       alert("Email is required.");
       return;
     }
 
     const payload = {
-      email,  
+      email,
       password: data.password,
       password_confirmation: data.password_confirmation,
     };
@@ -42,7 +43,6 @@ export default function ResetPasswordPage() {
     try {
       const response = await resetPassword(payload).unwrap();
       console.log("Password reset successful:", response);
-     
       setSuccessful(true);
     } catch (error) {
       console.error("Error resetting password:", error);

@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
         port: "8000",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "bader.apphero.agency",
+      },
+      {
+        protocol: "https",
+        hostname: "bader",
+      },
     ],
   },
 };

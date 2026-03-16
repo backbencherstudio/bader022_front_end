@@ -6,7 +6,24 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { useBookingSuccessfullQuery } from "@/redux/features/userDashboard/booking";
 import { bookingsApi } from './../../redux/features/merchant/bookingsApi';
+import { log } from "console";
 
+// export interface BookingSuccessProps {
+//   booking_id: string;  
+// }
+interface BookingSuccessProps {
+  booking_id: string | number;
+}
+
+const BookingSuccess: React.FC<BookingSuccessProps> = ({ booking_id }) => {
+  console.log("BookingSuccess component received booking_id:", booking_id);
+  return (
+    <div>
+      <h2>Booking Successful!</h2>
+      <p>Your booking ID is: {booking_id}</p>
+    </div>
+  );
+};
 export default function BookingSuccessPage() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
@@ -15,7 +32,7 @@ export default function BookingSuccessPage() {
   const { data: bookingData, isLoading, error } = useBookingSuccessfullQuery(
     { booking_id: Number(bookingId) },
     {
-      skip: !bookingId, 
+      skip: !bookingId,
     }
   );
 
@@ -49,7 +66,7 @@ export default function BookingSuccessPage() {
   };
 
 
-  const previewInvoice = async (bookingId:any) => {
+  const previewInvoice = async (bookingId: any) => {
     const response = await fetch(`http://192.168.7.97:8000/api/confirm-invoice/${bookingId}`);
     const blob = await response.blob(); // get PDF blob
     const url = window.URL.createObjectURL(blob);
@@ -84,7 +101,7 @@ export default function BookingSuccessPage() {
           </div>
 
           <p className="text-sm max-w-[520px] mx-auto leading-6">
-            Your appointment is successfully booked. A confirmation email with your booking details has been sent to your email. Please check your inbox. 
+            Your appointment is successfully booked. A confirmation email with your booking details has been sent to your email. Please check your inbox.
           </p>
 
           {/* Details Box */}

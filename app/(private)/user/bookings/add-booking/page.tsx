@@ -7,6 +7,7 @@ import Step3 from "../../components/bookings/Step3";
 import Step0 from "../../components/bookings/Step0";
 import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
 import { useRouter } from "next/navigation";
+import Step4 from "../../components/bookings/Step4";
 
 type Service = {
   id: number;
@@ -72,7 +73,7 @@ export default function BookingCheckoutStepper() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-
+  const [bookingId, setBookingId] = useState<string | number | null>(null);
   const { data } = useBookingServiceQuery(
     selectedService?.service_name || ""
   );
@@ -94,12 +95,11 @@ export default function BookingCheckoutStepper() {
         body: JSON.stringify(payload),
       }).then((response) => response.json());
 
-      console.log("Booking Success:", res);
-
       if (res?.payment_url) {
         window.location.href = res.payment_url;
       } else {
-        router.push(`/booking-success?booking_id=${res.booking_id}`);
+        setBookingId(res.booking_id);
+        setCurrentStep(3); // ✅ এখন success step
       }
     } catch (err) {
       console.error("Booking Error:", err);
@@ -114,7 +114,7 @@ export default function BookingCheckoutStepper() {
         {currentStep === 0 && "Select Services"}
         {currentStep === 1 && "Select Date Time & Staff"}
         {currentStep === 2 && "Payment Information"}
-        {currentStep === 3 && "Card Information"}
+        {currentStep === 3 && "Success"}
       </h2>
 
       <div className="mt-6">
@@ -144,7 +144,7 @@ export default function BookingCheckoutStepper() {
 
         {currentStep === 2 && selectedService && (
           <Step2
-            onNext={() => setCurrentStep(3)}
+            onNext={handleBooking}  
             onBack={() => setCurrentStep(1)}
             service={selectedService}
             date={selectedDate}
@@ -154,13 +154,20 @@ export default function BookingCheckoutStepper() {
 
         {/* {currentStep === 4 && <BookingSuccessPage booking_id={bookingId} />} */}
 
+        {currentStep === 3 && bookingId && (
+          <Step4
+            booking_id={bookingId}      
+            onNext={() => console.log("Next")}
+            onBack={() => setCurrentStep(2)}
+          />
+        )}
 
-        {currentStep === 2 && selectedService && (
+        {/* {currentStep === 3 && selectedService && (
           <Step3
             onNext={handleBooking}
             onBack={() => setCurrentStep(2)}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

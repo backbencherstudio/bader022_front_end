@@ -2,7 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
-export default function Step4() {
+interface Step4Props {
+  onNext: () => void;
+  onBack: () => void;
+  booking_id?: string | number; // ✅ Add this
+}
+
+export default function Step4({ onNext, onBack, booking_id
+}: Step4Props) {
   return (
     <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="rounded-xl border border-border overflow-hidden">

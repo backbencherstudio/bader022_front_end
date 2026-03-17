@@ -190,11 +190,11 @@ export default function PackageTab() {
             </Button>
           </div> */}
 
-          <div className="mb-4 flex items-end justify-end">
+          {/* <div className="mb-4 flex items-end justify-end">
             <button className="px-4 py-2 cursor-pointer">
               <AddPlan />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -248,7 +248,7 @@ export default function PackageTab() {
 
                       <PackagePlanUpdateModal
                         id={plan.id}
-                        businessName={plan.name}
+                        plan={plan}
                       />
                     </div>
                   </TableCell>

@@ -9,6 +9,38 @@ import { motion, cubicBezier } from "framer-motion";
 import { useMerchentPlanPriceQuery } from "@/redux/features/merchant/merchantRegitraion";
 
 type Billing = "monthly" | "annual";
+interface Plan {
+  id: number;
+  name: string;
+  title: string;
+  price: string;
+  currency: string;
+  package: string;
+  day: number;
+  features: string[];
+  status: boolean;
+}
+
+function getPlansByBilling(plans: Plan[], billing: Billing): Plan[] {
+  // Free plan (always include)
+  const freePlan = plans.find(
+    (plan) => plan.package.toLowerCase() === "free"
+  );
+
+  // Match billing plan (Monthly / Annual)
+  const matchedPlan = plans.find(
+    (plan) =>
+      plan.package.toLowerCase() === billing &&
+      plan.package.toLowerCase() !== "free"
+  );
+
+  const result: Plan[] = [];
+
+  if (freePlan) result.push(freePlan);
+  if (matchedPlan) result.push(matchedPlan);
+
+  return result;
+}
 
 interface PricingPlan {
   name: string;
@@ -85,6 +117,7 @@ export default function ChooseyourPlan({
   );
 
   const { data, isLoading } = useMerchentPlanPriceQuery({});
+  console.log("Plan Data:", data);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -95,18 +128,20 @@ export default function ChooseyourPlan({
 
 
   const plan = data?.data?.find((p: any) => p.id === defaultPlan);
-const premiumPrice = plan ? plan.price : "-"; 
-console.log(plan.id,"")
+  const premiumPrice = plan ? plan.price : "-";
+  const annulPrice = plan ? plan.price : "-";
 
-const getPlanPrice = (planId: number, billingType: Billing) => {
-  const matchedPlan = data?.data?.find(
-    (p: any) =>
-      p.id === planId &&
-      ((billingType === "monthly" && p.package.toLowerCase() === "monthly") ||
-       (billingType === "annual" && p.package.toLowerCase() === "annual"))
-  );
-  return matchedPlan ? matchedPlan.price : "-";
-};
+
+
+  // const getPlanPrice = (planId: number, billingType: Billing) => {
+  //   const matchedPlan = data?.data?.find(
+  //     (p: any) =>
+  //       p.id === planId &&
+  //       ((billingType === "monthly" && p.package.toLowerCase() === "monthly") ||
+  //        (billingType === "annual" && p.package.toLowerCase() === "annual"))
+  //   );
+  //   return matchedPlan ? matchedPlan.price : "-";
+  // };
 
   const basicFeatures = Array.isArray(basic?.features) ? basic.features : [];
   const premiumFeatures = Array.isArray(premium?.features)
@@ -116,7 +151,8 @@ const getPlanPrice = (planId: number, billingType: Billing) => {
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
 
-  
+  console.log("Basic Price:", basicPrice, "Premium Price:", premiumPrice);
+
 
   const handleBasicPlan = () => {
     onNext({ plan_id: 1 });
@@ -133,6 +169,9 @@ const getPlanPrice = (planId: number, billingType: Billing) => {
     onNext({ plan_id: 3 });
     setTimeout(() => onNext({ plan_id: 4 }), 500);
   };
+
+  const [basicplan, premeumPlan] = getPlansByBilling(data?.data ?? [], billing);
+  // console.log({ filteredPlans });
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
@@ -184,7 +223,7 @@ const getPlanPrice = (planId: number, billingType: Billing) => {
                   onClick={handleBasicPlan} // Trigger step 4 directly after basic plan
                   className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
                 >
-                  {basic?.cta} 
+                  {basic?.cta}
                   <MdArrowOutward
                     className={locale === "ar" ? "rotate-270" : ""}
                   />
@@ -220,7 +259,8 @@ const getPlanPrice = (planId: number, billingType: Billing) => {
                 {premium?.desc}
               </p>
               <p className="text-gray-900 dark:text-white">
-                <span className="text-4xl font-bold">{premiumPrice}</span>
+                <span className="text-4xl font-bold">{premeumPlan?.price}</span>
+
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
@@ -230,7 +270,7 @@ const getPlanPrice = (planId: number, billingType: Billing) => {
                 onClick={handlePremiumPlan} // Proceed with Premium plan
                 className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
               >
-              
+
                 {premium?.cta}
                 <MdArrowOutward
                   className={locale === "ar" ? "rotate-270" : ""}

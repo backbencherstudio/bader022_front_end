@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Edit } from "lucide-react";
+import { Edit, Pencil } from "lucide-react";
 import { useUpdateSubscriptionsByIdMutation } from "@/redux/features/admin/adminApi";
 
 type FormValues = {
@@ -51,7 +51,13 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Edit className="h-5 w-5 cursor-pointer mt-2" />
+        <button
+          type="button"
+
+          className="h-10 w-10 rounded-xl text-muted-foreground hover:text-black border hover:bg-white flex items-center justify-center cursor-pointer"
+        >
+          <Pencil className="h-5 w-5" />
+        </button>
       </DialogTrigger>
 
       <DialogContent className="rounded-xl">

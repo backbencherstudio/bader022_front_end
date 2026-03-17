@@ -166,8 +166,8 @@ export const adminApi = baseApi.injectEndpoints({
     //
     updatePlanById: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/admin/plan/update-status/${id}`,
-        method: "PATCH",
+        url: `/admin/plan/update/${id}`,
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Plan"],

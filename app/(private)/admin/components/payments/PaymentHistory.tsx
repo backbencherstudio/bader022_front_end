@@ -32,8 +32,8 @@ export default function PaymentHistory() {
   };
 
   const [search, setSearch] = useState("");
-       // input এর জন্য
-  const [query, setQuery] = useState("");          // API এর জন্য
+      
+  const [query, setQuery] = useState("");         
   const [packageFilter, setPackageFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);

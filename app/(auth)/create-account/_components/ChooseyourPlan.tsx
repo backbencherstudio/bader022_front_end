@@ -160,7 +160,7 @@ export default function ChooseyourPlan({
                   onClick={handleBasicPlan} // Trigger step 4 directly after basic plan
                   className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
                 >
-                  {basic?.cta} free
+                  {basic?.cta} 
                   <MdArrowOutward
                     className={locale === "ar" ? "rotate-270" : ""}
                   />
@@ -206,7 +206,7 @@ export default function ChooseyourPlan({
                 onClick={handlePremiumPlan} // Proceed with Premium plan
                 className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
               >
-                prmium
+              
                 {premium?.cta}
                 <MdArrowOutward
                   className={locale === "ar" ? "rotate-270" : ""}

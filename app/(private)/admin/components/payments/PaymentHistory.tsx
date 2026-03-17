@@ -42,7 +42,7 @@ export default function PaymentHistory() {
 
   // Combine all filters for API query
   const filters = {
-    search: search ||  "",
+    search: search || "",
     package: packageFilter || "",
     status: statusFilter || "",
     page,
@@ -57,11 +57,7 @@ export default function PaymentHistory() {
   // Reset page when filters change
   useEffect(() => {
     setPage(1);
-  }, [search]);
-
-   useEffect(() => {
-    setPage(1);
-   }, [packageFilter]);
+  }, [search, packageFilter, statusFilter]);
 
   // Map API data to table rows
   const rows =

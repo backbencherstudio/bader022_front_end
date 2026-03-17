@@ -152,7 +152,9 @@ export default function BookingCheckoutStepper() {
           />
         )}
 
-        {currentStep === 3 && selectedService && (
+
+
+        {currentStep === 4 && selectedService && (
           <Step3
             onNext={handleBooking}
             onBack={() => setCurrentStep(2)}
@@ -424,7 +426,8 @@ export default function BookingCheckoutStepper() {
 //   const [selectedDate, setSelectedDate] = useState<string>("");
 //   const [selectedTime, setSelectedTime] = useState<string>("");
 //   import { Suspense } from "react";
-//   const { data, isLoading, error } = useBookingServiceQuery(
+//   import BookingSuccessPage from './../../../../booking-success/page';
+const { data, isLoading, error } = useBookingServiceQuery(
 //     selectedService?.service_name || "",
 //     // { skip: !selectedService } 
 //   );

@@ -6,6 +6,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
 import { motion, cubicBezier } from "framer-motion";
+import { useMerchentPlanPriceQuery } from "@/redux/features/merchant/merchantRegitraion";
 
 type Billing = "monthly" | "annual";
 
@@ -83,6 +84,30 @@ export default function ChooseyourPlan({
     [get],
   );
 
+  const { data, isLoading } = useMerchentPlanPriceQuery({});
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      console.log(data, "-=-=-=-=-0=-");
+    }
+  }, [data, isLoading]);
+
+
+
+  const plan = data?.data?.find((p: any) => p.id === defaultPlan);
+const premiumPrice = plan ? plan.price : "-"; 
+console.log(plan.id,"")
+
+const getPlanPrice = (planId: number, billingType: Billing) => {
+  const matchedPlan = data?.data?.find(
+    (p: any) =>
+      p.id === planId &&
+      ((billingType === "monthly" && p.package.toLowerCase() === "monthly") ||
+       (billingType === "annual" && p.package.toLowerCase() === "annual"))
+  );
+  return matchedPlan ? matchedPlan.price : "-";
+};
+
   const basicFeatures = Array.isArray(basic?.features) ? basic.features : [];
   const premiumFeatures = Array.isArray(premium?.features)
     ? premium.features
@@ -91,8 +116,7 @@ export default function ChooseyourPlan({
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
 
-  const premiumPrice =
-    billing === "monthly" ? premium?.priceMonthly : premium?.priceAnnual;
+  
 
   const handleBasicPlan = () => {
     onNext({ plan_id: 1 });

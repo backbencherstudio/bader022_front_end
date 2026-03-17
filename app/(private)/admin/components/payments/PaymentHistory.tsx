@@ -32,6 +32,8 @@ export default function PaymentHistory() {
   };
 
   const [search, setSearch] = useState("");
+       // input এর জন্য
+  const [query, setQuery] = useState("");          // API এর জন্য
   const [packageFilter, setPackageFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
@@ -42,9 +44,7 @@ export default function PaymentHistory() {
 
   // Combine all filters for API query
   const filters = {
-    search: search || "",
-    package: packageFilter || "",
-    status: statusFilter || "",
+    search: query,
     page,
     limit: pageSize,
   };
@@ -57,6 +57,8 @@ export default function PaymentHistory() {
   // Reset page when filters change
   useEffect(() => {
     setPage(1);
+    // setPackageFilter(())
+    console.log("Filters updated:", { search, packageFilter, statusFilter });
   }, [search, packageFilter, statusFilter]);
 
   // Map API data to table rows
@@ -103,17 +105,23 @@ export default function PaymentHistory() {
 
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search anything"
-              className="h-12 w-64 pl-10"
+            <Input placeholder="Search anything" className="h-12 w-64 pl-10"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setQuery(e.target.value);
+              }}
             />
           </div>
 
           <Select
             value={packageFilter || "all"}
-            onValueChange={(value) => setPackageFilter(value === "all" ? "" : value)}
+            onValueChange={(value) => {
+              const val = value === "all" ? "" : value;
+
+              setPackageFilter(val);
+              setQuery(val); 
+            }}
           >
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Package" />
@@ -127,16 +135,19 @@ export default function PaymentHistory() {
 
           <Select
             value={statusFilter || "all"}
-            onValueChange={(value) => setStatusFilter(value === "all" ? "" : value)}
+            onValueChange={(value) => {
+              setStatusFilter(value);
+              setQuery(value === "all" ? "" : value);
+            }}
           >
             <SelectTrigger className="py-6 w-64">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="Paid">Paid</SelectItem>
-              <SelectItem value="Failed">Failed</SelectItem>
-              <SelectItem value="Due">Due</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
+              <SelectItem value="failed">Failed</SelectItem>
+              <SelectItem value="due">Due</SelectItem>
             </SelectContent>
           </Select>
         </div>

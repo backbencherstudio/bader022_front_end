@@ -52,10 +52,10 @@
 
       const handleBooking = async () => {
         const payload = {
-          service_id: service.id, 
+          service_id: service.id,
           staff_id: "",
           date: date,
-          time: time, 
+          time: time,
           customer_name: formData.customer_name,
           email: formData.email,
           phone: formData.phone,
@@ -69,9 +69,16 @@
           console.log("Booking Success:", res);
 
           if (method === "tap" && res?.payment_url) {
+            // Redirect to payment page
             window.location.href = res.payment_url;
           } else {
-            onNext(); // Proceed to the next step after successful booking
+            // Cash payment: go directly to success page
+            if (res?.booking_id) {
+              // If you use router inside Step2
+              window.location.href = `/booking-success?booking_id=${res.booking_id}`;
+            } else {
+              onNext(); // fallback
+            }
           }
         } catch (err) {
           console.error("Booking Error:", err);

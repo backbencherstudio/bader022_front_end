@@ -10,7 +10,19 @@ export const merchantRegistrationApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Merchants"],
     }),
+
+    //merchant plan price
+    merchentPlanPrice: builder.query({
+      query: () => ({
+        url: `/plan`,
+        method: "GET",
+      }),
+      // providesTags: ["MiniSite"],
+    }),
   }),
 });
 
-export const { useMerchantRegMutation } = merchantRegistrationApi;
+
+export const { useMerchantRegMutation,
+  useMerchentPlanPriceQuery,
+ } = merchantRegistrationApi;

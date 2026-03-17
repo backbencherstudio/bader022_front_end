@@ -16,26 +16,35 @@ export default function Step0({
   data,
   onNext,
 }: Step0Props) {
+  // console.log(selectedService);
+
   return (
     <div>
       <div className="flex items-center gap-4 mb-4">
         <p>Filter by:</p>
         <select
-          className="border p-1 rounded-md px-2"
-          value={selectedService?.service_name || ""}
+          className="border p-1 rounded-md px-2 bg-white text-black dark:bg-gray-800 dark:text-white"
+          value={selectedService?.name || ""}
           onChange={(e) => {
             const selected = data?.data?.find(
-              (item: any) => item.service_name === e.target.value
+              (item: any) => item.name === e.target.value,
             );
             setSelectedService(selected);
           }}
         >
-          <option value="" className="bg-white dark:bg-gray-800 ">
+          <option
+            value=""
+            className="bg-white text-black dark:bg-gray-800 dark:text-white"
+          >
             Select Service
           </option>
           {data?.data?.map((item: any) => (
-            <option className="bg-white dark:bg-gray-800" key={item.id} value={item.service_name}>
-              {item.service_name}
+            <option
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+              key={item.id}
+              value={item.name}
+            >
+              {item.name}
             </option>
           ))}
         </select>

@@ -179,7 +179,6 @@
 //   );
 // }
 
-
 // components/BookingCheckoutStepper.tsx
 "use client";
 
@@ -203,8 +202,13 @@ type Service = {
   service_name: string;
 };
 
-
-function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number }) {
+function Stepper({
+  steps,
+  currentStep,
+}: {
+  steps: string[];
+  currentStep: number;
+}) {
   return (
     <div className="w-full flex items-center gap-3 sm:gap-4">
       {steps.map((_, index) => {
@@ -216,12 +220,13 @@ function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number 
           <div key={index} className="flex items-center w-full">
             {/* Circle */}
             <div
-              className={`h-5 w-5 p-5 rounded-full flex items-center justify-center text-sm font-semibold border ${isCompleted
+              className={`h-5 w-5 p-5 rounded-full flex items-center justify-center text-sm font-semibold border ${
+                isCompleted
                   ? "bg-[#111827] dark:bg-green-800 border-[#111827] dark:border-[#016630] text-white"
                   : isActive
                     ? "bg-white border-[#111827] dark:border-[#016630] text-[#111827]"
                     : "bg-[#F4F6F8] border-border text-[#637381]"
-                }`}
+              }`}
             >
               {isCompleted ? "✓" : stepNumber}
             </div>
@@ -229,8 +234,11 @@ function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number 
             {/* Line */}
             {index !== steps.length - 1 && (
               <div
-                className={`h-0.75 w-full mx-2 sm:mx-3 rounded-full ${stepNumber < currentStep ? "bg-[#111827] dark:bg-green-800" : "bg-border"
-                  }`}
+                className={`h-0.75 w-full mx-2 sm:mx-3 rounded-full ${
+                  stepNumber < currentStep
+                    ? "bg-[#111827] dark:bg-green-800"
+                    : "bg-border"
+                }`}
               />
             )}
           </div>
@@ -241,7 +249,6 @@ function Stepper({ steps, currentStep }: { steps: string[]; currentStep: number 
 }
 
 export default function BookingCheckoutStepper() {
- 
   const router = useRouter(); // Use Next.js router
   const steps = [
     "Select Services",
@@ -256,9 +263,11 @@ export default function BookingCheckoutStepper() {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const { data, isLoading, error } = useBookingServiceQuery(
-    selectedService?.service_name || "",
-    // { skip: !selectedService } 
+    selectedService?.name || "",
+    // { skip: !selectedService }
   );
+
+  // console.log(selectedService);
 
   const handleBooking = async () => {
     const payload = {
@@ -345,12 +354,13 @@ export default function BookingCheckoutStepper() {
           />
         )}
 
-        {currentStep === 4 && (
-          <BookingSuccessPage /> 
-        )}
+        {currentStep === 4 && <BookingSuccessPage />}
 
         {currentStep === 3 && selectedService && (
-          <Step3 onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} />
+          <Step3
+            onNext={() => setCurrentStep(4)}
+            onBack={() => setCurrentStep(2)}
+          />
         )}
       </div>
     </div>

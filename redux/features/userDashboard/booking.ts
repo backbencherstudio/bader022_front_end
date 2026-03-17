@@ -24,7 +24,7 @@ export const dashboardApi = baseApi.injectEndpoints({
     // booking services
     bookingService: builder.query({
       query: (service_name: string) => ({
-        url: `/admin/service/index`,
+        url: `/admin/service/userindex`,
         method: "GET",
         params: {
           service_name,

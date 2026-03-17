@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { useBookingSuccessfullQuery } from "@/redux/features/userDashboard/booking";
-import { bookingsApi } from './../../redux/features/merchant/bookingsApi';
+import { bookingsApi } from "./../../redux/features/merchant/bookingsApi";
 import { log } from "console";
 
 // export interface BookingSuccessProps {
-//   booking_id: string;  
+//   booking_id: string;
 // }
 interface BookingSuccessProps {
   booking_id: string | number;
@@ -29,11 +29,15 @@ export default function BookingSuccessPage() {
   const bookingId = searchParams.get("booking_id");
 
   // RTK Query call
-  const { data: bookingData, isLoading, error } = useBookingSuccessfullQuery(
+  const {
+    data: bookingData,
+    isLoading,
+    error,
+  } = useBookingSuccessfullQuery(
     { booking_id: Number(bookingId) },
     {
       skip: !bookingId,
-    }
+    },
   );
 
   const handleDownload = async (BookingId: string) => {
@@ -42,7 +46,7 @@ export default function BookingSuccessPage() {
         `http://192.168.7.97:8000/api/confirm-invoice/${bookingId}`,
         {
           method: "GET",
-        }
+        },
       );
 
       if (!res.ok) throw new Error("Failed to download invoice");
@@ -52,7 +56,7 @@ export default function BookingSuccessPage() {
 
       const link = document.createElement("a");
       link.href = url;
-      // link.target = "_blank"; 
+      // link.target = "_blank";
       // link.rel = "noopener noreferrer";
       link.download = `invoice_${bookingId}.pdf`;
       document.body.appendChild(link);
@@ -65,17 +69,26 @@ export default function BookingSuccessPage() {
     }
   };
 
-
   const previewInvoice = async (bookingId: any) => {
-    const response = await fetch(`http://192.168.7.97:8000/api/confirm-invoice/${bookingId}`);
+    const response = await fetch(
+      `http://192.168.7.97:8000/api/confirm-invoice/${bookingId}`,
+    );
     const blob = await response.blob(); // get PDF blob
     const url = window.URL.createObjectURL(blob);
     window.open(url, "_blank"); // open in new tab
   };
-  if (!bookingId) return <p style={{ padding: "40px", color: "red" }}>No booking ID provided</p>;
-  if (isLoading) return <p style={{ padding: "40px" }}>Loading booking details...</p>;
+  if (!bookingId)
+    return (
+      <p style={{ padding: "40px", color: "red" }}>No booking ID provided</p>
+    );
+  if (isLoading)
+    return <p style={{ padding: "40px" }}>Loading booking details...</p>;
   if (error || !bookingData)
-    return <p style={{ padding: "40px", color: "red" }}>Failed to fetch booking details</p>;
+    return (
+      <p style={{ padding: "40px", color: "red" }}>
+        Failed to fetch booking details
+      </p>
+    );
 
   const booking = bookingData.data;
 
@@ -88,7 +101,8 @@ export default function BookingSuccessPage() {
 
         <div className="p-6 sm:p-10 text-center">
           <p className="text-sm">
-            Booking ID: <span className="font-semibold">{booking.booking_id}</span>
+            Booking ID:{" "}
+            <span className="font-semibold">{booking.booking_id}</span>
           </p>
 
           {/* Success Icon */}
@@ -101,7 +115,9 @@ export default function BookingSuccessPage() {
           </div>
 
           <p className="text-sm max-w-[520px] mx-auto leading-6">
-            Your appointment is successfully booked. A confirmation email with your booking details has been sent to your email. Please check your inbox.
+            Your appointment is successfully booked. A confirmation email with
+            your booking details has been sent to your email. Please check your
+            inbox.
           </p>
 
           {/* Details Box */}
@@ -132,7 +148,10 @@ export default function BookingSuccessPage() {
               Preview Invoice
             </a> */}
 
-            <Button onClick={() => previewInvoice(bookingId)} className="cursor-pointer py-2">
+            <Button
+              onClick={() => previewInvoice(bookingId)}
+              className="cursor-pointer py-2"
+            >
               Download Invoice
             </Button>
             <Link href={"/user/bookings"}>

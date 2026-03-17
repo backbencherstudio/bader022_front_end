@@ -51,7 +51,7 @@ export const bookingsApi = baseApi.injectEndpoints({
         date: string;
         time: string;
       }) => ({
-        url: `/admin/service/index`,
+        url: `/admin/booking/staff`,
         method: "GET",
         params: { service_id, date, time },
       }),
@@ -63,7 +63,7 @@ export const bookingsApi = baseApi.injectEndpoints({
           query: (id) => ({
             url: `/admin/booking/invoice-by-merchant/${id}`,
             method: "GET",
-            responseHandler: (response) => response.blob(), 
+            responseHandler: (response:any) => response.blob(), 
           }),
           providesTags: ["Bookings"],
         }),

@@ -488,12 +488,14 @@ export default function AddBookingModal({
   const { data: servicesData } = useAllServicesQuery({});
   const servicesList = servicesData?.data || [];
 
-  // console.log(servicesList);
+  console.log(servicesList);
 
   // Watch selected service and date
   const selectedService = useWatch({ control, name: "service" });
   const selectedDate = useWatch({ control, name: "date" });
   const selectedTime = useWatch({ control, name: "time" });
+
+  console.log(selectedService, selectedDate, selectedTime);
 
   // Fetch available times for selected service & date
   const { data: bookingServiceSchedule } = useGetBookingScheduleQuery(
@@ -502,9 +504,11 @@ export default function AddBookingModal({
       : skipToken,
   );
 
-  // console.log(bookingServiceSchedule);
+  console.log(bookingServiceSchedule);
 
   const availableTimes = bookingServiceSchedule?.available_times || [];
+
+  console.log(availableTimes);
 
   // Fetch available staff for selected service, date & time
   const { data: bookingStaffSchedule } = useGetBookingStaffScheduleQuery(
@@ -517,7 +521,11 @@ export default function AddBookingModal({
       : skipToken,
   );
 
+  console.log(bookingStaffSchedule);
+
   const availableStaff = bookingStaffSchedule?.available_staff || [];
+
+  console.log(availableStaff);
 
   // Submit booking
   const onSubmit = async (data: any) => {

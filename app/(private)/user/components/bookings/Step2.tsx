@@ -50,7 +50,10 @@ export default function Step2({
 
   const [paymentInformation, { isLoading }] = usePaymentInformationMutation();
 
-
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/booking-success")
+  })
   const handleBooking = async () => {
     const payload = {
       service_id: service.id,
@@ -227,7 +230,7 @@ export default function Step2({
               <span>Pay:</span>
               <span className="font-medium capitalize">{method}</span>
             </div>
-            <Button className="cursor-pointer py-2 w-full" >
+            <Button className="cursor-pointer py-2 w-full" onClick={onNext}>
               Confirm Booking
             </Button>
           </div>

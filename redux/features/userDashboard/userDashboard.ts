@@ -32,7 +32,7 @@ export const dashboardApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/admin/booking/invoice/${id}`,
         method: "GET",
-        responseHandler: (response) => response.blob(), 
+        responseHandler: (response:any) => response.blob(), 
       }),
 
     }),

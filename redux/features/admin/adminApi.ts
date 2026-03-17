@@ -85,7 +85,7 @@ export const adminApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/admin/payment-history/admin-invoice/${id}`,
         method: "GET",
-        responseHandler: (response) => response.blob(),
+        responseHandler: (response:any) => response.blob(),
       }),
     }),
 

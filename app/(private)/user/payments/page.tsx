@@ -160,7 +160,7 @@ export function RecentTransactionsCard({
                         <AvatarImage src={r.customerAvatar} />
                         <AvatarFallback>{r.customerName?.slice(0, 2)}</AvatarFallback>
                       </Avatar>
-                      <span className="font-medium">{r.customerName}</span>
+                      <span className="">{r.customerName}</span>
                     </div>
                   </TableCell>
 

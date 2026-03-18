@@ -22,7 +22,6 @@ export default function Step4({ onNext, onBack, booking_id
             Booking ID: <span className="font-semibold">BOK91385</span>
           </p>
 
-          {/* Fake success icon */}
           <div className="my-8 flex items-center justify-center">
             <div className="h-20 w-20 rounded-full bg-[#F4F6F8] dark:bg-gray-900 flex items-center justify-center">
               <div className="h-12 w-12 rounded-full bg-white dark:bg-black border border-border flex items-center justify-center font-bold">
@@ -37,7 +36,6 @@ export default function Step4({ onNext, onBack, booking_id
             booking.
           </p>
 
-          {/* Details Box */}
           <div className="mt-8 rounded-xl border border-border p-5 sm:p-6 text-sm text-left space-y-3">
             {[
               ["Service:", "Haircut & Styling"],

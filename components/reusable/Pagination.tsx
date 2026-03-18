@@ -16,7 +16,7 @@ export default function Pagination({
     const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
 
     return (
-        <div className="flex gap-8 items-center ">
+        <div className="flex gap-2 items-center ">
 
             {/* Previous */}
             <Button className=""

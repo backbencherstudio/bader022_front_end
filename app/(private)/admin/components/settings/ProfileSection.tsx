@@ -112,7 +112,7 @@ export default function ProfileSection() {
               onClick={() => fileInputRef.current?.click()}
               className="absolute bottom-0 right-0 w-9 h-9 rounded-full bg-black flex items-center justify-center border-2 border-white"
             >
-              <Pencil size={16} className="text-white" />
+              <Pencil size={16} className="text-white cursor-pointer" />
             </button>
 
             <input
@@ -152,8 +152,8 @@ export default function ProfileSection() {
               <Input {...register("address")} className="mt-2 py-5" />
             </div>
 
-            <div className="flex justify-end pt-6">
-              <Button type="submit" disabled={isUpdating}>
+            <div className="flex justify-end pt-6 cursor-pointer">
+              <Button type="submit" disabled={isUpdating} className="cursor-pointer">
                 {isUpdating ? "Updating..." : "Save Changes"}
               </Button>
             </div>

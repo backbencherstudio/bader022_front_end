@@ -50,10 +50,10 @@ export default function Step2({
 
   const [paymentInformation, { isLoading }] = usePaymentInformationMutation();
 
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/booking-success")
-  })
+  // const router = useRouter();
+  // useEffect(() => {
+  //   router.push("/booking-success")
+  // })
   const handleBooking = async () => {
     const payload = {
       service_id: service.id,
@@ -73,15 +73,12 @@ export default function Step2({
       console.log("Booking Success:", res);
 
       if (method === "tap" && res?.payment_url) {
-        // Redirect to payment page
         window.location.href = res.payment_url;
       } else {
-        // Cash payment: go directly to success page
         if (res?.booking_id) {
-          // If you use router inside Step2
           window.location.href = `/booking-success?booking_id=${res.booking_id}`;
         } else {
-          onNext(); // fallback
+          onNext();
         }
       }
     } catch (err) {

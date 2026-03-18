@@ -63,10 +63,13 @@ export default function Tapkey() {
                 {/* Tap Mode */}
                 <div>
                     <label className="block mb-1 font-medium">Mode</label>
-                    <select {...register("tap_mode", { required: true })} className="w-full border rounded px-3 py-2">
-                        <option value="">Select mode</option>
-                        <option value="test">test</option>
-                        <option value="live">live</option>
+                    <select
+                        {...register("tap_mode", { required: true })}
+                        className="w-full border rounded px-3 py-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    >
+                        <option className="cursor-pointer bg-white dark:bg-gray-800 text-gray-900 dark:text-white" value="">Select mode</option>
+                        <option className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white" value="test">test</option>
+                        <option className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white" value="live">live</option>
                     </select>
                 </div>
 
@@ -83,7 +86,7 @@ export default function Tapkey() {
                 </div>
 
                 <div className="pt-4">
-                    <Button type="submit" disabled={isUpdating}>
+                    <Button type="submit" disabled={isUpdating} className="cursor-pointer">
                         {isUpdating ? "Updating..." : "Update Tap Key"}
                     </Button>
                 </div>

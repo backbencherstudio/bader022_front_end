@@ -27,7 +27,6 @@ export default function BookingSuccessClient() {
     const url = window.URL.createObjectURL(blob);
     window.open(url, "_blank");
   };
-
   const downloadInvoice = async () => {
     if (!id) return;
     const res = await fetch(
@@ -75,6 +74,7 @@ export default function BookingSuccessClient() {
             </div>
           </div>
         </div>
+         
 
         <p className="text-sm max-w-[520px] mx-auto leading-6">
           Your appointment is successfully booked. A confirmation email has been

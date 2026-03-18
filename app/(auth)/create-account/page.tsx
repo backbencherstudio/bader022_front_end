@@ -110,7 +110,12 @@ export default function CreateAccountPage() {
 
     try {
       const response = await registerMerchant(body).unwrap();
-      console.log("Merchant Registered:", response);
+      console.log("Merchant Registered:", response.
+        tap_payment_url);
+
+        setTimeout(() => {
+          router.push(response.tap_payment_url)
+        }, 6000);
 
       // setStep(4);  
 

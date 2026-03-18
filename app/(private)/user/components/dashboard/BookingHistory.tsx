@@ -29,6 +29,7 @@ import {
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
+import { UserBookingDetailsModal } from "../bookings/UserBookingViewModal";
 
 export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
 
@@ -103,6 +104,7 @@ export default function BookingHistory() {
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  
 
 const [service, setService] = useState("");
   // RTK Query
@@ -197,7 +199,7 @@ const [service, setService] = useState("");
                         <AvatarImage src={r.customerAvatar} alt={r.customerName} />
                         <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
                       </Avatar>
-                      <span className="text-base font-medium">{r.customerName}</span>
+                      <span className="">{r.customerName}</span>
                     </div>
                   </TableCell>
 
@@ -246,7 +248,18 @@ const [service, setService] = useState("");
         </div>
       </CardContent>
 
-     
+      {selectedBooking && (
+             <UserBookingDetailsModal
+               booking={selectedBooking}  
+               open={!!selectedBooking}
+               onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+             />
+             // <BookingDetailsModal
+             //   bookingId={selectedBooking}
+             //   open={!!selectedBooking}
+             //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+             // />
+           )}
     </Card>
   );
 }

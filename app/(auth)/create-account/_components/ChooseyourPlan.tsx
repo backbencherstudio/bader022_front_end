@@ -22,12 +22,10 @@ interface Plan {
 }
 
 function getPlansByBilling(plans: Plan[], billing: Billing): Plan[] {
-  // Free plan (always include)
   const freePlan = plans.find(
     (plan) => plan.package.toLowerCase() === "free"
   );
 
-  // Match billing plan (Monthly / Annual)
   const matchedPlan = plans.find(
     (plan) =>
       plan.package.toLowerCase() === billing &&
@@ -61,7 +59,6 @@ interface Step3Props {
   onPrevious: () => void;
 }
 
-/* ---------------- MOBILE DETECTION ---------------- */
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -75,7 +72,6 @@ function useIsMobile() {
   return isMobile;
 }
 
-/* ---------------- MOTION VARIANTS ---------------- */
 const leftCardVariant = {
   hidden: { opacity: 0, x: -80 },
   visible: {
@@ -99,7 +95,6 @@ const mobileStatic = {
   visible: { opacity: 1, x: 0 },
 };
 
-/* ---------------- COMPONENT ---------------- */
 export default function ChooseyourPlan({
   defaultPlan,
   onNext,
@@ -117,31 +112,14 @@ export default function ChooseyourPlan({
   );
 
   const { data, isLoading } = useMerchentPlanPriceQuery({});
-  console.log("Plan Data:", data);
 
-  useEffect(() => {
-    if (!isLoading && data) {
-      console.log(data, "-=-=-=-=-0=-");
-    }
-  }, [data, isLoading]);
+  const plans = data?.data || [];
 
+  const basicPlan = plans.find((p: Plan) => p.package.toLowerCase() === "free");
+  const monthlyPlan = plans.find((p: Plan) => p.package.toLowerCase() === "monthly");
+  const annualPlan = plans.find((p: Plan) => p.package.toLowerCase() === "annual");
 
-
-  const plan = data?.data?.find((p: any) => p.id === defaultPlan);
-  const premiumPrice = plan ? plan.price : "-";
-  const annulPrice = plan ? plan.price : "-";
-
-
-
-  // const getPlanPrice = (planId: number, billingType: Billing) => {
-  //   const matchedPlan = data?.data?.find(
-  //     (p: any) =>
-  //       p.id === planId &&
-  //       ((billingType === "monthly" && p.package.toLowerCase() === "monthly") ||
-  //        (billingType === "annual" && p.package.toLowerCase() === "annual"))
-  //   );
-  //   return matchedPlan ? matchedPlan.price : "-";
-  // };
+  const currentPremiumPlan = billing === "monthly" ? monthlyPlan : annualPlan;
 
   const basicFeatures = Array.isArray(basic?.features) ? basic.features : [];
   const premiumFeatures = Array.isArray(premium?.features)
@@ -151,17 +129,24 @@ export default function ChooseyourPlan({
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
 
-  console.log("Basic Price:", basicPrice, "Premium Price:", premiumPrice);
-
-
   const handleBasicPlan = () => {
-    onNext({ plan_id: 1 });
-    // onNext({ plan_id: 3 });
+    if (basicPlan) {
+      onNext({ plan_id: basicPlan.id });
+    } else {
+      onNext({ plan_id: 1 });
+    }
   };
 
-  const handlePremiumPlan = () => {
-
-    window.location.href = "https://checkout.tap.company/?mode=page&themeMode=&language=en&token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY5YjY0ZWFjYzY3OTdhNTQ3ZjZkZjQzNSJ9.fBHtE1hQvo_M1hLSad345aUOqfajI-KO4PpU2FoL36s";
+  const handlePremiumPlan = async () => {
+    if (currentPremiumPlan) {
+      onNext({ plan_id: currentPremiumPlan.id });
+    } else if (monthlyPlan && billing === "monthly") {
+      onNext({ plan_id: monthlyPlan.id });
+    } else if (annualPlan && billing === "annual") {
+      onNext({ plan_id: annualPlan.id });
+    } else {
+      onNext({ plan_id: billing === "monthly" ? 2 : 3 });
+    }
   };
 
   const handlePremiumNext = () => {
@@ -170,13 +155,11 @@ export default function ChooseyourPlan({
     setTimeout(() => onNext({ plan_id: 4 }), 500);
   };
 
-  const [basicplan, premeumPlan] = getPlansByBilling(data?.data ?? [], billing);
-  // console.log({ filteredPlans });
+  const [basicplan, premeumPlan] = getPlansByBilling(plans, billing);
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
       <div className="container mx-auto py-5 md:px-4">
-        {/* Billing Toggle */}
         <div className="flex justify-center mb-5 gap-2 w-[300px] mx-auto bg-[#FAFAFA] dark:bg-gray-800 p-2 rounded-full">
           {(["monthly", "annual"] as Billing[]).map((b) => (
             <button
@@ -195,9 +178,7 @@ export default function ChooseyourPlan({
           ))}
         </div>
 
-        {/* Plans */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* Basic */}
           <motion.div
             variants={isMobile ? mobileStatic : leftCardVariant}
             initial="hidden"
@@ -220,7 +201,7 @@ export default function ChooseyourPlan({
               <div className="inline-block p-0.5 rounded-md bg-linear-to-r from-[#3CB3FF] to-[#7153FF] my-5">
                 <button
                   type="button"
-                  onClick={handleBasicPlan} // Trigger step 4 directly after basic plan
+                  onClick={handleBasicPlan}
                   className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
                 >
                   {basic?.cta}
@@ -244,7 +225,6 @@ export default function ChooseyourPlan({
             </div>
           </motion.div>
 
-          {/* Premium */}
           <motion.div
             variants={isMobile ? mobileStatic : rightCardVariant}
             initial="hidden"
@@ -259,18 +239,16 @@ export default function ChooseyourPlan({
                 {premium?.desc}
               </p>
               <p className="text-gray-900 dark:text-white">
-                <span className="text-4xl font-bold">{premeumPlan?.price}</span>
-
+                <span className="text-4xl font-bold">{premeumPlan?.price || currentPremiumPlan?.price}</span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>
               </p>
               <button
                 type="button"
-                onClick={handlePremiumPlan} // Proceed with Premium plan
+                onClick={handlePremiumPlan}
                 className="bg-linear-to-r from-[#3CB3FF] to-[#7153FF] px-6 py-3 rounded-md font-semibold flex gap-3 items-center text-white my-5 hover:opacity-90 cursor-pointer"
               >
-
                 {premium?.cta}
                 <MdArrowOutward
                   className={locale === "ar" ? "rotate-270" : ""}
@@ -288,7 +266,6 @@ export default function ChooseyourPlan({
           </motion.div>
         </div>
 
-        {/* Footer */}
         <div className="flex justify-between pt-6">
           <button
             type="button"
@@ -305,7 +282,6 @@ export default function ChooseyourPlan({
         onClose={() => setOpen(false)}
         onNext={handlePremiumNext}
       />
-
     </section>
   );
 }

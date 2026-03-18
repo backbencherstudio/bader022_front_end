@@ -20,7 +20,7 @@ export function ViewSubscriptionModal({ id }: { id: string }) {
         <Dialog>
             {/* Trigger */}
             <DialogTrigger asChild>
-                <button className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center">
+                <button className="h-10 cursor-pointer w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center">
                     <Eye className="h-5 w-5" />
                 </button>
             </DialogTrigger>

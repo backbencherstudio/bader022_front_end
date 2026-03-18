@@ -239,7 +239,7 @@ const [service, setService] = useState("");
                         <AvatarImage src={r.customerAvatar} alt={r.customerName} />
                         <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
                       </Avatar>
-                      <span className="text-base font-medium">{r.customerName}</span>
+                      <span className="">{r.customerName}</span>
                     </div>
                   </TableCell>
 

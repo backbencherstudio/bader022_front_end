@@ -20,8 +20,8 @@ export function ViewPackage({ id }: { id: number }) {
         <Dialog>
             {/* Trigger */}
             <DialogTrigger asChild>
-                <button className="h-10 w-10 text-gray-500 hover:text-blue-600 rounded-xl border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200">
-                    <Eye className="h-5 w-5" />
+                <button className="h-10 w-10 cursor-pointer text-gray-500 hover:text-black rounded-xl border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200">
+                    <Eye className="h-5 w-5 " />
                 </button>
             </DialogTrigger>
 

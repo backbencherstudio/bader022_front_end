@@ -118,7 +118,7 @@ export default function ChangePasswordCard() {
 
             {/* Submit Button */}
             <div className="flex justify-end mt-4">
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isLoading} className="cursor-pointer">
                 {isLoading ? "Changing..." : "Save Change"}
               </Button>
             </div>

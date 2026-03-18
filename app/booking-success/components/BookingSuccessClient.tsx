@@ -27,15 +27,6 @@ export default function BookingSuccessClient() {
     const url = window.URL.createObjectURL(blob);
     window.open(url, "_blank");
   };
-<<<<<<< HEAD
-  const downloadInvoice = async () => {
-    if (!id) return;
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/confirm-invoice/${id}`,
-    );
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-=======
 
   // const downloadInvoice = async () => {
   //   if (!id) return;
@@ -44,7 +35,6 @@ export default function BookingSuccessClient() {
   //   );
   //   const blob = await res.blob();
   //   const url = window.URL.createObjectURL(blob);
->>>>>>> 6a99cd8b16226486958c4676e2a2017ce3d0c133
 
   //   const link = document.createElement("a");
   //   link.href = url;

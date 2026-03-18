@@ -59,12 +59,12 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
     //upcomming
-
     Upcomming: builder.query({
       query: () => ({
         url: "/admin/dashboard/upcoming",
         method: "GET",
       }),
+      providesTags: ["Reschedule"]
     }),
 
     //orders details
@@ -73,6 +73,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: `/admin/dashboard/view-order-details/${booking_id}`,
         method: "GET",
       }),
+      providesTags: ["Reschedule"]
     }),
 
     //resedule appointment

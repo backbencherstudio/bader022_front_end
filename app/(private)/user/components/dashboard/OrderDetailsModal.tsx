@@ -39,7 +39,7 @@ export function OrderDetailsDialog({
 
   // Extracting service_id from booking_info
   const serviceId = booking_info.service_id;
-  console.log(serviceId,"fddddddddddddddddddddd")
+  // console.log(serviceId,"fddddddddddddddddddddd")
 
   return (
     <DialogContent className="p-0 max-h-[600px] w-full overflow-y-auto rounded-2xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">

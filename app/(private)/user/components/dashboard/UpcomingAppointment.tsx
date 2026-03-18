@@ -39,6 +39,7 @@ type UpcomingBooking = {
   booking_id: number;
   booking_time: string;
   service_id: number;
+  staff:string;
   merchant_category: string;
   merchant_phone: string;
   service_name: string;
@@ -46,12 +47,13 @@ type UpcomingBooking = {
   status: string;
   address?: string;
   bookingID?: number;
+  message?:string
+
 };
 
 type UpcomingResponse = {
   success: boolean;
   data: UpcomingBooking;
-  
 };
 
 
@@ -65,6 +67,9 @@ export default function UpcomingAppointment() {
     isLoading: boolean;
   };
 
+  console.log(upcomingData);
+  
+
   const booking = upcomingData?.data;
 
   const { data, isLoading, error } =
@@ -72,8 +77,11 @@ export default function UpcomingAppointment() {
       data?: DashboardActivityResponse;
       isLoading: boolean;
       error?: unknown;
-    
+     
     };
+
+    console.log(data);
+    
 
   const [orderOpen, setOrderOpen] = useState<boolean>(false);
   const [rescheduleOpen, setRescheduleOpen] = useState<boolean>(false);
@@ -94,13 +102,16 @@ export default function UpcomingAppointment() {
     <div className="my-3">
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* LEFT CARD */}
-        <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+
+        {upcomingData?.success === false ? <h2 className="text-3xl font-semibold text-black dark:text-white ">
+              {booking?.message || "No upcoming appointment found"}
+            </h2> : <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <div className="flex items-start justify-between">
             <h2 className="text-[26px] font-semibold text-black dark:text-white">
               Upcoming Appointment
             </h2>
             <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
-              {booking?.status}
+              {booking?.status === "Confirm" ? "Confirmed" : booking?.status}
             </span>
           </div>
 
@@ -120,7 +131,7 @@ export default function UpcomingAppointment() {
             </div>
             <div className="flex items-center gap-4 text-black dark:text-white">
               <DollarSign size={22} />
-              {booking?.service_price} SAR
+              {booking?.service_price}
             </div>
             <div className="flex items-center gap-4 text-black dark:text-white">
               <Phone size={22} />
@@ -138,7 +149,8 @@ export default function UpcomingAppointment() {
           >
             View Order Details
           </Button>
-        </Card>
+        </Card>}
+
 
         {/* RIGHT CARD */}
         <Card className="rounded-[18px] px-7 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
@@ -187,7 +199,7 @@ export default function UpcomingAppointment() {
 
       {/* Reschedule Modal */}
       <Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
-        <DialogContent style={{ maxWidth: '70rem' }}> 
+       <DialogContent className="w-full max-w-[95vw] sm:max-w-4xl lg:max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Reschedule Appointment</DialogTitle>
             <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
@@ -197,8 +209,10 @@ export default function UpcomingAppointment() {
             bookingId={selectedBookingId!}
             serviceId={booking?.service_id!}
             currentDate={booking?.booking_date}
+            bookingTime={booking?.booking_time}
+            staffName ={booking?.staff}
             onConfirm={(newDate, newTime, selectedStaff) => {
-              console.log("Reschedule Confirmed:", newDate, newTime, selectedStaff);
+              // console.log("Reschedule Confirmed:", newDate, newTime, selectedStaff);
               setRescheduleOpen(false);
             }}
           />

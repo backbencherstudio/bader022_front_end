@@ -27,6 +27,7 @@ export default function BookingSuccessClient() {
     const url = window.URL.createObjectURL(blob);
     window.open(url, "_blank");
   };
+<<<<<<< HEAD
   const downloadInvoice = async () => {
     if (!id) return;
     const res = await fetch(
@@ -34,15 +35,25 @@ export default function BookingSuccessClient() {
     );
     const blob = await res.blob();
     const url = window.URL.createObjectURL(blob);
+=======
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `invoice_${id}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  };
+  // const downloadInvoice = async () => {
+  //   if (!id) return;
+  //   const res = await fetch(
+  //     `${process.env.NEXT_PUBLIC_API_URL}/confirm-invoice/${id}`,
+  //   );
+  //   const blob = await res.blob();
+  //   const url = window.URL.createObjectURL(blob);
+>>>>>>> 6a99cd8b16226486958c4676e2a2017ce3d0c133
+
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.download = `invoice_${id}.pdf`;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   link.remove();
+  //   window.URL.revokeObjectURL(url);
+  // };
 
   if (!bookingId)
     return <p style={{ padding: 40, color: "red" }}>No booking ID provided</p>;
@@ -61,6 +72,7 @@ export default function BookingSuccessClient() {
 
   return (
     <Card className="rounded-2xl p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+      <h3 className="text-center text-5xl font-bold text-green-500 my-3">Booking Confirmed!</h3>
       <div className="text-center">
         <p className="text-sm">
           Booking ID:{" "}
@@ -76,7 +88,7 @@ export default function BookingSuccessClient() {
         </div>
          
 
-        <p className="text-sm max-w-[520px] mx-auto leading-6">
+        <p className="text-sm max-w-130 mx-auto leading-6">
           Your appointment is successfully booked. A confirmation email has been
           sent to your inbox.
         </p>
@@ -97,15 +109,15 @@ export default function BookingSuccessClient() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <Button onClick={previewInvoice} className="py-2">
-            Preview Invoice
-          </Button>
-          <Button onClick={downloadInvoice} variant="outline" className="py-2">
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 ">
+          <Button onClick={previewInvoice} className="py-2 cursor-pointer">
             Download Invoice
           </Button>
+          {/* <Button onClick={downloadInvoice} variant="outline" className="py-2">
+            Download Invoice
+          </Button> */}
           <Link href="/user/bookings">
-            <Button variant="outline" className="py-2">
+            <Button variant="outline" className="py-2 cursor-pointer">
               Go to Dashboard
             </Button>
           </Link>

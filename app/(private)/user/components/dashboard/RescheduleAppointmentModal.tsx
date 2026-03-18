@@ -24,6 +24,8 @@ interface RescheduleProps {
   serviceId: number;
   bookingId: number;
   currentDate?: string;
+  bookingTime?:string
+  staffName?:string
   onConfirm: (newDate: string, newTime: string, selectedStaff: string) => void;
 }
 
@@ -31,32 +33,45 @@ export default function RescheduleAppointmentModal({
   serviceId,
   bookingId,
   currentDate,
+  bookingTime,
+  staffName,
   onConfirm,
 }: RescheduleProps) {
 
   const [selectedDate, setSelectedDate] = useState(currentDate || "");
   const [dateObj, setDateObj] = useState<Date>(
-    currentDate ? new Date(currentDate) : new Date()
+    // currentDate ? new Date(currentDate) : 
+    new Date()
   );
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedStaff, setSelectedStaff] = useState("");
 
+  // console.log(dateObj);
+  
   const formattedDate = selectedDate
     ? new Date(selectedDate).toISOString().split("T")[0]
     : "";
+
+  // const formattedDate = dateObj.toLocaleDateString("en-CA");
   // schedule api
   const { data, isLoading } = useSheduleQuery(
     { service_id: serviceId, date: formattedDate },
-    { skip: !formattedDate }
+    // { skip: !formattedDate }
   );
-
+ console.log(formattedDate);
+ 
   const timeSlots = data?.available_times || [];
+
+  console.log(data);
 
   // staff api
   const { data: staffData } = useSheduleStaffQuery(
     { service_id: serviceId, date: formattedDate, time: selectedTime },
     { skip: !selectedTime }
   );
+
+  
+  
 
   const staffs = staffData?.available_staff || [];
 
@@ -68,7 +83,9 @@ export default function RescheduleAppointmentModal({
     if (!date) return;
 
     setDateObj(date);
-    setSelectedDate(date.toISOString().split("T")[0]);
+    // setSelectedDate(date.toISOString().split("T")[0]);
+    const localDate = date.toLocaleDateString("en-CA");
+    setSelectedDate(localDate);
     setSelectedTime("");
   };
 
@@ -136,13 +153,33 @@ export default function RescheduleAppointmentModal({
         </div>
 
         {/* Time Slots */}
-        <div className="flex-1 flex flex-col justify-between outline outline-[#E5E7EB] p-4 rounded-2xl">
+        <div className="flex flex-col gap-5 outline outline-[#E5E7EB] p-4 rounded-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Date</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {currentDate}
+                  </button>
+                </div>
 
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Time</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {bookingTime}
+                  </button>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Staff</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {staffName}
+                  </button>
+                </div>
+              </div>
           <div>
-
             <h3 className="font-semibold mb-2">Available Times</h3>
 
-            {isLoading ? (
+            {timeSlots.length === 0 ? <div><p className="text-red-500">{data?.message || "Selected date is in the past"}</p></div>: <div>{isLoading ? (
               <p>Loading...</p>
             ) : (
               <div className="grid grid-cols-2 gap-2">
@@ -161,7 +198,8 @@ export default function RescheduleAppointmentModal({
                 ))}
 
               </div>
-            )}
+            )}</div>}
+
 
           </div>
 

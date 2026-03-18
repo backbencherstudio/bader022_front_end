@@ -115,7 +115,7 @@ const [service, setService] = useState("");
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
-  console.log(bookings, "=================booking history data====================");
+  // console.log(bookings, "=================booking history data====================");
 
   // Reset page when filter changes
   useEffect(() => {
@@ -124,7 +124,8 @@ const [service, setService] = useState("");
 
   const filteredBookings = bookings.filter((b) =>
     b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.service_name.toLowerCase().includes(searchTerm.toLowerCase())
+    b.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    b.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const mappedBookings: TransactionRow[] = filteredBookings.map((b) => ({

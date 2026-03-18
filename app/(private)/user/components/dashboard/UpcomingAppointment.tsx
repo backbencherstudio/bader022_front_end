@@ -104,7 +104,7 @@ export default function UpcomingAppointment() {
         {/* LEFT CARD */}
 
         {upcomingData?.success === false ? <h2 className="text-3xl font-semibold text-black dark:text-white ">
-              {booking?.message}
+              {booking?.message || "No upcoming appointment found"}
             </h2> : <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <div className="flex items-start justify-between">
             <h2 className="text-[26px] font-semibold text-black dark:text-white">

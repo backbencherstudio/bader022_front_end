@@ -24,6 +24,8 @@ interface RescheduleProps {
   serviceId: number;
   bookingId: number;
   currentDate?: string;
+  bookingTime?:string
+  staffName?:string
   onConfirm: (newDate: string, newTime: string, selectedStaff: string) => void;
 }
 
@@ -31,6 +33,8 @@ export default function RescheduleAppointmentModal({
   serviceId,
   bookingId,
   currentDate,
+  bookingTime,
+  staffName,
   onConfirm,
 }: RescheduleProps) {
 
@@ -137,11 +141,30 @@ export default function RescheduleAppointmentModal({
 
         {/* Time Slots */}
         <div className="flex-1 flex flex-col justify-between outline outline-[#E5E7EB] p-4 rounded-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Date</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {currentDate}
+                  </button>
+                </div>
 
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Time</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {bookingTime}
+                  </button>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold mb-2">Selected Staff</h3>
+                  <button className="w-full border rounded-md p-2 text-left">
+                    {staffName}
+                  </button>
+                </div>
+              </div>
           <div>
-
             <h3 className="font-semibold mb-2">Available Times</h3>
-
             {isLoading ? (
               <p>Loading...</p>
             ) : (

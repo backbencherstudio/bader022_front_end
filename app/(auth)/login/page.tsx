@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import { toast } from "sonner";
 
 type FormValues = {
   email: string;
@@ -32,21 +33,29 @@ export default function LoginPage() {
   }, []);
 
   const onSubmit = async (data: FormValues) => {
+
+    console.log(data);
+    
     try {
       const response = await login({
         email: data.email,
         password: data.password,
       }).unwrap();
+
+       console.log(response);
       if (response.success) {
         dispatch(
           setCredentials({
-            token: response.token,
+            token: response?.token,
             user: {
-              ...response.data.user,
-              role: response.data.user_type,
+              ...response?.data?.user,
+              role: response?.data?.user_type,
             },
           }),
         );
+
+        console.log(response);
+        
 
         if (response.data.user_type === "Admin") {
           router.push("/admin/dashboard");
@@ -58,6 +67,7 @@ export default function LoginPage() {
       }
     } catch (error: any) {
       console.error(error);
+      toast.error( "Invalid credentials")
     }
   };
 

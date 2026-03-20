@@ -103,7 +103,8 @@ export default function AllBookingHistory() {
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
+  // const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
 
 const [service, setService] = useState("");
   // RTK Query
@@ -116,7 +117,7 @@ const [service, setService] = useState("");
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
-  console.log(bookings, "=================booking history data====================");
+  // console.log(bookings, "=================booking history data====================");
 
   // Reset page when filter changes
   useEffect(() => {
@@ -259,7 +260,9 @@ const [service, setService] = useState("");
                     <Button className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)}
+                      onClick={() => setSelectedBooking(r)}
+                      // onClick={() => setSelectedBooking(r.bookingID)}
+
                     >
                       View Details
                     </Button>
@@ -290,10 +293,15 @@ const [service, setService] = useState("");
 
       {selectedBooking && (
         <UserBookingDetailsModal
-          booking={selectedBooking}  
+          booking={selectedBooking}
           open={!!selectedBooking}
           onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
         />
+        // <UserBookingDetailsModal
+        //   booking={selectedBooking}  
+        //   open={!!selectedBooking}
+        //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        // />
         // <BookingDetailsModal
         //   bookingId={selectedBooking}
         //   open={!!selectedBooking}

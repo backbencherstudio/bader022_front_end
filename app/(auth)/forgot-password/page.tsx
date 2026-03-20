@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope } from "react-icons/fa";
 import { Label } from '@/components/ui/label';
+import { toast } from "sonner";
 
 type FormValues = {
   email: string;
@@ -15,7 +16,7 @@ type FormValues = {
 };
 
 export default function ForgotPasswordPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, formState : {errors} } = useForm<FormValues>();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -42,6 +43,7 @@ export default function ForgotPasswordPage() {
         err?.data?.message || "Failed to send OTP. Please try again."
       );
     }
+    toast.error(error || "Failed to send OTP. Please try again.");
   };
 
   return (
@@ -80,8 +82,8 @@ export default function ForgotPasswordPage() {
             </div>
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
+          {errors.email && (
+            <p className="text-red-500 text-sm text-center">Email is required</p>
           )}
 
           <button

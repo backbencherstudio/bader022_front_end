@@ -59,7 +59,7 @@ export function UserBookingDetailsModal({
               <span className="text-gray-900">{booking.customerName}</span>
             </div>
 
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <span className="font-medium text-gray-700">Email:</span>
               <span className="text-gray-900">{booking.email}</span>
             </div>
@@ -67,7 +67,7 @@ export function UserBookingDetailsModal({
             <div className="flex justify-between">
               <span className="font-medium text-gray-700">Phone:</span>
               <span className="text-gray-900">{booking.phone}</span>
-            </div>
+            </div> */}
 
             <div className="flex justify-between">
               <span className="font-medium text-gray-700">Service:</span>

@@ -103,7 +103,8 @@ export default function BookingHistory() {
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
+  // const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
   
 
 const [service, setService] = useState("");
@@ -117,9 +118,8 @@ const [service, setService] = useState("");
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
-  // console.log(bookings, "=================booking history data====================");
-
-  // Reset page when filter changes
+  
+  
   useEffect(() => {
     setPage(1);
   }, [dateFilter, statusFilter, serviceFilter]);
@@ -220,7 +220,7 @@ const [service, setService] = useState("");
                     <Button className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)}
+                      onClick={() => setSelectedBooking(r)}
                     >
                       View Details
                     </Button>
@@ -250,16 +250,16 @@ const [service, setService] = useState("");
       </CardContent>
 
       {selectedBooking && (
-             <UserBookingDetailsModal
-               booking={selectedBooking}  
-               open={!!selectedBooking}
-               onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
-             />
-             // <BookingDetailsModal
-             //   bookingId={selectedBooking}
-             //   open={!!selectedBooking}
-             //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
-             // />
+        <UserBookingDetailsModal
+          booking={selectedBooking}
+          open={!!selectedBooking}
+          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        />
+            //  <BookingDetailsModal
+            //    bookingId={selectedBooking}
+            //    open={!!selectedBooking}
+            //    onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+            //  />
            )}
     </Card>
   );

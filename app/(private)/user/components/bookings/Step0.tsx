@@ -77,13 +77,17 @@ export default function Step0({
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {service.price} SAR
                 </span>
+                
               </div>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">
+                {service.name}
+              </span>
 
               <h3 className="font-semibold">{service.service_name}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>
-              <p>{getImageUrl(service.image)}</p>
+            
 
               <div className="flex gap-3 pt-3">
                 <Button

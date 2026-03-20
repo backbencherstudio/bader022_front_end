@@ -19,7 +19,7 @@ type FormValues = {
 };
 
 export default function LoginPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, formState: { errors }, } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -102,8 +102,19 @@ export default function LoginPage() {
             icon={<FaEnvelope />}
             placeholder="john@example.com"
             type="email"
-            register={register("email", { required: true })}
+            register={register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
+            })}
           />
+          {errors.email && (
+            <span className="text-red-500 text-sm">
+              {errors.email.message}
+            </span>
+          )}
           {/* Password */}
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
@@ -114,13 +125,24 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
                 className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
                   text-gray-900 dark:text-white
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  {errors.password.message}
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -149,7 +171,8 @@ export default function LoginPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
+            disabled={isLoading}
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer disabled:opacity-50"
           >
             {isLoading ? "Loading..." : "Login"}
           </button>

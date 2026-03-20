@@ -44,8 +44,8 @@ export default function Navbar() {
   );
 
   return (
-    <div className="mx-auto w-full bg-white z-50 fixed">
-      <header className="px-4 md:px-6 py-5 container mx-auto">
+    <div className=" mx-auto bg-white z-50 fixed  w-full">
+      <header className="px-4 md:px-6 py-5 container mx-auto ">
         <div
           className={`flex items-center justify-between ${
             locale === "ar" ? "flex-row-reverse" : ""
@@ -112,7 +112,7 @@ export default function Navbar() {
             {user?.role === "Merchant" ? (
               <Link
                 href={"/merchant/dashboard"}
-                className="hidden md:flex rounded-md px-3 py-3 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
+                className="hidden md:flex rounded-md px-3 py-3 bg-red-500 from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
               >
                 {/* {t("Nav.button")}
                 <ArrowUpRight
@@ -147,7 +147,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {open && (
           <div
-            className={`md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t shadow-md ${
+            className={`md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t   shadow-md ${
               locale === "ar" ? "text-right" : "text-left"
             }`}
           >

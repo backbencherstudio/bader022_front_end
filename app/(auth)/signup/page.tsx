@@ -30,7 +30,7 @@ type FormValues = {
 };
 
 export default function SignUpPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -98,6 +98,9 @@ export default function SignUpPage() {
             placeholder="John Doe"
             register={register("fullName", { required: true })}
           />
+          {
+            errors.fullName && <span className="text-red-500 text-sm">Name is required</span>
+          }
 
           <Input
             label="Email Address"
@@ -106,6 +109,9 @@ export default function SignUpPage() {
             type="email"
             register={register("email", { required: true })}
           />
+          {
+            errors.email && <span className="text-red-500 text-sm">Email is required</span>
+          }
 
           <Input
             label="Phone"
@@ -113,6 +119,9 @@ export default function SignUpPage() {
             placeholder="966..."
             register={register("phone", { required: true })}
           />
+          {
+            errors.phone && <span className="text-red-500 text-sm">Phone is required</span>
+          }
 
           {/* Password */}
           <div>
@@ -127,6 +136,10 @@ export default function SignUpPage() {
                 {...register("password", { required: true })}
                 className="w-full pl-10 pr-10 py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {
+            errors.password && <span className="text-red-500 text-sm">Password is required</span>
+          }
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}

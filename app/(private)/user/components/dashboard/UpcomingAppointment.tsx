@@ -14,11 +14,19 @@ import {
   BadgeDollarSign,
   X,
 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { OrderDetailsDialog } from "./OrderDetailsModal";
 import { CancelAppointmentModal } from "./CancelAppointmentModal";
 import RescheduleAppointmentModal from "./RescheduleAppointmentModal";
-import { useDashboardActivityQuery, useUpcommingQuery } from "@/redux/features/userDashboard/userDashboard";
+import {
+  useDashboardActivityQuery,
+  useUpcommingQuery,
+} from "@/redux/features/userDashboard/userDashboard";
 
 // --------------------
 // Types
@@ -39,7 +47,7 @@ type UpcomingBooking = {
   booking_id: number;
   booking_time: string;
   service_id: number;
-  staff:string;
+  staff: string;
   merchant_category: string;
   merchant_phone: string;
   service_name: string;
@@ -47,8 +55,7 @@ type UpcomingBooking = {
   status: string;
   address?: string;
   bookingID?: number;
-  message?:string
-
+  message?: string;
 };
 
 type UpcomingResponse = {
@@ -56,45 +63,42 @@ type UpcomingResponse = {
   data: UpcomingBooking;
 };
 
-
-
 export default function UpcomingAppointment() {
-  const {
-    data: upcomingData,
-    isLoading: upcomingLoading,
-  } = useUpcommingQuery({}) as {
+  const { data: upcomingData, isLoading: upcomingLoading } = useUpcommingQuery(
+    {},
+  ) as {
     data?: UpcomingResponse;
     isLoading: boolean;
   };
 
-  console.log(upcomingData);
-  
+  // console.log(upcomingData);
 
   const booking = upcomingData?.data;
 
-  const { data, isLoading, error } =
-    useDashboardActivityQuery(undefined) as {
-      data?: DashboardActivityResponse;
-      isLoading: boolean;
-      error?: unknown;
-     
-    };
+  const { data, isLoading, error } = useDashboardActivityQuery(undefined) as {
+    data?: DashboardActivityResponse;
+    isLoading: boolean;
+    error?: unknown;
+  };
 
-    console.log(data);
-    
+  // console.log(data);
 
   const [orderOpen, setOrderOpen] = useState<boolean>(false);
   const [rescheduleOpen, setRescheduleOpen] = useState<boolean>(false);
   const [cancelOpen, setCancelOpen] = useState<boolean>(false);
-  const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
+  const [selectedBookingId, setSelectedBookingId] = useState<number | null>(
+    null,
+  );
 
   // Safe fallback empty array
   const activities: Activity[] = data?.data ?? [];
 
   const getIcon = (title: string) => {
     if (title.toLowerCase().includes("cancel")) return <X size={22} />;
-    if (title.toLowerCase().includes("reschedule")) return <Calendar size={22} />;
-    if (title.toLowerCase().includes("payment")) return <BadgeDollarSign size={22} />;
+    if (title.toLowerCase().includes("reschedule"))
+      return <Calendar size={22} />;
+    if (title.toLowerCase().includes("payment"))
+      return <BadgeDollarSign size={22} />;
     return <Check size={22} />;
   };
 
@@ -103,54 +107,60 @@ export default function UpcomingAppointment() {
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* LEFT CARD */}
 
-        {upcomingData?.success === false ? <h2 className="text-3xl font-semibold text-black dark:text-white ">
-              {booking?.message || "No upcoming appointment found"}
-            </h2> : <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-          <div className="flex items-start justify-between">
-            <h2 className="text-[26px] font-semibold text-black dark:text-white">
-              Upcoming Appointment
-            </h2>
-            <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
-              {booking?.status === "Confirm" ? "Confirmed" : booking?.status}
-            </span>
-          </div>
+        {upcomingData?.success === false ? (
+          <h2 className="text-3xl font-semibold text-black dark:text-white ">
+            {booking?.message || "No upcoming appointment found"}
+          </h2>
+        ) : (
+          <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+            <div className="flex items-start justify-between">
+              <h2 className="text-[26px] font-semibold text-black dark:text-white">
+                Upcoming Appointment
+              </h2>
+              <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
+                {booking?.status === "Confirm" ? "Confirmed" : booking?.status}
+              </span>
+            </div>
 
-          <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
+            <h3 className="text-[20px] font-semibold">
+              {booking?.service_name}
+            </h3>
 
-          <div className="space-y-4 text-[18px] text-gray-600 mt-4">
-            <div className="flex items-center gap-4 text-black dark:text-white">
-              <MapPin size={22} /> {booking?.address}
+            <div className="space-y-4 text-[18px] text-gray-600 mt-4">
+              <div className="flex items-center gap-4 text-black dark:text-white">
+                <MapPin size={22} /> {booking?.address}
+              </div>
+              <div className="flex items-center gap-4 text-black dark:text-white">
+                <CalendarDays size={22} />
+                {booking?.booking_date}
+              </div>
+              <div className="flex items-center gap-4 text-black dark:text-white">
+                <Clock size={22} />
+                {booking?.booking_time}
+              </div>
+              <div className="flex items-center gap-4 text-black dark:text-white">
+                <DollarSign size={22} />
+                {booking?.service_price}
+              </div>
+              <div className="flex items-center gap-4 text-black dark:text-white">
+                <Phone size={22} />
+                {booking?.merchant_phone}
+              </div>
             </div>
-            <div className="flex items-center gap-4 text-black dark:text-white">
-              <CalendarDays size={22} />
-              {booking?.booking_date}
-            </div>
-            <div className="flex items-center gap-4 text-black dark:text-white">
-              <Clock size={22} />
-              {booking?.booking_time}
-            </div>
-            <div className="flex items-center gap-4 text-black dark:text-white">
-              <DollarSign size={22} />
-              {booking?.service_price}
-            </div>
-            <div className="flex items-center gap-4 text-black dark:text-white">
-              <Phone size={22} />
-              {booking?.merchant_phone}
-            </div>
-          </div>
 
-          <Button className="cursor-pointer"
-            onClick={() => {
-              if (booking?.booking_id) {
-                setSelectedBookingId(booking.booking_id);
-                setOrderOpen(true);
-              }
-            }}
-          >
-            View Order Details
-          </Button>
-        </Card>}
-
+            <Button
+              className="cursor-pointer"
+              onClick={() => {
+                if (booking?.booking_id) {
+                  setSelectedBookingId(booking.booking_id);
+                  setOrderOpen(true);
+                }
+              }}
+            >
+              View Order Details
+            </Button>
+          </Card>
+        )}
 
         {/* RIGHT CARD */}
         <Card className="rounded-[18px] px-7 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
@@ -159,23 +169,27 @@ export default function UpcomingAppointment() {
           </h2>
 
           <div className="space-y-7 mt-6">
-            {isLoading && <p className="text-gray-400 text-sm">Loading activity...</p>}
-            {!isLoading && activities.length === 0 && <p className="text-gray-400 text-sm">No recent activity found</p>}
+            {isLoading && (
+              <p className="text-gray-400 text-sm">Loading activity...</p>
+            )}
+            {!isLoading && activities.length === 0 && (
+              <p className="text-gray-400 text-sm">No recent activity found</p>
+            )}
             {activities.map((item: Activity, index: number) => (
               <div key={index} className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-[14px] flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                     {getIcon(item.title)}
                   </div>
-                  <p className="text-[16px] font-medium text-black dark:text-white">{item.title}</p>
+                  <p className="text-[16px] font-medium text-black dark:text-white">
+                    {item.title}
+                  </p>
                 </div>
                 <p className="text-[14px] text-gray-400">{item.time}</p>
               </div>
             ))}
           </div>
         </Card>
-
-       
       </div>
 
       {/* Dialogs */}
@@ -199,10 +213,12 @@ export default function UpcomingAppointment() {
 
       {/* Reschedule Modal */}
       <Dialog open={rescheduleOpen} onOpenChange={setRescheduleOpen}>
-       <DialogContent className="w-full max-w-[95vw] sm:max-w-4xl lg:max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-full max-w-[95vw] sm:max-w-4xl lg:max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Reschedule Appointment</DialogTitle>
-            <h3 className="text-[20px] font-semibold">{booking?.service_name}</h3>
+            <h3 className="text-[20px] font-semibold">
+              {booking?.service_name}
+            </h3>
           </DialogHeader>
 
           <RescheduleAppointmentModal
@@ -210,7 +226,7 @@ export default function UpcomingAppointment() {
             serviceId={booking?.service_id!}
             currentDate={booking?.booking_date}
             bookingTime={booking?.booking_time}
-            staffName ={booking?.staff}
+            staffName={booking?.staff}
             onConfirm={(newDate, newTime, selectedStaff) => {
               // console.log("Reschedule Confirmed:", newDate, newTime, selectedStaff);
               setRescheduleOpen(false);

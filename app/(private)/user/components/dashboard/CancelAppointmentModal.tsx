@@ -5,13 +5,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useCancelAppoitmentQuery, useConfirmCancelAppointmentMutation } from "@/redux/features/userDashboard/userDashboard";
+import {
+  useCancelAppoitmentQuery,
+  useConfirmCancelAppointmentMutation,
+} from "@/redux/features/userDashboard/userDashboard";
 import { toast } from "sonner";
 
 export function CancelAppointmentModal({
   bookingID,
-  onClose,          
-  onCancelSuccess,  
+  onClose,
+  onCancelSuccess,
 }: {
   bookingID: number;
   onClose: () => void;
@@ -20,17 +23,20 @@ export function CancelAppointmentModal({
   const { data } = useCancelAppoitmentQuery({ booking_id: bookingID });
   const booking = data?.data;
 
-  const [confirmCancel, { isLoading: cancelLoading }] = useConfirmCancelAppointmentMutation();
+  const [confirmCancel, { isLoading: cancelLoading }] =
+    useConfirmCancelAppointmentMutation();
 
   const handleConfirmCancel = async () => {
     try {
-      await confirmCancel({ booking_id: bookingID }).unwrap();
-      onClose();           
-      onCancelSuccess();   
-    } catch (err) {
-      console.error("Cancel failed", err);
+      const res = await confirmCancel({ booking_id: bookingID }).unwrap();
+      // console.log(res);
+      toast.success(res?.message);
+      onClose();
+      onCancelSuccess();
+    } catch (err: any) {
+      // console.error("Cancel failed", err);
+      toast.error(err?.data?.message);
     }
-    toast.success("Appointment cancelled successfully");
   };
 
   return (

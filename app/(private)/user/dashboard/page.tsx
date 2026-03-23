@@ -7,7 +7,7 @@ export default function page() {
     <div>
       <UpcomingAppointment />
       <div className="mt-6">
-        <BookingHistory/>
+        <BookingHistory />
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ interface RescheduleProps {
   serviceId: number;
   bookingId: number;
   currentDate?: string;
-  bookingTime?:string
-  staffName?:string
+  bookingTime?: string;
+  staffName?: string;
   onConfirm: (newDate: string, newTime: string, selectedStaff: string) => void;
 }
 
@@ -37,17 +37,16 @@ export default function RescheduleAppointmentModal({
   staffName,
   onConfirm,
 }: RescheduleProps) {
-
   const [selectedDate, setSelectedDate] = useState(currentDate || "");
   const [dateObj, setDateObj] = useState<Date>(
-    // currentDate ? new Date(currentDate) : 
-    new Date()
+    // currentDate ? new Date(currentDate) :
+    new Date(),
   );
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedStaff, setSelectedStaff] = useState("");
 
   // console.log(dateObj);
-  
+
   const formattedDate = selectedDate
     ? new Date(selectedDate).toISOString().split("T")[0]
     : "";
@@ -58,8 +57,8 @@ export default function RescheduleAppointmentModal({
     { service_id: serviceId, date: formattedDate },
     // { skip: !formattedDate }
   );
- console.log(formattedDate);
- 
+  console.log(formattedDate);
+
   const timeSlots = data?.available_times || [];
 
   console.log(data);
@@ -67,11 +66,8 @@ export default function RescheduleAppointmentModal({
   // staff api
   const { data: staffData } = useSheduleStaffQuery(
     { service_id: serviceId, date: formattedDate, time: selectedTime },
-    { skip: !selectedTime }
+    { skip: !selectedTime },
   );
-
-  
-  
 
   const staffs = staffData?.available_staff || [];
 
@@ -100,25 +96,23 @@ export default function RescheduleAppointmentModal({
         booking_id: bookingId,
         date: selectedDate,
         time: selectedTime,
-        staff_id: selectedStaff
+        staff_id: selectedStaff,
       }).unwrap();
 
       onConfirm(selectedDate, selectedTime, selectedStaff);
       toast.success("Appointment rescheduled successfully");
-    } catch (err) {
-      console.log("Reschedule Error:", err);
+    } catch (err: any) {
+      // console.log("Reschedule Error:", err);
       // alert("Error: " + (err.message || "Failed to reschedule"));
+      toast.error(err?.data?.message);
     }
   };
 
   return (
     <div className="rounded-2x p-1 space-y-6 ]">
-
       <div className="flex flex-col lg:flex-row gap-6 w-full">
-
         {/* Calendar */}
         <div className="flex-1 outline outline-[#E5E7EB] p-4 rounded-2xl w-full">
-
           <h3 className="font-semibold mb-2">Select New Date</h3>
 
           <Calendar
@@ -129,78 +123,81 @@ export default function RescheduleAppointmentModal({
           />
 
           <div className="mt-4 outline outline-[#E5E7EB] p-2 rounded-lg">
-
-            <h3 className="font-semibold mb-2 bg-gray-100 p-2 rounded-t-lg mb-4">Select Staff</h3>
+            <h3 className="font-semibold mb-2 bg-gray-100 p-2 rounded-t-lg mb-4">
+              Select Staff
+            </h3>
 
             <Select onValueChange={setSelectedStaff}>
-
               <SelectTrigger>
                 <SelectValue placeholder="Select Staff" />
               </SelectTrigger>
 
               <SelectContent>
-
-                {staffs.map((staff:any) => (
+                {staffs.map((staff: any) => (
                   <SelectItem key={staff.id} value={String(staff.id)}>
                     {staff.name}
                   </SelectItem>
                 ))}
-
               </SelectContent>
             </Select>
-
           </div>
         </div>
 
         {/* Time Slots */}
         <div className="flex flex-col gap-5 outline outline-[#E5E7EB] p-4 rounded-2xl">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <h3 className="font-semibold mb-2">Selected Date</h3>
-                  <button className="w-full border rounded-md p-2 text-left">
-                    {currentDate}
-                  </button>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <h3 className="font-semibold mb-2">Selected Date</h3>
+              <button className="w-full border rounded-md p-2 text-left">
+                {currentDate}
+              </button>
+            </div>
 
-                <div>
-                  <h3 className="font-semibold mb-2">Selected Time</h3>
-                  <button className="w-full border rounded-md p-2 text-left">
-                    {bookingTime}
-                  </button>
-                </div>
+            <div>
+              <h3 className="font-semibold mb-2">Selected Time</h3>
+              <button className="w-full border rounded-md p-2 text-left">
+                {bookingTime}
+              </button>
+            </div>
 
-                <div>
-                  <h3 className="font-semibold mb-2">Selected Staff</h3>
-                  <button className="w-full border rounded-md p-2 text-left">
-                    {staffName}
-                  </button>
-                </div>
-              </div>
+            <div>
+              <h3 className="font-semibold mb-2">Selected Staff</h3>
+              <button className="w-full border rounded-md p-2 text-left">
+                {staffName}
+              </button>
+            </div>
+          </div>
           <div>
             <h3 className="font-semibold mb-2">Available Times</h3>
 
-            {timeSlots.length === 0 ? <div><p className="text-red-500">{data?.message || "Selected date is in the past"}</p></div>: <div>{isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <div className="grid grid-cols-2 gap-2">
-
-                {timeSlots.map((time:any) => (
-                  <button
-                    key={time}
-                    onClick={() => setSelectedTime(time)}
-                    className={cn(
-                      "h-10 rounded-lg border",
-                      selectedTime === time && "bg-gray-200"
-                    )}
-                  >
-                    {time}
-                  </button>
-                ))}
-
+            {timeSlots.length === 0 ? (
+              <div>
+                <p className="text-red-500">
+                  {data?.message || "Selected date is in the past"}
+                </p>
               </div>
-            )}</div>}
-
-
+            ) : (
+              <div>
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    {timeSlots.map((time: any) => (
+                      <button
+                        key={time}
+                        onClick={() => setSelectedTime(time)}
+                        className={cn(
+                          "h-10 rounded-lg border",
+                          selectedTime === time && "bg-gray-200",
+                        )}
+                      >
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <Button
@@ -210,7 +207,6 @@ export default function RescheduleAppointmentModal({
           >
             {isRescheduleLoading ? "Rescheduling..." : "Confirm Reschedule"}
           </Button>
-
         </div>
       </div>
     </div>

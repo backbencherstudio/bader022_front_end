@@ -73,6 +73,8 @@ export default function PackageTab() {
   const pageSize = 10; // You can adjust this value
 
   const { data, isLoading } = useGetSubscriptionsPlanQuery(filters);
+  console.log(data, "--------------")
+ 
 
   // Get all plans from API
   const allPlans: SubscriptionPlan[] = data?.data || [];

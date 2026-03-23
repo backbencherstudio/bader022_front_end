@@ -50,9 +50,9 @@ const baseQueryWithAuthCheck = async (args: any, api: any, extraOptions: any) =>
     api.dispatch({ type: "auth/logout" });
 
     // redirect to login page
-    if (typeof window !== "undefined") {
-      window.location.href = "/login";
-    }
+    // if (typeof window !== "undefined") {
+    //   window.location.href = "/";
+    // }
   }
 
   return result;

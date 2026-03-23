@@ -104,9 +104,9 @@ export default function SignUpPage() {
             })}
             error={errors.fullName?.message}
           />
-          {
+          {/* {
             errors.fullName && <span className="text-red-500 text-sm">Name is required</span>
-          }
+          } */}
 
           <Input
             label="Email Address"
@@ -123,9 +123,9 @@ export default function SignUpPage() {
             error={errors.email?.message}
 
           />
-          {
+          {/* {
             errors.email && <span className="text-red-500 text-sm">Email is required</span>
-          }
+          } */}
 
           <Input
             label="Phone"
@@ -141,9 +141,9 @@ export default function SignUpPage() {
             error={errors.phone?.message}
 
           />
-          {
+          {/* {
             errors.phone && <span className="text-red-500 text-sm">Phone is required</span>
-          }
+          } */}
 
           {/* Password */}
           <div>

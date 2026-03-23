@@ -115,7 +115,7 @@ export default function CreateAccountPage() {
 
         setTimeout(() => {
           router.push(response.tap_payment_url)
-        }, 6000);
+        }, 1000);
 
       // setStep(4);  
 

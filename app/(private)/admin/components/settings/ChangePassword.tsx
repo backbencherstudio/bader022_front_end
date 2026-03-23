@@ -44,6 +44,7 @@ export default function ChangePasswordCard() {
       }).unwrap();
 
       console.log("Password changed successfully:", response);
+      // toast.success("Password changed successfully");
       form.reset();
     } catch (error) {
       console.error("Password change failed:", error);

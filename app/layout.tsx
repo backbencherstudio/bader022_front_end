@@ -45,7 +45,8 @@ export default function RootLayout({
                 {children}
               </I18nProvider>
             </ThemeProvider>
-          </StoreProvider></Suspense>
+          </StoreProvider>
+          </Suspense>
 
       </body>
     </html>

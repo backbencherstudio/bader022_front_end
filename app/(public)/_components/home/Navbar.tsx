@@ -44,8 +44,8 @@ export default function Navbar() {
   );
 
   return (
-    <div className=" mx-auto bg-white z-50 fixed  w-full">
-      <header className="px-4 md:px-6 py-5 container mx-auto ">
+    <div className=" mx-auto bg-white z-50 fixed  w-full ">
+      <header className="px-4 md:px-6 py-5 container mx-auto  ">
         <div
           className={`flex items-center justify-between ${
             locale === "ar" ? "flex-row-reverse" : ""

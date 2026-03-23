@@ -14,6 +14,7 @@ import {
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { authorize } from "@/lib/auth";
 
 const MERCHANT_NAV_ITEMS = [
   {
@@ -68,18 +69,25 @@ export default function DashboardLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.push("/login");
-    } else {
-      setLoading(false);
+      const auth = authorize(["Admin"]);
+      if (!auth.authorized) {
+        router.push("/");
+      }
+    }, []);
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        router.push("/login");
+      } else {
+        setLoading(false);
+      }
+    }, [router]);
+  
+    if (loading) {
+      return <p>Loading...</p>;
     }
-  }, [router]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div>

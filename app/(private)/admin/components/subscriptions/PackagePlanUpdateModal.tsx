@@ -50,7 +50,7 @@ export function PackagePlanUpdateModal({
     plan: any;
 }) {
     const [open, setOpen] = useState(false);
-        const [features, setFeatures] = useState([""]);
+    const [features, setFeatures] = useState<string[]>([]);
     
 
     const [updateSubscription, { isLoading }] =
@@ -68,17 +68,19 @@ export function PackagePlanUpdateModal({
     });
 
     useEffect(() => {
-        if (plan) {
-            form.reset({
-                name: plan.name || "",
-                title: plan.title || "",
-                price: Number(plan.price) || 0,
-                currency: plan.currency || "SAR",
-                package: plan.package || "Free",
-                packageStatus: plan.status ? "active" : "inactive",
-            });
-        }
-    }, [plan, form]);
+    if (plan && open) {   // 👈 add open check
+        form.reset({
+            name: plan.name || "",
+            title: plan.title || "",
+            price: Number(plan.price) || 0,
+            currency: plan.currency || "SAR",
+            package: plan.package || "Free",
+            packageStatus: plan.status ? "active" : "inactive",
+        });
+
+        setFeatures(plan.features?.length ? plan.features : [""]);
+    }
+}, [plan, open]); 
 
     async function onSubmit(values: FormValues) {
         try {
@@ -88,7 +90,7 @@ export function PackagePlanUpdateModal({
                 price: Number(values.price),
                 currency: values.currency,
                 package: values.package,
-                features: plan?.features || [],
+                features: features.filter((f) => f.trim() !== ""),
                 status: values.packageStatus === "active" ? 1 : 0,
                 _method: "put",
             };

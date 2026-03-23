@@ -19,7 +19,7 @@ type FormValues = {
 };
 
 export default function LoginPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -104,11 +104,11 @@ export default function LoginPage() {
             type="email"
             register={register("email", { required: true })}
           />
-          {errors.email && (
+          {/* {errors.email && (
             <span className="text-red-500 text-sm">
               {errors.email.message}
             </span>
-          )}
+          )} */}
           {/* Password */}
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">

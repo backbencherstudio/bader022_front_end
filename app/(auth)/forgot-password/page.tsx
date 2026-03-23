@@ -15,7 +15,7 @@ type FormValues = {
 };
 
 export default function ForgotPasswordPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, formState:{errors} } = useForm<FormValues>();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -74,20 +74,34 @@ export default function ForgotPasswordPage() {
                 id="email"
                 type="email"
                 placeholder="john@example.com"
-                className="pl-10"
-                {...register("email", { required: true })}
+                className={`pl-10 ${errors.email ? "border-red-500" : ""
+                  }`}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
               />
             </div>
+
+            {/* Frontend validation error */}
+            {errors.email && (
+              <p className="text-red-500 text-sm">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
+            <p className="text-red-500 text-sm text-center">Enter your valid Email</p>
           )}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50"
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? "Sending..." : "Send OTP"}
           </button>

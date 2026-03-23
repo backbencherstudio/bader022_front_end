@@ -34,18 +34,18 @@ export default function RootLayout({
       >
         <Suspense fallback={<div>Loading</div>}>
           <StoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <I18nProvider>
-              <Toaster className="top-center top-0" />
-              {children}
-            </I18nProvider>
-          </ThemeProvider>
-        </StoreProvider></Suspense>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <I18nProvider>
+                <Toaster position="top-center" />
+                {children}
+              </I18nProvider>
+            </ThemeProvider>
+          </StoreProvider></Suspense>
 
       </body>
     </html>

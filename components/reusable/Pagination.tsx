@@ -13,13 +13,34 @@ export default function Pagination({
     lastPage,
     onPageChange,
 }: PaginationProps) {
-    const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+
+    // ✅ NEW LOGIC
+    const getPages = () => {
+        const pages: (number | string)[] = [];
+
+        if (lastPage <= 6) {
+            return Array.from({ length: lastPage }, (_, i) => i + 1);
+        }
+
+        // First 4
+        pages.push(1,);
+
+        // Ellipsis
+        pages.push("...");
+
+        // Last 2
+        pages.push(lastPage - 1, lastPage);
+
+        return pages;
+    };
+
+    const pages = getPages();
 
     return (
-        <div className="flex gap-2 items-center ">
+        <div className="flex gap-2 items-center">
 
             {/* Previous */}
-            <Button className=""
+            <Button
                 variant="outline"
                 disabled={currentPage === 1}
                 onClick={() => onPageChange(currentPage - 1)}
@@ -27,15 +48,21 @@ export default function Pagination({
                 &lt;
             </Button>
 
-            {pages.map((page) => (
-                <Button
-                    key={page}
-                    variant={page === currentPage ? "default" : "outline"}
-                    onClick={() => onPageChange(page)}
-                >
-                    {page}
-                </Button>
-            ))}
+            {pages.map((page, index) =>
+                page === "..." ? (
+                    <span key={index} className="px-2 text-gray-500">
+                        ...
+                    </span>
+                ) : (
+                    <Button
+                        key={page}
+                        variant={page === currentPage ? "default" : "outline"}
+                        onClick={() => onPageChange(page as number)}
+                    >
+                        {page}
+                    </Button>
+                )
+            )}
 
             {/* Next */}
             <Button

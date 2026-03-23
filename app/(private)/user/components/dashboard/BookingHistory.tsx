@@ -103,7 +103,7 @@ export default function BookingHistory() {
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
   
 
 const [service, setService] = useState("");
@@ -220,7 +220,7 @@ const [service, setService] = useState("");
                     <Button className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)}
+                      onClick={() => setSelectedBooking(r)}
                     >
                       View Details
                     </Button>

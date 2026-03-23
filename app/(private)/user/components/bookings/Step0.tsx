@@ -83,7 +83,7 @@ export default function Step0({
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>
-              <p>{getImageUrl(service.image)}</p>
+           
 
               <div className="flex gap-3 pt-3">
                 <Button

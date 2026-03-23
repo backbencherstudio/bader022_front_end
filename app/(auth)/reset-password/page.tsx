@@ -23,7 +23,7 @@ export default function ResetPasswordPage() {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, formState:{errors} } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [successful, setSuccessful] = useState(false);
@@ -46,7 +46,7 @@ export default function ResetPasswordPage() {
       setSuccessful(true);
     } catch (error) {
       console.error("Error resetting password:", error);
-      alert("Password reset failed. Please try again.");
+      // alert("Password reset failed. Please try again.");
     }
   };
 
@@ -85,13 +85,24 @@ export default function ResetPasswordPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                  })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
                   text-gray-900 dark:text-white
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -112,13 +123,22 @@ export default function ResetPasswordPage() {
                 <input
                   type={confirmPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  {...register("password_confirmation", { required: true })}
+                  {...register("password_confirmation", {
+                    required: "Confirm password is required",
+                    validate: (value) =>
+                      value === ("password") || "Passwords do not match",
+                  })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700
                   border-gray-300 dark:border-gray-600
                   text-gray-900 dark:text-white
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                {errors.password_confirmation && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password_confirmation.message}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => setConfirmPassword(!confirmPassword)}
@@ -132,9 +152,10 @@ export default function ResetPasswordPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
+              disabled={isLoading}
+              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90"
             >
-              Save
+              {isLoading ? "Saving..." : "Save"}
             </button>
           </form>
         </div>

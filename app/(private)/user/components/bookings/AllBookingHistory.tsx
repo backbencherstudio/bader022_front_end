@@ -103,7 +103,7 @@ export default function AllBookingHistory() {
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
 
 const [service, setService] = useState("");
   // RTK Query
@@ -256,10 +256,11 @@ const [service, setService] = useState("");
                   </TableCell>
                   <TableCell>
                     {/* `/user/bookings/${r.bookingID}` */}
-                    <Button className="cursor-pointer"
+                    <Button
+                      className="cursor-pointer"
                       size="sm"
                       variant="outline"
-                      onClick={() => setSelectedBooking(r.bookingID)}
+                      onClick={() => setSelectedBooking(r)}
                     >
                       View Details
                     </Button>
@@ -290,9 +291,11 @@ const [service, setService] = useState("");
 
       {selectedBooking && (
         <UserBookingDetailsModal
-          booking={selectedBooking}  
+          booking={selectedBooking}
           open={!!selectedBooking}
-          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+          onOpenChange={(open) => {
+            if (!open) setSelectedBooking(null);
+          }}
         />
         // <BookingDetailsModal
         //   bookingId={selectedBooking}

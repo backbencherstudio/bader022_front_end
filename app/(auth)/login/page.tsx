@@ -19,7 +19,13 @@ type FormValues = {
 };
 
 export default function LoginPage() {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: "onChange",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -67,7 +73,7 @@ export default function LoginPage() {
       }
     } catch (error: any) {
       console.error(error);
-      toast.error( "Invalid credentials")
+      toast.error(error?.data?.message || "Invalid credentials");
     }
   };
 
@@ -102,7 +108,14 @@ export default function LoginPage() {
             icon={<FaEnvelope />}
             placeholder="john@example.com"
             type="email"
-            register={register("email", { required: true })}
+            register={register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
+            })}
+            error={errors.email?.message}
           />
           {/* Password */}
           <div>
@@ -114,13 +127,24 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                {...register("password", { required: true })}
-                className="w-full pl-10 pr-10 py-3 border rounded-md
-                  bg-white dark:bg-gray-700
-                  border-gray-300 dark:border-gray-600
-                  text-gray-900 dark:text-white
-                  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                })}
+                className={`w-full pl-10 pr-10 py-3 border rounded-md
+    bg-white dark:bg-gray-700
+    ${errors.password ? "border-red-500" : "border-gray-300 dark:border-gray-600"}
+    text-gray-900 dark:text-white
+    focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1 absolute ">
+                  {errors.password.message}
+                </p>
+              )}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -131,7 +155,7 @@ export default function LoginPage() {
             </div>
           </div>
           {/* Remember + Forgot */}
-          <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 pt-3">
             <label className="flex items-center gap-2">
               <input type="checkbox" {...register("remember")} />
               Remember me
@@ -178,33 +202,42 @@ function Input({
   register,
   placeholder,
   type = "text",
+  error,
 }: {
   label: string;
   icon: React.ReactNode;
   register: any;
   placeholder: string;
   type?: string;
+  error?: string;
 }) {
   return (
     <div>
       <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
         {label} *
       </label>
+
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
           {icon}
         </span>
+
         <input
           type={type}
           placeholder={placeholder}
           {...register}
-          className="w-full pl-10 py-3 border rounded-md
+          className={`w-full pl-10 py-3 border rounded-md
             bg-white dark:bg-gray-700
-            border-gray-300 dark:border-gray-600
+            ${error ? "border-red-500" : "border-gray-300 dark:border-gray-600"}
             text-gray-900 dark:text-white
-            focus:outline-none focus:ring-2 focus:ring-blue-500"
+            focus:outline-none focus:ring-2 focus:ring-blue-500`}
         />
       </div>
+
+      {/* ✅ error message */}
+      {error && (
+        <p className="text-red-500 text-sm mt-1">{error}</p>
+      )}
     </div>
   );
 }

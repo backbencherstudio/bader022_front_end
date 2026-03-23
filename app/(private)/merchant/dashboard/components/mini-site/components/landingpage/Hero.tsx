@@ -7,7 +7,7 @@ export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
   // console.log("====================================");
-  // console.log(brandingData.logo);
+  console.log(brandingData.logo);
   // console.log("====================================");
 
   return (
@@ -58,7 +58,7 @@ export default function Hero() {
             src={
               brandingData.brandingLogoPreview
                 ? brandingData.brandingLogoPreview
-                : brandingData.logo
+                : getImageUrl(brandingData.logo)
             }
             alt="Logo"
             width={brandingData.logoSize || 120}

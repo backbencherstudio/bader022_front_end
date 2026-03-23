@@ -36,7 +36,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Image
-              src={footerData.footerLogo}
+              src={getImageUrl(footerData.footerLogo)}
               alt={footerData.footerTitle}
               width={40}
               height={40}

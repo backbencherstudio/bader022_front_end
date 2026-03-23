@@ -14,6 +14,7 @@ import {
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { authorize } from "@/lib/auth";
 
 const MERCHANT_NAV_ITEMS = [
   {
@@ -68,6 +69,13 @@ export default function DashboardLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const auth = authorize(["Admin"]);
+    if (!auth.authorized) {
+      router.push("/");
+    }
+  }, []);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -88,8 +96,8 @@ export default function DashboardLayout({
           navItems={MERCHANT_NAV_ITEMS}
           footerItems={MERCHANT_FOOTER_ITEMS as any}
           logoSrc="/images/image 259.png"
-        // title="Car wash"
-        // badgeText="premium"
+          // title="Car wash"
+          // badgeText="premium"
         />
         <TopBar />
         <div

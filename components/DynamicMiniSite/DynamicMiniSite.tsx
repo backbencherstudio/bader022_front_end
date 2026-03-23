@@ -59,7 +59,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  // console.log(data?.minisite?.hero_image);
+  console.log("loggg============", data.global_setting.branding_logo);
   return (
     <div>
       {/* hero section  */}
@@ -99,7 +99,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     `}
           >
             <Image
-              src={data.global_setting.branding_logo}
+              src={getImageUrl(data.global_setting.branding_logo)}
               alt="Logo"
               width={data.global_setting.logo_size || 120}
               height={data.global_setting.logo_size || 40}

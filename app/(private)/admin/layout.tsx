@@ -69,6 +69,13 @@ export default function DashboardLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const auth = authorize(["Admin"]);
+    if (!auth.authorized) {
+      router.push("/");
+    }
+  }, []);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {

@@ -257,7 +257,8 @@ const [service, setService] = useState("");
                   </TableCell>
                   <TableCell>
                     {/* `/user/bookings/${r.bookingID}` */}
-                    <Button className="cursor-pointer"
+                    <Button
+                      className="cursor-pointer"
                       size="sm"
                       variant="outline"
                       onClick={() => setSelectedBooking(r)}
@@ -295,7 +296,9 @@ const [service, setService] = useState("");
         <UserBookingDetailsModal
           booking={selectedBooking}
           open={!!selectedBooking}
-          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+          onOpenChange={(open) => {
+            if (!open) setSelectedBooking(null);
+          }}
         />
         // <UserBookingDetailsModal
         //   booking={selectedBooking}  

@@ -29,10 +29,30 @@ export function DataPagination({
     const startItem = (currentPage - 1) * pageSize + 1;
     const endItem = Math.min(currentPage * pageSize, totalItems);
 
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    // ✅ NEW PAGINATION LOGIC
+    const getPages = () => {
+        const pages: (number | string)[] = [];
+
+        if (totalPages <= 6) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+
+        // First 4 pages
+        pages.push(1, 2, 3, 4);
+
+        // Ellipsis
+        pages.push("...");
+
+        // Last 2 pages
+        pages.push(totalPages - 1, totalPages);
+
+        return pages;
+    };
+
+    const pages = getPages();
 
     return (
-        <div className="flex  justify-between w-full">
+        <div className="flex justify-between w-full">
             <p className="text-sm text-muted-foreground">
                 Showing {startItem}-{endItem} of {totalItems} Results
             </p>
@@ -47,14 +67,20 @@ export function DataPagination({
                         />
                     </PaginationItem>
 
-                    {pages.map((pageNumber) => (
-                        <PaginationItem key={pageNumber}>
-                            <PaginationLink
-                                isActive={pageNumber === currentPage}
-                                onClick={() => onPageChange(pageNumber)}
-                            >
-                                {pageNumber}
-                            </PaginationLink>
+                    {pages.map((page, index) => (
+                        <PaginationItem key={index}>
+                            {page === "..." ? (
+                                <span className="px-2 text-muted-foreground">
+                                    ...
+                                </span>
+                            ) : (
+                                <PaginationLink
+                                    isActive={page === currentPage}
+                                    onClick={() => onPageChange(page as number)}
+                                >
+                                    {page}
+                                </PaginationLink>
+                            )}
                         </PaginationItem>
                     ))}
 

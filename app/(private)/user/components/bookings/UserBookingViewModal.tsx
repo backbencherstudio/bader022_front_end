@@ -86,10 +86,7 @@ export function UserBookingDetailsModal({
               </span>
             </div>
 
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-700">Staff:</span>
-              <span className="text-gray-900">{booking.staff}</span>
-            </div>
+         
 
             <div className="flex justify-between">
               <span className="font-medium text-gray-700">Price:</span>

@@ -18,6 +18,7 @@ import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { authorize } from "@/lib/auth";
+import { toast } from "sonner";
 // import { toast } from "sonner";
 
 type FormValues = {
@@ -71,6 +72,7 @@ export default function SignUpPage() {
       console.error(error);
       error(error?.data?.message || "Registration failed. Please try again.");
     }
+    toast.error("Registration failed");
   };
 
   return (
@@ -96,7 +98,11 @@ export default function SignUpPage() {
             label="Full Name"
             icon={<FaUser />}
             placeholder="John Doe"
-            register={register("fullName", { required: true })}
+            register={register("fullName", {
+              required: "Full name is required",
+             
+            })}
+            error={errors.fullName?.message}
           />
           {
             errors.fullName && <span className="text-red-500 text-sm">Name is required</span>
@@ -107,7 +113,15 @@ export default function SignUpPage() {
             icon={<FaEnvelope />}
             placeholder="john@example.com"
             type="email"
-            register={register("email", { required: true })}
+            register={register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
+            })}
+            error={errors.email?.message}
+
           />
           {
             errors.email && <span className="text-red-500 text-sm">Email is required</span>
@@ -117,7 +131,15 @@ export default function SignUpPage() {
             label="Phone"
             icon={<FaPhoneAlt />}
             placeholder="966..."
-            register={register("phone", { required: true })}
+            register={register("phone", {
+              required: "Phone number is required",
+              minLength: {
+                value: 10,
+                message: "Phone must be at least 10 digits",
+              },
+            })}
+            error={errors.phone?.message}
+
           />
           {
             errors.phone && <span className="text-red-500 text-sm">Phone is required</span>
@@ -133,7 +155,13 @@ export default function SignUpPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                })}
                 className="w-full pl-10 pr-10 py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {
@@ -152,7 +180,7 @@ export default function SignUpPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer mt-3"
           >
             {isLoading ? "Creating..." : "Sign Up"}
           </button>
@@ -161,7 +189,7 @@ export default function SignUpPage() {
         <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
           Already have an account?{" "}
           <Link href="/login">
-            <span className="text-blue-600 cursor-pointer hover:underline">
+            <span className="text-blue-600 cursor-pointer hover:underline ">
               Login
             </span>
           </Link>
@@ -178,29 +206,39 @@ function Input({
   register,
   placeholder,
   type = "text",
+  error,
 }: {
   label: string;
   icon: React.ReactNode;
   register: any;
   placeholder: string;
   type?: string;
+  error?: string;
 }) {
   return (
     <div>
       <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
         {label} *
       </label>
+
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
           {icon}
         </span>
+
         <input
           type={type}
           placeholder={placeholder}
           {...register}
-          className="w-full pl-10 py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full pl-10 py-3 border rounded-md bg-white dark:bg-gray-700 
+          ${error ? "border-red-500" : "border-gray-300"} 
+          text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
         />
       </div>
+
+      {error && (
+        <p className="text-red-500 text-sm mt-1">{error}</p>
+      )}
     </div>
   );
 }

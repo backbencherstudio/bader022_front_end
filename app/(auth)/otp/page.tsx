@@ -116,9 +116,10 @@ export default function OTPPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer"
+            disabled={isLoading}
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50 cursor-pointer"
           >
-            Submit
+            {isLoading ? "Verifying..." : "Submit"}
           </button>
 
           {/* Resend */}
@@ -127,7 +128,7 @@ export default function OTPPage() {
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
             onClick={() => {
               // Trigger OTP resend logic here
-              alert("Resend OTP functionality is not yet implemented.");
+              // alert("Resend OTP functionality is not yet implemented.");
             }}
           >
             Resend OTP

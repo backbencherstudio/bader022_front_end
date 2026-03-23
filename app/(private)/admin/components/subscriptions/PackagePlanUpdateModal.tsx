@@ -50,6 +50,8 @@ export function PackagePlanUpdateModal({
     plan: any;
 }) {
     const [open, setOpen] = useState(false);
+        const [features, setFeatures] = useState([""]);
+    
 
     const [updateSubscription, { isLoading }] =
         useUpdatePlanByIdMutation();
@@ -65,7 +67,6 @@ export function PackagePlanUpdateModal({
         },
     });
 
-    // ✅ FIX: default values set after data আসে
     useEffect(() => {
         if (plan) {
             form.reset({
@@ -229,6 +230,30 @@ export function PackagePlanUpdateModal({
                                 </FormItem>
                             )}
                         />
+                        <div>
+                            {features.map((item, index) => (
+                                <Input
+                                    key={index}
+                                    className="mt-2"
+                                    placeholder="Enter feature"
+                                    value={item}
+                                    onChange={(e) => {
+                                        const updated = [...features];
+                                        updated[index] = e.target.value;
+                                        setFeatures(updated);
+                                    }}
+                                />
+                            ))}
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="mt-2"
+                                onClick={() => setFeatures([...features, ""])}
+                            >
+                                + Add Feature
+                            </Button>
+                        </div>
+
 
                         {/* Status */}
                         <FormField

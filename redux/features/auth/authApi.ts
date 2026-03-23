@@ -13,13 +13,42 @@ export const authApi = baseApi.injectEndpoints({
 
     //  Login
 
+    // login: builder.mutation({
+    //   query: (body) => ({
+    //     url: "/login",
+    //     method: "POST",
+    //     body
+    //   }),
+    // }),
+
+
     login: builder.mutation({
-      query: (body) => ({
-        url: "/login",
-        method: "POST",
-        body,
-      }),
-    }),
+  query: (body) => ({
+    url: "/login",
+    method: "POST",
+    body,
+  }),
+
+  // ✅ success response
+  transformResponse: (response: any) => {
+    return {
+      success: response?.success,
+      token: response?.token,
+      data: response?.data,
+    };
+  },
+
+  // ✅ error response
+  transformErrorResponse: (error: any) => {
+    return {
+      status: error?.status,
+      message:
+        error?.data?.message ||
+        error?.data?.error ||
+        "Something went wrong",
+    };
+  },
+}),
 
     //  Send OTP
     sendOtp: builder.mutation({

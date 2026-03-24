@@ -67,12 +67,13 @@ export default function SignUpPage() {
         );
 
         router.push("/login");
+        toast.error("Registration successfull");
+
       }
     } catch (error: any) {
       console.error(error);
       error(error?.data?.message || "Registration failed. Please try again.");
     }
-    toast.error("Registration failed");
   };
 
   return (
@@ -162,10 +163,14 @@ export default function SignUpPage() {
                     message: "Password must be at least 8 characters",
                   },
                 })}
-                className="w-full pl-10 pr-10 py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-10 py-3 border rounded-md
+                  bg-white dark:bg-gray-700
+                  border-gray-300 dark:border-gray-600
+                  text-gray-900 dark:text-white
+                  focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {
-            errors.password && <span className="text-red-500 text-sm">Password is required</span>
+            // errors.password && <span className="text-red-500 text-sm ">Password is required</span>
           }
 
               <button

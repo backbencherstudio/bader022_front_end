@@ -26,7 +26,7 @@ export function ViewPackage({ id }: { id: number }) {
             </DialogTrigger>
 
             {/* Content */}
-            <DialogContent className="sm:max-w-md bg-white rounded-2xl shadow-lg overflow-y-auto max-h-[90vh]">
+            <DialogContent className="sm:max-w-lg bg-white rounded-2xl shadow-lg overflow-y-auto max-h-[90vh]">
                 <DialogHeader>
                     <DialogTitle className="text-xl font-semibold text-black ">
                         Subscription Details
@@ -38,7 +38,7 @@ export function ViewPackage({ id }: { id: number }) {
                         Loading...
                     </div>
                 ) : (
-                    <div className="px-6 py-6 space-y-6">
+                    <div className=" py-6 space-y-6">
                         {/* Status Banner */}
                         <div className="flex items-start gap-3 rounded-xl border border-emerald-400 bg-emerald-50 px-4 py-4">
                             <Eye className="h-6 w-6 mt-0.5 text-emerald-600" />

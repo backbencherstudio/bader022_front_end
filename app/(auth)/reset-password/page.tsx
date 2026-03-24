@@ -99,7 +99,7 @@ export default function ResetPasswordPage() {
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-red-500 text-sm mt-1 absolute">
                     {errors.password.message}
                   </p>
                 )}
@@ -115,7 +115,7 @@ export default function ResetPasswordPage() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 mt-7">
                 Confirm Password *
               </label>
               <div className="relative">
@@ -135,14 +135,14 @@ export default function ResetPasswordPage() {
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errors.password_confirmation && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-red-500 text-sm mt-1 absolute ">
                     {errors.password_confirmation.message}
                   </p>
                 )}
                 <button
                   type="button"
                   onClick={() => setConfirmPassword(!confirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer "
                 >
                   {confirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -153,7 +153,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90"
+              className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 mt-3"
             >
               {isLoading ? "Saving..." : "Save"}
             </button>

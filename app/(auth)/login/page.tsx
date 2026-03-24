@@ -38,7 +38,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (data: FormValues) => {
-    console.log("🚀 Form submitted:", data);
+    console.log(" Form submitted:", data);
 
     try {
       const response = await login({
@@ -46,7 +46,7 @@ export default function LoginPage() {
         password: data.password,
       }).unwrap();
 
-      console.log("✅ Login response:", response);
+      console.log(" Login response:", response);
 
       if (response.success) {
         setError(null);
@@ -62,7 +62,7 @@ export default function LoginPage() {
         );
 
         const role = response.data.user_type;
-        console.log("👤 User role:", role);
+        console.log(" User role:", role);
 
         // Add a small delay to ensure state is updated
         setTimeout(() => {
@@ -75,6 +75,7 @@ export default function LoginPage() {
           }
         }, 100);
       }
+      toast.success("Login successful");
     } catch (error: any) {
       console.error("Login error:", error);
 

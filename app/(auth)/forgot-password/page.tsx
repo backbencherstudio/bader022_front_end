@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
     console.log(click)
   }
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
-//  console.log(forgotPassword,"dfsdfsd")
+
   const onSubmit = async (data: FormValues) => {
     // console.log(data,"data=============")
     try {

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { useAppSelector } from "@/redux/hooks";
+import { toast } from "sonner";
 
 type PasswordFormData = {
   oldPassword: string;
@@ -44,7 +45,7 @@ export default function ChangePasswordCard() {
       }).unwrap();
 
       console.log("Password changed successfully:", response);
-      // toast.success("Password changed successfully");
+      toast.success("Password changed successfully");
       form.reset();
     } catch (error) {
       console.error("Password change failed:", error);

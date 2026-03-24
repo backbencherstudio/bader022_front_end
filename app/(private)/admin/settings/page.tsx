@@ -172,7 +172,7 @@ export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("personal_info");
 
   return (
-    <div className="border rounded-xl mt-4">
+    <div className="border rounded-xl mt-4 ">
       <h1 className="text-[18px] p-4 font-semibold">
         {activeSection.replace("_", " ")} Setting
       </h1>

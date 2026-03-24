@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useGetTapkeyQuery, useUpdateTapkeyMutation } from "@/redux/features/admin/adminApi";
+import { toast } from "sonner";
 
 type TapkeyFormData = {
     tap_mode: string;
@@ -48,6 +49,8 @@ export default function Tapkey() {
             });
 
             console.log("Updated data:", result.data);
+                  toast.success("Tap key update successfully");
+            
         } catch (err) {
             console.error("Update failed:", err);
         }
@@ -57,7 +60,8 @@ export default function Tapkey() {
     if (isError) return <div className="text-red-500">Failed to load Tap key.</div>;
 
     return (
-        <div className="max-w-3xl mx-auto mt-10 p-6 border rounded-lg shadow-sm">
+       <div className="p-5 h-full">
+         <div className="max-w-3xl mx-auto mt-10 p-6 border rounded-lg shadow-sm  ">
             <h2 className="text-xl font-semibold mb-4">Tap Key Settings</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {/* Tap Mode */}
@@ -92,5 +96,6 @@ export default function Tapkey() {
                 </div>
             </form>
         </div>
+       </div>
     );
 }

@@ -21,6 +21,7 @@ export function CancelAppointmentModal({
   const booking = data?.data;
 
   const [confirmCancel, { isLoading: cancelLoading }] = useConfirmCancelAppointmentMutation();
+ 
 
   const handleConfirmCancel = async () => {
     try {

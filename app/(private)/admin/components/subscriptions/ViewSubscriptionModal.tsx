@@ -26,25 +26,25 @@ export function ViewSubscriptionModal({ id }: { id: string }) {
             </DialogTrigger>
 
             {/* Content */}
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-lg   rounded-xl border border-gray-100 bg-gray-50 px-5 py-4 space-y-3 shadow-sm text-black">
                 <DialogHeader>
-                    <DialogTitle>Subscription Details</DialogTitle>
+                    <DialogTitle className="text-xl py-2 border border-emerald-400 bg-emerald-50 rounded-lg mt-6 px-2">Subscription Details</DialogTitle>
                 </DialogHeader>
 
                 {isLoading ? (
                     <div className="py-6 text-center">Loading...</div>
                 ) : (
-                    <div className="space-y-3">
-                        <p><strong>Business:</strong> {data?.data?.user?.name}</p>
-                        <p><strong>Email:</strong> {data?.data?.user?.email}</p>
-                        <p><strong>Plan:</strong> {data?.data?.plan?.name}</p>
-                        <p><strong>Price:</strong> {data?.data?.plan?.price}</p>
-                        <p><strong>Status:</strong> {data?.data?.status}</p>
-                        <p><strong>Start:</strong> {data?.data?.starts_at}</p>
-                        <p><strong>End:</strong> {data?.data?.ends_at}</p>
+                        <div className="space-y-3  text-gray-700 ">
+                        <p className="flex justify-between"><strong>Business:</strong> {data?.data?.user?.name}</p>
+                        <p className="flex justify-between"><strong>Email:</strong> {data?.data?.user?.email}</p>
+                        <p className="flex justify-between"><strong>Plan:</strong> {data?.data?.plan?.name}</p>
+                        <p className="flex justify-between"><strong>Price:</strong> {data?.data?.plan?.price}</p>
+                        <p className="flex justify-between"><strong>Status:</strong> {data?.data?.status}</p>
+                        <p className="flex justify-between"><strong>Start:</strong> {data?.data?.starts_at}</p>
+                        <p className="flex justify-between"><strong>End:</strong> {data?.data?.ends_at}</p>
 
                         <DialogClose asChild>
-                            <Button variant="outline" className="w-full">
+                            <Button variant="outline" className="w-full text-blue-400 mt-5">
                                 Close
                             </Button>
                         </DialogClose>

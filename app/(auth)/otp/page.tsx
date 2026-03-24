@@ -123,16 +123,16 @@ export default function OTPPage() {
           </button>
 
           {/* Resend */}
-          <button
-            type="button"
-            className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
-            onClick={() => {
-              // Trigger OTP resend logic here
-              // alert("Resend OTP functionality is not yet implemented.");
-            }}
-          >
-            Resend OTP
-          </button>
+            {/* <button
+              type="button"
+              className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
+              onClick={() => {
+                // Trigger OTP resend logic here
+                // alert("Resend OTP functionality is not yet implemented.");
+              }}
+            >
+              Resend OTP
+            </button> */}
         </form>
       </div>
     </div>

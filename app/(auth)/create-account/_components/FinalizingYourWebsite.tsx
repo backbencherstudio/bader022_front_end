@@ -19,11 +19,16 @@ interface Step4Props {
   onPrevious: () => void;
 }
 
-export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props) {
-
+export default function FinalizingYourWebsite({
+  onNext,
+  onPrevious,
+}: Step4Props) {
   const router = useRouter();
 
   const { step, setStep } = useCreateAccount();
+
+  console.log(step);
+
   const { t } = useI18n();
 
   const [progress, setProgress] = useState(0);
@@ -61,7 +66,7 @@ export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props
     if (progress === 100 && !hasAdvancedStep.current) {
       hasAdvancedStep.current = true;
       setTimeout(() => {
-        setStep(step + 1);
+        setStep(5);
       }, 500);
     }
   }, [progress, setStep, step]);
@@ -120,21 +125,23 @@ export default function FinalizingYourWebsite({ onNext, onPrevious }: Step4Props
               >
                 {label}
               </span>
-             
             </div>
           );
         })}
       </div>
       <div className="flex gap-4">
-        <button
+        {/* <button
           type="button"
           onClick={onPrevious}
           className="rounded-md cursor-pointer border px-6 py-2 text-sm text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           Back
-        </button>
+        </button> */}
 
-        <Link href="/login" className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer">
+        <Link
+          href="/login"
+          className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
+        >
           go to merchant Login
         </Link>
 

@@ -22,14 +22,14 @@ export const authApi = baseApi.injectEndpoints({
     // }),
 
 
-    login: builder.mutation({
+  login: builder.mutation({
   query: (body) => ({
     url: "/login",
     method: "POST",
     body,
   }),
 
-  // ✅ success response
+  //  success response
   transformResponse: (response: any) => {
     return {
       success: response?.success,
@@ -38,7 +38,7 @@ export const authApi = baseApi.injectEndpoints({
     };
   },
 
-  // ✅ error response
+  //  error response
   transformErrorResponse: (error: any) => {
     return {
       status: error?.status,

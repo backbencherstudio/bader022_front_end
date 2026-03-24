@@ -16,8 +16,10 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authorize } from "@/lib/auth";
+import { useGetPaymentStatusQuery } from "@/redux/features/payment/paymentApi";
+import { toast } from "sonner";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -47,6 +49,17 @@ export default function CreateAccountPage() {
       router.push("/");
     }
   }, []);
+  // console.log(step);
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("user_id");
+  // console.log(userId);
+  const { data: paymentStatus, isLoading: paymentLoading } =
+    useGetPaymentStatusQuery({ user_id: userId }, { skip: !userId });
+  useEffect(() => {
+    if (paymentStatus?.data?.status === "paid") {
+      setStep(4);
+    }
+  }, [paymentStatus]);
 
   const [createAccountData, setCreateAccountData] = useState<CreateAccountData>(
     {
@@ -102,27 +115,23 @@ export default function CreateAccountPage() {
       business_name: createAccountData.step2.business_name,
       address: createAccountData.step2.address,
       business_category: createAccountData.step2.business_category,
-
-      number_of_branches: Number(createAccountData.step2.number_of_branches), 
-
+      number_of_branches: Number(createAccountData.step2.number_of_branches),
       plan_id: finalPlanId,
     };
-
+    // console.log(body);
     try {
       const response = await registerMerchant(body).unwrap();
-      console.log("Merchant Registered:", response.
-        tap_payment_url);
-
-        setTimeout(() => {
-          router.push(response.tap_payment_url)
-        }, 1000);
-
-      // setStep(4);  
-
-      resetForm();
-    } catch (err: any) {
-
-    }
+      // console.log(response);
+      if (response?.success) {
+        if (response?.tap_payment_url) {
+          router.push(response.tap_payment_url);
+        } else if (response?.token) {
+          setStep(4);
+        }
+      }
+    } catch (err: any) {}
+    // setStep(4);
+    // toast.error("Merchant Created Fail");
   };
 
   const steps = [
@@ -160,9 +169,9 @@ export default function CreateAccountPage() {
 
               setCreateAccountData(updatedData);
 
-              await handleSubmit(data); 
+              await handleSubmit(data);
 
-              setStep(4);              
+              // setStep(4);
             }}
             onPrevious={handlePrevious}
           />

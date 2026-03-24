@@ -61,7 +61,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src={data.global_setting.branding_logo as string}
+                src={getImageUrl(data.global_setting.branding_logo as string)}
                 alt={data.global_setting.website_name || ""}
                 width={40}
                 height={40}

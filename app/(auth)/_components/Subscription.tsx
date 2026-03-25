@@ -65,7 +65,8 @@ export default function Subscription() {
         }
       }
     } catch (error: any) {
-      const message = error?.message || "Something went wrong";
+      // console.log(error);
+      const message = error?.data?.message || "Something went wrong";
       toast.error(message);
     }
   };

@@ -53,7 +53,7 @@ export default function LoginPage() {
         password: data.password,
       }).unwrap();
 
-      console.log("Login response:", response);
+      // console.log("Login response:", response);
 
       if (response.success) {
         setError(null);
@@ -223,11 +223,11 @@ export default function LoginPage() {
             </Link>
           </p>
         ) : (
-          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6 flex flex-col md:flex-row gap-3">
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6 flex flex-col md:flex-row gap-2">
             Your subscription has expired
             <Link href="/subscription">
               <span className="text-blue-600 cursor-pointer hover:underline">
-                Subscription here
+                subscription renew
               </span>
             </Link>
           </p>

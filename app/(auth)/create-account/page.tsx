@@ -105,8 +105,6 @@ export default function CreateAccountPage() {
 
   const handleSubmit = async (step3Data?: { plan_id: number }) => {
     const finalPlanId = step3Data?.plan_id ?? createAccountData.step3.plan_id;
-    console.log("bplan_id==================", finalPlanId);
-
     const body = {
       name: createAccountData.step1.fullName,
       email: createAccountData.step1.email,
@@ -119,7 +117,6 @@ export default function CreateAccountPage() {
       number_of_branches: Number(createAccountData.step2.number_of_branches),
       plan_id: finalPlanId,
     };
-    console.log("body==================", body);
     try {
       const response = await registerMerchant(body).unwrap();
       // console.log(response);

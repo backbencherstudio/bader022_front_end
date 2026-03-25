@@ -22,14 +22,12 @@ interface Plan {
 }
 
 function getPlansByBilling(plans: Plan[], billing: Billing): Plan[] {
-  const freePlan = plans.find(
-    (plan) => plan.package.toLowerCase() === "free"
-  );
+  const freePlan = plans.find((plan) => plan.package.toLowerCase() === "free");
 
   const matchedPlan = plans.find(
     (plan) =>
       plan.package.toLowerCase() === billing &&
-      plan.package.toLowerCase() !== "free"
+      plan.package.toLowerCase() !== "free",
   );
 
   const result: Plan[] = [];
@@ -116,8 +114,12 @@ export default function ChooseyourPlan({
   const plans = data?.data || [];
 
   const basicPlan = plans.find((p: Plan) => p.package.toLowerCase() === "free");
-  const monthlyPlan = plans.find((p: Plan) => p.package.toLowerCase() === "monthly");
-  const annualPlan = plans.find((p: Plan) => p.package.toLowerCase() === "annual");
+  const monthlyPlan = plans.find(
+    (p: Plan) => p.package.toLowerCase() === "monthly",
+  );
+  const annualPlan = plans.find(
+    (p: Plan) => p.package.toLowerCase() === "annual",
+  );
 
   const currentPremiumPlan = billing === "monthly" ? monthlyPlan : annualPlan;
 
@@ -129,7 +131,8 @@ export default function ChooseyourPlan({
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
 
-  const handleBasicPlan = () => {
+  const handleBasicPlan = async () => {
+    // console.log("basicPlan======", basicPlan);
     if (basicPlan) {
       onNext({ plan_id: basicPlan.id });
     } else {
@@ -138,6 +141,7 @@ export default function ChooseyourPlan({
   };
 
   const handlePremiumPlan = async () => {
+    // console.log("currentPremiumPlan==========", currentPremiumPlan);
     if (currentPremiumPlan) {
       onNext({ plan_id: currentPremiumPlan.id });
     } else if (monthlyPlan && billing === "monthly") {
@@ -239,7 +243,9 @@ export default function ChooseyourPlan({
                 {premium?.desc}
               </p>
               <p className="text-gray-900 dark:text-white">
-                <span className="text-4xl font-bold">{premeumPlan?.price || currentPremiumPlan?.price}</span>
+                <span className="text-4xl font-bold">
+                  {premeumPlan?.price || currentPremiumPlan?.price}
+                </span>
                 <span className="text-sm text-slate-500 dark:text-gray-400">
                   /{t(`Pricing.billing.${billing}`)}
                 </span>

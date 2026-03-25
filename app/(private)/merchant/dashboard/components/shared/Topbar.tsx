@@ -95,11 +95,11 @@ export default function TopBar() {
                 <p className="text-black dark:text-gray-300 text-[12px]">
                   {user?.email}
                 </p>
+                {/* <p>{getImageUrl(user?.image as string)}</p> */}
               </div>
             </button>
           </DialogTrigger>
 
-  
           {/* <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center mt-6">

@@ -36,6 +36,7 @@ export default function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
+  const [isSubscription, setIsSubscription] = useState(false);
 
   useEffect(() => {
     const auth = authorize(["Merchant", "Admin", "User"]);
@@ -45,8 +46,7 @@ export default function LoginPage() {
   }, []);
 
   const onSubmit = async (data: FormValues) => {
-    console.log(" Form submitted:", data);
-
+    // console.log(" Form submitted:", data);
     try {
       const response = await login({
         email: data.email,
@@ -69,7 +69,7 @@ export default function LoginPage() {
         );
 
         const role = response.data.user_type;
-        console.log(" User role:", role);
+        // console.log(" User role:", role);
 
         // Add a small delay to ensure state is updated
         setTimeout(() => {
@@ -83,13 +83,15 @@ export default function LoginPage() {
         }, 100);
       }
     } catch (error: any) {
-      // console.error("Login error:", error);
+      console.error("Login error:", error);
+      const message = error?.message || "Invalid credentials";
 
-      const message =
-        error?.data?.message || error?.message || "Invalid credentials";
-
-      setError(message);
-      toast.error(message);
+      if (error?.status === 403) {
+        setIsSubscription(true);
+        toast.error(message);
+      } else {
+        setError(message);
+      }
     }
   };
 
@@ -211,15 +213,25 @@ export default function LoginPage() {
             {/* login */}
           </button>
         </form>
-
-        <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
-          Don't have an account?{" "}
-          <Link href="/signup">
-            <span className="text-blue-600 cursor-pointer hover:underline">
-              Sign Up
-            </span>
-          </Link>
-        </p>
+        {!isSubscription ? (
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+            Don't have an account?{" "}
+            <Link href="/signup">
+              <span className="text-blue-600 cursor-pointer hover:underline">
+                Sign Up
+              </span>
+            </Link>
+          </p>
+        ) : (
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6 flex flex-col md:flex-row gap-3">
+            Your subscription has expired
+            <Link href="/subscription">
+              <span className="text-blue-600 cursor-pointer hover:underline">
+                Subscription here
+              </span>
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

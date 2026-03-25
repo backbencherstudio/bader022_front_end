@@ -38,12 +38,13 @@ export default function ForgotPasswordPage() {
         localStorage.setItem("resetEmail", data.email);
         router.push("/otp");
       }
+      toast.success(response.message || "OTP sent successfully");
     } catch (err: any) {
       setError(
         err?.data?.message || "Failed to send OTP. Please try again."
       );
     }
-    toast.error(error || "Failed to send OTP. Please try again.");
+  
   };
 
   return (

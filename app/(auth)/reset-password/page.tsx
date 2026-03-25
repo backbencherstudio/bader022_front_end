@@ -10,12 +10,13 @@ import { useRouter } from "next/navigation";
 
 type FormValues = {
   password: string;
-  password_confirmation: string; // Ensure it's a string for password comparison
+  password_confirmation: string;
 };
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
+
   useEffect(() => {
     const storedEmail = localStorage.getItem("resetEmail");
     setEmail(storedEmail);
@@ -23,7 +24,15 @@ export default function ResetPasswordPage() {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  const { register, handleSubmit, formState:{errors} } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const password = watch("password");
+
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [successful, setSuccessful] = useState(false);
@@ -46,7 +55,6 @@ export default function ResetPasswordPage() {
       setSuccessful(true);
     } catch (error) {
       console.error("Error resetting password:", error);
-      // alert("Password reset failed. Please try again.");
     }
   };
 
@@ -54,7 +62,6 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       {!successful ? (
         <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
-          {/* Logo */}
           <div className="flex justify-center">
             <Image
               src="/images/image 259.png"
@@ -66,7 +73,6 @@ export default function ResetPasswordPage() {
             />
           </div>
 
-          {/* Title */}
           <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
             Reset Your Password
           </h2>
@@ -75,7 +81,6 @@ export default function ResetPasswordPage() {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                 Password *
@@ -88,8 +93,8 @@ export default function ResetPasswordPage() {
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
+                      value: 6,
+                      message: "Password must be at least 6 characters",
                     },
                   })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
@@ -98,11 +103,6 @@ export default function ResetPasswordPage() {
                   text-gray-900 dark:text-white
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm mt-1 absolute">
-                    {errors.password.message}
-                  </p>
-                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -111,11 +111,15 @@ export default function ResetPasswordPage() {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
-            {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300 mt-7">
+              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                 Confirm Password *
               </label>
               <div className="relative">
@@ -126,7 +130,7 @@ export default function ResetPasswordPage() {
                   {...register("password_confirmation", {
                     required: "Confirm password is required",
                     validate: (value) =>
-                      value === ("password") || "Passwords do not match",
+                      value === password || "Passwords do not match",
                   })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700
@@ -134,22 +138,21 @@ export default function ResetPasswordPage() {
                   text-gray-900 dark:text-white
                   focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                {errors.password_confirmation && (
-                  <p className="text-red-500 text-sm mt-1 absolute ">
-                    {errors.password_confirmation.message}
-                  </p>
-                )}
                 <button
                   type="button"
                   onClick={() => setConfirmPassword(!confirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer "
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
                 >
                   {confirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+              {errors.password_confirmation && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password_confirmation.message}
+                </p>
+              )}
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isLoading}

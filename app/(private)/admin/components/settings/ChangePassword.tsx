@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { useAppSelector } from "@/redux/hooks";
+import { toast } from "sonner";
 
 type PasswordFormData = {
   oldPassword: string;
@@ -43,11 +44,12 @@ export default function ChangePasswordCard() {
         },
       }).unwrap();
 
-      console.log("Password changed successfully:", response);
-      // toast.success("Password changed successfully");
+      // console.log("Password changed successfully:", response);
+      toast.success("Password changed successfully");
       form.reset();
-    } catch (error) {
-      console.error("Password change failed:", error);
+    } catch (error: any) {
+      // console.error("Password change failed:", error);
+      toast.error("Password change failed");
     }
   };
 
@@ -82,7 +84,8 @@ export default function ChangePasswordCard() {
             <div className="space-y-2">
               <label className="text-[14px] font-medium">New Password</label>
               <div className="relative">
-                <Input className="w-full py-5 mt-2"
+                <Input
+                  className="w-full py-5 mt-2"
                   type={showNew ? "text" : "password"}
                   placeholder="Enter your new password"
                   {...form.register("newPassword", { required: true })}
@@ -99,7 +102,9 @@ export default function ChangePasswordCard() {
 
             {/* Confirm Password */}
             <div className="space-y-2">
-              <label className="text-[14px] font-medium">Confirm Password</label>
+              <label className="text-[14px] font-medium">
+                Confirm Password
+              </label>
               <div className="relative">
                 <Input
                   className="w-full py-5 mt-2"
@@ -119,7 +124,11 @@ export default function ChangePasswordCard() {
 
             {/* Submit Button */}
             <div className="flex justify-end mt-4">
-              <Button type="submit" disabled={isLoading} className="cursor-pointer">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="cursor-pointer"
+              >
                 {isLoading ? "Changing..." : "Save Change"}
               </Button>
             </div>

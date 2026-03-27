@@ -85,7 +85,6 @@ export default function BookingCheckoutStepper() {
     // { skip: !selectedService }
   );
 
-
   const handleBooking = async () => {
     const payload = {
       service_id: selectedService?.id,
@@ -95,7 +94,7 @@ export default function BookingCheckoutStepper() {
       customer_name: "John Doe",
       email: "johndoe@example.com",
       phone: "017xxxxxxxx",
-      special_note: "Please call before appointment", 
+      special_note: "Please call before appointment",
       payment_method: "tap",
     };
 
@@ -110,9 +109,9 @@ export default function BookingCheckoutStepper() {
       setBookingId(res.booking_id);
 
       if (res?.payment_url) {
-        window.location.href = res.payment_url; 
+        window.location.href = res.payment_url;
       } else {
-        router.push(`/booking-success?booking_id=${res.booking_id}`); 
+        router.push(`/booking-success?booking_id=${res.booking_id}`);
       }
     } catch (err) {
       console.error("Booking Error:", err);

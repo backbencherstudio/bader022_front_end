@@ -19,7 +19,6 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { authorize } from "@/lib/auth";
 import { toast } from "sonner";
-// import { toast } from "sonner";
 
 type FormValues = {
   fullName: string;
@@ -31,7 +30,11 @@ type FormValues = {
 };
 
 export default function SignUpPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -54,25 +57,25 @@ export default function SignUpPage() {
         password: data.password,
         password_confirmation: data.password,
       }).unwrap();
-
-      if (response.success) {
-        dispatch(
-          setCredentials({
-            token: response.token,
-            user: {
-              ...response.data,
-              role: "user",
-            },
-          }),
-        );
-
-        router.push("/login");
-      }
+      // if (response.success) {
+      //   dispatch(
+      //     setCredentials({
+      //       token: response.token,
+      //       user: {
+      //         ...response.data,
+      //         role: "user",
+      //       },
+      //     }),
+      //   );
+      // }
+      toast.success("User Registration Successfully");
+      router.push("/login");
     } catch (error: any) {
-      console.error(error);
-      error(error?.data?.message || "Registration failed. Please try again.");
+      // console.error(error);
+      toast.error(
+        error?.data?.message || "Registration failed. Please try again.",
+      );
     }
-    toast.error("Registration failed");
   };
 
   return (
@@ -100,7 +103,6 @@ export default function SignUpPage() {
             placeholder="John Doe"
             register={register("fullName", {
               required: "Full name is required",
-             
             })}
             error={errors.fullName?.message}
           />
@@ -121,7 +123,6 @@ export default function SignUpPage() {
               },
             })}
             error={errors.email?.message}
-
           />
           {/* {
             errors.email && <span className="text-red-500 text-sm">Email is required</span>
@@ -139,7 +140,6 @@ export default function SignUpPage() {
               },
             })}
             error={errors.phone?.message}
-
           />
           {/* {
             errors.phone && <span className="text-red-500 text-sm">Phone is required</span>
@@ -164,9 +164,11 @@ export default function SignUpPage() {
                 })}
                 className="w-full pl-10 pr-10 py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {
-            errors.password && <span className="text-red-500 text-sm">Password is required</span>
-          }
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  Password is required
+                </span>
+              )}
 
               <button
                 type="button"
@@ -236,9 +238,7 @@ function Input({
         />
       </div>
 
-      {error && (
-        <p className="text-red-500 text-sm mt-1">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 }

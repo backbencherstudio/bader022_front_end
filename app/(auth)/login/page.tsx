@@ -68,9 +68,9 @@ export default function LoginPage() {
           }),
         );
 
+        toast.success("Login Successfully");
         const role = response.data.user_type;
         // console.log(" User role:", role);
-
         // Add a small delay to ensure state is updated
         setTimeout(() => {
           if (role === "Admin") {
@@ -83,9 +83,8 @@ export default function LoginPage() {
         }, 100);
       }
     } catch (error: any) {
-      console.error("Login error:", error);
+      // console.error("Login error:", error);
       const message = error?.message || "Invalid credentials";
-
       if (error?.status === 403) {
         setIsSubscription(true);
         toast.error(message);

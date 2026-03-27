@@ -314,7 +314,7 @@ export default function BusinessSetting() {
                   <SelectContent>
                     <SelectItem value="Saudi Arabia">Saudi Arabia</SelectItem>
                     <SelectItem value="USA">USA</SelectItem>
-                    <SelectItem value="India">India</SelectItem>
+                    {/* <SelectItem value="India">India</SelectItem> */}
                   </SelectContent>
                 </Select>
               )}
@@ -371,14 +371,14 @@ export default function BusinessSetting() {
 
                   <SelectContent>
                     <SelectItem value="(GMT+3) Arabia Standard Time">
-                      (GMT+3) Arabia Standard Time
+                      Asia/Dhaka
                     </SelectItem>
                     <SelectItem value="(GMT+5) Indian Standard Time">
-                      (GMT+5) Indian Standard Time
+                      Asia/Riyadh
                     </SelectItem>
-                    <SelectItem value="(GMT+2) Central European Time">
+                    {/* <SelectItem value="(GMT+2) Central European Time">
                       (GMT+2) Central European Time
-                    </SelectItem>
+                    </SelectItem> */}
                   </SelectContent>
                 </Select>
               )}
@@ -406,8 +406,8 @@ export default function BusinessSetting() {
 
                   <SelectContent>
                     <SelectItem value="SAR">SAR</SelectItem>
-                    <SelectItem value="USD - US Dollar">USD</SelectItem>
-                    <SelectItem value="INR - Indian Rupee">INR</SelectItem>
+                    {/* <SelectItem value="USD - US Dollar">USD</SelectItem>
+                    <SelectItem value="INR - Indian Rupee">INR</SelectItem> */}
                   </SelectContent>
                 </Select>
               )}

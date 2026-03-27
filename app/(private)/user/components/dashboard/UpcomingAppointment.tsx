@@ -104,66 +104,69 @@ export default function UpcomingAppointment() {
 
   return (
     <div className="my-3">
-      <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="mx-auto flex flex-col gap-5 lg:flex-row">
         {/* LEFT CARD */}
 
-        {upcomingData?.success === false ? (
-          <h2 className="text-3xl font-semibold text-black dark:text-white ">
-            {booking?.message || "No upcoming appointment found"}
-          </h2>
-        ) : (
-          <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-            <div className="flex items-start justify-between">
-              <h2 className="text-[26px] font-semibold text-black dark:text-white">
-                Upcoming Appointment
-              </h2>
-              <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
-                {booking?.status === "Confirm" ? "Confirmed" : booking?.status}
-              </span>
-            </div>
+        <div className="w-full lg:w-[70%]">
+          {upcomingData?.success === false ? (
+            <h2 className="text-3xl font-semibold text-black dark:text-white ">
+              {booking?.message || "No upcoming appointment found"}
+            </h2>
+          ) : (
+            <Card className="lg:col-span-2 rounded-[18px] px-4 md:px-8 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+              <div className="flex items-start justify-between">
+                <h2 className="text-[26px] font-semibold text-black dark:text-white">
+                  Upcoming Appointment
+                </h2>
+                <span className="px-6 py-2 rounded-[10px] border border-green-500 text-green-600 font-semibold text-[16px] bg-green-50">
+                  {booking?.status === "Confirm"
+                    ? "Confirmed"
+                    : booking?.status}
+                </span>
+              </div>
 
-            <h3 className="text-[20px] font-semibold">
-              {booking?.service_name}
-            </h3>
+              <h3 className="text-[20px] font-semibold">
+                {booking?.service_name}
+              </h3>
 
-            <div className="space-y-4 text-[18px] text-gray-600 mt-4">
-              <div className="flex items-center gap-4 text-black dark:text-white">
-                <MapPin size={22} /> {booking?.address}
+              <div className="space-y-4 text-[18px] text-gray-600 mt-4">
+                <div className="flex items-center gap-4 text-black dark:text-white">
+                  <MapPin size={22} /> {booking?.address}
+                </div>
+                <div className="flex items-center gap-4 text-black dark:text-white">
+                  <CalendarDays size={22} />
+                  {booking?.booking_date}
+                </div>
+                <div className="flex items-center gap-4 text-black dark:text-white">
+                  <Clock size={22} />
+                  {booking?.booking_time}
+                </div>
+                <div className="flex items-center gap-4 text-black dark:text-white">
+                  <DollarSign size={22} />
+                  {booking?.service_price}
+                </div>
+                <div className="flex items-center gap-4 text-black dark:text-white">
+                  <Phone size={22} />
+                  {booking?.merchant_phone}
+                </div>
               </div>
-              <div className="flex items-center gap-4 text-black dark:text-white">
-                <CalendarDays size={22} />
-                {booking?.booking_date}
-              </div>
-              <div className="flex items-center gap-4 text-black dark:text-white">
-                <Clock size={22} />
-                {booking?.booking_time}
-              </div>
-              <div className="flex items-center gap-4 text-black dark:text-white">
-                <DollarSign size={22} />
-                {booking?.service_price}
-              </div>
-              <div className="flex items-center gap-4 text-black dark:text-white">
-                <Phone size={22} />
-                {booking?.merchant_phone}
-              </div>
-            </div>
 
-            <Button
-              className="cursor-pointer"
-              onClick={() => {
-                if (booking?.booking_id) {
-                  setSelectedBookingId(booking.booking_id);
-                  setOrderOpen(true);
-                }
-              }}
-            >
-              View Order Details
-            </Button>
-          </Card>
-        )}
-
+              <Button
+                className="cursor-pointer"
+                onClick={() => {
+                  if (booking?.booking_id) {
+                    setSelectedBookingId(booking.booking_id);
+                    setOrderOpen(true);
+                  }
+                }}
+              >
+                View Order Details
+              </Button>
+            </Card>
+          )}
+        </div>
         {/* RIGHT CARD */}
-        <Card className="rounded-[18px] px-7 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+        <Card className="w-full lg:w-[30%] rounded-[18px] px-7 py-7 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
           <h2 className="text-[22px] font-semibold text-black dark:text-white">
             Recent Activity
           </h2>

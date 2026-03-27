@@ -61,7 +61,7 @@ export default function Step1({
 
   const noAvailableSlot = data?.message || "";
 
-  console.log(data);
+  // console.log(data);
 
   // Get staff based on selected time
   const { data: staffData } = useSelectStaffQuery(

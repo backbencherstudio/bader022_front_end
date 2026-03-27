@@ -11,8 +11,6 @@ export default function WhyChooseUs() {
     typographyData,
   } = useLandingPage();
 
-  if (!whyChooseUsData.whyChooseUsTitle) return null;
-
   return (
     <section
       style={{
@@ -30,7 +28,7 @@ export default function WhyChooseUs() {
           }}
           className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white"
         >
-          {whyChooseUsData.whyChooseUsTitle}
+          {whyChooseUsData.whyChooseUsTitle || "Why We’re Right Choice"}
         </h3>
 
         {/* Subtitle */}
@@ -41,7 +39,8 @@ export default function WhyChooseUs() {
           }}
           className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12"
         >
-          {whyChooseUsData.whyChooseUsSubtitle}
+          {whyChooseUsData.whyChooseUsSubtitle ||
+            "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results"}
         </p>
 
         {/* Feature Cards */}
@@ -77,14 +76,16 @@ export default function WhyChooseUs() {
                   style={{ color: colorSystemData.headingColor }}
                   className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                 >
-                  {whyChooseUsData.whyChooseUsTitleOne}
+                  {whyChooseUsData.whyChooseUsTitleOne ||
+                    "Certified Hair Experts"}
                 </h3>
 
                 <p
                   style={{ color: colorSystemData.bodyTextColor }}
-                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  className="text-gray-600 dark:text-gray-300 line-clamp-3"
                 >
-                  {whyChooseUsData.whyChooseUsDescriptionOne}
+                  {whyChooseUsData.whyChooseUsDescriptionOne ||
+                    "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise"}
                 </p>
               </div>
             </div>
@@ -121,14 +122,16 @@ export default function WhyChooseUs() {
                   style={{ color: colorSystemData.headingColor }}
                   className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                 >
-                  {whyChooseUsData.whyChooseUsTitleTwo}
+                  {whyChooseUsData.whyChooseUsTitleTwo ||
+                    "FDA-Approved Products"}
                 </h3>
 
                 <p
                   style={{ color: colorSystemData.bodyTextColor }}
-                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  className="text-gray-600 dark:text-gray-300 line-clamp-3"
                 >
-                  {whyChooseUsData.whyChooseUsDescriptionTwo}
+                  {whyChooseUsData.whyChooseUsDescriptionTwo ||
+                    "We use only FDA-approved products that meet the highest safety and quality standards, ensuring every treatment"}
                 </p>
               </div>
             </div>
@@ -165,14 +168,16 @@ export default function WhyChooseUs() {
                   style={{ color: colorSystemData.headingColor }}
                   className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                 >
-                  {whyChooseUsData.whyChooseUsTitleThree}
+                  {whyChooseUsData.whyChooseUsTitleThree ||
+                    "Personalized Treatment"}
                 </h3>
 
                 <p
                   style={{ color: colorSystemData.bodyTextColor }}
-                  className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                  className="text-gray-600 dark:text-gray-300 line-clamp-3"
                 >
-                  {whyChooseUsData.whyChooseUsDescriptionThree}
+                  {whyChooseUsData.whyChooseUsDescriptionThree ||
+                    "We customize every hair treatment to match your unique texture, concerns, and goals, ensuring results that are tailored"}
                 </p>
               </div>
             </div>

@@ -36,7 +36,9 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Image
-              src={getImageUrl(footerData.footerLogo)}
+              src={
+                getImageUrl(footerData.footerLogo) || "/images/image 259.png"
+              }
               alt={footerData.footerTitle}
               width={40}
               height={40}
@@ -45,7 +47,8 @@ export default function Footer() {
           </div>
 
           <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
-            {footerData.footerSubTitle}
+            {footerData.footerSubTitle ||
+              "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
           </p>
           {/* Social Links */}
           <div className="flex gap-3 mt-6">

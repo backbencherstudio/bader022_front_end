@@ -170,7 +170,7 @@ export default function page() {
       await createWhyChooseUs(formData).unwrap();
       await createGlobalSetting(formData).unwrap();
 
-      toast.success("MiniSite created successfully");
+      toast.success("MiniSite updated successfully");
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to create MiniSite");
     }

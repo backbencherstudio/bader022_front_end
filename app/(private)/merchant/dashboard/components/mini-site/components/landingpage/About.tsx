@@ -7,14 +7,14 @@ export default function About() {
   const { aboutData, colorSystemData, layoutSettingsData, typographyData } =
     useLandingPage();
 
-  console.log(aboutData.padding);
+  // console.log(colorSystemData.buttonColor);
 
   return (
     <section
       style={{
         backgroundColor: aboutData.backgroundColor || "transparent",
         marginTop: layoutSettingsData.sectionSpacing,
-        paddingTop: Number(aboutData.padding),
+        paddingTop: Number(aboutData.padding) || 40,
         paddingBottom: Number(aboutData.padding),
       }}
       className="transition-colors dark:bg-gray-900"
@@ -34,7 +34,10 @@ export default function About() {
               />
             ) : (
               <Image
-                src={getImageUrl(aboutData.aboutImage)}
+                src={
+                  getImageUrl(aboutData.aboutImage) ||
+                  "/images/miniwebsitebuilder2.png"
+                }
                 alt="About Us"
                 fill
                 className="object-cover"
@@ -53,7 +56,8 @@ export default function About() {
               }}
               className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white"
             >
-              {aboutData.aboutTitle}
+              {aboutData.aboutTitle ||
+                "Elevate Your Look with Bespoke Hair Care & Expert"}
             </h3>
 
             <p
@@ -63,7 +67,8 @@ export default function About() {
               }}
               className="text-gray-600 dark:text-gray-300 mb-6"
             >
-              {aboutData.aboutDescription}
+              {aboutData.aboutDescription ||
+                "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication."}
             </p>
 
             <button

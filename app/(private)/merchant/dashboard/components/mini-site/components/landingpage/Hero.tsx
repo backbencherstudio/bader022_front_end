@@ -7,7 +7,7 @@ export default function Hero() {
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
   // console.log("====================================");
-  console.log(brandingData.logo);
+  // console.log(brandingData.logo);
   // console.log("====================================");
 
   return (
@@ -24,7 +24,7 @@ export default function Hero() {
           />
         ) : (
           <Image
-            src={getImageUrl(heroData.heroImage)}
+            src={getImageUrl(heroData.heroImage) || "/images/heroImage.png"}
             alt="Hero background"
             fill
             className="object-cover"
@@ -58,7 +58,7 @@ export default function Hero() {
             src={
               brandingData.brandingLogoPreview
                 ? brandingData.brandingLogoPreview
-                : getImageUrl(brandingData.logo)
+                : getImageUrl(brandingData.logo) || "/images/image 259.png"
             }
             alt="Logo"
             width={brandingData.logoSize || 120}
@@ -83,17 +83,17 @@ export default function Hero() {
       text-left
     "
           >
-            {heroData.heroSubtitle && (
-              <h3
-                style={{
-                  // color: colorSystemData.headingColor,
-                  fontSize: typographyData.h2Size,
-                }}
-                className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
-              >
-                {heroData.heroSubtitle}
-              </h3>
-            )}
+            {/* {heroData.heroSubtitle && ( */}
+            <h3
+              style={{
+                // color: colorSystemData.headingColor,
+                fontSize: typographyData.h2Size,
+              }}
+              className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
+            >
+              {heroData.heroSubtitle || "Care your hair"}
+            </h3>
+            {/* )} */}
             <h1
               className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
               style={{
@@ -101,49 +101,51 @@ export default function Hero() {
                 // color: colorSystemData.headingColor,
               }}
             >
-              {heroData.heroTitle}
+              {heroData.heroTitle ||
+                "Nourish Your Scalp for Strong, Healthy Hair Growth"}
             </h1>
-            {heroData.heroDescription && (
-              <p
-                style={{
-                  // color: colorSystemData.bodyTextColor,
-                  fontSize: typographyData.bodySize,
-                }}
-                className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
-              >
-                {heroData.heroDescription}
-              </p>
-            )}
+            {/* {heroData.heroDescription && ( */}
+            <p
+              style={{
+                // color: colorSystemData.bodyTextColor,
+                fontSize: typographyData.bodySize,
+              }}
+              className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
+            >
+              {heroData.heroDescription ||
+                "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
+            </p>
+            {/* )} */}
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              {heroData.primaryBtn && (
-                <Link href={"/user/bookings/add-booking"}>
-                  <button
-                    style={{
-                      backgroundColor: colorSystemData.primaryColor,
-                    }}
-                    className="px-6 py-3 rounded-md text-white font-medium transition
+              {/* {heroData.primaryBtn && ( */}
+              <Link href={"/user/bookings/add-booking"}>
+                <button
+                  style={{
+                    backgroundColor: colorSystemData.primaryColor,
+                  }}
+                  className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
-                  >
-                    {heroData.primaryBtn}
-                  </button>
-                </Link>
-              )}
+                >
+                  {heroData.primaryBtn || "Get Started"}
+                </button>
+              </Link>
+              {/* )} */}
 
-              {heroData.secondaryBtn && (
-                <Link href={"/user/bookings/add-booking"}>
-                  <button
-                    style={{
-                      // color: colorSystemData.secondaryColor,
-                      borderColor: colorSystemData.secondaryColor,
-                    }}
-                    className="px-6 py-3 rounded-md border font-medium transition
+              {/* {heroData.secondaryBtn && ( */}
+              <Link href={"/user/bookings/add-booking"}>
+                <button
+                  style={{
+                    // color: colorSystemData.secondaryColor,
+                    borderColor: colorSystemData.secondaryColor,
+                  }}
+                  className="px-6 py-3 rounded-md border font-medium transition
                  hover:text-white cursor-pointer"
-                  >
-                    {heroData.secondaryBtn}
-                  </button>
-                </Link>
-              )}
+                >
+                  {heroData.secondaryBtn || "Book A Consultation"}
+                </button>
+              </Link>
+              {/* )} */}
             </div>
           </div>
         </div>

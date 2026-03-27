@@ -369,11 +369,11 @@ export function LandingPageProvider({
       setServicesPreviewData((prev) => ({
         ...prev,
         servicesPreviewTitle:
-          api.minisite.service_title || prev.servicesPreviewTitle,
+          api.minisite?.service_title || prev.servicesPreviewTitle,
         servicesPreviewSubtitle:
-          api.minisite.service_description || prev.servicesPreviewSubtitle,
+          api.minisite?.service_description || prev.servicesPreviewSubtitle,
         backgroundColor:
-          api.minisite.service_background || prev.backgroundColor,
+          api.minisite?.service_background || prev.backgroundColor,
         servicesCards: api.services.map((service: any) => ({
           image: service.image || null,
           title: service.name,
@@ -440,32 +440,32 @@ export function LandingPageProvider({
     if (api.global_setting) {
       setFooterData((prev) => ({
         ...prev,
-        footerTitle: api.global_setting.website_name || prev.footerTitle,
-        footerSubTitle: api.global_setting.footer_des || prev.footerSubTitle,
+        footerTitle: api.global_setting?.website_name || prev.footerTitle,
+        footerSubTitle: api.global_setting?.footer_des || prev.footerSubTitle,
         footerLogo: api.global_setting.branding_logo || prev.footerLogo,
         footerBackground:
           api.global_setting.footer_background || prev.footerBackground,
         footerTextColor:
           api.global_setting.footer_text_color || prev.footerTextColor,
-        facebookUrl: api.global_setting.facebook_url || prev.facebookUrl,
-        twitterUrl: api.global_setting.twitter_url || prev.twitterUrl,
-        instagramUrl: api.global_setting.instagram_url || prev.instagramUrl,
-        linkedinUrl: api.global_setting.linkedin_url || prev.linkedinUrl,
-        pinterestUrl: api.global_setting.pinterest_url || prev.pinterestUrl,
-        homeUrl: api.global_setting.home_url || prev.homeUrl,
-        aboutUrl: api.global_setting.about_url || prev.aboutUrl,
+        facebookUrl: api.global_setting?.facebook_url || prev.facebookUrl,
+        twitterUrl: api.global_setting?.twitter_url || prev.twitterUrl,
+        instagramUrl: api.global_setting?.instagram_url || prev.instagramUrl,
+        linkedinUrl: api.global_setting?.linkedin_url || prev.linkedinUrl,
+        pinterestUrl: api.global_setting?.pinterest_url || prev.pinterestUrl,
+        homeUrl: api.global_setting?.home_url || prev.homeUrl,
+        aboutUrl: api.global_setting?.about_url || prev.aboutUrl,
         why_choose_usUrl:
-          api.global_setting.why_choose_us_url || prev.why_choose_usUrl,
-        serviceUrl: api.global_setting.service_url || prev.serviceUrl,
-        contactUrl: api.global_setting.contact_url || prev.contactUrl,
+          api.global_setting?.why_choose_us_url || prev.why_choose_usUrl,
+        serviceUrl: api.global_setting?.service_url || prev.serviceUrl,
+        contactUrl: api.global_setting?.contact_url || prev.contactUrl,
         privacy_policyUrl:
-          api.global_setting.privacy_policy_url || prev.privacy_policyUrl,
+          api.global_setting?.privacy_policy_url || prev.privacy_policyUrl,
         terms_conditionUrl:
-          api.global_setting.terms_condition_url || prev.terms_conditionUrl,
-        contact_info: api.global_setting.contact_info || prev.contact_info,
-        contact_email: api.global_setting.contact_email || prev.contact_email,
-        address: api.global_setting.country || prev.address,
-        showPoweredBy: api.global_setting.turn_off || prev.showPoweredBy,
+          api.global_setting?.terms_condition_url || prev.terms_conditionUrl,
+        contact_info: api.global_setting?.contact_info || prev.contact_info,
+        contact_email: api.global_setting?.contact_email || prev.contact_email,
+        address: api.global_setting?.country || prev.address,
+        showPoweredBy: api.global_setting?.turn_off || prev.showPoweredBy,
       }));
     }
   }, [data]);

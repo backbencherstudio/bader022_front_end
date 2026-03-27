@@ -33,7 +33,8 @@ export default function ServicesPreview() {
             }}
             className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
           >
-            {servicesPreviewData.servicesPreviewTitle}
+            {servicesPreviewData.servicesPreviewTitle ||
+              "Customized Hair Treatments & Styling to Suit You"}
           </h3>
 
           <div className="flex flex-col md:flex-row gap-4 md:justify-between">
@@ -45,7 +46,8 @@ export default function ServicesPreview() {
               }}
               className="text-gray-600 dark:text-gray-300 max-w-xl"
             >
-              {servicesPreviewData.servicesPreviewSubtitle}
+              {servicesPreviewData.servicesPreviewSubtitle ||
+                "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
             </p>
             <button
               style={{

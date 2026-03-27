@@ -13,7 +13,7 @@ export default function CTABanner() {
       className="relative"
       style={{ marginTop: layoutSettingsData.sectionSpacing }}
     >
-      <div className="relative min-h-[360px] sm:min-h-[320px]">
+      <div className="relative min-h-90 sm:min-h-80">
         {/* Background Image */}
         {ctaBannerData.ctaPreviewImage ? (
           <Image
@@ -47,7 +47,7 @@ export default function CTABanner() {
         {/* Content */}
         <div
           style={{
-            padding: Number(ctaBannerData.padding),
+            padding: Number(ctaBannerData.padding) || 40,
           }}
           className="
             relative z-10
@@ -65,20 +65,21 @@ export default function CTABanner() {
             }}
             className="text-xl sm:text-2xl md:text-3xl font-bold"
           >
-            {ctaBannerData.ctaBannerTitle}
+            {ctaBannerData.ctaBannerTitle || "Your Hair Deserves the Best Care"}
           </h2>
 
-          {ctaBannerData.ctaBannerSubTitle && (
-            <p
-              style={{
-                color: colorSystemData.bodyTextColor,
-                fontSize: typographyData.bodySize,
-              }}
-              className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
-            >
-              {ctaBannerData.ctaBannerSubTitle}
-            </p>
-          )}
+          {/* {ctaBannerData.ctaBannerSubTitle && ( */}
+          <p
+            style={{
+              color: colorSystemData.bodyTextColor,
+              fontSize: typographyData.bodySize,
+            }}
+            className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
+          >
+            {ctaBannerData.ctaBannerSubTitle ||
+              "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
+          </p>
+          {/* )} */}
 
           <Link href={"/user/bookings/add-booking"}>
             <button

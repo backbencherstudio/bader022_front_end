@@ -78,7 +78,10 @@ export default function BookingCheckoutStepper() {
   const [bookingId, setBookingId] = useState<string | number>("");
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  // const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toLocaleDateString("en-CA"),
+  );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const { data, isLoading, error } = useBookingServiceQuery(
     selectedService?.name || "",

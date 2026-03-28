@@ -77,7 +77,6 @@ export default function Step0({
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {service.price} SAR
                 </span>
-                
               </div>
               <span className="font-semibold text-gray-900 dark:text-gray-100">
                 {service.name}
@@ -87,7 +86,6 @@ export default function Step0({
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>
-            
 
               <div className="flex gap-3 pt-3">
                 <Button

@@ -195,7 +195,11 @@ export default function Step2({
             <Button variant="outline" onClick={onBack}>
               Back
             </Button>
-            <Button onClick={handleBooking} disabled={isLoading}>
+            <Button
+              className="cursor-pointer"
+              onClick={handleBooking}
+              disabled={isLoading}
+            >
               {isLoading ? "Booking..." : "Confirm Booking"}
             </Button>
           </div>

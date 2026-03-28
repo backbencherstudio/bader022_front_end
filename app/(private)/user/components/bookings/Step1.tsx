@@ -178,7 +178,11 @@ export default function Step1({
             Back
           </Button>
 
-          <Button onClick={onNext} disabled={!selectedTime || !selectedDate}>
+          <Button
+            className="cursor-pointer"
+            onClick={onNext}
+            disabled={!selectedDate || !selectedTime}
+          >
             Continue to Checkout
           </Button>
         </div>

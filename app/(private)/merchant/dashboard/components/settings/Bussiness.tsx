@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -11,7 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useUpdateBusinessSettingMutation } from "@/redux/features/merchant/settingApi";
+import {
+  useGetMerchantDataShowQuery,
+  useUpdateBusinessSettingMutation,
+} from "@/redux/features/merchant/settingApi";
 import { toast } from "sonner";
 
 type WorkingHour = {
@@ -23,12 +26,11 @@ type WorkingHour = {
 
 type FormData = {
   store_name: string;
-  // businessLogo: File | null;
   business_category: string;
-  businessAddress: string;
+  business_address: string;
   country: string;
   city: string;
-  timeZone: string;
+  time_zone: string;
   currency: string;
   workingHours: WorkingHour[];
 };
@@ -62,7 +64,9 @@ export default function BusinessSetting() {
     },
   });
 
-  // const [logo, setLogo] = useState<File | null>(null);
+  const { data: merchantData, isLoading } = useGetMerchantDataShowQuery({});
+
+  // console.log("merchantData========", merchantData);
 
   const [updateBusinessSetting] = useUpdateBusinessSettingMutation();
 
@@ -74,12 +78,43 @@ export default function BusinessSetting() {
     return `${hour}:${minute}`;
   });
 
+  // AUTO FILL FROM API (IMPORTANT PART)
+  useEffect(() => {
+    if (merchantData?.data) {
+      const data = merchantData.data;
+
+      const formattedWorkingHours = DAYS.map((day) => {
+        const found = data.business_hours?.find(
+          (item: any) => item.day.toLowerCase() === day.toLowerCase(),
+        );
+
+        return {
+          day,
+          enabled: found ? !found.is_closed : false,
+          from: found?.open_time || "09:00",
+          to: found?.close_time || "18:00",
+        };
+      });
+
+      reset({
+        store_name: data.store_name || "",
+        business_category: data.business_category || "",
+        business_address: data.business_address || "",
+        country: data.country || "Saudi Arabia",
+        city: data.city || "Riyadh",
+        time_zone: data.time_zone || "Asia/Riyadh",
+        currency: data.currency || "SAR",
+        workingHours: formattedWorkingHours,
+      });
+    }
+  }, [merchantData, reset]);
+
   const onSubmit = async (data: FormData) => {
     const business_hours: Record<string, { open: string; close: string }> = {};
+
     data.workingHours.forEach((item) => {
       if (item.enabled) {
         const day = item.day.toLowerCase();
-
         business_hours[day] = {
           open: item.from,
           close: item.to,
@@ -91,19 +126,19 @@ export default function BusinessSetting() {
       ...data,
       business_hours,
     };
-
-    // console.log("Final Payload:", payload);
-
+    // console.log("payload", payload);
     try {
       const response = await updateBusinessSetting(payload);
-      if (response.data.success === false) {
+
+      if (response?.data?.success === false) {
         toast.error(response.data.message);
+        return;
       }
+
       toast.success("Business Updated successfully");
       reset();
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to Business Updated");
-      reset();
     }
   };
 
@@ -115,7 +150,7 @@ export default function BusinessSetting() {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Business Name */}
+          {/* Store Name */}
           <div>
             <label className="block mb-2 text-sm font-medium text-muted-foreground">
               Business / Store Name
@@ -126,7 +161,6 @@ export default function BusinessSetting() {
                 required: "Business name is required",
               })}
               placeholder="My Store"
-              className="w-full"
             />
 
             {errors.store_name && (
@@ -135,46 +169,21 @@ export default function BusinessSetting() {
               </p>
             )}
           </div>
-          {/* Business Logo */}
-          {/* <div>
-            <label className="block mb-2 text-sm font-medium text-muted-foreground">
-              Business Logo
-            </label>
 
-            <div className="flex flex-col items-center border-2 p-4 rounded-md">
-              <input
-                type="file"
-                id="businessLogo"
-                onChange={(e) => setLogo(e.target.files?.[0] || null)}
-                className="hidden"
-              />
-
-              <label htmlFor="businessLogo" className="cursor-pointer">
-                Click to upload or drag and drop
-              </label>
-
-              {logo && <p>{logo.name}</p>}
-
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-            </div>
-          </div> */}
           {/* Working Hours */}
           <div className="space-y-3 overflow-x-auto">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Working Hours
-            </h3>
+            <h3 className="text-sm font-medium">Working Hours</h3>
 
             {watch("workingHours")?.map((item, index) => (
               <div
                 key={index}
                 className="grid gap-3 grid-cols-[140px_1fr_1fr_1fr] items-center"
               >
-                {/* Day */}
                 <Controller
                   control={control}
                   name={`workingHours.${index}.enabled`}
                   render={({ field }) => (
-                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <label className="flex items-center gap-2 text-sm">
                       <input
                         type="checkbox"
                         checked={field.value}
@@ -185,7 +194,6 @@ export default function BusinessSetting() {
                   )}
                 />
 
-                {/* From */}
                 <Controller
                   control={control}
                   name={`workingHours.${index}.from`}
@@ -198,7 +206,6 @@ export default function BusinessSetting() {
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
-
                       <SelectContent>
                         {TIME_OPTIONS.map((time) => (
                           <SelectItem key={time} value={time}>
@@ -214,7 +221,6 @@ export default function BusinessSetting() {
                   to
                 </span>
 
-                {/* To */}
                 <Controller
                   control={control}
                   name={`workingHours.${index}.to`}
@@ -227,7 +233,6 @@ export default function BusinessSetting() {
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
-
                       <SelectContent>
                         {TIME_OPTIONS.map((time) => (
                           <SelectItem key={time} value={time}>
@@ -241,80 +246,47 @@ export default function BusinessSetting() {
               </div>
             ))}
           </div>
-          {/* Business Category */}
+
+          {/* Category */}
           <div>
-            <label
-              htmlFor="businessCategory"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              Business Category
-            </label>
-
-            <Controller
-              control={control}
-              name="business_category"
-              defaultValue="salon_beauty"
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Business Category" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="salon_beauty">salon_beauty</SelectItem>
-                    <SelectItem value="Retail">Retail</SelectItem>
-                    <SelectItem value="Food">Food</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
+            <label className="block mb-2 text-sm">Business Category</label>
+            <Input
+              {...register("business_category", {})}
+              disabled
+              className="opacity-100"
             />
           </div>
-
-          {/* Business Address */}
           <div>
-            <label
-              htmlFor="businessAddress"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              Business Address
-            </label>
+            <label className="block mb-2 text-sm">Business Address</label>
+
             <Input
-              {...register("businessAddress", {
-                required: "Business address is required",
+              {...register("business_address", {
+                required: "Business Address is required",
               })}
-              placeholder="123 Main Street, Building A"
-              className="w-full"
+              placeholder="Enter Your Business Address"
             />
-            {errors.businessAddress && (
+
+            {errors.business_address && (
               <p className="text-red-500 text-xs">
-                {errors.businessAddress.message}
+                {errors.business_address.message}
               </p>
             )}
           </div>
 
           {/* Country */}
           <div>
-            <label
-              htmlFor="country"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              Country
-            </label>
-
+            <label className="block mb-2 text-sm">Country</label>
             <Controller
               control={control}
               name="country"
-              defaultValue="Saudi Arabia"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Country" />
+                    <SelectValue />
                   </SelectTrigger>
-
                   <SelectContent>
                     <SelectItem value="Saudi Arabia">Saudi Arabia</SelectItem>
                     <SelectItem value="USA">USA</SelectItem>
-                    {/* <SelectItem value="India">India</SelectItem> */}
                   </SelectContent>
                 </Select>
               )}
@@ -323,23 +295,15 @@ export default function BusinessSetting() {
 
           {/* City */}
           <div>
-            <label
-              htmlFor="city"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              City
-            </label>
-
+            <label className="block mb-2 text-sm">City</label>
             <Controller
               control={control}
               name="city"
-              defaultValue="Riyadh"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="City" />
+                    <SelectValue />
                   </SelectTrigger>
-
                   <SelectContent>
                     <SelectItem value="Riyadh">Riyadh</SelectItem>
                     <SelectItem value="Jeddah">Jeddah</SelectItem>
@@ -350,35 +314,20 @@ export default function BusinessSetting() {
             />
           </div>
 
-          {/* Time Zone */}
+          {/* Timezone */}
           <div>
-            <label
-              htmlFor="timeZone"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              Time Zone
-            </label>
-
+            <label className="block mb-2 text-sm">Timezone</label>
             <Controller
               control={control}
-              name="timeZone"
-              defaultValue="(GMT+3) Arabia Standard Time"
+              name="time_zone"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Time Zone" />
+                    <SelectValue />
                   </SelectTrigger>
-
                   <SelectContent>
-                    <SelectItem value="(GMT+3) Arabia Standard Time">
-                      Asia/Dhaka
-                    </SelectItem>
-                    <SelectItem value="(GMT+5) Indian Standard Time">
-                      Asia/Riyadh
-                    </SelectItem>
-                    {/* <SelectItem value="(GMT+2) Central European Time">
-                      (GMT+2) Central European Time
-                    </SelectItem> */}
+                    <SelectItem value="Asia/Dhaka">Asia/Dhaka</SelectItem>
+                    <SelectItem value="Asia/Riyadh">Asia/Riyadh</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -387,38 +336,27 @@ export default function BusinessSetting() {
 
           {/* Currency */}
           <div>
-            <label
-              htmlFor="currency"
-              className="block mb-2 text-sm font-medium text-muted-foreground"
-            >
-              Currency
-            </label>
-
+            <label className="block mb-2 text-sm">Currency </label>
             <Controller
               control={control}
               name="currency"
-              defaultValue="SAR"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Currency" />
+                    <SelectValue />
                   </SelectTrigger>
-
                   <SelectContent>
                     <SelectItem value="SAR">SAR</SelectItem>
-                    {/* <SelectItem value="USD - US Dollar">USD</SelectItem>
-                    <SelectItem value="INR - Indian Rupee">INR</SelectItem> */}
                   </SelectContent>
                 </Select>
               )}
             />
           </div>
-          {/* Save Button */}
-          <div>
-            <Button type="submit" className="w-full">
-              Save Changes
-            </Button>
-          </div>
+
+          {/* Submit */}
+          <Button type="submit" className="w-full cursor-pointer">
+            Save Changes
+          </Button>
         </form>
       </div>
     </div>

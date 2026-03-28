@@ -34,6 +34,15 @@ export const settingApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Setting"],
     }),
+
+        //Tap key
+    getMerchantDataShow: builder.query({
+      query: () => ({
+        url: `/admin/merchant-setting/show`,
+        method: "GET",
+      }),
+      providesTags: ["Setting"],
+    }),
   }),
 });
 
@@ -41,5 +50,5 @@ export const {
   useUpdateBusinessSettingMutation,
   useGetMerchantTapkeyQuery,
   useUpdateMerchantTapkeyMutation,
-
+  useGetMerchantDataShowQuery
 } = settingApi;

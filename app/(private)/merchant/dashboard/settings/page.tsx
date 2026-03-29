@@ -81,7 +81,7 @@ function Sidebar({
             Notifications
           </div>
         </li> */}
-        <li
+        {/* <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "language"
@@ -96,7 +96,7 @@ function Sidebar({
             </span>
             Language
           </div>
-        </li>
+        </li> */}
         <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
@@ -187,7 +187,7 @@ function MobileSidebar({
           >
             Notifications
           </li> */}
-          <li
+          {/* <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "language"
@@ -197,7 +197,7 @@ function MobileSidebar({
             onClick={() => setActiveSection("language")}
           >
             Language
-          </li>
+          </li> */}
           <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
@@ -368,8 +368,8 @@ function getActiveSectionContent(activeSection: string) {
     //       <NotificationSettings />
     //     </div>
     //   );
-    case "language":
-      return <LanguageSettings />;
+    // case "language":
+    //   return <LanguageSettings />;
     case "support":
       return <SupportSettings />;
     case "tapkey":

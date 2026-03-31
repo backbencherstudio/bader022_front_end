@@ -46,8 +46,7 @@ export default function RootLayout({
               </I18nProvider>
             </ThemeProvider>
           </StoreProvider>
-          </Suspense>
-
+        </Suspense>
       </body>
     </html>
   );

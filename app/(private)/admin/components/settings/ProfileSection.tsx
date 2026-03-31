@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
@@ -23,12 +22,11 @@ export default function ProfileSection() {
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 
   const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
-  console.log
+  console.log;
   const [updateInformation, { isLoading: isUpdating }] =
     useUpdateInformationMutation();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -41,11 +39,9 @@ export default function ProfileSection() {
     },
   });
 
-
   const profileImageUrl = data?.data?.image
-    ? getImageUrl(data.data.image) 
+    ? getImageUrl(data.data.image)
     : "/default-avatar.png";
-// console.log(profileImageUrl,"dfdfdfdefdfd");
   // Handle image change
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -153,7 +149,11 @@ export default function ProfileSection() {
             </div>
 
             <div className="flex justify-end pt-6 cursor-pointer">
-              <Button type="submit" disabled={isUpdating} className="cursor-pointer">
+              <Button
+                type="submit"
+                disabled={isUpdating}
+                className="cursor-pointer"
+              >
                 {isUpdating ? "Updating..." : "Save Changes"}
               </Button>
             </div>

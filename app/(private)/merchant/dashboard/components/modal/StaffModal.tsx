@@ -1,6 +1,8 @@
 "use client";
 
+import { getImageUrl } from "@/helper/formatImage";
 import { useAllServicesQuery } from "@/redux/features/merchant/servicesApi";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX, FiImage } from "react-icons/fi";
@@ -10,7 +12,7 @@ type Staff = {
   name: string;
   role: "admin" | "staff";
   service_id: number;
-  image?: string;
+  image?: any;
 };
 
 type Props = {
@@ -30,6 +32,8 @@ export default function StaffModal({
   onSubmitStaff,
   isLoading,
 }: Props) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const {
     register,
     handleSubmit,
@@ -49,31 +53,82 @@ export default function StaffModal({
       name: s.service_name,
     })) || [];
 
-  /* ---------------- Prefill on Edit ---------------- */
+  const imageFile = watch("image");
+
+  // Handle Hydration: Only render after mounting
   useEffect(() => {
-    if (mode === "edit" && initialData) {
-      reset({
-        name: initialData.name,
-        role: initialData.role,
-        service_id: initialData.service_id,
-      });
-    }
+    setMounted(true);
+  }, []);
 
-    if (mode === "add") {
-      reset({
-        name: "",
-        role: "staff",
-        service_id: undefined,
-      });
+  // Handle Image Preview logic
+  useEffect(() => {
+    if (imageFile && imageFile instanceof FileList && imageFile.length > 0) {
+      const file = imageFile[0];
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } else if (mode === "edit" && initialData?.image) {
+      setPreview(getImageUrl(initialData.image));
+    } else {
+      setPreview(null);
     }
-  }, [mode, initialData, reset]);
+  }, [imageFile, initialData, mode]);
 
-  if (!open) return null;
+  // Reset form and preview
+  useEffect(() => {
+    if (open) {
+      if (mode === "edit" && initialData) {
+        reset({
+          name: initialData.name,
+          role: initialData.role,
+          service_id: initialData.service_id,
+        });
+      } else {
+        reset({
+          name: "",
+          role: "staff",
+          service_id: undefined,
+        });
+        setPreview(null);
+      }
+    }
+  }, [open, mode, initialData, reset]);
+
+  // // Early return if modal is closed OR if not mounted to prevent hydration errors
+  if (!open || !mounted) return null;
+
   const onSubmit = (data: Staff) => {
     onSubmitStaff({ ...initialData, ...data });
     reset();
+    setPreview(null);
     onClose();
   };
+
+  /* ---------------- Prefill on Edit ---------------- */
+  // useEffect(() => {
+  //   if (mode === "edit" && initialData) {
+  //     reset({
+  //       name: initialData.name,
+  //       role: initialData.role,
+  //       service_id: initialData.service_id,
+  //     });
+  //   }
+
+  //   if (mode === "add") {
+  //     reset({
+  //       name: "",
+  //       role: "staff",
+  //       service_id: undefined,
+  //     });
+  //   }
+  // }, [mode, initialData, reset]);
+
+  // if (!open) return null;
+  // const onSubmit = (data: Staff) => {
+  //   onSubmitStaff({ ...initialData, ...data });
+  //   reset();
+  //   onClose();
+  // };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 overflow-y-auto">
@@ -154,11 +209,37 @@ export default function StaffModal({
                 hover:bg-gray-100 dark:hover:bg-gray-700
               "
             >
-              <FiImage size={26} className="text-gray-400" />
-              <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
-                Click to upload
-              </span>
-              <input type="file" {...register("image")} className="hidden" />
+              {preview ? (
+                <div className="relative w-full h-40">
+                  <Image
+                    src={preview || getImageUrl(initialData?.image)}
+                    alt="Service preview"
+                    fill
+                    className="object-contain p-2"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded">
+                      Change Image
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center py-8">
+                  <FiImage size={26} className="text-gray-400" />
+                  <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+                    Click to upload
+                  </span>
+                </div>
+              )}
+
+              {/* Hidden Input */}
+              <input
+                type="file"
+                accept="image/*"
+                {...register("image")}
+                className="hidden"
+              />
             </label>
           </div>
 
@@ -168,7 +249,7 @@ export default function StaffModal({
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 cursor-pointer"
             >
               Cancel
             </button>

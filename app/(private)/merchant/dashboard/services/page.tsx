@@ -75,10 +75,9 @@ export default function ServicesPage() {
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
-
-        const response = await createService(formData).unwrap();
-
+        await createService(formData).unwrap();
         toast.success("Service created successfully");
+        setOpenModal(false);
       } catch (error: any) {
         toast.error(error?.data?.message || "Failed to create service");
       }
@@ -98,9 +97,7 @@ export default function ServicesPage() {
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
-
-        const response = await updateServiceById({ id, formData }).unwrap();
-
+        await updateServiceById({ id, formData }).unwrap();
         toast.success("Service updated successfully");
         setOpenModal(false);
       } catch (error: any) {
@@ -109,15 +106,39 @@ export default function ServicesPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this service?")) return;
-
-    await toast.promise(deleteServiceById(id).unwrap(), {
-      loading: "Deleting service...",
-      success: "Service deleted successfully",
-      error: (err) => err?.data?.message || "Delete failed ",
+  const handleDelete = (id: string) => {
+    toast("Delete Staff Member?", {
+      description: "Are you sure? This action cannot be undone.",
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            await toast.promise(deleteServiceById(id).unwrap(), {
+              loading: "Deleting Service...",
+              success: "Service deleted successfully",
+              error: (err) => err?.data?.message || "Delete failed",
+            });
+          } catch (error) {
+            console.error("Delete error:", error);
+          }
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => {},
+      },
     });
   };
+
+  // const handleDelete = async (id: string) => {
+  //   if (!confirm("Are you sure you want to delete this service?")) return;
+
+  //   await toast.promise(deleteServiceById(id).unwrap(), {
+  //     loading: "Deleting service...",
+  //     success: "Service deleted successfully",
+  //     error: (err) => err?.data?.message || "Delete failed ",
+  //   });
+  // };
 
   if (isLoading) return <p className="p-6">Loading services...</p>;
   if (isError)

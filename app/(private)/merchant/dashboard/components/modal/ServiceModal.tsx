@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { getImageUrl } from "@/helper/formatImage";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX, FiImage } from "react-icons/fi";
 
@@ -10,7 +12,8 @@ type Service = {
   duration: string;
   price: number;
   description?: string;
-  image?: string;
+  // image?: string;
+  image?: any;
 };
 
 type Props = {
@@ -30,41 +33,142 @@ export default function ServiceModal({
   onSubmitService,
   isLoading,
 }: Props) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<Service>();
 
-  // Populate form on Edit
+  // Watch the image field
+  const imageFile = watch("image");
+
+  // Handle Hydration: Only render after mounting
   useEffect(() => {
-    if (mode === "edit" && initialData) {
-      reset({
-        service_name: initialData.service_name,
-        duration: initialData.duration,
-        price: initialData.price,
-        description: initialData.description,
-      });
-    }
+    setMounted(true);
+  }, []);
 
-    if (mode === "add") {
-      reset({});
+  // Handle Image Preview logic
+  useEffect(() => {
+    if (imageFile && imageFile instanceof FileList && imageFile.length > 0) {
+      const file = imageFile[0];
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } else if (mode === "edit" && initialData?.image) {
+      setPreview(getImageUrl(initialData.image));
+    } else {
+      setPreview(null);
     }
-  }, [mode, initialData, reset]);
+  }, [imageFile, initialData, mode]);
 
-  if (!open) return null;
+  // Reset form and preview
+  useEffect(() => {
+    if (open) {
+      if (mode === "edit" && initialData) {
+        reset({
+          service_name: initialData.service_name,
+          duration: initialData.duration,
+          price: initialData.price,
+          description: initialData.description,
+        });
+      } else {
+        reset({
+          service_name: "",
+          duration: "",
+          price: 0,
+          description: "",
+        });
+        setPreview(null);
+      }
+    }
+  }, [open, mode, initialData, reset]);
+
+  // Early return if modal is closed OR if not mounted to prevent hydration errors
+  if (!open || !mounted) return null;
 
   const onSubmit = (data: Service) => {
     onSubmitService({ ...initialData, ...data });
-    reset({
-      service_name: "",
-      duration: "",
-      price: 0,
-      description: "",
-    });
+    reset();
+    setPreview(null);
     onClose();
   };
+
+  // // Handle Image Preview logic
+  // useEffect(() => {
+  //   if (imageFile && imageFile.length > 0) {
+  //     const file = imageFile[0];
+  //     const objectUrl = URL.createObjectURL(file);
+  //     setPreview(objectUrl);
+
+  //     // Free memory when component unmounts or file changes
+  //     return () => URL.revokeObjectURL(objectUrl);
+  //   } else if (mode === "edit" && initialData?.image) {
+  //     // Show existing image if editing and no new file selected
+  //     setPreview(initialData.image);
+  //   } else {
+  //     setPreview(null);
+  //   }
+  // }, [imageFile, initialData, mode]);
+
+  // // Reset form and preview
+  // useEffect(() => {
+  //   if (mode === "edit" && initialData) {
+  //     reset({
+  //       service_name: initialData.service_name,
+  //       duration: initialData.duration,
+  //       price: initialData.price,
+  //       description: initialData.description,
+  //       image: initialData.image,
+  //     });
+  //   }
+  //   if (mode === "add") {
+  //     reset({});
+  //     setPreview(null);
+  //   }
+  // }, [mode, initialData, reset]);
+
+  // if (!open) return null;
+
+  // const onSubmit = (data: Service) => {
+  //   // console.log(data);
+  //   onSubmitService({ ...initialData, ...data });
+  //   reset();
+  //   setPreview(null);
+  //   onClose();
+  // };
+
+  // Populate form on Edit
+  // useEffect(() => {
+  //   if (mode === "edit" && initialData) {
+  //     reset({
+  //       service_name: initialData.service_name,
+  //       duration: initialData.duration,
+  //       price: initialData.price,
+  //       description: initialData.description,
+  //     });
+  //   }
+
+  //   if (mode === "add") {
+  //     reset({});
+  //   }
+  // }, [mode, initialData, reset]);
+
+  // if (!open) return null;
+
+  // const onSubmit = (data: Service) => {
+  //   onSubmitService({ ...initialData, ...data });
+  //   reset({
+  //     service_name: "",
+  //     duration: "",
+  //     price: 0,
+  //     description: "",
+  //   });
+  //   onClose();
+  // };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto">
@@ -167,18 +271,44 @@ export default function ServiceModal({
 
             <label
               className="
-                mt-2 flex flex-col items-center justify-center
-                border-2 border-dashed rounded-lg py-8 cursor-pointer
-                border-gray-300 dark:border-gray-700
-                bg-gray-50 dark:bg-gray-800
-                hover:bg-gray-100 dark:hover:bg-gray-700
-              "
+                  relative mt-2 flex flex-col items-center justify-center
+                  border-2 border-dashed rounded-lg cursor-pointer
+                  border-gray-300 dark:border-gray-700
+                  bg-gray-50 dark:bg-gray-800
+                  hover:bg-gray-100 dark:hover:bg-gray-700
+                  min-h-40 overflow-hidden"
             >
-              <FiImage size={26} className="text-gray-400" />
-              <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
-                Click to upload
-              </span>
-              <input type="file" {...register("image")} className="hidden" />
+              {preview ? (
+                <div className="relative w-full h-40">
+                  <Image
+                    src={preview || getImageUrl(initialData?.image)}
+                    alt="Service preview"
+                    fill
+                    className="object-contain p-2"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded">
+                      Change Image
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center py-8">
+                  <FiImage size={26} className="text-gray-400" />
+                  <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
+                    Click to upload
+                  </span>
+                </div>
+              )}
+
+              {/* Hidden Input */}
+              <input
+                type="file"
+                accept="image/*"
+                {...register("image")}
+                className="hidden"
+              />
             </label>
           </div>
 
@@ -191,7 +321,7 @@ export default function ServiceModal({
                 px-4 py-2 rounded-lg
                 bg-gray-100 dark:bg-gray-700
                 text-gray-800 dark:text-gray-200
-                hover:bg-gray-200 dark:hover:bg-gray-600
+                hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer
               "
             >
               Cancel
@@ -203,7 +333,7 @@ export default function ServiceModal({
                 px-4 py-2 rounded-lg
                 bg-gray-900 dark:bg-white
                 text-white dark:text-gray-900
-                hover:opacity-90
+                hover:opacity-90 cursor-pointer
               "
             >
               {isLoading

@@ -35,7 +35,6 @@ export default function StaffPage() {
       // console.log("Add Staff:", data);
       try {
         const formData = new FormData();
-
         formData.append("name", data.name);
         formData.append("role", data.role);
         formData.append("service_id", data.service_id);
@@ -44,10 +43,9 @@ export default function StaffPage() {
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
-
-        const response = await createStaff(formData).unwrap();
-
+        await createStaff(formData).unwrap();
         toast.success("Staff created successfully");
+        setOpenModal(false);
       } catch (error: any) {
         toast.error(error?.data?.message || "Failed to create staff");
       }
@@ -66,9 +64,7 @@ export default function StaffPage() {
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
-
-        const response = await updateStaffById({ id, formData }).unwrap();
-
+        await updateStaffById({ id, formData }).unwrap();
         toast.success("Staff updated successfully");
         setOpenModal(false);
       } catch (error: any) {
@@ -76,16 +72,39 @@ export default function StaffPage() {
       }
     }
   };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this staff?")) return;
-
-    await toast.promise(deleteStaffById(id).unwrap(), {
-      loading: "Deleting service...",
-      success: "Staff deleted successfully",
-      error: (err) => err?.data?.message || "Delete failed ",
+  const handleDelete = (id: string) => {
+    toast("Delete Staff Member?", {
+      description: "Are you sure? This action cannot be undone.",
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            await toast.promise(deleteStaffById(id).unwrap(), {
+              loading: "Deleting staff...",
+              success: "Staff deleted successfully",
+              error: (err) => err?.data?.message || "Delete failed",
+            });
+          } catch (error) {
+            console.error("Delete error:", error);
+          }
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => {},
+      },
     });
   };
+
+  // const handleDelete = async (id: string) => {
+  //   if (!confirm("Are you sure you want to delete this staff?")) return;
+
+  //   await toast.promise(deleteStaffById(id).unwrap(), {
+  //     loading: "Deleting service...",
+  //     success: "Staff deleted successfully",
+  //     error: (err) => err?.data?.message || "Delete failed ",
+  //   });
+  // };
 
   if (isLoading) {
     return <div className="p-6">Loading staff...</div>;
@@ -134,7 +153,7 @@ export default function StaffPage() {
               text-white dark:text-gray-900
               px-4 py-2 rounded-lg
               text-sm font-medium
-              hover:opacity-90
+              hover:opacity-90 cursor-pointer
             "
           >
             Add New Staff
@@ -215,11 +234,10 @@ export default function StaffPage() {
                 <p className="text-xs text-gray-400">No service assigned</p>
               )}
             </div>
-
             {/* Actions */}
             <div className="mt-5 flex items-center gap-3">
               <button
-                className={`flex-1 py-2 rounded-lg text-sm font-medium ${
+                className={`flex-1 py-2 rounded-lg text-sm font-medium cursor-pointer ${
                   staff.status === 1
                     ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
                     : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
@@ -235,7 +253,7 @@ export default function StaffPage() {
                   p-2 rounded-lg
                   border border-gray-200 dark:border-gray-700
                   text-red-500
-                  hover:bg-red-50 dark:hover:bg-red-900/20
+                  hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer
                 "
               >
                 {isDeleteStaffLoading ? (
@@ -257,7 +275,7 @@ export default function StaffPage() {
                   p-2 rounded-lg
                   border border-gray-200 dark:border-gray-700
                   text-gray-700 dark:text-gray-300
-                  hover:bg-gray-100 dark:hover:bg-gray-700
+                  hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer
                 "
               >
                 <FiEdit />

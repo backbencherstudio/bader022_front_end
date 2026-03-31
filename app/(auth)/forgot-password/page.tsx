@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { FaEnvelope } from "react-icons/fa";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import Link from "next/link";
 
 type FormValues = {
   email: string;
@@ -52,16 +53,18 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
-        <div className="flex justify-center">
-          <Image
-            src="/images/image 259.png"
-            alt="Company Logo"
-            width={120}
-            height={40}
-            priority
-            className="h-auto w-auto object-contain dark:brightness-0 dark:invert"
-          />
-        </div>
+        <Link href={"/"}>
+          <div className="flex justify-center">
+            <Image
+              src="/images/image 259.png"
+              alt="Company Logo"
+              width={120}
+              height={40}
+              priority
+              className="h-auto w-auto object-contain dark:brightness-0 dark:invert"
+            />
+          </div>
+        </Link>
 
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
           Forgot Password

@@ -7,6 +7,7 @@ import AccountSuccess from "../_components/AccountSuccess";
 import Image from "next/image";
 import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type FormValues = {
   password: string;
@@ -23,14 +24,19 @@ export default function ResetPasswordPage() {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  const { register, handleSubmit, formState:{errors} } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [successful, setSuccessful] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
     if (!email) {
-      alert("Email is required.");
+      // alert("Email is required.");
+      toast.error("Email is required.");
       return;
     }
 
@@ -40,12 +46,16 @@ export default function ResetPasswordPage() {
       password_confirmation: data.password_confirmation,
     };
 
+    // console.log(payload);
+
     try {
       const response = await resetPassword(payload).unwrap();
-      console.log("Password reset successful:", response);
-      setSuccessful(true);
+      // console.log("Password reset successful:", response);
+      toast.success("Password reset successful");
+      router.push("/login");
     } catch (error) {
-      console.error("Error resetting password:", error);
+      // console.error("Error resetting password:", error);
+      toast.error("Error resetting password");
       // alert("Password reset failed. Please try again.");
     }
   };
@@ -125,8 +135,10 @@ export default function ResetPasswordPage() {
                   placeholder="••••••••"
                   {...register("password_confirmation", {
                     required: "Confirm password is required",
-                    validate: (value) =>
-                      value === ("password") || "Passwords do not match",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
                   })}
                   className="w-full pl-10 pr-10 py-3 border rounded-md
                   bg-white dark:bg-gray-700

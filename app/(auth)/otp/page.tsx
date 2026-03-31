@@ -22,7 +22,7 @@ export default function OTPPage() {
   const [error, setError] = useState<string>("");
 
   const onSubmit = async () => {
-    const otp = otpValues.join(""); 
+    const otp = otpValues.join("");
     const email = localStorage.getItem("resetEmail");
 
     const body = {
@@ -32,10 +32,10 @@ export default function OTPPage() {
 
     try {
       const response = await verifyOtp(body).unwrap();
-      console.log("OTP verified:", response);
+      // console.log("OTP verified:", response);
       router.push("/reset-password");
     } catch (error: any) {
-      console.error("Error verifying OTP:", error);
+      // console.error("Error verifying OTP:", error);
       if (error?.data?.message === "OTP expired") {
         setError("The OTP has expired. Please request a new one.");
       } else {
@@ -85,9 +85,7 @@ export default function OTPPage() {
           We have sent a code to your registered email address
         </p>
 
-        {error && (
-          <div className="text-center text-red-500 mb-4">{error}</div>
-        )}
+        {error && <div className="text-center text-red-500 mb-4">{error}</div>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
@@ -123,7 +121,7 @@ export default function OTPPage() {
           </button>
 
           {/* Resend */}
-          <button
+          {/* <button
             type="button"
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
             onClick={() => {
@@ -132,7 +130,7 @@ export default function OTPPage() {
             }}
           >
             Resend OTP
-          </button>
+          </button> */}
         </form>
       </div>
     </div>

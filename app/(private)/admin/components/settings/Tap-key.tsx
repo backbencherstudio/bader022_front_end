@@ -81,7 +81,7 @@ export default function Tapkey() {
             </option>
             <option
               className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              value="test"
+              value="local"
             >
               test
             </option>

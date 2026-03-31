@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
 import MerchantTapkey from "../components/settings/MerchantTapkey";
+import MerchantProfile from "../components/settings/MerchantProfile";
 
 // Sidebar component with dynamic content handling
 function Sidebar({
@@ -270,7 +271,7 @@ function AccountSettingsForm() {
 
   return (
     <div className="flex flex-col gap-8 p-6 w-full">
-      <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+      {/* <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">Information</CardTitle>
         </CardHeader>
@@ -294,7 +295,8 @@ function AccountSettingsForm() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
+      <MerchantProfile />
 
       {/* Change Password Section */}
       <form onSubmit={handleSubmit(onSubmit)}>

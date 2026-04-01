@@ -223,7 +223,7 @@ export default function RecentTransactions({ data }: any) {
       id: item.id,
       customerName: item.booking?.customer_name ?? "Unknown",
       customerAvatar: item.user?.image ?? "",
-      service: `Service #${item.booking?.service_id}`,
+      service: item.booking?.service?.service_name,
       amount: item.amount,
       date: new Date(item.created_at).toLocaleDateString(),
       status:

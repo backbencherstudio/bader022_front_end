@@ -57,13 +57,28 @@ export default function WeeklyGrid({
   bookings?: TBooking[];
   onOpenMore: (day: Date, dayBookings: TBooking[]) => void;
 }) {
-  const times = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00"];
+  const times = [
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+  ];
 
   // Current week (start from Sunday)
   const weekStart = startOfWeek(new Date());
   const days: Date[] = Array.from({ length: 7 }).map((_, i) =>
     addDays(weekStart, i),
   );
+
+  // console.log(bookings);
 
   return (
     <div className="overflow-hidden rounded-xl border">
@@ -98,6 +113,7 @@ export default function WeeklyGrid({
               t,
               month,
             );
+            // console.log(slotBookings);
 
             return (
               <div key={i} className="min-h-19.5 border-l p-2">

@@ -81,7 +81,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
     return filtered.slice(start, start + PAGE_SIZE);
   }, [filtered, page]);
 
-  console.log(paginated);
+  // console.log(paginated);
 
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800">
@@ -216,6 +216,8 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
 }
 
 export default function RecentTransactions({ data }: any) {
+  console.log(data);
+
   const rows: TransactionRow[] =
     data?.map((item: any) => ({
       id: item.id,
@@ -231,6 +233,8 @@ export default function RecentTransactions({ data }: any) {
             ? "cancel"
             : "pending",
     })) ?? [];
+
+  console.log(rows);
 
   return <RecentTransactionsCard rows={rows} />;
 }

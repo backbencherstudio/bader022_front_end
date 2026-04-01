@@ -9,7 +9,7 @@ export default function page() {
     isError,
   } = useMerchantTransactionOverviewQuery({});
 
-  // console.log(transactionOverview?.data);
+  console.log(transactionOverview?.data);
 
   return (
     <div className="mt-4">

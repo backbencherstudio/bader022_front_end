@@ -46,7 +46,8 @@ export default function Page() {
   // console.log({ allBookings });
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
   const [view, setView] = useState<"monthly" | "weekly">("monthly");
-  const [month, setMonth] = useState(() => new Date(2026, 0, 1));
+  // const [month, setMonth] = useState(() => new Date(2026, 0, 1));
+  const [month, setMonth] = useState(() => new Date());
 
   const [filterBy, setFilterBy] = useState<"staff" | "service" | "customer">(
     "staff",

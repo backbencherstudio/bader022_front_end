@@ -480,7 +480,7 @@ export default function AddBookingModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { control, handleSubmit, setValue } = useForm({ defaultValues });
+  const { control, handleSubmit, setValue, reset } = useForm({ defaultValues });
 
   const [createBooking] = useCreateBookingMutation();
 
@@ -488,14 +488,14 @@ export default function AddBookingModal({
   const { data: servicesData } = useAllServicesQuery({});
   const servicesList = servicesData?.data || [];
 
-  console.log(servicesList);
+  // console.log(servicesList);
 
   // Watch selected service and date
   const selectedService = useWatch({ control, name: "service" });
   const selectedDate = useWatch({ control, name: "date" });
   const selectedTime = useWatch({ control, name: "time" });
 
-  console.log(selectedService, selectedDate, selectedTime);
+  // console.log(selectedService, selectedDate, selectedTime);
 
   // Fetch available times for selected service & date
   const { data: bookingServiceSchedule } = useGetBookingScheduleQuery(
@@ -508,7 +508,7 @@ export default function AddBookingModal({
 
   const availableTimes = bookingServiceSchedule?.available_times || [];
 
-  console.log(availableTimes);
+  // console.log(availableTimes);
 
   // Fetch available staff for selected service, date & time
   const { data: bookingStaffSchedule } = useGetBookingStaffScheduleQuery(
@@ -521,11 +521,11 @@ export default function AddBookingModal({
       : skipToken,
   );
 
-  console.log(bookingStaffSchedule);
+  // console.log(bookingStaffSchedule);
 
   const availableStaff = bookingStaffSchedule?.available_staff || [];
 
-  console.log(availableStaff);
+  // console.log(availableStaff);
 
   // Submit booking
   const onSubmit = async (data: any) => {
@@ -543,9 +543,10 @@ export default function AddBookingModal({
         customer_name: data.customer,
         email: data.email,
         phone: data.phone,
-        payment_method: "tap",
+        payment_method: "cash",
       }).unwrap();
       toast.success("Booking created successfully");
+      reset();
       onClose();
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to create booking");
@@ -733,10 +734,17 @@ export default function AddBookingModal({
           </div>
 
           <DialogFooter className="px-6 py-4 border-t flex gap-3 justify-end">
-            <Button variant="outline" type="button" onClick={onClose}>
+            <Button
+              className="cursor-pointer"
+              variant="outline"
+              type="button"
+              onClick={onClose}
+            >
               Cancel
             </Button>
-            <Button type="submit">Add Booking</Button>
+            <Button className="cursor-pointer" type="submit">
+              Add Booking
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -13,7 +13,8 @@ import { useAppSelector } from "@/redux/hooks";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -26,22 +27,80 @@ export default function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
   // console.log(user);
 
-  const NavLinks = ({ onClick }: { onClick?: () => void }) => (
-    <>
-      <Link href="/" onClick={onClick}>
-        {t("Nav.home")}
-      </Link>
-      <Link href="/#services" onClick={onClick}>
-        {t("Nav.services")}
-      </Link>
-      <Link href="/#faq-section" onClick={onClick}>
-        {t("Nav.faqs")}
-      </Link>
-      <Link href="/pricing" onClick={onClick}>
-        {t("Nav.pricing")}
-      </Link>
-    </>
-  );
+  // const NavLinks = ({ onClick }: { onClick?: () => void }) => (
+  //   <>
+  //     <Link href="/" onClick={onClick}>
+  //       {t("Nav.home")}
+  //     </Link>
+  //     <Link href="/#services" onClick={onClick}>
+  //       {t("Nav.services")}
+  //     </Link>
+  //     <Link href="/#faq-section" onClick={onClick}>
+  //       {t("Nav.faqs")}
+  //     </Link>
+  //     <Link href="/pricing" onClick={onClick}>
+  //       {t("Nav.pricing")}
+  //     </Link>
+  //   </>
+  // );
+
+  const pathname = usePathname();
+  const [activeHash, setActiveHash] = useState("");
+
+  // Listen for hash changes to update the active state
+  useEffect(() => {
+    // Set initial hash
+    setActiveHash(window.location.hash);
+
+    const handleHashChange = () => {
+      setActiveHash(window.location.hash);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const NavLinks = ({ onClick }: { onClick?: () => void }) => {
+    const links = [
+      { name: t("Nav.home"), href: "/", hash: "" },
+      { name: t("Nav.services"), href: "/#services", hash: "#services" },
+      { name: t("Nav.faqs"), href: "/#faq-section", hash: "#faq-section" },
+      { name: t("Nav.pricing"), href: "/pricing", hash: "" },
+    ];
+
+    return (
+      <>
+        {links.map((link) => {
+          // 1. If it's a hash link, check if pathname matches AND hash matches
+          // 2. If it's a regular page, check if pathname matches exactly
+          const isHashLink = link.href.includes("#");
+          const isActive = isHashLink
+            ? pathname === "/" && activeHash === link.hash
+            : pathname === link.href && activeHash === "";
+
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => {
+                if (onClick) onClick();
+                // Manually set hash for instant UI update on click
+                if (isHashLink) setActiveHash(link.hash);
+                else setActiveHash("");
+              }}
+              className={`
+                px-4 py-2 rounded-lg transition-all duration-200
+                hover:bg-slate-100 hover:text-indigo-600
+                ${isActive ? "bg-slate-100 text-indigo-600" : "text-black"}
+              `}
+            >
+              {link.name}
+            </Link>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <div className=" mx-auto bg-white z-50 fixed  w-full ">

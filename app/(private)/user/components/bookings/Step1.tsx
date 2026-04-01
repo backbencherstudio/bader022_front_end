@@ -89,11 +89,13 @@ export default function Step1({
   const staffs = staffData?.available_staff || [];
 
   return (
-    <Card className="rounded-2xl p-4 sm:p-6 border shadow-sm">
+    <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar */}
-        <div className="border rounded-xl overflow-hidden">
-          <div className="bg-gray-100 px-5 py-4 font-semibold">Select Date</div>
+        <div className="border rounded-xl overflow-hidden ">
+          <div className="border-gray-200 dark:border-gray-700 dark:bg-gray-800  px-5 py-4 font-semibold">
+            Select Date
+          </div>
 
           <div className="p-5">
             <Calendar
@@ -103,14 +105,14 @@ export default function Step1({
               onSelect={(newDate) =>
                 newDate && setSelectedDate(newDate.toLocaleDateString("en-CA"))
               }
-              className="w-full"
+              className="w-full dark:bg-gray-800"
             />
           </div>
         </div>
 
         {/* Time Slots */}
         <div className="border rounded-xl overflow-hidden">
-          <div className="bg-gray-100 px-5 py-4 font-semibold">
+          <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
             Available Times
           </div>
 
@@ -145,7 +147,7 @@ export default function Step1({
 
         {/* Staff */}
         <div className="border rounded-xl overflow-hidden">
-          <div className="bg-gray-100 px-5 py-4 font-semibold">
+          <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
             Select Staff
           </div>
 

@@ -216,7 +216,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
 }
 
 export default function RecentTransactions({ data }: any) {
-  console.log(data);
+  // console.log(data);
 
   const rows: TransactionRow[] =
     data?.map((item: any) => ({
@@ -234,7 +234,7 @@ export default function RecentTransactions({ data }: any) {
             : "pending",
     })) ?? [];
 
-  console.log(rows);
+  // console.log(rows);
 
   return <RecentTransactionsCard rows={rows} />;
 }

@@ -19,7 +19,10 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
-import { useLazyInvoiceDownloadQuery, useUserPaymentHistoryQuery } from "@/redux/features/userDashboard/userDashboard";
+import {
+  useLazyInvoiceDownloadQuery,
+  useUserPaymentHistoryQuery,
+} from "@/redux/features/userDashboard/userDashboard";
 import Pagination from "@/components/reusable/Pagination";
 
 export type TxStatus = "paid" | "failed" | "due" | "refunded" | "refund_failed";
@@ -91,7 +94,7 @@ export function RecentTransactionsCard({
   handleDownload: (bookingID: number) => void;
 }) {
   return (
-    <Card className="rounded-3xl border border-gray-200 shadow-sm">
+    <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardContent className="pb-8">
         <div className="text-lg font-medium pb-4">Payment History</div>
 
@@ -126,10 +129,16 @@ export function RecentTransactionsCard({
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30">
-                <TableHead className="text-muted-foreground">Booking ID</TableHead>
-                <TableHead className="text-muted-foreground">Customer</TableHead>
+                <TableHead className="text-muted-foreground">
+                  Booking ID
+                </TableHead>
+                <TableHead className="text-muted-foreground">
+                  Customer
+                </TableHead>
                 <TableHead className="text-muted-foreground">Service</TableHead>
-                <TableHead className="text-muted-foreground">Date & Time</TableHead>
+                <TableHead className="text-muted-foreground">
+                  Date & Time
+                </TableHead>
                 <TableHead className="text-muted-foreground">Amount</TableHead>
                 <TableHead className="text-muted-foreground">Status</TableHead>
                 <TableHead className="text-muted-foreground">Invoice</TableHead>
@@ -158,7 +167,9 @@ export function RecentTransactionsCard({
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={r.customerAvatar} />
-                        <AvatarFallback>{r.customerName?.slice(0, 2)}</AvatarFallback>
+                        <AvatarFallback>
+                          {r.customerName?.slice(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <span className="">{r.customerName}</span>
                     </div>
@@ -177,7 +188,6 @@ export function RecentTransactionsCard({
                   <TableCell>
                     <StatusPill status={r.status} />
                   </TableCell>
-
 
                   {/* <TableCell className="cursor-pointer underline">
                     <a
@@ -205,8 +215,14 @@ export function RecentTransactionsCard({
 
       {/* Pagination */}
       <div className="flex justify-between flex-col sm:flex-row items-center px-6 pb-4 border-t border-muted/40">
-        <div className="text-sm text-muted-foreground">Showing {rows.length} results</div>
-        <Pagination currentPage={page} lastPage={pagination?.last_page || 1} onPageChange={setPage} />
+        <div className="text-sm text-muted-foreground">
+          Showing {rows.length} results
+        </div>
+        <Pagination
+          currentPage={page}
+          lastPage={pagination?.last_page || 1}
+          onPageChange={setPage}
+        />
       </div>
     </Card>
   );
@@ -216,7 +232,10 @@ export default function UserPaymentHistory() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, isLoading, error } = useUserPaymentHistoryQuery({ status: search, page });
+  const { data, isLoading, error } = useUserPaymentHistoryQuery({
+    status: search,
+    page,
+  });
 
   const pagination = data?.pagination;
   const bookings: Booking[] = data?.data ?? [];
@@ -230,14 +249,16 @@ export default function UserPaymentHistory() {
       service: b.service,
       amountLabel: b.amount,
       dateLabel: b.date_time,
-      status: ["paid", "failed", "due", "refunded", "refund_failed"].includes(status)
+      status: ["paid", "failed", "due", "refunded", "refund_failed"].includes(
+        status,
+      )
         ? status
         : "due",
     };
   });
 
- 
-  const [triggerInvoiceDownload, { isLoading: downloading }] = useLazyInvoiceDownloadQuery();
+  const [triggerInvoiceDownload, { isLoading: downloading }] =
+    useLazyInvoiceDownloadQuery();
 
   const handleDownload = async (bookingID: number) => {
     try {
@@ -264,7 +285,7 @@ export default function UserPaymentHistory() {
       setPage={setPage}
       search={search}
       setSearch={setSearch}
-      handleDownload={handleDownload} 
+      handleDownload={handleDownload}
     />
   );
 }

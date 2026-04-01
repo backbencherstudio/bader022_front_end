@@ -97,7 +97,7 @@ export function MerchantManagementCard({
   // Calculate paginated data
   const paginatedRows = rows.slice(
     (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    currentPage * pageSize,
   );
 
   return (
@@ -185,31 +185,19 @@ export function MerchantManagementCard({
                             {initials(r.businessName)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="  ">
-                          {r.businessName}
-                        </span>
+                        <span className="  ">{r.businessName}</span>
                       </div>
                     </TableCell>
 
-                    <TableCell className="">
-                      {r.businessType}
-                    </TableCell>
+                    <TableCell className="">{r.businessType}</TableCell>
 
-                    <TableCell className="">
-                      {r.email}
-                    </TableCell>
+                    <TableCell className="">{r.email}</TableCell>
 
-                    <TableCell className="">
-                      {r.package}
-                    </TableCell>
+                    <TableCell className="">{r.package}</TableCell>
 
-                    <TableCell className="">
-                      {r.planType}
-                    </TableCell>
+                    <TableCell className="">{r.planType}</TableCell>
 
-                    <TableCell className="">
-                      {r.expireDate}
-                    </TableCell>
+                    <TableCell className="">{r.expireDate}</TableCell>
 
                     <TableCell>
                       <StatusPill status={r.status} />
@@ -221,7 +209,9 @@ export function MerchantManagementCard({
                         {/* View Button */}
                         <button
                           type="button"
-                          onClick={() => navigate.push(`/admin/merchants/${r.id}`)}
+                          onClick={() =>
+                            navigate.push(`/admin/merchants/${r.id}`)
+                          }
                           className="h-10 w-10 text-muted-foreground hover:text-black rounded-xl border hover:bg-white flex items-center justify-center cursor-pointer"
                         >
                           <Eye className="h-5 w-5" />
@@ -290,7 +280,7 @@ export default function MerchantManagement() {
     search,
   });
 
-  console.log(data, "proper");
+  // console.log(data, "proper");
 
   // Transform backend response → MerchantRow[]
   const merchants: MerchantRow[] =

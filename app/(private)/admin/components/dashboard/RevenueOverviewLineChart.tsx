@@ -20,7 +20,6 @@ type Props = {
   data: RevenueData[];
   height?: number;
   maxValue?: number;
-  
 };
 
 export default function RevenueOverviewLineChart({
@@ -29,6 +28,8 @@ export default function RevenueOverviewLineChart({
   maxValue = 5000,
 }: Props) {
   const { theme } = useTheme();
+
+  // console.log(data);
 
   const lineColor = theme === "dark" ? "#ffffff" : "#1f2937";
   return (

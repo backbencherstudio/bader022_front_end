@@ -29,7 +29,6 @@ export default function MonthGrid({
     days.push(day);
     day = addDays(day, 1);
   }
-
   return (
     <div className="rounded-xl overflow-auto border border-t-0 rounded-t-none">
       <div className="min-w-200 overflow-auto">

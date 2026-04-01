@@ -21,37 +21,6 @@ export type TData = {
   name: string;
   revenue: number;
 };
-
-// const monthlyData: TData[] = [
-//   { name: "Jan", revenue: 450 },
-//   { name: "Feb", revenue: 300 },
-//   { name: "Mar", revenue: 150 },
-//   { name: "Apr", revenue: 300 },
-//   { name: "May", revenue: 150 },
-//   { name: "Jun", revenue: 300 },
-//   { name: "Jul", revenue: 500 },
-//   { name: "Aug", revenue: 300 },
-//   { name: "Sep", revenue: 150 },
-//   { name: "Oct", revenue: 300 },
-//   { name: "Nov", revenue: 150 },
-//   { name: "Dec", revenue: 500 },
-// ];
-// const weeklyData: TData[] = [
-//   { name: "Sat", revenue: 150 },
-//   { name: "Sun", revenue: 300 },
-//   { name: "Mon", revenue: 150 },
-//   { name: "Tue", revenue: 250 },
-//   { name: "Wed", revenue: 150 },
-//   { name: "Thu", revenue: 300 },
-//   { name: "Fri", revenue: 500 },
-// ];
-
-// const appointments: Appointment[] = Array.from({ length: 8 }).map((_, i) => ({
-//   id: String(i),
-//   datetimeLabel: "Feb 1t 2024, 10:30 AM",
-//   customerName: "Sarah Johnson",
-//   serviceName: "Haircut & Styling",
-// }));
 export default function DashboardPage() {
   const {
     data: dashboardOverview,

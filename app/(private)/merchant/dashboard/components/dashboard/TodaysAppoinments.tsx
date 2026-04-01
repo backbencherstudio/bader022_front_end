@@ -9,7 +9,7 @@ export type Appointment = {
 };
 
 function AppointmentRow({ item }: { item: Appointment }) {
-  console.log(item);
+  // console.log(item);
 
   return (
     <div className="relative flex gap-4">
@@ -77,7 +77,7 @@ export function TodaysAppointments({
           <div className="space-y-0">
             {items.length === 0 ? (
               <div className="relative flex gap-4">
-                <div className="relative z-10 mt-[2px] flex h-6 w-6 items-center justify-center rounded-full bg-muted/40">
+                <div className="relative z-10 mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-muted/40">
                   <div className="h-2 w-2 rounded-full bg-foreground" />
                 </div>
 

@@ -73,8 +73,7 @@ export default function PackageTab() {
   const pageSize = 10; // You can adjust this value
 
   const { data, isLoading } = useGetSubscriptionsPlanQuery(filters);
-  console.log(data, "--------------")
- 
+  // console.log(data, "--------------")
 
   // Get all plans from API
   const allPlans: SubscriptionPlan[] = data?.data || [];
@@ -83,10 +82,7 @@ export default function PackageTab() {
   const totalItems = allPlans.length;
 
   // Calculate paginated data
-  const paginatedPlans = allPlans.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
+  const paginatedPlans = allPlans.slice((page - 1) * pageSize, page * pageSize);
 
   // Reset page when filters change
   useEffect(() => {
@@ -206,7 +202,9 @@ export default function PackageTab() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30">
-                <TableHead className="pl-8 text-[#777980]">Package Name</TableHead>
+                <TableHead className="pl-8 text-[#777980]">
+                  Package Name
+                </TableHead>
                 <TableHead className="text-[#777980]">Business Type</TableHead>
                 <TableHead className="text-[#777980]">Duration</TableHead>
                 <TableHead className="text-[#777980]">Price</TableHead>
@@ -219,9 +217,7 @@ export default function PackageTab() {
             <TableBody>
               {paginatedPlans.map((plan: SubscriptionPlan) => (
                 <TableRow key={plan.id}>
-                  <TableCell className="pl-8 ">
-                    {plan.name}
-                  </TableCell>
+                  <TableCell className="pl-8 ">{plan.name}</TableCell>
 
                   <TableCell>{plan.package}</TableCell>
 
@@ -248,10 +244,7 @@ export default function PackageTab() {
                         <ViewPackage id={plan.id} />
                       </button>
 
-                      <PackagePlanUpdateModal
-                        id={plan.id}
-                        plan={plan}
-                      />
+                      <PackagePlanUpdateModal id={plan.id} plan={plan} />
                     </div>
                   </TableCell>
                 </TableRow>

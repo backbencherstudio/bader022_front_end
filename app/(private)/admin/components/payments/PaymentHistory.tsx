@@ -4,17 +4,34 @@ import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Download, SaudiRiyal, Search } from "lucide-react";
 import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
 import { PaymentModal } from "./PaymentModal";
-import { useGetPaymentHistoryQuery, useLazyAdmininvoiceDownloadQuery } from "@/redux/features/admin/adminApi";
+import {
+  useGetPaymentHistoryQuery,
+  useLazyAdmininvoiceDownloadQuery,
+} from "@/redux/features/admin/adminApi";
 
 type PaymentStatus = "successful" | "failed" | "pending";
 
 export default function PaymentHistory() {
-  const [triggerInvoiceDownload, { isLoading: downloading }] = useLazyAdmininvoiceDownloadQuery();
+  const [triggerInvoiceDownload, { isLoading: downloading }] =
+    useLazyAdmininvoiceDownloadQuery();
 
   const handleDownload = async (bookingID: number) => {
     try {
@@ -27,13 +44,13 @@ export default function PaymentHistory() {
       // Optional: revoke URL after a delay to allow tab to load
       setTimeout(() => window.URL.revokeObjectURL(url), 1000);
     } catch (err) {
-      console.error("Error previewing invoice:", err);
+      // console.error("Error previewing invoice:", err);
     }
   };
 
   const [search, setSearch] = useState("");
-      
-  const [query, setQuery] = useState("");         
+
+  const [query, setQuery] = useState("");
   const [packageFilter, setPackageFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
@@ -52,13 +69,17 @@ export default function PaymentHistory() {
   const { data, isLoading, isError } = useGetPaymentHistoryQuery(filters);
 
   const totalItems =
-    data?.meta?.total ?? data?.meta?.totalItems ?? data?.total ?? data?.data?.length ?? 0;
+    data?.meta?.total ??
+    data?.meta?.totalItems ??
+    data?.total ??
+    data?.data?.length ??
+    0;
 
   // Reset page when filters change
   useEffect(() => {
     setPage(1);
     // setPackageFilter(())
-    console.log("Filters updated:", { search, packageFilter, statusFilter });
+    // console.log("Filters updated:", { search, packageFilter, statusFilter });
   }, [search, packageFilter, statusFilter]);
 
   // Map API data to table rows
@@ -83,7 +104,8 @@ export default function PaymentHistory() {
 
   const paginatedData = rows.slice((page - 1) * pageSize, page * pageSize);
 
-  if (isLoading) return <div className="p-6 text-center">Loading payments...</div>;
+  if (isLoading)
+    return <div className="p-6 text-center">Loading payments...</div>;
 
   if (isError)
     return (
@@ -101,11 +123,15 @@ export default function PaymentHistory() {
       <CardContent className="pb-8">
         {/* Filter Bar */}
         <div className="mb-6 flex flex-wrap items-center gap-4">
-          <div className="text-base font-semibold text-muted-foreground">Filter by:</div>
+          <div className="text-base font-semibold text-muted-foreground">
+            Filter by:
+          </div>
 
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search anything" className="h-12 w-64 pl-10"
+            <Input
+              placeholder="Search anything"
+              className="h-12 w-64 pl-10"
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -120,7 +146,7 @@ export default function PaymentHistory() {
               const val = value === "all" ? "" : value;
 
               setPackageFilter(val);
-              setQuery(val); 
+              setQuery(val);
             }}
           >
             <SelectTrigger className="py-6 w-64">
@@ -159,12 +185,18 @@ export default function PaymentHistory() {
               <TableHeader>
                 <TableRow className="bg-muted/30 text-[#777980] ">
                   <TableHead className="pl-8 text-[#777980]">TX ID</TableHead>
-                  <TableHead className="text-[#777980]">Merchant Name</TableHead>
-                  <TableHead className="text-[#777980]">Business Name</TableHead>
+                  <TableHead className="text-[#777980]">
+                    Merchant Name
+                  </TableHead>
+                  <TableHead className="text-[#777980]">
+                    Business Name
+                  </TableHead>
                   <TableHead className="text-[#777980]">Package</TableHead>
                   <TableHead className="text-[#777980]">Date</TableHead>
                   <TableHead className="text-[#777980]">Amount</TableHead>
-                  <TableHead className="text-[#777980]">Payment Method</TableHead>
+                  <TableHead className="text-[#777980]">
+                    Payment Method
+                  </TableHead>
                   <TableHead className="text-[#777980]">Status</TableHead>
                   <TableHead className="pr-8 text-[#777980]">Action</TableHead>
                 </TableRow>
@@ -186,12 +218,13 @@ export default function PaymentHistory() {
                     <TableCell>{r.paymentMethod}</TableCell>
                     <TableCell>
                       <span
-                        className={`px-4 py-2 rounded-xl text-sm font-semibold border ${r.status === "successful"
-                          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                          : r.status === "failed"
-                            ? "border-red-500 bg-red-50 text-red-600"
-                            : "border-yellow-500 bg-yellow-50 text-yellow-700"
-                          }`}
+                        className={`px-4 py-2 rounded-xl text-sm font-semibold border ${
+                          r.status === "successful"
+                            ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                            : r.status === "failed"
+                              ? "border-red-500 bg-red-50 text-red-600"
+                              : "border-yellow-500 bg-yellow-50 text-yellow-700"
+                        }`}
                       >
                         {r.status === "successful"
                           ? "Successful"
@@ -201,7 +234,7 @@ export default function PaymentHistory() {
                       </span>
                     </TableCell>
                     <TableCell
-                      onClick={() => handleDownload(r.bookingID ?? r.id)}  // Fallback to r.id if bookingID is missing
+                      onClick={() => handleDownload(r.bookingID ?? r.id)} // Fallback to r.id if bookingID is missing
                       className="cursor-pointer underline"
                     >
                       <Download className="text-muted-foreground w-5" />

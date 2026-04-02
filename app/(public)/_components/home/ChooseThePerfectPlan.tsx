@@ -6,8 +6,18 @@ import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { motion, cubicBezier } from "framer-motion";
 import { MdArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import { useMerchentPlanPriceQuery } from "@/redux/features/merchant/merchantRegitraion";
 
 type Billing = "monthly" | "annual";
+
+interface Plan {
+  id: number;
+  name: string;
+  title: string;
+  price: string;
+  currency: string;
+  package: string;
+}
 
 interface PricingPlan {
   name: string;
@@ -76,19 +86,42 @@ export default function ChooseThePerfectPlan() {
   const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
 
-  /*  USE get() FOR OBJECTS */
   const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
-
   const premium = useMemo(
     () => get<PricingPlan>("Pricing.plans.premium"),
     [get],
   );
+  const { data, isLoading } = useMerchentPlanPriceQuery({});
+
+  const plans = data?.data || [];
+  // console.log(plans);
+
+  const monthlyPlan = plans.find(
+    (p: Plan) => p.package.toLowerCase() === "monthly",
+  );
+  const annualPlan = plans.find(
+    (p: Plan) => p.package.toLowerCase() === "annual",
+  );
+  const currentPremiumPlan = billing === "monthly" ? monthlyPlan : annualPlan;
 
   const basicPrice =
-    billing === "monthly" ? basic.priceMonthly : basic.priceAnnual;
+    billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
 
-  const premiumPrice =
-    billing === "monthly" ? premium.priceMonthly : premium.priceAnnual;
+  // console.log(currentPremiumPlan);
+
+  // /*  USE get() FOR OBJECTS */
+  // const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
+
+  // const premium = useMemo(
+  //   () => get<PricingPlan>("Pricing.plans.premium"),
+  //   [get],
+  // );
+
+  // const basicPrice =
+  //   billing === "monthly" ? basic.priceMonthly : basic.priceAnnual;
+
+  // const premiumPrice =
+  //   billing === "monthly" ? premium.priceMonthly : premium.priceAnnual;
 
   return (
     <section className="w-full bg-white overflow-x-hidden">
@@ -117,8 +150,8 @@ export default function ChooseThePerfectPlan() {
                 className={[
                   "py-2 px-4 rounded-full font-semibold transition-all duration-300",
                   billing === b
-                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF]"
-                    : "text-slate-700 hover:bg-white",
+                    ? "text-white bg-linear-to-r from-[#3CB3FF] to-[#7153FF] cursor-pointer"
+                    : "text-slate-700 hover:bg-white cursor-pointer",
                 ].join(" ")}
               >
                 {t(`Pricing.billing.${b}`)}
@@ -184,7 +217,9 @@ export default function ChooseThePerfectPlan() {
               <p className="py-4">{premium.desc}</p>
 
               <p>
-                <span className="text-4xl font-bold">{premiumPrice}</span>
+                <span className="text-4xl font-bold">
+                  {currentPremiumPlan?.price}
+                </span>
                 <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>
               <Link href={"/create-account"}>

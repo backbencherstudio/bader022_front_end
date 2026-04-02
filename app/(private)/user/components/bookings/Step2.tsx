@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { usePaymentInformationMutation } from "@/redux/features/userDashboard/booking";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 // Step2 Props Interface
 interface Step2Props {
@@ -79,8 +80,13 @@ export default function Step2({
           onNext();
         }
       }
-    } catch (err) {
-      console.error("Booking Error:", err);
+    } catch (err: any) {
+      // console.error("Booking Error:", err);
+      if (err?.data?.errors) {
+        toast.error(err.data.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -200,7 +206,7 @@ export default function Step2({
               onClick={handleBooking}
               disabled={isLoading}
             >
-              {isLoading ? "Booking..." : "Confirm Booking"}
+              {isLoading ? "Proceed to Payment..." : "Proceed to Payment"}
             </Button>
           </div>
         </div>

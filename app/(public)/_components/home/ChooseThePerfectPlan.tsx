@@ -171,9 +171,9 @@ export default function ChooseThePerfectPlan() {
           >
             <div className="bg-white rounded-xl p-6">
               <h3 className="text-3xl font-bold">{basic.name}</h3>
-              <p className="py-3">{basic.desc}</p>
+              <p className="py-4">{basic.desc}</p>
 
-              <p>
+              <p className="py-4">
                 <span className="text-4xl font-bold">{basicPrice}</span>
                 <span className="px-1">/{t(`Pricing.billing.${billing}`)}</span>
               </p>

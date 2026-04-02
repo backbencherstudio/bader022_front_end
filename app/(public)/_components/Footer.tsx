@@ -63,16 +63,18 @@ export default function Footer() {
           {/* Quick Links */}
           <FooterColumn title={t("Footer.quickLinks.title")}>
             <FooterLink href="/">{t("Footer.quickLinks.home")}</FooterLink>
-            <FooterLink href="/features">
-              {t("Footer.quickLinks.features")}
+            <FooterLink href="/#services">
+              {t("Footer.quickLinks.services")}
             </FooterLink>
-            <FooterLink href="/faq">{t("Footer.quickLinks.faqs")}</FooterLink>
+            <FooterLink href="/#faq-section">
+              {t("Footer.quickLinks.faqs")}
+            </FooterLink>
             <FooterLink href="/pricing">
               {t("Footer.quickLinks.pricing")}
             </FooterLink>
-            <FooterLink href="/contact">
+            {/* <FooterLink href="/contact">
               {t("Footer.quickLinks.contact")}
-            </FooterLink>
+            </FooterLink> */}
           </FooterColumn>
 
           {/* Areas Served */}
@@ -89,10 +91,10 @@ export default function Footer() {
           {/* Contact */}
           <FooterColumn title={t("Footer.contact.title")}>
             <FooterText>{t("Footer.contact.desc")}</FooterText>
-            <FooterText className="mt-3 font-medium">
+            {/* <FooterText className="mt-3 font-medium">
               {t("Footer.contact.phone")}
             </FooterText>
-            <FooterText>{t("Footer.contact.email")}</FooterText>
+            <FooterText>{t("Footer.contact.email")}</FooterText> */}
             <FooterText>{t("Footer.contact.address")}</FooterText>
           </FooterColumn>
         </div>

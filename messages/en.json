@@ -284,12 +284,42 @@
     "subtitleLine2": "features built to support your business from day one.",
     "button": "Start Accepting Bookings Today"
   },
+
+"Terms": {
+    "title": "Terms & Conditions",
+    "subtitle": "Please read these terms and conditions carefully before using our platform. By accessing our services, you agree to be bound by these legal requirements.",
+    "legal_update": "Last Updated: April 2, 2026",
+    "contact_title": "Questions about our terms?",
+    "contact_text": "If you have any questions regarding these terms, please contact our legal department at legal@yourplatform.com",
+    "items": [
+      {
+        "title": "Acceptance of Agreement",
+        "content": "By using this website, you represent that you are at least 18 years of age. These terms constitute a legally binding agreement between you and our company regarding your use of the service."
+      },
+      {
+        "title": "Account Registration",
+        "content": "To access certain features, you must register for an account. You agree to provide accurate, current, and complete information and to update such information to keep it accurate.\n\nYou are responsible for safeguarding your password and any activities under your account."
+      },
+      {
+        "title": "Merchant Responsibilities",
+        "content": "Merchants using our dashboard agree to provide authentic services to customers. Any fraudulent activity or misrepresentation of pricing will result in immediate account suspension."
+      },
+      {
+        "title": "Privacy & Data Protection",
+        "content": "Your privacy is important to us. Our Privacy Policy describes how we collect, use, and disclose your personal information. By using our services, you consent to our data practices."
+      },
+      {
+        "title": "Limitation of Liability",
+        "content": "To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, or consequential damages resulting from your use or inability to use the service."
+      }
+    ]
+  },
   "Footer": {
     "brandDesc": "Smart booking management for modern service businesses.",
     "quickLinks": {
       "title": "Quick Links",
       "home": "Home",
-      "features": "Features",
+      "services": "Services",
       "faqs": "FAQs",
       "pricing": "Pricing",
       "contact": "Contact us"
@@ -307,7 +337,7 @@
       "desc": "Do you have questions about Bokli or need help getting started?",
       "phone": "+48 (0) 3165-83887",
       "email": "Bokli@gmail.com",
-      "address": "23 Main Street, NY, USA"
+      "address": "Riyadh, Saudi Arabia "
     },
     "copyright": "All Rights Reserved.",
     "terms": "Terms & Conditions"

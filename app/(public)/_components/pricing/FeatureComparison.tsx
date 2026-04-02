@@ -4,16 +4,38 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { CheckCircle2, Check, Lock, Star } from "lucide-react";
+import { useMerchentPlanPriceQuery } from "@/redux/features/merchant/merchantRegitraion";
 
 type Row = { feature: string; free: string; premium: string };
+type Billing = "monthly" | "annual";
+interface Plan {
+  id: number;
+  name: string;
+  title: string;
+  price: string;
+  currency: string;
+  package: string;
+}
 
 export function FeatureComparison() {
   const { t, get } = useI18n();
-  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  // const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  const [billing, setBilling] = useState<Billing>("monthly");
+
+  const { data, isLoading } = useMerchentPlanPriceQuery({});
+
+  const plans = data?.data || [];
+  // console.log(plans);
+
+  const monthlyPlan = plans.find(
+    (p: Plan) => p.package.toLowerCase() === "monthly",
+  );
+
+  // console.log(monthlyPlan);
 
   // ===== Pricing Config =====
   const currency = "SAR";
-  const monthlyPrice = 210;
+  const monthlyPrice = monthlyPlan?.price;
   const annualMonths = 12;
   const annualDiscount = 0.2; // 20%
 
@@ -23,7 +45,7 @@ export function FeatureComparison() {
   const premiumMainPrice = billing === "monthly" ? monthlyPrice : annualPayable;
   const premiumSuffix = billing === "monthly" ? "/ month" : "/ year";
 
-  const formatMoney = (n: number) => `${n.toLocaleString()} ${currency}`;
+  // const formatMoney = (n: number) => `${n.toLocaleString()} ${currency}`;
 
   const rows = useMemo(() => {
     const value = get<Row[]>("FeatureComparison.rows");
@@ -235,7 +257,8 @@ export function FeatureComparison() {
                       </div>
 
                       <div className="text-3xl top-37 absolute font-semibold text-gray-900 leading-none">
-                        {formatMoney(premiumMainPrice)}
+                        {/* {formatMoney(premiumMainPrice)} */}
+                        {premiumMainPrice}
                         <span className="text-sm font-medium text-gray-600">
                           {premiumSuffix}
                         </span>

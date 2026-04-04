@@ -4,6 +4,7 @@ import { LandingPageProvider } from "@/app/(private)/merchant/dashboard/componen
 import DynamicMiniSite from "@/components/DynamicMiniSite/DynamicMiniSite";
 import NotFoundPage from "@/components/NotFoundPage";
 import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
+import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -18,6 +19,10 @@ export default function DynamicMiniSitePage() {
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
   // console.log(data);
+
+  if (!data) {
+    return <Loader />;
+  }
 
   return (
     <div>

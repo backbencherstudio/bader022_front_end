@@ -107,7 +107,7 @@ export default function BookingCheckoutStepper() {
         body: JSON.stringify(payload),
       }).then((response) => response.json());
 
-      console.log("Booking Success:", res);
+      // console.log("Booking Success:", res);
 
       setBookingId(res.booking_id);
 
@@ -117,7 +117,7 @@ export default function BookingCheckoutStepper() {
         router.push(`/booking-success?booking_id=${res.booking_id}`);
       }
     } catch (err) {
-      console.error("Booking Error:", err);
+      // console.error("Booking Error:", err);
     }
   };
 

@@ -117,6 +117,9 @@ export default function CreateAccountPage() {
       number_of_branches: Number(createAccountData.step2.number_of_branches),
       plan_id: finalPlanId,
     };
+
+    // console.log(body);
+
     try {
       const response = await registerMerchant(body).unwrap();
       // console.log(response);

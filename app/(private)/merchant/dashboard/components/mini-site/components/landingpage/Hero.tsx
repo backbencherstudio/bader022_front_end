@@ -78,7 +78,7 @@ export default function Hero() {
         >
           <div
             className="
-      max-w-xl
+      max-w-5xl
       text-white
       text-left
     "
@@ -87,7 +87,7 @@ export default function Hero() {
             <h3
               style={{
                 color: colorSystemData.headingColor,
-                fontSize: typographyData.h2Size,
+                fontSize: Number(typographyData.h2Size),
               }}
               className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
             >
@@ -97,7 +97,7 @@ export default function Hero() {
             <h1
               className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
               style={{
-                fontSize: typographyData.h1Size,
+                fontSize: Number(typographyData.h1Size),
                 color: colorSystemData.headingColor,
               }}
             >
@@ -108,7 +108,7 @@ export default function Hero() {
             <p
               style={{
                 color: colorSystemData.bodyTextColor,
-                fontSize: typographyData.bodySize,
+                fontSize: Number(typographyData.bodySize),
               }}
               className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
             >

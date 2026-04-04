@@ -59,15 +59,12 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  // console.log(
-  //   "loggg============",
-  //   getImageUrl(data.global_setting.branding_logo),
-  // );
+  // console.log("loggg============", data.global_setting.typography_h1);
   return (
     <div>
-      {/* hero section  */}
+      {/* hero section */}
       <section className="relative w-full">
-        <div className="relative w-full h-[70vh] overflow-hidden">
+        <div className="relative w-full min-h-[65vh] sm:min-h-[75vh] lg:min-h-[90vh] overflow-hidden">
           {/* Background Image */}
           <Image
             src={
@@ -75,9 +72,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             }
             alt="Hero background"
             fill
-            className="object-cover"
             priority
-            unoptimized={true}
+            unoptimized
+            className="object-cover object-center sm:object-center lg:object-cover"
           />
 
           {/* Overlay */}
@@ -85,23 +82,22 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             className="absolute inset-0"
             style={{
               backgroundColor: data.minisite.hero_overlay_color,
-              opacity: 0.05,
+              opacity: 0.25,
             }}
           />
 
           {/* Logo */}
           <div
             className={`
-                        absolute top-4 md:top-6 z-20 w-full px-4 md:px-10
-                        flex
-                        ${
-                          data.global_setting.logo_position === "center"
-                            ? "justify-center"
-                            : data.global_setting.logo_position === "right"
-                              ? "justify-end"
-                              : "justify-start"
-                        }
-                    `}
+        absolute top-4 sm:top-6 z-20 w-full px-4 sm:px-6 lg:px-10 flex
+        ${
+          data.global_setting.logo_position === "center"
+            ? "justify-center"
+            : data.global_setting.logo_position === "right"
+              ? "justify-end"
+              : "justify-start"
+        }
+      `}
           >
             <Image
               src={
@@ -109,86 +105,82 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 "/images/image 259.png"
               }
               alt="Logo"
-              width={data.global_setting.logo_size || 120}
-              height={data.global_setting.logo_size || 40}
-              className="object-contain"
+              width={120}
+              height={40}
+              className="object-contain w-25 sm:w-30 md:w-35 h-auto"
               priority
-              unoptimized={true}
+              unoptimized
             />
           </div>
 
           {/* Content */}
-          <div
-            className="lg:w-10/12 mx-auto
-        relative z-10
-        flex items-center h-full
-        px-4 md:px-10 lg:px-16 pt-30 pb-10
-    "
-          >
-            <div
-              className="
-            max-w-6xl
-            text-white
-            text-left
-        "
-            >
-              <h3
-                style={{
-                  color: data.global_setting.heading_color,
-                  fontSize: data.global_setting.typography_h2,
-                }}
-                className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
+          <div className="relative z-10 flex items-center justify-center h-full px-4 sm:px-6 lg:px-16 py-16 sm:py-20 mt-20 md:mt-30 lg:mt-40">
+            <div className="w-full container mx-auto">
+              {/* Responsive alignment wrapper */}
+              <div
+                className="max-w-2xl lg:max-w-5xl 
+                        text-center lg:text-left 
+                        mx-auto lg:mx-0"
               >
-                {data.minisite.hero_subtitle || "Care your hair"}
-              </h3>
+                {/* Subtitle */}
+                <h3
+                  style={{ color: data.global_setting.heading_color }}
+                  className="text-xs sm:text-sm uppercase tracking-wide opacity-90"
+                >
+                  {data.minisite.hero_subtitle || "Care your hair"}
+                </h3>
 
-              <h1
-                className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
-                style={{
-                  color: data.global_setting.heading_color,
-                  fontSize: data.global_setting.typography_h1,
-                }}
-              >
-                {data.minisite.hero_title ||
-                  "Nourish Your Scalp for Strong, Healthy Hair Growth"}
-              </h1>
+                {/* Title */}
+                <h1
+                  style={{ color: data.global_setting.heading_color }}
+                  className="font-bold mt-3 leading-tight 
+                       text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+                >
+                  {data.minisite.hero_title ||
+                    "Nourish Your Scalp for Strong, Healthy Hair Growth"}
+                </h1>
 
-              <p
-                style={{
-                  color: data.global_setting.body_text_color,
-                  fontSize: data.global_setting.body_text_size,
-                }}
-                className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
-              >
-                {data.minisite.hero_description ||
-                  "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
-              </p>
+                {/* Description */}
+                <p
+                  style={{ color: data.global_setting.body_text_color }}
+                  className="mt-3 text-sm sm:text-base md:text-lg lg:text-xl"
+                >
+                  {data.minisite.hero_description ||
+                    "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair."}
+                </p>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                <Link href={"/user/bookings/add-booking "}>
-                  <button
-                    style={{
-                      backgroundColor: data.global_setting.primary_color,
-                    }}
-                    className="px-6 py-3 rounded-md text-white font-medium transition
-                                 hover:opacity-90 cursor-pointer"
-                  >
-                    {data.minisite.cta_button_text || "Get Started"}
-                  </button>
-                </Link>
-                <Link href={"/user/bookings/add-booking"}>
-                  <button
-                    style={{
-                      color: data.global_setting.secondary_color,
-                      borderColor: data.global_setting.secondary_color,
-                    }}
-                    className="px-6 py-3 rounded-md border font-medium transition
-                                 hover:text-white cursor-pointer"
-                  >
-                    {data.minisite.cta_button_text_two || "Book A Consultation"}
-                  </button>
-                </Link>
+                {/* Buttons */}
+                <div
+                  className="
+              flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6
+              items-center lg:items-start
+              justify-center lg:justify-start
+            "
+                >
+                  <Link href="/user/bookings/add-booking">
+                    <button
+                      style={{
+                        backgroundColor: data.global_setting.primary_color,
+                      }}
+                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md text-white font-medium transition hover:opacity-90"
+                    >
+                      {data.minisite.cta_button_text || "Get Started"}
+                    </button>
+                  </Link>
+
+                  <Link href="/user/bookings/add-booking">
+                    <button
+                      style={{
+                        color: data.global_setting.secondary_color,
+                        borderColor: data.global_setting.secondary_color,
+                      }}
+                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md border font-medium transition hover:bg-white/10"
+                    >
+                      {data.minisite.cta_button_text_two ||
+                        "Book A Consultation"}
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

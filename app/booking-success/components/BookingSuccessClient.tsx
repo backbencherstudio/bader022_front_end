@@ -28,23 +28,6 @@ export default function BookingSuccessClient() {
     window.open(url, "_blank");
   };
 
-  // const downloadInvoice = async () => {
-  //   if (!id) return;
-  //   const res = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/confirm-invoice/${id}`,
-  //   );
-  //   const blob = await res.blob();
-  //   const url = window.URL.createObjectURL(blob);
-
-  //   const link = document.createElement("a");
-  //   link.href = url;
-  //   link.download = `invoice_${id}.pdf`;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   link.remove();
-  //   window.URL.revokeObjectURL(url);
-  // };
-
   if (!bookingId)
     return <p style={{ padding: 40, color: "red" }}>No booking ID provided</p>;
 
@@ -62,7 +45,9 @@ export default function BookingSuccessClient() {
 
   return (
     <Card className="rounded-2xl p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-      <h3 className="text-center text-5xl font-bold text-green-500 my-3">Booking Confirmed!</h3>
+      <h3 className="text-center text-5xl font-bold text-green-500 my-3">
+        Booking Confirmed!
+      </h3>
       <div className="text-center">
         <p className="text-sm">
           Booking ID:{" "}
@@ -76,7 +61,6 @@ export default function BookingSuccessClient() {
             </div>
           </div>
         </div>
-         
 
         <p className="text-sm max-w-130 mx-auto leading-6">
           Your appointment is successfully booked. A confirmation email has been

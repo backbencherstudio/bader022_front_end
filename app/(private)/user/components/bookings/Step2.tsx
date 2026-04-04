@@ -130,11 +130,11 @@ export default function Step2({
                     }
                   />
                 </div>
-                <div>
+                {/* <div>
                   <Label>Phone *</Label>
                   <Input
                     className="mt-2"
-                    type="text"
+                    type="phone"
                     placeholder="017xxxxxxxx"
                     value={formData.phone}
                     onChange={(e) =>
@@ -143,6 +143,24 @@ export default function Step2({
                         phone: e.target.value,
                       })
                     }
+                  />
+                </div> */}
+                <div>
+                  <Label>Phone *</Label>
+                  <Input
+                    className="mt-2"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    placeholder="05XXXXXXXX"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, ""); // only numbers
+                      setFormData({
+                        ...formData,
+                        phone: value,
+                      });
+                    }}
                   />
                 </div>
               </div>

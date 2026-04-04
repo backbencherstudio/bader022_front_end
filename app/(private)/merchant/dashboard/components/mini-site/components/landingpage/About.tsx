@@ -22,7 +22,7 @@ export default function About() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* Image */}
-          <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
+          <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
             {aboutData.aboutPreviewImage ? (
               <Image
                 src={aboutData.aboutPreviewImage}

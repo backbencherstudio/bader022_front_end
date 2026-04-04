@@ -86,7 +86,7 @@ export default function Hero() {
             {/* {heroData.heroSubtitle && ( */}
             <h3
               style={{
-                // color: colorSystemData.headingColor,
+                color: colorSystemData.headingColor,
                 fontSize: typographyData.h2Size,
               }}
               className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
@@ -98,7 +98,7 @@ export default function Hero() {
               className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
               style={{
                 fontSize: typographyData.h1Size,
-                // color: colorSystemData.headingColor,
+                color: colorSystemData.headingColor,
               }}
             >
               {heroData.heroTitle ||
@@ -107,7 +107,7 @@ export default function Hero() {
             {/* {heroData.heroDescription && ( */}
             <p
               style={{
-                // color: colorSystemData.bodyTextColor,
+                color: colorSystemData.bodyTextColor,
                 fontSize: typographyData.bodySize,
               }}
               className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "

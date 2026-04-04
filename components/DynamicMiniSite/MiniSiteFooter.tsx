@@ -61,7 +61,10 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src={getImageUrl(data.global_setting.branding_logo as string)}
+                src={
+                  getImageUrl(data.global_setting.branding_logo as string) ||
+                  "/images/image 259.png"
+                }
                 alt={data.global_setting.website_name || ""}
                 width={40}
                 height={40}
@@ -70,7 +73,8 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             </div>
 
             <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
-              {data.global_setting.footer_des}
+              {data.global_setting.footer_des ||
+                "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
             </p>
 
             {/* Social Links */}
@@ -170,21 +174,21 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <IconCircle>
                   <FaPhoneAlt />
                 </IconCircle>
-                {data.global_setting.contact_info}
+                {data.global_setting.contact_info || "097515......."}
               </li>
 
               <li className="flex items-center gap-3">
                 <IconCircle>
                   <FaEnvelope />
                 </IconCircle>
-                {data.global_setting.contact_email}
+                {data.global_setting.contact_email || "example@gmail.com"}
               </li>
 
               <li className="flex items-center gap-3">
                 <IconCircle>
                   <FaMapMarkerAlt />
                 </IconCircle>
-                {data.global_setting.country}
+                {data.global_setting.country || "Jeddah Saudi Arabia"}
               </li>
             </ul>
           </div>

@@ -59,7 +59,10 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log("loggg============", data.global_setting.branding_logo);
+  // console.log(
+  //   "loggg============",
+  //   getImageUrl(data.global_setting.branding_logo),
+  // );
   return (
     <div>
       {/* hero section  */}
@@ -67,7 +70,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         <div className="relative w-full h-[70vh] overflow-hidden">
           {/* Background Image */}
           <Image
-            src={getImageUrl(data?.minisite?.hero_image)}
+            src={
+              getImageUrl(data?.minisite?.hero_image) || "/images/heroImage.png"
+            }
             alt="Hero background"
             fill
             className="object-cover"
@@ -99,7 +104,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     `}
           >
             <Image
-              src={getImageUrl(data.global_setting.branding_logo)}
+              src={
+                getImageUrl(data.global_setting.branding_logo) ||
+                "/images/image 259.png"
+              }
               alt="Logo"
               width={data.global_setting.logo_size || 120}
               height={data.global_setting.logo_size || 40}
@@ -131,7 +139,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
               >
-                {data.minisite.hero_subtitle}
+                {data.minisite.hero_subtitle || "Care your hair"}
               </h3>
 
               <h1
@@ -141,7 +149,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   fontSize: data.global_setting.typography_h1,
                 }}
               >
-                {data.minisite.hero_title}
+                {data.minisite.hero_title ||
+                  "Nourish Your Scalp for Strong, Healthy Hair Growth"}
               </h1>
 
               <p
@@ -151,12 +160,13 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
               >
-                {data.minisite.hero_description}
+                {data.minisite.hero_description ||
+                  "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
               </p>
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                <Link href={"/user/bookings/add-booking"}>
+                <Link href={"/user/bookings/add-booking "}>
                   <button
                     style={{
                       backgroundColor: data.global_setting.primary_color,
@@ -164,7 +174,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     className="px-6 py-3 rounded-md text-white font-medium transition
                                  hover:opacity-90 cursor-pointer"
                   >
-                    {data.minisite.cta_button_text}
+                    {data.minisite.cta_button_text || "Get Started"}
                   </button>
                 </Link>
                 <Link href={"/user/bookings/add-booking"}>
@@ -176,7 +186,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     className="px-6 py-3 rounded-md border font-medium transition
                                  hover:text-white cursor-pointer"
                   >
-                    {data.minisite.cta_button_text_two}
+                    {data.minisite.cta_button_text_two || "Book A Consultation"}
                   </button>
                 </Link>
               </div>
@@ -190,7 +200,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         style={{
           backgroundColor: data.minisite.background_color || "transparent",
           // marginTop: data.global_setting.section_spacing,
-          paddingTop: `${data.minisite.about_padding}px`,
+          paddingTop: `${data.minisite.about_padding || 40}px`,
           paddingBottom: `${data.minisite.about_padding}px`,
         }}
         className="transition-colors dark:bg-gray-900"
@@ -198,9 +208,12 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             {/* Image */}
-            <div className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
+            <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
               <Image
-                src={getImageUrl(data?.minisite?.about_hero_image)}
+                src={
+                  getImageUrl(data?.minisite?.about_hero_image) ||
+                  "/images/miniwebsitebuilder2.png"
+                }
                 alt="About Us"
                 fill
                 className="object-cover"
@@ -218,7 +231,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white"
               >
-                {data.minisite.about_title}
+                {data.minisite.about_title ||
+                  "Elevate Your Look with Bespoke Hair Care & Expert"}
               </h3>
 
               <p
@@ -228,7 +242,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="text-gray-600 dark:text-gray-300 mb-6"
               >
-                {data.minisite.about_description}
+                {data.minisite.about_description ||
+                  "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication."}
               </p>
 
               <button
@@ -265,7 +280,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             }}
             className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white"
           >
-            {data.why_choose_us.section_title}
+            {data.why_choose_us.section_title || "Why We’re Right Choice"}
           </h3>
 
           {/* Subtitle */}
@@ -276,7 +291,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             }}
             className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12"
           >
-            {data.why_choose_us.section_subtitle}
+            {data.why_choose_us.section_subtitle ||
+              "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results"}
           </p>
 
           {/* Feature Cards */}
@@ -286,14 +302,14 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                          bg-white 
+                          bg-gray-100 text-black dark:bg-gray-700 dark:text-white
                           border border-gray-200 dark:border-gray-700
                           shadow-sm hover:shadow-md
                           transition
                         "
               >
                 {/* Icon */}
-                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                <div className="relative w-14 h-14 rounded-full bg-gray-100 text-black dark:bg-gray-700 dark:text-white overflow-hidden">
                   <Image
                     src={
                       getImageUrl(
@@ -313,14 +329,16 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     style={{ color: data.global_setting.heading_color }}
                     className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                   >
-                    {data.why_choose_us.feature_one_title}
+                    {data.why_choose_us.feature_one_title ||
+                      "Certified Hair Experts"}
                   </h3>
 
                   <p
                     style={{ color: data.global_setting.body_text_color }}
                     className="text-gray-600 dark:text-gray-300 line-clamp-2"
                   >
-                    {data.why_choose_us.feature_one_des}
+                    {data.why_choose_us.feature_one_des ||
+                      "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise"}
                   </p>
                 </div>
               </div>
@@ -330,7 +348,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                          bg-white 
+                          bg-gray-100 text-black dark:bg-gray-700 dark:text-white
                           border border-gray-200 dark:border-gray-700
                           shadow-sm hover:shadow-md
                           transition
@@ -357,14 +375,16 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     style={{ color: data.global_setting.heading_color }}
                     className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                   >
-                    {data.why_choose_us.feature_two_title}
+                    {data.why_choose_us.feature_two_title ||
+                      "FDA-Approved Products"}
                   </h3>
 
                   <p
                     style={{ color: data.global_setting.body_text_color }}
                     className="text-gray-600 dark:text-gray-300 line-clamp-2"
                   >
-                    {data.why_choose_us.feature_two_des}
+                    {data.why_choose_us.feature_two_des ||
+                      "We use only FDA-approved products that meet the highest safety and quality standards, ensuring every treatment"}
                   </p>
                 </div>
               </div>
@@ -374,7 +394,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                          bg-white 
+                         bg-gray-100 text-black dark:bg-gray-700 dark:text-white
                           border border-gray-200 dark:border-gray-700
                           shadow-sm hover:shadow-md
                           transition
@@ -403,14 +423,16 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     style={{ color: data.global_setting.heading_color }}
                     className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                   >
-                    {data.why_choose_us.feature_three_title}
+                    {data.why_choose_us.feature_three_title ||
+                      "Personalized Treatment"}
                   </h3>
 
                   <p
                     style={{ color: data.global_setting.body_text_color }}
                     className="text-gray-600 dark:text-gray-300 line-clamp-2"
                   >
-                    {data.why_choose_us.feature_three_des}
+                    {data.why_choose_us.feature_three_des ||
+                      "We customize every hair treatment to match your unique texture, concerns, and goals, ensuring results that are tailored"}
                   </p>
                 </div>
               </div>
@@ -439,7 +461,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               }}
               className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
             >
-              {data.minisite.service_title}
+              {data.minisite.service_title ||
+                "Customized Hair Treatments & Styling to Suit You"}
             </h3>
 
             <div className="flex flex-col md:flex-row gap-4 md:justify-between">
@@ -451,7 +474,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="text-gray-600 dark:text-gray-300 max-w-4xl"
               >
-                {data.minisite.service_description}
+                {data.minisite.service_description ||
+                  "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
               </p>
               <button
                 style={{
@@ -547,7 +571,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
         className="relative"
         // style={{ marginTop: layoutSettingsData.sectionSpacing }}
       >
-        <div className="relative min-h-[360px] sm:min-h-[320px]">
+        <div className="relative min-h-90 sm:min-h-80">
           {/* Background Image */}
           <Image
             src={
@@ -567,7 +591,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           {/* Content */}
           <div
             style={{
-              padding: data.minisite.cta_padding,
+              padding: data.minisite.cta_padding || 40,
             }}
             className="
             relative z-10
@@ -585,7 +609,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               }}
               className="text-xl sm:text-2xl md:text-3xl font-bold"
             >
-              {data.minisite.cta_title}
+              {data.minisite.cta_title || "Your Hair Deserves the Best Care"}
             </h2>
 
             <p
@@ -595,7 +619,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               }}
               className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
             >
-              {data.minisite.cta_subtitle}
+              {data.minisite.cta_subtitle ||
+                "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
             </p>
 
             <Link href={"/user/bookings/add-booking"}>

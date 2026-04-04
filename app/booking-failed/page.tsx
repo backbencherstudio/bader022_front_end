@@ -3,14 +3,21 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authorize } from "@/lib/auth";
 
 export default function BookingFailedPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const auth = authorize(["User"]);
+    if (!auth.authorized) {
+      router.push("/");
+    }
+  }, []);
+
+  useEffect(() => {
     // Show error toast
     toast.error("Booking Payment Failed");
-
     // Redirect after 2 seconds
     const timer = setTimeout(() => {
       router.push("/user/bookings");

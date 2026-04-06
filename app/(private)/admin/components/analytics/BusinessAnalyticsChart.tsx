@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { useGetBuesnessAnalyticsQuery } from "@/redux/features/admin/adminApi";
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 
@@ -13,13 +14,7 @@ type BusinessAnalyticsResponse = {
   categories: BusinessCategory[];
 };
 
-const COLORS = [
-  "#7D4CB5",
-  "#F6C000",
-  "#2E3DBB",
-  "#0A1423",
-  "#E6E6E6",
-];
+const COLORS = ["#7D4CB5", "#F6C000", "#2E3DBB", "#0A1423", "#E6E6E6"];
 
 // snake_case → Title Case
 const formatCategory = (text: string) => {
@@ -66,6 +61,7 @@ const renderSliceLabel = ({
 };
 
 export default function BusinessTypeAnalyticsChart() {
+  const { t, locale } = useI18n();
   const { data, isLoading } = useGetBuesnessAnalyticsQuery({}) as {
     data?: BusinessAnalyticsResponse;
     isLoading: boolean;
@@ -73,20 +69,25 @@ export default function BusinessTypeAnalyticsChart() {
 
   const analyticsData: BusinessCategory[] = data?.categories || [];
 
-  const chartData = analyticsData.map((item: BusinessCategory, index: number) => ({
-    name: formatCategory(item.business_category),
-    value: item.total,
-    color: COLORS[index % COLORS.length],
-  }));
+  const chartData = analyticsData.map(
+    (item: BusinessCategory, index: number) => ({
+      name: formatCategory(item.business_category),
+      value: item.total,
+      color: COLORS[index % COLORS.length],
+    }),
+  );
 
   const totalMerchants = data?.total_merchants || 0;
 
   return (
     <div className="w-full bg-white p-4 dark:bg-gray-800">
       {/* Title */}
-      <h2 className="text-xl font-medium mb-6">
-        Business Type Analytics
-      </h2>
+
+      {locale === "ar" ? (
+        <h2 className="text-xl font-medium mb-6">تحليلات الاشتراكات</h2>
+      ) : (
+        <h2 className="text-xl font-medium mb-6">Business Type Analytics</h2>
+      )}
 
       {/* Chart */}
       <div className="w-full h-80 flex justify-center items-center">

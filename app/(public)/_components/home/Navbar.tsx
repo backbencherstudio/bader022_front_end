@@ -27,23 +27,6 @@ export default function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
   // console.log(user);
 
-  // const NavLinks = ({ onClick }: { onClick?: () => void }) => (
-  //   <>
-  //     <Link href="/" onClick={onClick}>
-  //       {t("Nav.home")}
-  //     </Link>
-  //     <Link href="/#services" onClick={onClick}>
-  //       {t("Nav.services")}
-  //     </Link>
-  //     <Link href="/#faq-section" onClick={onClick}>
-  //       {t("Nav.faqs")}
-  //     </Link>
-  //     <Link href="/pricing" onClick={onClick}>
-  //       {t("Nav.pricing")}
-  //     </Link>
-  //   </>
-  // );
-
   const pathname = usePathname();
   const [activeHash, setActiveHash] = useState("");
 

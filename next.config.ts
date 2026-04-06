@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "bader",
       },
+      {
+        protocol: "https",
+        hostname: "backend.bokli.io",
+      },
     ],
   },
 };

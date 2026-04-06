@@ -481,5 +481,152 @@
   },
   "common": {
     "cancel": "Cancel"
+  },
+    "Topbar": {
+    "welcome": "Welcome back, {{name}}!",
+    "subtitle": "Your booking page is live and ready to accept bookings",
+    "visitWebsite": "Visit Website",
+    "notifications": "Notifications",
+    "toggleTheme": "Toggle Theme"
+  },
+  "Admin": {
+      "Sidebar": {
+        "dashboard": "Dashboard",
+        "merchants": "Merchants",
+        "payments": "Payments",
+        "subscriptions": "Subscriptions",
+        "analytics": "Analytics",
+        "settings": "Settings",
+        "logout": "Logout"
+      },
+      "Dashboard": {
+      "revenue": "Revenue",
+      "totalMerchants": "Total Merchants",
+      "premiumUsers": "Premium Users",
+      "basicUsers": "Basic Users",
+      "revenueStats": "Revenue Statistics",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },    
+     "Merchants": {
+      "title": "Merchant Management",
+      "search": "Search anything",
+      "viewAll": "View All",
+      "noData": "No merchants found.",
+      "loading": "Loading merchants...",
+      "error": "Failed to load merchants.",
+      "columns": {
+        "businessName": "Business Name",
+        "businessType": "Business Type",
+        "email": "Email Address",
+        "package": "Package",
+        "planType": "Plan Type",
+        "expireDate": "Expire Date",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "pending": "Pending",
+        "expired": "Expired",
+        "cancelled": "Cancelled"
+      }
+    },
+    "Pagination": {
+    "showing": "Showing {{start}}-{{end}} of {{total}} results",
+    "previous": "Previous",
+    "next": "Next"
+       },
+    "PaymentHistory": {
+      "title": "Payment History",
+      "filterBy": "Filter by",
+      "searchPlaceholder": "Search anything",
+      "package": "Package",
+      "status": "Status",
+      "all": "All",
+      "basic": "Basic",
+      "premium": "Premium",
+      "paid": "Paid",
+      "failed": "Failed",
+      "due": "Due",
+      "txId": "TX ID",
+      "merchantName": "Merchant Name",
+      "businessName": "Business Name",
+      "date": "Date",
+      "amount": "Amount",
+      "paymentMethod": "Payment Method",
+      "action": "Action",
+      "successful": "Successful",
+      "pending": "Pending",
+      "loading": "Loading payments...",
+      "error": "Failed to load payment history"
+    },
+    "SubscriptionAnalytics": {
+      "totalPackages": "Total Packages",
+      "activeSubscriptions": "Active Subscriptions",
+      "expiredSubscriptions": "Expired Subscriptions",
+      "expiringSoon": "Expiring Soon",
+      "expiringSoonDesc": "(Within the next 7 days)"
+    },
+    "ActiveSubscription": {
+      "businessName": "Business Name",
+      "package": "Package",
+      "planType": "Plan Type",
+      "price": "Price",
+      "startDate": "Start Date",
+      "expiryDate": "Expiry Date",
+      "remainingDays": "Remaining Days",
+      "subscriptionStatus": "Subscription Status",
+      "action": "Action"
+    },
+    "SubscriptionPages": {
+      "package": "Package",
+       "businessName": "Business Name",
+      "duration": "Duration",
+      "price": "Price",
+      "packageStatus": "Package Status",
+      "createdOn": "Created On",
+      "action": "Action"
+    },
+     "MerchantDetails": {
+      "title": "Merchant Details",
+      "subtitle": "View & manage merchant information",
+      "back": "Back",
+
+      "businessInfo": "Business Information",
+      "packageInfo": "Package Info",
+      "paymentHistory": "Payment History",
+
+      "ownerName": "Owner Name",
+      "phone": "Phone",
+      "email": "Email",
+      "location": "Location",
+      "websiteDomain": "Website Domain",
+      "platformStatus": "Platform Status",
+      "platformAccess": "Platform Access",
+
+      "currentPackage": "Current Package",
+      "packageDuration": "Package Duration",
+      "packageStartDate": "Package Start Date",
+      "expireDate": "Expire Date",
+      "remainingDays": "Remaining Days",
+      "packageStatus": "Package Status",
+
+      "invoiceId": "Invoice ID",
+      "paymentDate": "Payment Date",
+      "amountPaid": "Amount Paid",
+      "paymentStatus": "Payment Status",
+
+      "noPayments": "No payments found",
+      "loading": "Loading merchant...",
+      "error": "Failed to load merchant"
+    }, 
+    "AccountSettings": {
+    "title": "Settings",
+    "personalInfo": "Personal Info",
+    "password": "Password",
+    "tapKey": "Tap-key",
+    "menu": "Menu"
   }
+    }
 }

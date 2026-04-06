@@ -28,6 +28,7 @@ import { ViewSubscriptionModal } from "./ViewSubscriptionModal";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type PackageStatus = "active" | "pending" | "expired" | "cancelled";
 
@@ -103,6 +104,8 @@ function StatusPill({ status }: { status: PackageStatus }) {
 }
 
 export default function Packages() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -123,7 +126,6 @@ export default function Packages() {
   const pageSize = 10; // You can adjust this value
 
   const { data } = useGetSubscriptionsQuery(filters);
-  
 
   const rows: SubscriptionRow[] = (data?.data || []).map(
     (item: SubscriptionApiItem) => ({
@@ -137,24 +139,19 @@ export default function Packages() {
       expiryDate: new Date(item.expiry_date).toLocaleDateString(),
       remainingDays: `${item.remaining_days} days`,
       status: item.status,
-    })
+    }),
   );
 
- 
   const totalItems = rows.length;
 
- 
-  const paginatedRows = rows.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
+  const paginatedRows = rows.slice((page - 1) * pageSize, page * pageSize);
 
   useEffect(() => {
     setPage(1);
   }, [filters]);
 
   return (
-    <div>
+    <div dir={isRTL ? "rtl" : "ltr"}>
       <div className="w-full rounded-xl p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <Tabs value={activeTab} onValueChange={handleTabChange}>
           <div className="flex justify-between">
@@ -163,14 +160,14 @@ export default function Packages() {
                 value="packages"
                 className="data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black"
               >
-                Packages
+                {locale === "ar" ? "الباقات" : "Packages"}
               </TabsTrigger>
 
               <TabsTrigger
                 value="active_subscription"
                 className="data-[state=active]:bg-black cursor-pointer data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black"
               >
-                Active Subscription
+                {locale === "ar" ? "الاشتراكات النشطة" : "Active Subscription"}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -284,17 +281,33 @@ export default function Packages() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/30">
-                      <TableHead className="pl-8 text-[#777980]">Business Name</TableHead>
-                      <TableHead className="text-[#777980]">Package</TableHead>
-                      <TableHead className="text-[#777980]">Plan Type</TableHead>
-                      <TableHead className="text-[#777980]">Price</TableHead>
-                      <TableHead className="text-[#777980]">Start Date</TableHead>
-                      <TableHead className="text-[#777980]">Expiry date</TableHead>
-                      <TableHead className="pr-8 text-[#777980]">Remaining Days</TableHead>
-                      <TableHead className="pr-8 text-[#777980]">
-                        Subscription Status
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.businessName")}
                       </TableHead>
-                      <TableHead className="pr-8 text-[#777980]">Action</TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.package")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.planType")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.price")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.startDate")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.expiryDate")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.remainingDays")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.subscriptionStatus")}
+                      </TableHead>
+                      <TableHead>
+                        {t("Admin.ActiveSubscription.action")}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
 

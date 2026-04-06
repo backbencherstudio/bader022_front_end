@@ -476,5 +476,152 @@
   },
   "common": {
     "cancel": "إلغاء"
+  },
+    "Topbar": {
+    "welcome": "مرحبًا بعودتك، {{name}}!",
+    "subtitle": "صفحة الحجز الخاصة بك جاهزة لاستقبال الحجوزات",
+    "visitWebsite": "زيارة الموقع",
+    "notifications": "الإشعارات",
+    "toggleTheme": "تبديل الوضع"
+  },
+    "Admin": {
+    "Sidebar": {
+      "dashboard": "لوحة التحكم",
+      "merchants": "التجار",
+      "payments": "المدفوعات",
+      "subscriptions": "الاشتراكات",
+      "analytics": "التحليلات",
+      "settings": "الإعدادات",
+      "logout": "تسجيل الخروج"
+    },
+     "Dashboard": {
+      "revenue": "الإيرادات",
+      "totalMerchants": "إجمالي التجار",
+      "premiumUsers": "المستخدمون المميزون",
+      "basicUsers": "المستخدمون الأساسيون",
+      "revenueStats": "إحصائيات الإيرادات",
+      "weekly": "أسبوعي",
+      "monthly": "شهري"
+    },
+     "Merchants": {
+      "title": "إدارة التجار",
+      "search": "ابحث عن أي شيء",
+      "viewAll": "عرض الكل",
+      "noData": "لا يوجد تجار",
+      "loading": "جارٍ تحميل التجار...",
+      "error": "فشل في تحميل التجار",
+      "columns": {
+        "businessName": "اسم النشاط",
+        "businessType": "نوع النشاط",
+        "email": "البريد الإلكتروني",
+        "package": "الباقة",
+        "planType": "نوع الخطة",
+        "expireDate": "تاريخ الانتهاء",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "pending": "قيد الانتظار",
+        "expired": "منتهي",
+        "cancelled": "ملغي"
+      }
+    },
+    "Pagination": {
+    "showing": "عرض {{start}}-{{end}} من {{total}} نتيجة",
+    "previous": "السابق",
+    "next": "التالي"
+  },
+   "PaymentHistory": {
+      "title": "سجل المدفوعات",
+      "filterBy": "تصفية حسب",
+      "searchPlaceholder": "ابحث...",
+      "package": "الباقة",
+      "status": "الحالة",
+      "all": "الكل",
+      "basic": "أساسي",
+      "premium": "مميز",
+      "paid": "مدفوع",
+      "failed": "فشل",
+      "due": "مستحق",
+      "txId": "رقم المعاملة",
+      "merchantName": "اسم التاجر",
+      "businessName": "اسم النشاط",
+      "date": "التاريخ",
+      "amount": "المبلغ",
+      "paymentMethod": "طريقة الدفع",
+      "action": "الإجراء",
+      "successful": "ناجح",
+      "pending": "قيد الانتظار",
+      "loading": "جاري تحميل المدفوعات...",
+      "error": "فشل في تحميل سجل المدفوعات"
+    },
+   "SubscriptionAnalytics": {
+      "totalPackages": "إجمالي الباقات",
+      "activeSubscriptions": "الاشتراكات النشطة",
+      "expiredSubscriptions": "الاشتراكات المنتهية",
+      "expiringSoon": "قريباً تنتهي",
+      "expiringSoonDesc": "(خلال 7 أيام القادمة)"
+    },
+    "ActiveSubscription": {
+      "businessName": "اسم النشاط التجاري",
+      "package": "الباقة",
+      "planType": "نوع الخطة",
+      "price": "السعر",
+      "startDate": "تاريخ البداية",
+      "expiryDate": "تاريخ الانتهاء",
+      "remainingDays": "الأيام المتبقية",
+      "subscriptionStatus": "حالة الاشتراك",
+      "action": "الإجراء"
+    },
+    "SubscriptionPages": {
+      "package": "الباقة",
+      "businessName":  "اسم النشاط التجاري",
+      "duration": "المدة",
+      "price": "السعر",
+      "packageStatus": "حالة الباقة",
+      "createdOn": "تاريخ الإنشاء",
+      "action": "الإجراء"
+    },
+    "MerchantDetails": {
+      "title": "تفاصيل التاجر",
+      "subtitle": "عرض وإدارة معلومات التاجر",
+      "back": "رجوع",
+
+      "businessInfo": "معلومات النشاط التجاري",
+      "packageInfo": "معلومات الباقة",
+      "paymentHistory": "سجل المدفوعات",
+
+      "ownerName": "اسم المالك",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "location": "الموقع",
+      "websiteDomain": "نطاق الموقع",
+      "platformStatus": "حالة المنصة",
+      "platformAccess": "وصول المنصة",
+
+      "currentPackage": "الباقة الحالية",
+      "packageDuration": "مدة الباقة",
+      "packageStartDate": "تاريخ بداية الباقة",
+      "expireDate": "تاريخ الانتهاء",
+      "remainingDays": "الأيام المتبقية",
+      "packageStatus": "حالة الباقة",
+
+      "invoiceId": "رقم الفاتورة",
+      "paymentDate": "تاريخ الدفع",
+      "amountPaid": "المبلغ المدفوع",
+      "paymentStatus": "حالة الدفع",
+
+      "noPayments": "لا توجد مدفوعات",
+      "loading": "جاري تحميل التاجر...",
+      "error": "فشل في تحميل التاجر"
+    },
+    "AccountSettings": {
+    "title": "الإعدادات",
+    "personalInfo": "المعلومات الشخصية",
+    "password": "كلمة المرور",
+    "tapKey": "مفتاح Tap",
+    "menu": "القائمة"
+  }
   }
 }

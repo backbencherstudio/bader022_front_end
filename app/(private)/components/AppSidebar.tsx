@@ -5,18 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu } from "lucide-react";
-
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
 
-// export type SidebarItem = {
-//   label: string;
-//   href: string;
-//   icon?: (props: ComponentProps<"svg">) => ReactNode;
-//   iconClassName?: string;
-// };
 export type SidebarItem = {
   label: string;
   href?: string;
@@ -35,44 +27,6 @@ type Props = {
   pathname?: string | null; // optional override
 };
 
-// function SidebarLink({
-//   item,
-//   pathname,
-// }: {
-//   item: SidebarItem;
-//   pathname: string | null;
-// }) {
-//   const active = pathname === item.href;
-
-//   return (
-//     <Link
-//       href={item.href}
-//       className={[
-//         "group flex items-center gap-3 px-4 py-3 rounded-xl transition cursor-pointer",
-//         "focus:outline-none focus:ring-2 focus:ring-white/30",
-//         active
-//           ? "bg-black text-white dark:bg-gray-800 dark:text-white"
-//           : "text-black dark:text-white hover:text-white hover:bg-black dark:hover:bg-gray-700",
-//       ].join(" ")}
-//       aria-current={active ? "page" : undefined}
-//     >
-//       {item.icon && (
-//         <span className="shrink-0">
-//           {item.icon({
-//             className: [
-//               "h-5 w-5 transition",
-//               item.iconClassName || "",
-//               active ? "opacity-100" : "opacity-90 group-hover:opacity-100",
-//             ].join(" "),
-//           })}
-//         </span>
-//       )}
-
-//       <span className="text-sm font-medium">{item.label}</span>
-//     </Link>
-//   );
-// }
-
 function SidebarLink({
   item,
   pathname,
@@ -88,14 +42,11 @@ function SidebarLink({
   const handleClick = () => {
     if (item.action === "logout") {
       dispatch(logout());
-
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-
       router.push("/login");
       return;
     }
-
     if (item.href) {
       router.push(item.href);
     }
@@ -152,7 +103,6 @@ function SidebarInner({
   pathname,
   logoSrc,
   title,
-  badgeText,
 }: Props & { pathname: string | null }) {
   return (
     <>
@@ -185,12 +135,6 @@ function SidebarInner({
             {title}
           </p>
         )}
-
-        {/* {badgeText && (
-          <Button className="text-[11px] uppercase bg-black mt-1.5 text-white dark:bg-gray-700">
-            {badgeText}
-          </Button>
-        )} */}
       </div>
 
       {/* Nav */}

@@ -26,10 +26,13 @@ import {
   useGetPaymentHistoryQuery,
   useLazyAdmininvoiceDownloadQuery,
 } from "@/redux/features/admin/adminApi";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type PaymentStatus = "successful" | "failed" | "pending";
 
 export default function PaymentHistory() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [triggerInvoiceDownload, { isLoading: downloading }] =
     useLazyAdmininvoiceDownloadQuery();
 
@@ -117,20 +120,22 @@ export default function PaymentHistory() {
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Payment History</CardTitle>
+        <CardTitle className="text-xl font-semibold">
+          {t("Admin.PaymentHistory.title")}
+        </CardTitle>
       </CardHeader>
 
       <CardContent className="pb-8">
         {/* Filter Bar */}
         <div className="mb-6 flex flex-wrap items-center gap-4">
           <div className="text-base font-semibold text-muted-foreground">
-            Filter by:
+            {t("Admin.PaymentHistory.filterBy")}
           </div>
 
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search anything"
+              placeholder={t("Admin.PaymentHistory.searchPlaceholder")}
               className="h-12 w-64 pl-10"
               value={search}
               onChange={(e) => {
@@ -184,21 +189,51 @@ export default function PaymentHistory() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/30 text-[#777980] ">
-                  <TableHead className="pl-8 text-[#777980]">TX ID</TableHead>
-                  <TableHead className="text-[#777980]">
-                    Merchant Name
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.txId")}
                   </TableHead>
-                  <TableHead className="text-[#777980]">
-                    Business Name
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.merchantName")}
                   </TableHead>
-                  <TableHead className="text-[#777980]">Package</TableHead>
-                  <TableHead className="text-[#777980]">Date</TableHead>
-                  <TableHead className="text-[#777980]">Amount</TableHead>
-                  <TableHead className="text-[#777980]">
-                    Payment Method
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.businessName")}
                   </TableHead>
-                  <TableHead className="text-[#777980]">Status</TableHead>
-                  <TableHead className="pr-8 text-[#777980]">Action</TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.package")}
+                  </TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.date")}
+                  </TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.amount")}
+                  </TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.paymentMethod")}
+                  </TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.status")}
+                  </TableHead>
+                  <TableHead
+                    className={`text-[#777980] ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {t("Admin.PaymentHistory.action")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
 

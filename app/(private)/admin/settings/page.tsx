@@ -4,84 +4,66 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Info, Lock, KeyRound } from "lucide-react";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 import ProfileSection from "../components/settings/ProfileSection";
 import ChangePasswordCard from "../components/settings/ChangePassword";
 import Tapkey from "../components/settings/Tap-key";
 
-
-function Sidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function Sidebar({ activeSection, setActiveSection, t }: any) {
   return (
     <div className="w-full sm:w-72 p-4 sm:block hidden">
       <ul className="flex flex-col gap-4">
-
-        {/* Personal Info */}
         <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "personal_info"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("personal_info")}
         >
           <div className="flex items-center gap-2">
             <Info size={18} />
-            Personal Info
+            {t("Admin.AccountSettings.personalInfo", "Personal Info")}
           </div>
         </li>
 
-        {/* Password */}
         <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "password"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("password")}
         >
           <div className="flex items-center gap-2">
             <Lock size={18} />
-            Password
+            {t("Admin.AccountSettings.password", "Password")}
           </div>
         </li>
 
-        {/* Tap-key */}
         <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "tapkey"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("tapkey")}
         >
           <div className="flex items-center gap-2">
             <KeyRound size={18} />
-            Tap-key
+            {t("Admin.AccountSettings.tapKey", "Tap-key")}
           </div>
         </li>
-
       </ul>
     </div>
   );
 }
 
-
-function MobileSidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function MobileSidebar({ activeSection, setActiveSection, t }: any) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -91,18 +73,17 @@ function MobileSidebar({
         onClick={() => setIsOpen(!isOpen)}
         className="w-full"
       >
-        Menu
+        {t("Admin.AccountSettings.menu", "Menu")}
       </Button>
 
       {isOpen && (
         <ul className="flex flex-col gap-4 mt-4 w-full">
-
           <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "personal_info"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => {
               setActiveSection("personal_info");
@@ -110,7 +91,7 @@ function MobileSidebar({
             }}
           >
             <Info size={18} className="inline mr-2" />
-            Personal Info
+            {t("Admin.AccountSettings.personalInfo", "Personal Info")}
           </li>
 
           <li
@@ -118,7 +99,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "password"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => {
               setActiveSection("password");
@@ -126,7 +107,7 @@ function MobileSidebar({
             }}
           >
             <Lock size={18} className="inline mr-2" />
-            Password
+            {t("Admin.AccountSettings.password", "Password")}
           </li>
 
           <li
@@ -134,7 +115,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "tapkey"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => {
               setActiveSection("tapkey");
@@ -142,17 +123,13 @@ function MobileSidebar({
             }}
           >
             <KeyRound size={18} className="inline mr-2" />
-            Tap-key
+            {t("Admin.AccountSettings.tapKey", "Tap-key")}
           </li>
-
         </ul>
       )}
     </div>
   );
 }
-
-
-
 
 function getActiveSectionContent(activeSection: string) {
   switch (activeSection) {
@@ -167,25 +144,30 @@ function getActiveSectionContent(activeSection: string) {
   }
 }
 
-
 export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("personal_info");
+  const { t, locale } = useI18n();
+
+  const isRTL = locale === "ar";
 
   return (
-    <div className="border rounded-xl mt-4">
+    <div dir={isRTL ? "rtl" : "ltr"} className="border rounded-xl mt-4">
+      {/* TITLE */}
       <h1 className="text-[18px] p-4 font-semibold">
-        {activeSection.replace("_", " ")} Setting
+        {t("Admin.AccountSettings.title")}
       </h1>
 
       <div className="flex flex-col sm:flex-row">
         <MobileSidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
+          t={t}
         />
 
         <Sidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
+          t={t}
         />
 
         <div className="w-full max-w-4xl">
@@ -195,4 +177,3 @@ export default function AccountPage() {
     </div>
   );
 }
-

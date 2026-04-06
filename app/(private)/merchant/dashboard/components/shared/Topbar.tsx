@@ -1,147 +1,143 @@
 "use client";
 
-import { Sun, Moon, Edit, BellDot } from "lucide-react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Sun, Moon, BellDot, ChevronDown } from "lucide-react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/components/provider/I18nProvider";
-import { useGetPersonaltHistoryQuery } from "@/redux/features/admin/adminApi";
 import { getImageUrl } from "@/helper/formatImage";
 import { useAppSelector } from "@/redux/hooks";
-import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const LANGS = {
+  en: { label: "English", flag: "/images/english_flag.png" },
+  ar: { label: "العربية", flag: "/images/arabic_flag.png" },
+};
 
 export default function TopBar() {
-  // const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
   const { user } = useAppSelector((state) => state.auth);
-  // console.log(user);
+  const { setTheme } = useTheme();
+  const { locale, setLocale, t } = useI18n();
 
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const { setTheme } = useTheme();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     setTheme(!isDarkMode ? "light" : "dark");
   };
-  const { t, locale } = useI18n();
+
+  const isRTL = locale === "ar";
+
   return (
-    <header className="h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] bg-white/10 dark:bg-gray-900 backdrop-blur-md flex items-center justify-end px-4 pl-16.5 lg:pl-4">
-      {/* Left Side */}
-      <div
-        className={`pl-10 hidden lg:block flex-1 ${locale === "ar" ? "lg:pr-70" : "lg:pl-70"}`}
-      >
-        <p className="text-xl font-semibold mb-1 text-black dark:text-white">
-          Welcome back, Carlota!
+    <header
+      dir={isRTL ? "rtl" : "ltr"}
+      className={`h-20 w-full fixed z-20 border-b border-[#E9E9E9] dark:border-[#555] 
+      bg-white/10 dark:bg-gray-900 backdrop-blur-md flex items-center
+      justify-between px-20 ${isRTL ? "lg:pr-80" : "lg:pl-80"}`}
+    >
+      {/* LEFT (Welcome) */}
+      <div className="hidden lg:block flex-1">
+        <p className="text-lg xl:text-xl font-semibold text-black dark:text-white">
+          {t("Topbar.welcome", { name: user?.name || "User" })}
         </p>
-        <p className="text-sm text-black dark:text-gray-300">
-          Your booking page is live and ready to accept bookings
+        <p className="text-xs sm:text-sm text-black dark:text-gray-300">
+          {t("Topbar.subtitle")}
         </p>
       </div>
 
-      {/* Right Side */}
+      {/* RIGHT SIDE */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Theme Toggle Icons */}
+        {/* Theme Toggle */}
         <button
-          className="p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition"
           onClick={toggleTheme}
-          aria-label="Toggle Theme"
+          aria-label={t("Topbar.toggleTheme")}
+          className="p-2 sm:p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
           {isDarkMode ? (
-            <Moon className="w-5.5 h-5.5 text-black dark:text-white" />
+            <Moon className="w-5 h-5 text-black dark:text-white" />
           ) : (
-            <Sun className="w-5.5 h-5.5 text-black dark:text-white" />
+            <Sun className="w-5 h-5 text-black dark:text-white" />
           )}
         </button>
 
-        {/* Notification Icon */}
-        <button
-          className="p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition"
-          aria-label="Notifications"
+        {/* Notifications */}
+        {/* <button
+          aria-label={t("Topbar.notifications")}
+          className="p-2 sm:p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
-          <BellDot className="w-5.5 h-5.5 text-black dark:text-white" />
+          <BellDot className="w-5 h-5 text-black dark:text-white" />
+        </button> */}
+
+        {/* Language Switch */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 rounded-full border px-2 sm:px-3 py-1 text-sm text-slate-700 hover:bg-slate-100 dark:text-white">
+              <Image
+                src={LANGS[locale].flag}
+                alt={LANGS[locale].label}
+                width={20}
+                height={20}
+              />
+              <span className="uppercase hidden sm:block">{locale}</span>
+              <ChevronDown size={14} />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-40">
+            {(Object.keys(LANGS) as Array<"en" | "ar">).map((key) => (
+              <DropdownMenuItem
+                key={key}
+                onClick={() => setLocale(key)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Image
+                  src={LANGS[key].flag}
+                  alt={LANGS[key].label}
+                  width={20}
+                  height={20}
+                />
+                <span>{LANGS[key].label}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Visit Website */}
+        <button className="hidden md:block bg-[#262626] text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm">
+          {t("Topbar.visitWebsite")}
         </button>
 
-        {/* Visit Website Button */}
-        <button className="bg-[#262626] hidden sm:block text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition cursor-pointer dark:bg-gray-700 hover:dark:bg-gray-600">
-          Visit Website
-        </button>
-
-        {/* Profile Icon and User Name */}
+        {/* Profile */}
         <Dialog>
           <DialogTrigger asChild>
-            <button
-              className="flex items-center cursor-pointer gap-2 p-3, pl-0 pr-3 rounded-full transition "
-              aria-label="Profile"
-            >
+            <button className="flex items-center gap-2 rounded-full transition">
               <Image
-                src={getImageUrl(user?.image as string) || "/images/user1.png"}
+                src={
+                  getImageUrl(user?.image as string) || "/images/profile.png"
+                }
                 alt={user?.name || "User"}
-                width={48}
-                height={48}
-                unoptimized={true}
-                className="w-12 h-12 rounded-full object-cover"
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-full object-cover"
               />
-              <div className="text-left sm:block hidden">
-                <p className="text-black dark:text-white font-semibold">
+
+              {/* Hide on mobile */}
+              <div className="hidden md:block text-left">
+                <p className="text-black dark:text-white font-semibold text-sm">
                   {user?.name}
                 </p>
-                <p className="text-black dark:text-gray-300 text-[12px]">
+                <p className="text-gray-500 dark:text-gray-300 text-xs">
                   {user?.email}
                 </p>
-                {/* <p>{getImageUrl(user?.image as string)}</p> */}
               </div>
             </button>
           </DialogTrigger>
-
-          {/* <DialogContent className="p-6 rounded-md w-100 bg-white dark:bg-[#444]">
-            <DialogHeader>
-              <DialogTitle className="flex justify-between items-center mt-6">
-                <h2 className="text-black dark:text-white"> {user?.name}</h2>
-                <button className="text-[14px] block sm:hidden text-white rounded-full py-2 px-4 cursor-pointer transition underline">
-                  Visit Website
-                </button>
-              </DialogTitle>
-              <DialogDescription className="text-black dark:text-gray-300">
-                You can edit your profile information or settings here.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <Image
-                  src={getImageUrl(user?.name) || "/images/user1.png"}
-                  alt="User"
-                  width={48}
-                  height={48}
-                  unoptimized={true}
-                  className="w-12 h-12 rounded-full"
-                />
-                <div className="text-left">
-                  <p className="text-black dark:text-white font-semibold">
-                    {user?.name}
-                  </p>
-                  <p className="text-black dark:text-gray-300 text-[12px]">
-                    {user?.email}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <Link
-                  href={"/merchant/dashboard/settings"}
-                  className="flex items-center gap-2 text-blue-500 dark:text-blue-300 cursor-pointer"
-                >
-                  <Edit className="w-4 h-4" />
-                  Edit Profile
-                </Link>
-              </div>
-            </div>
-          </DialogContent> */}
         </Dialog>
       </div>
     </header>

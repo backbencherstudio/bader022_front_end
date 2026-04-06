@@ -2,18 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { SaudiRiyal, Search, RefreshCcw } from "lucide-react";
-
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import {
   Table,
   TableBody,
@@ -29,6 +18,7 @@ import { ViewPackage } from "./ViewPackage";
 import { PackagePlanUpdateModal } from "./PackagePlanUpdateModal";
 import { AddPlan } from "./AddPlan";
 import { DataPagination } from "@/app/(private)/components/reusable/Pagination";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type PackageStatus = boolean;
 
@@ -62,6 +52,8 @@ function StatusPill({ status }: { status: PackageStatus }) {
 }
 
 export default function PackageTab() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [filters, setFilters] = useState({
     search: "",
     package: "",
@@ -115,84 +107,6 @@ export default function PackageTab() {
               }
             />
           </div>
-
-          {/* Filter Selects */}
-          {/* <div className="flex items-center gap-2">
-            <Select
-              onValueChange={(value) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  package: value === "all" ? "" : value,
-                }))
-              }
-            >
-              <SelectTrigger className="h-12 w-44">
-                <SelectValue placeholder="Package" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="Basic">Basic</SelectItem>
-                <SelectItem value="Premium">Premium</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select
-              onValueChange={(value) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  plan_type: value === "all" ? "" : value,
-                }))
-              }
-            >
-              <SelectTrigger className="h-12 w-44">
-                <SelectValue placeholder="Plan Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="annual">Annual</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select
-              onValueChange={(value) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  status: value === "all" ? "" : value,
-                }))
-              }
-            >
-              <SelectTrigger className="h-12 w-44">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button
-              variant="outline"
-              className="cursor-pointer"
-              onClick={() =>
-                setFilters({
-                  search: "",
-                  package: "",
-                  plan_type: "",
-                  status: "",
-                })
-              }
-            >
-              <RefreshCcw />
-            </Button>
-          </div> */}
-
-          {/* <div className="mb-4 flex items-end justify-end">
-            <button className="px-4 py-2 cursor-pointer">
-              <AddPlan />
-            </button>
-          </div> */}
         </div>
       </div>
 
@@ -203,14 +117,32 @@ export default function PackageTab() {
             <TableHeader>
               <TableRow className="bg-muted/30">
                 <TableHead className="pl-8 text-[#777980]">
-                  Package Name
+                  {t("Admin.SubscriptionPages.package")}
                 </TableHead>
-                <TableHead className="text-[#777980]">Business Type</TableHead>
-                <TableHead className="text-[#777980]">Duration</TableHead>
-                <TableHead className="text-[#777980]">Price</TableHead>
-                <TableHead className="text-[#777980]">Package Status</TableHead>
-                <TableHead className="text-[#777980]">Created On</TableHead>
-                <TableHead className="pr-8 text-[#777980]">Action</TableHead>
+                <TableHead className="text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.businessName")}
+                </TableHead>
+                <TableHead className="text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.duration")}
+                </TableHead>
+                <TableHead className="text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.price")}
+                </TableHead>
+                <TableHead className="text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.packageStatus")}
+                </TableHead>
+                <TableHead className="text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.createdOn")}
+                </TableHead>
+                <TableHead className="pr-8 text-[#777980]">
+                  {" "}
+                  {t("Admin.SubscriptionPages.action")}
+                </TableHead>
               </TableRow>
             </TableHeader>
 

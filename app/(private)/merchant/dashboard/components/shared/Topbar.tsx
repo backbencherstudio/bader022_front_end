@@ -7,13 +7,15 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { getImageUrl } from "@/helper/formatImage";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import { logout } from "@/redux/features/auth/authSlice";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -33,6 +35,14 @@ export default function TopBar() {
   };
 
   const isRTL = locale === "ar";
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const handlelogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/");
+  };
 
   return (
     <header
@@ -109,7 +119,10 @@ export default function TopBar() {
         </DropdownMenu>
 
         {/* Visit Website */}
-        <button className="hidden md:block bg-[#262626] text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm">
+        <button
+          onClick={handlelogout}
+          className="hidden md:block bg-[#262626] cursor-pointer text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm"
+        >
           {t("Topbar.visitWebsite")}
         </button>
 

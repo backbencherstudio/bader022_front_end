@@ -53,20 +53,54 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+
+  // NAV ITEMS (translated)
+  const navItems = [
+    {
+      label: t("User.Sidebar.dashboard"),
+      href: "/user/dashboard",
+      icon: (p: any) => <LayoutDashboard {...p} />,
+    },
+    {
+      label: t("User.Sidebar.bookings"),
+      href: "/user/bookings",
+      icon: (p: any) => <Calendar {...p} />,
+    },
+    {
+      label: t("User.Sidebar.payments"),
+      href: "/user/payments",
+      icon: (p: any) => <CreditCard {...p} />,
+    },
+    {
+      label: t("User.Sidebar.profile"),
+      href: "/user/profile",
+      icon: (p: any) => <User {...p} />,
+    },
+  ];
+
+  // FOOTER ITEMS
+  const footerItems = [
+    {
+      label: t("User.Sidebar.logout"),
+      href: "/",
+      icon: (p: any) => <LogOut {...p} />,
+      iconClassName: "text-red-400",
+      action: "logout",
+    },
+  ];
 
   useEffect(() => {
     const auth = authorize(["User"]);
     if (!auth.authorized) {
-      router.push("/");
+      router.push("/login");
     }
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       router.push("/login");
     } else {
@@ -82,11 +116,11 @@ export default function DashboardLayout({
     <div>
       <div>
         <AppSidebar
-          navItems={USER_NAV_ITEMS}
-          footerItems={USER_FOOTER_ITEMS as any}
+          navItems={navItems}
+          footerItems={footerItems as any}
           logoSrc="/images/image 259.png"
           // title="Car wash"
-          badgeText="premium"
+          // badgeText="premium"
         />
         <TopBar />
         <div

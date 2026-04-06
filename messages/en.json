@@ -627,6 +627,15 @@
     "password": "Password",
     "tapKey": "Tap-key",
     "menu": "Menu"
-  }
+       }
+    },
+    "User":{
+      "Sidebar": {
+        "dashboard": "Dashboard",
+        "bookings": "Bookings",
+        "payments": "Payments",
+        "profile": "Profile",
+        "logout": "Logout"
+      }
     }
 }

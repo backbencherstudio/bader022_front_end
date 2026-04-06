@@ -654,12 +654,25 @@
     "menu": "Menu"
        }
     },
-    "User":{
+  "User":{
       "Sidebar": {
         "dashboard": "Dashboard",
         "bookings": "Bookings",
         "payments": "Payments",
         "profile": "Profile",
+        "logout": "Logout"
+      }
+    },
+  "Merchant": {
+      "Sidebar": {
+        "dashboard": "Dashboard",
+        "bookings": "Bookings",
+        "services": "Services",
+        "staff": "Staff Management",
+        "mini-site": "Mini-site Builder",
+        "analytics": "Analytics",
+        "transactions": "Transactions",
+        "settings": "Settings",
         "logout": "Logout"
       }
     }

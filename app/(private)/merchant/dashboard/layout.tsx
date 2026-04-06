@@ -79,6 +79,62 @@ export default function DashboardLayout({
   const { t, locale } = useI18n();
   // console.log(t);
   const router = useRouter();
+
+  // NAV ITEMS (translated)
+  const navItems = [
+    {
+      label: t("Merchant.Sidebar.dashboard"),
+      href: "/merchant/dashboard",
+      icon: (p: any) => <LayoutDashboard {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.bookings"),
+      href: "/merchant/dashboard/bookings",
+      icon: (p: any) => <Calendar {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.services"),
+      href: "/merchant/dashboard/services",
+      icon: (p: any) => <Handbag {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.staff"),
+      href: "/merchant/dashboard/staff",
+      icon: (p: any) => <Users {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.mini-site"),
+      href: "/merchant/dashboard/mini-site",
+      icon: (p: any) => <Globe {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.analytics"),
+      href: "/merchant/dashboard/analytics",
+      icon: (p: any) => <SquareKanban {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.transactions"),
+      href: "/merchant/dashboard/transactions",
+      icon: (p: any) => <Captions {...p} />,
+    },
+  ];
+
+  // FOOTER ITEMS
+  const footerItems = [
+    {
+      label: t("Merchant.Sidebar.settings"),
+      href: "/merchant/dashboard/settings",
+      icon: (p: any) => <Settings {...p} />,
+    },
+    {
+      label: t("Merchant.Sidebar.logout"),
+      href: "/",
+      icon: (p: any) => <LogOut {...p} />,
+      iconClassName: "text-red-400",
+      action: "logout",
+    },
+  ];
+
   useEffect(() => {
     const auth = authorize(["Merchant"]);
     if (!auth.authorized) {
@@ -89,8 +145,8 @@ export default function DashboardLayout({
     <div>
       <div>
         <AppSidebar
-          navItems={MERCHANT_NAV_ITEMS}
-          footerItems={MERCHANT_FOOTER_ITEMS as any}
+          navItems={navItems}
+          footerItems={footerItems as any}
           logoSrc="/images/image 259.png"
           // title="Car wash"
           // badgeText="premium"

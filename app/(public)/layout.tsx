@@ -13,9 +13,18 @@ export default function MainLayout({
 }) {
   const router = useRouter();
   useEffect(() => {
-    const auth = authorize(["User"]);
+    const auth = authorize(["User", "Merchant", "Admin"]);
+
     if (auth.authorized) {
-      router.push("/user/dashboard");
+      const role = auth.user?.role;
+
+      const roleRedirectMap: Record<string, string> = {
+        Admin: "/admin/dashboard",
+        Merchant: "/merchant/dashboard",
+        User: "/user/dashboard",
+      };
+
+      router.push(roleRedirectMap[role] || "/");
     }
   }, []);
   return (

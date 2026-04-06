@@ -43,10 +43,22 @@ export default function CreateAccountPage() {
   const { t, locale, setLocale } = useI18n(); // localization
   const [step, setStep] = useState(1);
   const router = useRouter();
+  // useEffect(() => {
+  //   const auth = authorize(["Merchant"]);
+  //   if (auth.authorized) {
+  //     router.push("/");
+  //   }
+  // }, []);
   useEffect(() => {
-    const auth = authorize(["Merchant"]);
+    const auth = authorize(["User", "Merchant", "Admin"]);
     if (auth.authorized) {
-      router.push("/");
+      const role = auth.user?.role;
+      const roleRedirectMap: Record<string, string> = {
+        Admin: "/admin/dashboard",
+        Merchant: "/merchant/dashboard",
+        User: "/user/dashboard",
+      };
+      router.push(roleRedirectMap[role] || "/");
     }
   }, []);
   // console.log(step);

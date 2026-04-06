@@ -666,5 +666,18 @@
         "profile": "الملف الشخصي",
         "logout": "تسجيل الخروج"
       }
+    },
+"Merchant": {
+      "Sidebar": {
+        "dashboard": "لوحة التحكم",
+        "bookings": "الحجوزات",
+        "services": "الخدمات",
+        "staff": "إدارة الموظفين",
+        "mini-site": "مُنشئ الموقع الصغير",
+        "analytics": "التحليلات",
+        "transactions": "المعاملات",
+        "settings": "الإعدادات",
+        "logout": "تسجيل الخروج"
+      }
     }
 }

@@ -13,6 +13,7 @@ import {
 import { useMemo } from "react";
 import { motion, cubicBezier } from "framer-motion";
 import { useI18n } from "@/components/provider/I18nProvider";
+import Link from "next/link";
 
 const ICONS = [
   <Palette key="palette" className="h-4 w-4 text-blue-600" />,
@@ -157,15 +158,17 @@ export default function MiniWebsiteBuilder() {
 
             {/* CTA */}
             <div className="mt-10">
-              <Button className="group w-fit rounded-lg px-5 py-6 text-[16px] text-white font-semibold bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
-                {t("MiniWebsiteBuilder.cta")}
-                <ArrowUpRight
-                  size={18}
-                  className={`ml-2 transition-transform group-hover:translate-x-1 ${
-                    locale === "ar" ? "rotate-270 ml-0 mr-2" : ""
-                  }`}
-                />
-              </Button>
+              <Link href={"/create-account"}>
+                <Button className="group w-fit cursor-pointer rounded-lg px-5 py-6 text-[16px] text-white font-semibold bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
+                  {t("MiniWebsiteBuilder.cta")}
+                  <ArrowUpRight
+                    size={18}
+                    className={`ml-2 transition-transform group-hover:translate-x-1 ${
+                      locale === "ar" ? "rotate-270 ml-0 mr-2" : ""
+                    }`}
+                  />
+                </Button>
+              </Link>
             </div>
           </motion.div>
 

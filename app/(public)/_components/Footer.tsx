@@ -72,9 +72,9 @@ export default function Footer() {
             <FooterLink href="/pricing">
               {t("Footer.quickLinks.pricing")}
             </FooterLink>
-            {/* <FooterLink href="/contact">
-              {t("Footer.quickLinks.contact")}
-            </FooterLink> */}
+            <FooterLink href="/privacy-policy">
+              {t("Footer.quickLinks.privacy")}
+            </FooterLink>
           </FooterColumn>
 
           {/* Areas Served */}

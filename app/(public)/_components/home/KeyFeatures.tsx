@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 import { motion, cubicBezier } from "framer-motion";
 import { useI18n } from "@/components/provider/I18nProvider";
+import Link from "next/link";
 
 type Feature = {
   title: string;
@@ -93,15 +94,18 @@ export default function KeyFeatures() {
             whileInView="visible"
             viewport={{ once: false, amount: 0.6 }}
           >
-            <Button className="w-fit rounded-lg px-5 py-6 text-[16px] text-white font-semibold cursor-pointer bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
-              {t("KeyFeatures.button")}
-              <ArrowUpRight
-                size={18}
-                className={`ml-2 ${
-                  locale === "ar" ? "rotate-270 ml-0 mr-2" : ""
-                }`}
-              />
-            </Button>
+            <Link href={"/create-account"}>
+              {" "}
+              <Button className="w-fit rounded-lg px-5 py-6 text-[16px] text-white font-semibold cursor-pointer bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90">
+                {t("KeyFeatures.button")}
+                <ArrowUpRight
+                  size={18}
+                  className={`ml-2 ${
+                    locale === "ar" ? "rotate-270 ml-0 mr-2" : ""
+                  }`}
+                />
+              </Button>
+            </Link>
           </motion.div>
         </div>
 

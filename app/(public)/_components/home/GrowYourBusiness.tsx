@@ -62,6 +62,7 @@ import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { motion, cubicBezier } from "framer-motion";
+import Link from "next/link";
 
 type Props = {
   bgSrc?: string;
@@ -146,17 +147,20 @@ export default function GrowYourBusiness({
                 ease: cubicBezier(0.25, 0.1, 0.25, 1),
               }}
             >
-              <Button className="group h-12 rounded-md text-[16px] px-4 font-semibold text-white bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90 border-none cursor-pointer">
-                {t("GrowBusiness.button")}
-                <ArrowUpRight
-                  size={18}
-                  className={`transition-transform duration-300 ${
-                    locale === "ar"
-                      ? "rotate-270 ml-0 mr-2 group-hover:-translate-x-1"
-                      : "ml-2 group-hover:translate-x-1"
-                  }`}
-                />
-              </Button>
+              <Link href={"/create-account"}>
+                {" "}
+                <Button className="group h-12 rounded-md text-[16px] px-4 font-semibold text-white bg-linear-to-l from-indigo-500 to-blue-500 hover:opacity-90 border-none cursor-pointer">
+                  {t("GrowBusiness.button")}
+                  <ArrowUpRight
+                    size={18}
+                    className={`transition-transform duration-300 ${
+                      locale === "ar"
+                        ? "rotate-270 ml-0 mr-2 group-hover:-translate-x-1"
+                        : "ml-2 group-hover:translate-x-1"
+                    }`}
+                  />
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>

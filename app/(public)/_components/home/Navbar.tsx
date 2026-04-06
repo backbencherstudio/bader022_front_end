@@ -195,34 +195,18 @@ export default function Navbar() {
           >
             <nav className="flex flex-col gap-4 px-6 py-6 text-[18px] font-semibold text-black">
               <NavLinks onClick={() => setOpen(false)} />
-              {user?.role === "Merchant" ? (
-                <Link href={"/merchant/dashboard"}>
-                  <Button
-                    onClick={() => setOpen(false)}
-                    className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold"
-                  >
-                    {/* {t("Nav.button")}
-                    <ArrowUpRight
-                      size={18}
-                      className={locale === "ar" ? "rotate-270" : ""}
-                    /> */}
-                    Dashboard
-                  </Button>
-                </Link>
-              ) : (
-                <Link href={"/login"}>
-                  <Button
-                    onClick={() => setOpen(false)}
-                    className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold"
-                  >
-                    {t("Nav.button")}
-                    <ArrowUpRight
-                      size={18}
-                      className={locale === "ar" ? "rotate-270" : ""}
-                    />
-                  </Button>
-                </Link>
-              )}
+              <Link href={"/login"}>
+                <Button
+                  onClick={() => setOpen(false)}
+                  className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
+                >
+                  {t("Nav.button")}
+                  <ArrowUpRight
+                    size={18}
+                    className={locale === "ar" ? "rotate-270" : ""}
+                  />
+                </Button>
+              </Link>
             </nav>
           </div>
         )}

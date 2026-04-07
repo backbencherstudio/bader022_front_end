@@ -4,31 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiCheckCircle, FiTool } from "react-icons/fi";
 import { useCreateAccount } from "../context/CreateAccount";
 import { useI18n } from "@/components/provider/I18nProvider";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
-type Step1Data = {
-  business_name: string;
-  address: string;
-  business_category: string;
-  number_of_branches: "1" | "3" | "6";
-};
-interface Step4Props {
-  data: Step1Data;
-  onNext: (values: Step1Data) => void;
-  onPrevious: () => void;
-}
-
-export default function FinalizingYourWebsite({
-  onNext,
-  onPrevious,
-}: Step4Props) {
-  const router = useRouter();
-
-  const { step, setStep } = useCreateAccount();
-
-  console.log(step);
-
+export default function FinalizingYourWebsite() {
+  const { setStep } = useCreateAccount();
   const { t } = useI18n();
 
   const [progress, setProgress] = useState(0);
@@ -42,34 +20,27 @@ export default function FinalizingYourWebsite({
     t("finalizing.steps.finish"),
   ];
 
-  // auto progress
+  // progress auto increase
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 1;
-      });
+      setProgress((prev) => (prev >= 100 ? 100 : prev + 1));
     }, 60);
 
     return () => clearInterval(interval);
   }, []);
 
-  // useEffect(()=>{
-  //   router.push("/login");
-  // },[7000])
-
-  // move to next step when complete
+  // move to step 5 when completed
   useEffect(() => {
-    if (progress === 100 && !hasAdvancedStep.current) {
+    if (progress >= 100 && !hasAdvancedStep.current) {
       hasAdvancedStep.current = true;
-      setTimeout(() => {
+      setStep(5);
+      const timer = setTimeout(() => {
         setStep(5);
-      }, 500);
+      }, 300);
+
+      return () => clearTimeout(timer);
     }
-  }, [progress, setStep, step]);
+  }, [progress, setStep]);
 
   const activeStepIndex = Math.floor(
     (progress / 100) * FINALIZING_STEPS.length,
@@ -86,18 +57,14 @@ export default function FinalizingYourWebsite({
 
       {/* Title */}
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-semibold text-black dark:text-white">
-          {t("finalizing.title")}
-        </h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          {t("finalizing.subtitle")}
-        </p>
+        <h1 className="text-2xl font-semibold">{t("finalizing.title")}</h1>
+        <p className="text-gray-500">{t("finalizing.subtitle")}</p>
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full h-3 overflow-hidden">
+      <div className="w-full h-3 overflow-hidden bg-gray-200 dark:bg-gray-700">
         <div
-          className="h-full bg-[#0f172a] dark:bg-blue-600 transition-all duration-300"
+          className="h-full bg-blue-600 transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -110,53 +77,14 @@ export default function FinalizingYourWebsite({
           return (
             <div key={index} className="flex items-center gap-3">
               <FiCheckCircle
-                className={`text-lg ${
-                  completed
-                    ? "text-[#0f172a] dark:text-blue-400"
-                    : "text-gray-300 dark:text-gray-600"
-                }`}
+                className={completed ? "text-blue-600" : "text-gray-300"}
               />
-              <span
-                className={`text-sm ${
-                  completed
-                    ? "text-gray-900 dark:text-gray-200"
-                    : "text-gray-400 dark:text-gray-500"
-                }`}
-              >
+              <span className={completed ? "text-black" : "text-gray-400"}>
                 {label}
               </span>
             </div>
           );
         })}
-      </div>
-      <div className="flex gap-4">
-        {/* <button
-          type="button"
-          onClick={onPrevious}
-          className="rounded-md cursor-pointer border px-6 py-2 text-sm text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
-        >
-          Back
-        </button> */}
-
-        <Link
-          href="/login"
-          className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
-        >
-          go to merchant Login
-        </Link>
-
-        {/* <button onClick={() => onNext({
-          business_name: "Example Business",
-          address: "123 Street",
-          business_category: "fitness_pro_gym",
-          number_of_branches: "1",
-        })}
-          type="submit"
-          className="rounded-md bg-linear-to-r from-purple-500 to-indigo-500 px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 cursor-pointer"
-        >
-          go to dashboard
-          {t("BusinessInfo.submit")}
-        </button> */}
       </div>
     </div>
   );

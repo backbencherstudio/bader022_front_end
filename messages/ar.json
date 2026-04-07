@@ -4,7 +4,8 @@
     "services": "الخدمات",
     "faqs": "الأسئلة الشائعة",
     "pricing": "الأسعار",
-    "button": "ابدأ مجانًا"
+    "button": "ابدأ مجانًا",
+    "signup": "إنشاء حساب"
   },
   "Banner": {
     "titleLine1": "إدارة حجوزات ذكية",
@@ -420,7 +421,7 @@
     ]
   },
   "createAccount": {
-    "step1Title": "أكمل ملفك الشخصي",
+    "step1Title": "إنشاء حساب عملك على بوكلي",
     "step2Title": "أضف خدماتك",
     "step3Title": "أضف فريقك",
     "step4Title": "اختر الخطة",
@@ -438,14 +439,16 @@
   },
   "AccountCreation": {
     "fullName": "الاسم الكامل",
-    "fullNamePlaceholder": "جون دو",
+    "fullNamePlaceholder": "",
     "email": "البريد الإلكتروني",
-    "emailPlaceholder": "john@example.com",
+    "emailPlaceholder": "",
     "phone": "الهاتف",
     "phonePlaceholder": "+1 (555) 000-0000",
     "password": "كلمة المرور",
-    "passwordPlaceholder": "••••••••",
-    "submit": "متابعة إلى معلومات العمل"
+    "passwordPlaceholder": "",
+    "submit": "متابعة إلى معلومات العمل",
+    "alreadyAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
 
   },
   "BusinessInfo": {
@@ -679,5 +682,34 @@
         "settings": "الإعدادات",
         "logout": "تسجيل الخروج"
       }
-    }
+    },
+    "Auth": {
+        "Login": {
+          "title": "تسجيل الدخول إلى بوكلي",
+          "subtitle": "منصة إدارة الحجز الشاملة الخاصة بك",
+          "email": "البريد الإلكتروني *",
+          "password": "كلمة المرور *",
+          "remember": "تذكرني",
+          "forgot": "هل نسيت كلمة المرور؟",
+          "login": "تسجيل الدخول",
+          "loading": "جارٍ التحميل...",
+          "noAccount": "ليس لديك حساب؟",
+          "signup": "إنشاء حساب",
+          "success": "تم تسجيل الدخول بنجاح",
+          "invalid": "بيانات الدخول غير صحيحة"
+        },
+         "Signup": {
+              "title": "إنشاء حساب في بوكلي",
+              "fullName": "الاسم الكامل",
+              "email": "البريد الإلكتروني",
+              "phone": "رقم الهاتف",
+              "password": "كلمة المرور",
+              "signup": "إنشاء حساب",
+              "loading": "جارٍ إنشاء الحساب...",
+              "success": "تم تسجيل المستخدم بنجاح",
+              "error": "فشل التسجيل، حاول مرة أخرى",
+              "alreadyAccount": "هل لديك حساب بالفعل؟",
+              "login": "تسجيل الدخول"
+            }
+  }
 }

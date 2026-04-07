@@ -2,13 +2,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  Scissors,
-  Dumbbell,
-  HeartPulse,
-  Leaf,
-  Home,
-} from "lucide-react";
+import { Scissors, Dumbbell, HeartPulse, Leaf, Home } from "lucide-react";
 import { useI18n } from "@/components/provider/I18nProvider";
 
 type Step1Data = {
@@ -16,6 +10,7 @@ type Step1Data = {
   address: string;
   business_category: string;
   number_of_branches: "1" | "3" | "6";
+  error?: string;
 };
 
 interface Step1Props {
@@ -62,10 +57,17 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           {t("BusinessInfo.businessName")} *
         </label>
         <input
-          {...register("business_name", { required: true })}
-          placeholder={t("BusinessInfo.businessNamePlaceholder")}
+          {...register("business_name", {
+            required: "Business Name is required",
+          })}
+          // placeholder={t("BusinessInfo.businessNamePlaceholder")}
           className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
+        {errors.business_name && (
+          <p className="mt-1 text-xs text-red-500">
+            {errors.business_name.message}
+          </p>
+        )}
       </div>
 
       {/* Business Address */}
@@ -74,10 +76,13 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           {t("BusinessInfo.businessAddress")} *
         </label>
         <input
-          {...register("address", { required: true })}
-          placeholder={t("BusinessInfo.businessAddressPlaceholder")}
+          {...register("address", { required: "Address is required" })}
+          // placeholder={t("BusinessInfo.businessAddressPlaceholder")}
           className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
+        {errors.address && (
+          <p className="mt-1 text-xs text-red-500">{errors.address.message}</p>
+        )}
       </div>
 
       {/* Business Category */}
@@ -101,15 +106,14 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                   })
                 }
                 className={`flex flex-col items-center justify-center gap-2 rounded-lg border p-3 text-sm transition
-                  ${active
-                    ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
-                    : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                  ${
+                    active
+                      ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
+                      : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                   }`}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-xs font-medium text-center">
-                  {t(`BusinessInfo.${label}`)}
-                </span>
+                <span className="text-xs font-medium text-center">{label}</span>
               </button>
             );
           })}
@@ -148,9 +152,10 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                   })
                 }
                 className={`flex items-center justify-center rounded-lg border p-4 text-sm font-medium transition
-                  ${active
-                    ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
-                    : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                  ${
+                    active
+                      ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"
+                      : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                   }`}
               >
                 {label}

@@ -82,7 +82,8 @@ const mobileStatic = {
 };
 
 export default function ChooseThePerfectPlan() {
-  const { t, get } = useI18n();
+  const { t, locale, get } = useI18n();
+  const isRTL = locale === "ar";
   const isMobile = useIsMobile();
   const [billing, setBilling] = useState<Billing>("monthly");
 
@@ -106,22 +107,6 @@ export default function ChooseThePerfectPlan() {
 
   const basicPrice =
     billing === "monthly" ? basic?.priceMonthly : basic?.priceAnnual;
-
-  // console.log(currentPremiumPlan);
-
-  // /*  USE get() FOR OBJECTS */
-  // const basic = useMemo(() => get<PricingPlan>("Pricing.plans.basic"), [get]);
-
-  // const premium = useMemo(
-  //   () => get<PricingPlan>("Pricing.plans.premium"),
-  //   [get],
-  // );
-
-  // const basicPrice =
-  //   billing === "monthly" ? basic.priceMonthly : basic.priceAnnual;
-
-  // const premiumPrice =
-  //   billing === "monthly" ? premium.priceMonthly : premium.priceAnnual;
 
   return (
     <section className="w-full bg-white overflow-x-hidden">
@@ -182,7 +167,7 @@ export default function ChooseThePerfectPlan() {
                   type="button"
                   className="bg-white dark:bg-gray-900 px-6 py-3 rounded-md font-semibold text-gray-900 dark:text-white flex gap-3 items-center hover:opacity-90 cursor-pointer"
                 >
-                  {basic?.cta} free
+                  {basic?.cta}
                   <MdArrowOutward />
                 </button>
               </Link>
@@ -231,6 +216,9 @@ export default function ChooseThePerfectPlan() {
                   <MdArrowOutward />
                 </button>
               </Link>
+              <p className="text-gray-500 dark:text-gray-400">
+                {isRTL ? "يمكنك الإلغاء في أي وقت" : "Cancel anytime"}
+              </p>
             </div>
 
             <div className="p-6 space-y-5">

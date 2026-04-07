@@ -2,7 +2,13 @@
 
 import { useI18n } from "@/components/provider/I18nProvider";
 import Link from "next/link";
-import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+  FaInstagram,
+  FaXTwitter,
+  FaYoutube,
+  FaFacebookF,
+  FaLinkedinIn,
+} from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 export default function Footer() {
@@ -39,7 +45,7 @@ export default function Footer() {
               {t("Footer.brandDesc")}
             </p>
 
-            <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
+            {/* <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
               <Link href="https://instagram.com" target="_blank">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
                   <FaInstagram />
@@ -52,6 +58,40 @@ export default function Footer() {
                 </div>
               </Link>
 
+              <Link href="https://youtube.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
+                  <FaYoutube />
+                </div>
+              </Link>
+            </div> */}
+            <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
+              {/* LinkedIn */}
+              <Link href="https://linkedin.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
+                  <FaLinkedinIn />
+                </div>
+              </Link>
+              {/* Facebook */}
+              <Link href="https://facebook.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-blue-600 hover:text-white transition">
+                  <FaFacebookF />
+                </div>
+              </Link>
+              {/* Instagram */}
+              <Link href="https://instagram.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
+                  <FaInstagram />
+                </div>
+              </Link>
+
+              {/* X (Twitter) */}
+              <Link href="https://x.com" target="_blank">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
+                  <FaXTwitter />
+                </div>
+              </Link>
+
+              {/* YouTube */}
               <Link href="https://youtube.com" target="_blank">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
                   <FaYoutube />

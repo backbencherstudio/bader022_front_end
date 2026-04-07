@@ -7,6 +7,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { useMerchantRegMutation } from "@/redux/features/merchant/merchantRegitraion";
+import Link from "next/link";
 
 export type FormValues = {
   fullName: string;
@@ -24,7 +25,12 @@ export default function AccountCreation({
   onNext,
   defaultValues,
 }: AccountCreationProps) {
-  const { register, handleSubmit, control } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues,
   });
 
@@ -35,7 +41,7 @@ export default function AccountCreation({
   const isRTL = locale === "ar";
 
   const onSubmit = (values: FormValues) => {
-    console.log("Form Data:", values); 
+    // console.log("Form Data:", values);
     onNext(values);
   };
 
@@ -49,7 +55,10 @@ export default function AccountCreation({
         label={t("AccountCreation.fullName")}
         icon={<FaUser />}
         placeholder={t("AccountCreation.fullNamePlaceholder")}
-        register={register("fullName", { required: true })}
+        register={register("fullName", {
+          required: "Full name is required",
+        })}
+        error={errors.fullName?.message}
         isRTL={isRTL}
       />
 
@@ -58,7 +67,14 @@ export default function AccountCreation({
         icon={<FaEnvelope />}
         type="email"
         placeholder={t("AccountCreation.emailPlaceholder")}
-        register={register("email", { required: true })}
+        register={register("email", {
+          required: "Email is required",
+          pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Invalid email address",
+          },
+        })}
+        error={errors.email?.message}
         isRTL={isRTL}
       />
 
@@ -67,32 +83,39 @@ export default function AccountCreation({
         <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
           {t("AccountCreation.phone")} *
         </label>
-
         <Controller
           name="phone"
           control={control}
-          rules={{ required: true }}
+          rules={{ required: "Phone number is required" }}
           render={({ field }) => (
             <PhoneInput
               international
               defaultCountry="SA"
               countryCallingCodeEditable={false}
-              value={field.value}
+              value={field.value || ""}
               onChange={field.onChange}
-              className="w-full
-                [&_input]:h-11
-                [&_input]:w-full
-                [&_input]:rounded-md
-                [&_input]:border
-                [&_input]:border-gray-300
-                dark:[&_input]:border-gray-600
-                [&_input]:bg-white
-                dark:[&_input]:bg-gray-800
-                [&_input]:px-3
-              "
+              className="
+        w-full
+
+        [&_input]:h-11
+        [&_input]:w-full
+        [&_input]:rounded-md
+        [&_input]:border
+        [&_input]:border-gray-300
+        dark:[&_input]:border-gray-600
+        [&_input]:bg-white
+        dark:[&_input]:bg-gray-800
+        [&_input]:px-3
+
+        [&_.PhoneInputCountry]:pointer-events-none
+        [&_.PhoneInputCountry]:opacity-70
+      "
             />
           )}
         />
+        {errors.phone && (
+          <p className="mt-1 text-sm text-red-500">{errors.phone.message}</p>
+        )}
       </div>
 
       {/* Password */}
@@ -100,7 +123,6 @@ export default function AccountCreation({
         <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
           {t("AccountCreation.password")} *
         </label>
-
         <div className="relative">
           <FaLock
             className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
@@ -111,7 +133,10 @@ export default function AccountCreation({
           <input
             type={showPassword ? "text" : "password"}
             placeholder={t("AccountCreation.passwordPlaceholder")}
-            {...register("password", { required: true, minLength: 6 })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: 6,
+            })}
             className={`w-full rounded-md border border-gray-300
               bg-white dark:bg-gray-800
               py-3 text-sm text-gray-900 dark:text-white
@@ -129,20 +154,30 @@ export default function AccountCreation({
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
         </div>
+        {errors.password && (
+          <p className="mt-1 text-sm text-red-500">
+            {errors.password.message || "Password is required"}
+          </p>
+        )}
       </div>
 
       {/* Submit */}
       <button
         type="submit"
-        className="mt-4 w-full rounded-md bg-gradient-to-r
-        from-blue-500 to-purple-500 py-3 text-sm font-medium text-white
+        className="mt-4 w-full rounded-md bg-linear-to-r
+        from-blue-500 to-purple-500 py-3 text-sm font-medium text-white cursor-pointer
         hover:opacity-90 transition"
       >
         {t("AccountCreation.submit")}
       </button>
 
-      <p className="text-center text-xs text-gray-400">
-        Takes less than 2 minutes
+      <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+        {t("AccountCreation.alreadyAccount")}{" "}
+        <Link href="/login">
+          <span className="text-blue-600 hover:underline">
+            {t("AccountCreation.login")}
+          </span>
+        </Link>
       </p>
     </form>
   );
@@ -157,6 +192,7 @@ interface InputProps {
   type?: string;
   register: any;
   isRTL: boolean;
+  error?: string;
 }
 
 function Input({
@@ -166,6 +202,7 @@ function Input({
   type = "text",
   register,
   isRTL,
+  error,
 }: InputProps) {
   return (
     <div>
@@ -192,6 +229,7 @@ function Input({
         `}
         />
       </div>
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
   );
 }

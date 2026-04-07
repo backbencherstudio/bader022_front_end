@@ -7,14 +7,14 @@ interface CreateAccountContextProps {
 }
 
 const CreateAccountContext = createContext<CreateAccountContextProps | null>(
-  null
+  null,
 );
 
 export const useCreateAccount = () => {
   const ctx = useContext(CreateAccountContext);
   if (!ctx)
     throw new Error(
-      "useCreateAccount must be used inside CreateAccountProvider"
+      "useCreateAccount must be used inside CreateAccountProvider",
     );
 
   return ctx;
@@ -28,12 +28,7 @@ export default function CreateAccountProvider({ children }: ProviderProps) {
   const [step, setStep] = useState(1);
 
   return (
-    <CreateAccountContext.Provider
-      value={{
-        step,
-        setStep,
-      }}
-    >
+    <CreateAccountContext.Provider value={{ step, setStep }}>
       {children}
     </CreateAccountContext.Provider>
   );

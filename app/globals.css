@@ -137,3 +137,9 @@
   background-color: #333;
   color: #fff;
 }
+
+
+.rp-country-select {
+  pointer-events: none;
+  opacity: 0.6;
+}

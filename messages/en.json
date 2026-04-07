@@ -4,7 +4,8 @@
     "services": "Services",
     "faqs": "FAQs",
     "pricing": "Pricing",
-    "button": "Login"
+    "button": "Log in",
+    "signup": "Sign up"
   },
   "Banner": {
     "titleLine1": "Smart Booking Management For",
@@ -418,7 +419,7 @@
     ]
   },
   "createAccount": {
-    "step1Title": "Create your Bolki Merchant Account",
+    "step1Title": "Create your Bokli Business Account",
     "step2Title": "Business Info",
     "step3Title": "Choose your plan",
 
@@ -434,14 +435,16 @@
   },
   "AccountCreation": {
     "fullName": "Full Name",
-    "fullNamePlaceholder": "John Doe",
+    "fullNamePlaceholder": "",
     "email": "Business Email Address",
-    "emailPlaceholder": "john@example.com",
+    "emailPlaceholder": "",
     "phone": "Business Phone Number",
     "phonePlaceholder": "+1 (555) 000-0000",
     "password": "Password",
-    "passwordPlaceholder": "••••••••",
-    "submit": "Continue to Business Info"
+    "passwordPlaceholder": "",
+    "submit": "Continue to Business Info",
+    "alreadyAccount": "Already have an account?",
+    "login": "Login"
   },
 
   "BusinessInfo": {
@@ -676,4 +679,34 @@
         "logout": "Logout"
       }
     }
+    ,
+     "Auth": {
+        "Login": {
+          "title": "Login to Bokli",
+          "subtitle": "Your all-in-one booking management platform",
+          "email": "Email Address *",
+          "password": "Password *",
+          "remember": "Remember me",
+          "forgot": "Forgot password?",
+          "login": "Login",
+          "loading": "Loading...",
+          "noAccount": "Don't have an account?",
+          "signup": "Sign Up",
+          "success": "Login Successfully",
+          "invalid": "Invalid credentials"
+        },
+         "Signup": {
+              "title": "Sign Up to Bokli",
+              "fullName": "Full Name",
+              "email": "Email Address",
+              "phone": "Phone",
+              "password": "Password",
+              "signup": "Sign Up",
+              "loading": "Signing up...",
+              "success": "User Registration Successfully",
+              "error": "Registration failed. Please try again.",
+              "alreadyAccount": "Already have an account?",
+              "login": "Login"
+            }
+  }
 }

@@ -108,9 +108,7 @@ export default function ChooseyourPlan({
     () => get<PricingPlan>("Pricing.plans.premium"),
     [get],
   );
-
   const { data, isLoading } = useMerchentPlanPriceQuery({});
-
   const plans = data?.data || [];
 
   const basicPlan = plans.find((p: Plan) => p.package.toLowerCase() === "free");
@@ -164,7 +162,7 @@ export default function ChooseyourPlan({
   return (
     <section className="w-full bg-white dark:bg-gray-900">
       <div className="container mx-auto py-5 md:px-4">
-        <div className="flex justify-center mb-5 gap-2 w-[300px] mx-auto bg-[#FAFAFA] dark:bg-gray-800 p-2 rounded-full">
+        <div className="flex justify-center mb-5 gap-2 w-75 mx-auto bg-[#FAFAFA] dark:bg-gray-800 p-2 rounded-full">
           {(["monthly", "annual"] as Billing[]).map((b) => (
             <button
               key={b}

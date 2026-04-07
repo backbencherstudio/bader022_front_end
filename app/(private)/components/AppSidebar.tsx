@@ -44,7 +44,9 @@ function SidebarLink({
       dispatch(logout());
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      router.push("/login");
+      if (item.href) {
+        router.push(item.href);
+      }
       return;
     }
     if (item.href) {

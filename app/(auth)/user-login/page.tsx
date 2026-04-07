@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
   email: string;
@@ -18,7 +19,10 @@ type FormValues = {
   remember: boolean;
 };
 
-export default function LoginPage() {
+export default function UserLoginPage() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+
   const {
     register,
     handleSubmit,
@@ -36,14 +40,6 @@ export default function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
-  const [isSubscription, setIsSubscription] = useState(false);
-
-  // useEffect(() => {
-  //   const auth = authorize(["Merchant", "Admin", "User"]);
-  //   if (auth.authorized) {
-  //     router.push("/");
-  //   }
-  // }, []);
 
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
@@ -59,14 +55,11 @@ export default function LoginPage() {
   }, []);
 
   const onSubmit = async (data: FormValues) => {
-    // console.log(" Form submitted:", data);
     try {
       const response = await login({
         email: data.email,
         password: data.password,
       }).unwrap();
-
-      // console.log("Login response:", response);
 
       if (response.success) {
         setError(null);
@@ -81,10 +74,10 @@ export default function LoginPage() {
           }),
         );
 
-        toast.success("Login Successfully");
+        toast.success(t("Auth.Login.success"));
+
         const role = response.data.user_type;
-        // console.log(" User role:", role);
-        // Add a small delay to ensure state is updated
+
         setTimeout(() => {
           if (role === "Admin") {
             router.replace("/admin/dashboard");
@@ -96,10 +89,8 @@ export default function LoginPage() {
         }, 100);
       }
     } catch (error: any) {
-      // console.error("Login error:", error);
-      const message = error?.message || "Invalid credentials";
+      const message = error?.message || t("Auth.Login.invalid");
       if (error?.status === 403) {
-        setIsSubscription(true);
         toast.error(message);
       } else {
         setError(message);
@@ -108,7 +99,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div
+      dir={isRTL ? "rtl" : "ltr"}
+      className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4"
+    >
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
         <Link href={"/"}>
           <div className="flex justify-center">
@@ -123,11 +117,13 @@ export default function LoginPage() {
           </div>
         </Link>
 
+        {/* Title */}
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-          Login to Bokli
+          {t("Auth.Login.title")}
         </h2>
+
         <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
-          Your all-in-one booking management platform
+          {t("Auth.Login.subtitle")}
         </p>
 
         <form
@@ -137,29 +133,30 @@ export default function LoginPage() {
           }}
           className="space-y-4"
         >
+          {/* Email */}
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-              Email Address *
+              {t("Auth.Login.email")}
             </label>
+
             <div className="relative">
-              <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <FaEnvelope
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "right-3" : "left-3"
+                }`}
+              />
+
               <input
                 type="email"
-                placeholder="john@example.com"
                 {...register("email", {
                   required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
                 })}
-                className="w-full pl-10 py-3 border rounded-md
-                  bg-white dark:bg-gray-700
-                  border-gray-300 dark:border-gray-600
-                  text-gray-900 dark:text-white
-                  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isRTL ? "pr-10 text-right" : "pl-10"
+                }`}
               />
             </div>
+
             {errors.email && (
               <span className="text-red-500 text-sm">
                 {errors.email.message}
@@ -167,83 +164,85 @@ export default function LoginPage() {
             )}
           </div>
 
+          {/* Password */}
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-              Password *
+              {t("Auth.Login.password")}
             </label>
+
             <div className="relative">
-              <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <FaLock
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "right-3" : "left-3"
+                }`}
+              />
+
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                {...register("password", { required: "Password is required" })}
-                autoComplete="current-password"
-                className="w-full pl-10 pr-10 py-3 border rounded-md
-                  bg-white dark:bg-gray-700
-                  border-gray-300 dark:border-gray-600
-                  text-gray-900 dark:text-white
-                  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {...register("password", {
+                  required: "Password is required",
+                })}
+                className={`w-full py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isRTL ? "pr-10 pl-10 text-right" : "pl-10 pr-10"
+                }`}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "left-3" : "right-3"
+                }`}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+
             {errors.password && (
               <span className="text-red-500 text-sm">
                 {errors.password.message}
               </span>
             )}
+
             {error && !errors.password && (
               <p className="text-red-500 text-sm mt-1">{error}</p>
             )}
           </div>
 
+          {/* Remember + Forgot */}
           <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 pt-3">
             <label className="flex items-center gap-2">
               <input type="checkbox" {...register("remember")} />
-              Remember me
+              {t("Auth.Login.remember")}
             </label>
 
             <Link
               href="/forgot-password"
-              className="text-blue-600 hover:underline cursor-pointer"
+              className="text-blue-600 hover:underline"
             >
-              Forgot password?
+              {t("Auth.Login.forgot")}
             </Link>
           </div>
 
+          {/* Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 cursor-pointer disabled:opacity-50"
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50"
           >
-            {isLoading ? "Loading..." : "Login"}
-            {/* login */}
+            {isLoading ? t("Auth.Login.loading") : t("Auth.Login.login")}
           </button>
         </form>
-        {!isSubscription ? (
-          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
-            Don't have an account?{" "}
-            <Link href="/create-account">
-              <span className="text-blue-600 cursor-pointer hover:underline">
-                Sign Up
-              </span>
-            </Link>
-          </p>
-        ) : (
-          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6 flex flex-col md:flex-row gap-2">
-            Your subscription has expired
-            <Link href="/subscription">
-              <span className="text-blue-600 cursor-pointer hover:underline">
-                subscription renew
-              </span>
-            </Link>
-          </p>
-        )}
+
+        {/* Footer */}
+        <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+          {t("Auth.Login.noAccount")}{" "}
+          <Link href="/user-signup">
+            <span className="text-blue-600 hover:underline">
+              {t("Auth.Login.signup")}
+            </span>
+          </Link>
+        </p>
       </div>
     </div>
   );

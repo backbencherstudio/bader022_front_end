@@ -10,7 +10,7 @@ interface CompleteYourProfileProps {
 }
 
 export default function CompleteYourProfile({
-  subscriptionLink = "https://bokli.io/dfg",
+  subscriptionLink = "https://bokli.io/login",
 }: CompleteYourProfileProps) {
   const { t } = useI18n();
   const [copied, setCopied] = useState(false);
@@ -51,7 +51,7 @@ export default function CompleteYourProfile({
 
           <button
             onClick={handleCopy}
-            className="flex items-center justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
+            className="flex items-center cursor-pointer justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
           >
             <FiCopy />
             {copied ? t("completeProfile.copied") : t("completeProfile.copy")}
@@ -59,8 +59,8 @@ export default function CompleteYourProfile({
         </div>
 
         {/* Dashboard Button */}
-        <Link href="/merchant/dashboard">
-          <button className="mx-auto mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-blue-600 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
+        <Link href="/login">
+          <button className="mx-auto cursor-pointer mt-4 flex items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-blue-600 px-6 py-3 text-sm sm:text-base font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-700 dark:hover:bg-gray-200">
             {t("completeProfile.dashboard")}
             <FiArrowUpRight />
           </button>

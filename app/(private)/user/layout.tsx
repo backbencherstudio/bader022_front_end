@@ -85,7 +85,7 @@ export default function DashboardLayout({
   const footerItems = [
     {
       label: t("User.Sidebar.logout"),
-      href: "/",
+      href: "/user-login",
       icon: (p: any) => <LogOut {...p} />,
       iconClassName: "text-red-400",
       action: "logout",
@@ -95,14 +95,14 @@ export default function DashboardLayout({
   useEffect(() => {
     const auth = authorize(["User"]);
     if (!auth.authorized) {
-      router.push("/login");
+      router.push("/user-login");
     }
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      router.push("/login");
+      router.push("/user-login");
     } else {
       setLoading(false);
     }

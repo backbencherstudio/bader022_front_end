@@ -105,7 +105,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-[18px] font-semibold text-black">
+          <nav className="hidden lg:flex items-center gap-8 text-[18px] font-semibold text-black">
             <NavLinks />
           </nav>
 
@@ -150,35 +150,30 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* CTA (desktop only) */}
-
-            {user?.role === "Merchant" ? (
-              <Link
-                href={"/merchant/dashboard"}
-                className="hidden md:flex rounded-md px-3 py-3 bg-red-500 from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
-              >
-                {/* {t("Nav.button")}
-                <ArrowUpRight
-                  size={18}
-                  className={locale === "ar" ? "rotate-270" : ""}
-                /> */}
-                Dashboard
-              </Link>
-            ) : (
-              <Link
-                href={"/login"}
-                className="hidden md:flex rounded-md px-3 py-3 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
-              >
-                {t("Nav.button")}
-                <ArrowUpRight
-                  size={18}
-                  className={locale === "ar" ? "rotate-270" : ""}
-                />
-              </Link>
-            )}
+            <Link
+              href={"/login"}
+              className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
+            >
+              {t("Nav.button")}
+              {/* <ArrowUpRight
+                size={18}
+                className={locale === "ar" ? "rotate-270" : ""}
+              /> */}
+            </Link>
+            <Link
+              href={"/create-account"}
+              className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
+            >
+              {t("Nav.signup")}
+              {/* <ArrowUpRight
+                size={18}
+                className={locale === "ar" ? "rotate-270" : ""}
+              /> */}
+            </Link>
 
             {/* Mobile Toggle */}
             <button
-              className="md:hidden p-2 text-black"
+              className="lg:hidden p-2 text-black"
               onClick={() => setOpen((v) => !v)}
             >
               {open ? <X size={26} /> : <Menu size={26} />}
@@ -189,7 +184,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {open && (
           <div
-            className={`md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t   shadow-md ${
+            className={`lg:hidden absolute left-0 right-0 top-full z-50 bg-white border-t   shadow-md ${
               locale === "ar" ? "text-right" : "text-left"
             }`}
           >
@@ -201,10 +196,22 @@ export default function Navbar() {
                   className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
                 >
                   {t("Nav.button")}
-                  <ArrowUpRight
+                  {/* <ArrowUpRight
                     size={18}
                     className={locale === "ar" ? "rotate-270" : ""}
-                  />
+                  /> */}
+                </Button>
+              </Link>
+              <Link href={"/create-account"}>
+                <Button
+                  onClick={() => setOpen(false)}
+                  className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
+                >
+                  {t("Nav.signup")}
+                  {/* <ArrowUpRight
+                    size={18}
+                    className={locale === "ar" ? "rotate-270" : ""}
+                  /> */}
                 </Button>
               </Link>
             </nav>

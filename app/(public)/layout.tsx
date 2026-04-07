@@ -31,7 +31,7 @@ export default function MainLayout({
     <div className="flex min-h-screen flex-col">
       {/* Main Content */}
       <Navbar />
-      <main className="flex-1 mt-20 md:mt-22">{children}</main>
+      <main className="flex-1 mt-20 md:mt-22 overflow-hidden">{children}</main>
       {/* Footer */}
       <Footer />
     </div>

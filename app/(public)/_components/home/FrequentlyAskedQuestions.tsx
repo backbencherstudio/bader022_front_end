@@ -84,13 +84,13 @@ export default function FrequentlyAskedQuestions() {
             {t("FAQ.title")}
           </h2>
 
-          <p className="w-11/12 md:w-9/12 lg:w-5/12 text-[16px] text-[#4A4C56]">
+          <p className="max-w-xl md:max-w-2xl text-[16px] text-[#4A4C56]">
             {t("FAQ.subtitle")}
           </p>
         </motion.div>
 
         {/* ---------------- Accordions ---------------- */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
           {/* Left */}
           <motion.div
             variants={reduceMotion ? mobileVariant : desktopLeftColVariant}

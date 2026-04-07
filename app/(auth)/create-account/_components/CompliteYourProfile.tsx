@@ -7,10 +7,12 @@ import { FiCheck, FiCopy, FiArrowUpRight } from "react-icons/fi";
 
 interface CompleteYourProfileProps {
   subscriptionLink?: string;
+  domain: string;
 }
 
 export default function CompleteYourProfile({
-  subscriptionLink = "https://bokli.io/login",
+  domain,
+  subscriptionLink = `https://bokli.io/${domain}`,
 }: CompleteYourProfileProps) {
   const { t } = useI18n();
   const [copied, setCopied] = useState(false);

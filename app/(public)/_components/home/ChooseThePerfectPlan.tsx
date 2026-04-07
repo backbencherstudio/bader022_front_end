@@ -95,7 +95,7 @@ export default function ChooseThePerfectPlan() {
   const { data, isLoading } = useMerchentPlanPriceQuery({});
 
   const plans = data?.data || [];
-  // console.log(plans);
+  console.log(plans);
 
   const monthlyPlan = plans.find(
     (p: Plan) => p.package.toLowerCase() === "monthly",

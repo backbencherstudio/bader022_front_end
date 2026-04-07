@@ -20,11 +20,11 @@ interface Step1Props {
 }
 
 const CATEGORIES = [
-  { key: "salon_beauty", label: "salon_beauty", icon: Scissors },
-  { key: "home_services", label: "home_services", icon: Dumbbell },
-  { key: "health", label: "health", icon: HeartPulse },
-  { key: "fitness_pro_gym", label: "fitness_pro_gym", icon: Leaf },
-  { key: "others", label: "others", icon: Home },
+  { key: "salon_beauty", label: "Salon Beauty", icon: Scissors },
+  { key: "home_services", label: "Home Services", icon: Dumbbell },
+  { key: "health", label: "Health", icon: HeartPulse },
+  { key: "fitness_pro_gym", label: "Fitness Pro Gym", icon: Leaf },
+  { key: "others", label: "Others", icon: Home },
 ];
 
 const BRANCH_OPTIONS = [
@@ -87,7 +87,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
 
       {/* Business Category */}
       <div>
-        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 cursor-pointer">
           {t("BusinessInfo.businessCategory")} *
         </label>
 

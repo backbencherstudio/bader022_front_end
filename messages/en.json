@@ -13,7 +13,7 @@
     "subtitleLine1": "All-in-one platform for managing services, staff, branches, bookings, payments, and",
     "subtitleLine2": "customer data — with your own branded mini-website.",
     "primaryBtn": "Get started for free",
-    "secondaryBtn": "Try Bokli for Free"
+    "secondaryBtn": "Book a Demo"
   },
   "TrustedCompaniesStateMent": {
     "title": "Trusted By 100+ Popular Company"
@@ -116,7 +116,7 @@
     "subtitle": "Select the right plan designed to support your growth, streamline bookings, and unlock advanced features when needed.",
     "billing": {
       "monthly": "Monthly",
-      "annual": "Annual (save over 20%)"
+      "annual": "Annual (save over 15%)"
     },
     "plans": {
       "basic": {
@@ -139,7 +139,7 @@
         "desc": "Unlock advanced booking features, multiple branches, customization tools, and powerful analytics to scale your business effortlessly.",
         "priceMonthly": "209 SAR",
         "priceAnnual": "199 SAR",
-        "cta": "Upgrade Premium",
+        "cta": "Upgrade to Premium",
         "features": [
           "Create Unlimited Staff",
           "Mini-site enabled",

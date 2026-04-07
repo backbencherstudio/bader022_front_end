@@ -44,6 +44,7 @@ export default function CreateAccountPage() {
   const { t, locale, setLocale } = useI18n(); // localization
   // const [step, setStep] = useState(4);
   const { step, setStep } = useCreateAccount();
+  const [domain, setDomain] = useState("barik");
   const router = useRouter();
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
@@ -112,6 +113,7 @@ export default function CreateAccountPage() {
       plan_id: finalPlanId,
     };
     // console.log("body===========", body);
+    setDomain(body.name);
     try {
       const response = await registerMerchant(body).unwrap();
       // console.log(response);
@@ -176,7 +178,7 @@ export default function CreateAccountPage() {
       case 4:
         return <FinalizingYourWebsite />;
       case 5:
-        return <CompleteYourProfile />;
+        return <CompleteYourProfile domain={domain} />;
       default:
         return null;
     }

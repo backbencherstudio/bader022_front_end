@@ -36,7 +36,7 @@ export default function MiniBookingPill({ booking }: { booking: TBooking }) {
         <div className="truncate font-medium">{booking.customer_name}</div>
       </div>
       <div className="mt-1 flex items-center gap-1">
-        <Scissors size={14} />
+        {/* <Scissors size={14} /> */}
         <div className="truncate opacity-80">
           {booking.service.service_name}
         </div>

@@ -677,7 +677,16 @@
         "transactions": "Transactions",
         "settings": "Settings",
         "logout": "Logout"
-      }
+      },
+      "Dashboard": {
+          "revenue": "Revenue",
+          "totalBooking": "Total Bookings",
+          "appointments": "Appointments",
+          "totalCustomers": "Total Customers",
+          "revenueStats": "Revenue Statistics",
+          "weekly": "Weekly",
+          "monthly": "Monthly"
+        } 
     }
     ,
      "Auth": {

@@ -16,12 +16,15 @@ import {
   useWeeklyRevenueQuery,
 } from "@/redux/features/merchant/dashboardApi";
 import { useMerchantTransactionOverviewQuery } from "@/redux/features/merchant/transactionApi";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TData = {
   name: string;
   revenue: number;
 };
 export default function DashboardPage() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const {
     data: dashboardOverview,
     isLoading,
@@ -71,23 +74,23 @@ export default function DashboardPage() {
           {/* Statistics Cards */}
           <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <StatCard
-              title="Revenue"
+              title={t("Merchant.Dashboard.revenue")}
               Currency={SaudiRiyal}
               value={dashboardOverview?.revenue}
               Icon={SaudiRiyal}
             />
             <StatCard
-              title="Total Bookings"
+              title={t("Merchant.Dashboard.totalBooking")}
               value={dashboardOverview?.total_bookings}
               Icon={Calendar}
             />
             <StatCard
-              title="Appointments"
+              title={t("Merchant.Dashboard.appointments")}
               value={dashboardOverview?.appointments}
               Icon={TrendingUp}
             />
             <StatCard
-              title="Total Customers"
+              title={t("Merchant.Dashboard.totalCustomers")}
               value={dashboardOverview?.Total_Customers}
               Icon={Users}
             />
@@ -101,7 +104,7 @@ export default function DashboardPage() {
               <Tabs defaultValue="monthly">
                 <div className="flex justify-between dark:text-white">
                   <p className="text-xl font-semibold text-[#444950] dark:text-white">
-                    Revenue Statistics
+                    {t("Merchant.Dashboard.revenueStats")}
                   </p>
                   <TabsList
                     className="h-14 p-2 dark:bg-gray-800
@@ -115,7 +118,7 @@ export default function DashboardPage() {
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
     "
                     >
-                      Weekly
+                      {/* Weekly */} {t("Merchant.Dashboard.weekly")}
                     </TabsTrigger>
 
                     <TabsTrigger
@@ -125,7 +128,7 @@ export default function DashboardPage() {
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
     "
                     >
-                      Monthly
+                      {/* Monthly */} {t("Merchant.Dashboard.monthly")}
                     </TabsTrigger>
                   </TabsList>
                 </div>

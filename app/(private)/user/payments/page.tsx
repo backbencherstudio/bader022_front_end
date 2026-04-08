@@ -96,6 +96,9 @@ export function RecentTransactionsCard({
 }) {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
+
+  // console.log(rows);
+
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardContent className="pb-8">

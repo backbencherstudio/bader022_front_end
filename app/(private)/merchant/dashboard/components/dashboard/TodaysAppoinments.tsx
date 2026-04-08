@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type Appointment = {
   id: string;
@@ -10,11 +11,13 @@ export type Appointment = {
 
 function AppointmentRow({ item }: { item: Appointment }) {
   // console.log(item);
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   return (
     <div className="relative flex gap-4">
       {/* Dot */}
-      <div className="relative z-10 mt-[2px] flex h-6 w-6 items-center justify-center rounded-full bg-muted/40">
+      <div className="relative z-10 mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-muted/40">
         <div className="h-2 w-2 rounded-full bg-foreground" />
       </div>
 
@@ -33,12 +36,13 @@ function AppointmentRow({ item }: { item: Appointment }) {
 export function TodaysAppointments({
   items,
   className,
-  title = "Today's Appointments",
 }: {
   items: Appointment[];
-  title?: string;
+
   className?: string;
 }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   return (
     <Card
       className={`px-0 w-full rounded-xl bg-white dark:bg-gray-800
@@ -46,7 +50,9 @@ export function TodaysAppointments({
                lg:w-1/4 shadow-sm ${className ?? ""}`}
     >
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold">{title}</CardTitle>
+        <CardTitle className="text-base font-semibold">
+          {locale == "ar" ? "مواعيد اليوم" : "Today's Appointments"}
+        </CardTitle>
       </CardHeader>
 
       <CardContent className="p-2!">
@@ -83,7 +89,9 @@ export function TodaysAppointments({
 
                 <div className="pb-6">
                   <p className="text-xs text-muted-foreground">
-                    No appointments today
+                    {locale == "ar"
+                      ? "لا توجد مواعيد اليوم"
+                      : "No appointments today "}
                   </p>
                 </div>
               </div>

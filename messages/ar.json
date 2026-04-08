@@ -681,7 +681,16 @@
         "transactions": "المعاملات",
         "settings": "الإعدادات",
         "logout": "تسجيل الخروج"
-      }
+      },
+      "Dashboard": {
+          "revenue": "الإيرادات",
+          "totalBooking": "إجمالي الحجوزات",
+          "appointments": "المواعيد",
+          "totalCustomers": "إجمالي العملاء",
+          "revenueStats": "إحصائيات الإيرادات",
+          "weekly": "أسبوعي",
+          "monthly": "شهري"
+        }
     },
     "Auth": {
         "Login": {

@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
   Building,
+  Eye,
+  EyeOff,
   KeyRound,
   Languages,
   ShieldQuestionMark,
@@ -22,15 +24,17 @@ import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
 import MerchantTapkey from "../components/settings/MerchantTapkey";
 import MerchantProfile from "../components/settings/MerchantProfile";
+import { useI18n } from "@/components/provider/I18nProvider";
+
+type PasswordFormData = {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 // Sidebar component with dynamic content handling
-function Sidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function Sidebar({ activeSection, setActiveSection, t }: any) {
+  const { locale } = useI18n();
   return (
     <div className="w-full sm:w-72 p-4 sm:block hidden">
       <ul className="flex flex-col gap-4">
@@ -47,7 +51,8 @@ function Sidebar({
             <span className="text-lg">
               <User />
             </span>
-            Account
+            {/* Account */}
+            {t("Admin.AccountSettings.personalInfo", "Personal Info")}
           </div>
         </li>
         <li
@@ -63,7 +68,8 @@ function Sidebar({
             <span className="text-lg">
               <Building />
             </span>
-            Business
+            {/* Business{" "} */}
+            {locale === "ar" ? "الأعمال" : "Business"}
           </div>
         </li>
         {/* <li
@@ -98,7 +104,7 @@ function Sidebar({
             Language
           </div>
         </li> */}
-        <li
+        {/* <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "support"
@@ -113,7 +119,7 @@ function Sidebar({
             </span>
             Support
           </div>
-        </li>
+        </li> */}
         {/* Tap-key */}
         <li
           className={cn(
@@ -126,7 +132,7 @@ function Sidebar({
         >
           <div className="flex items-center gap-2">
             <KeyRound size={18} />
-            Tap-key
+            {t("Admin.AccountSettings.tapKey", "Tap-key")}
           </div>
         </li>
       </ul>
@@ -135,14 +141,10 @@ function Sidebar({
 }
 
 // Mobile Sidebar (Hamburger menu)
-function MobileSidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function MobileSidebar({ activeSection, setActiveSection, t }: any) {
   const [isOpen, setIsOpen] = useState(false);
+  const { locale } = useI18n();
+  const isRTL = locale === "ar";
 
   return (
     <div className="sm:hidden flex flex-col items-start gap-4 p-4 w-full">
@@ -151,7 +153,7 @@ function MobileSidebar({
         onClick={() => setIsOpen(!isOpen)}
         className="text-muted-foreground w-full"
       >
-        Menu
+        {t("Admin.AccountSettings.menu", "Menu")}
       </Button>
       {isOpen && (
         <ul className="flex flex-col gap-4 mt-4">
@@ -164,7 +166,8 @@ function MobileSidebar({
             )}
             onClick={() => setActiveSection("account")}
           >
-            Account
+            {/* Account */}
+            {t("Admin.AccountSettings.personalInfo", "Personal Info")}
           </li>
           <li
             className={cn(
@@ -175,7 +178,8 @@ function MobileSidebar({
             )}
             onClick={() => setActiveSection("business")}
           >
-            Business
+            {/* Business{" "} */}
+            {locale === "ar" ? "الأعمال" : "Business"}
           </li>
           {/* <li
             className={cn(
@@ -199,7 +203,7 @@ function MobileSidebar({
           >
             Language
           </li> */}
-          <li
+          {/* <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "support"
@@ -209,7 +213,7 @@ function MobileSidebar({
             onClick={() => setActiveSection("support")}
           >
             Support
-          </li>
+          </li> */}
           <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
@@ -223,7 +227,7 @@ function MobileSidebar({
             }}
           >
             <KeyRound size={18} className="inline mr-2" />
-            Tap-key
+            {t("Admin.AccountSettings.tapKey", "Tap-key")}
           </li>
         </ul>
       )}
@@ -233,39 +237,33 @@ function MobileSidebar({
 
 // Information Form for Account
 function AccountSettingsForm() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const { user } = useAppSelector((state) => state.auth);
-  const { register, handleSubmit, reset } = useForm();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-  // console.log(user);
-  const [changePassword] = useChangePasswordMutation();
+  const form = useForm<PasswordFormData>();
 
-  const onSubmit = async (data: any) => {
-    console.log("Submitted Data:", data);
-    const id = user?.id;
+  const onSubmit = async (data: PasswordFormData) => {
     try {
-      const payload = {
-        id,
+      await changePassword({
+        id: user?.id,
         body: {
-          current_password: data.current_password,
-          new_password: data.new_password,
-          new_password_confirmation: data.new_password_confirmation,
+          current_password: data.oldPassword,
+          new_password: data.newPassword,
+          new_password_confirmation: data.confirmPassword,
         },
-      };
+      }).unwrap();
 
-      // console.log("Submitted Data:", payload);
-
-      const response = await changePassword(payload);
-
-      // console.log(response);
-      if (response.data.success === false) {
-        toast.error(response.data.message);
-      }
-      toast.success("Password Changed successfully");
-      reset();
+      toast.success(t("ChangePassword.success"));
+      form.reset();
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to change Password");
-
-      reset();
+      toast.error(t("ChangePassword.error"));
     }
   };
 
@@ -299,68 +297,142 @@ function AccountSettingsForm() {
       <MerchantProfile />
 
       {/* Change Password Section */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold">
-              Change Password
-            </CardTitle>
-          </CardHeader>
 
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold">
-                  Current Password *
-                </label>
-                <Input
-                  {...register("current_password")}
-                  className="mt-2"
-                  placeholder="Enter current password"
-                  type="password"
-                />
-              </div>
+      <Card className="rounded-xl p-8 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+        <h3 className="text-[18px] font-semibold mb-4">
+          {t("ChangePassword.title")}
+        </h3>
 
-              <div>
-                <label className="block text-sm font-semibold">
-                  New Password *
-                </label>
-                <Input
-                  {...register("new_password")}
-                  className="mt-2"
-                  placeholder="Enter new password"
-                  type="password"
-                />
-              </div>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Old Password */}
+          <div>
+            <label className="text-[14px] font-medium">
+              {t("ChangePassword.oldPassword")}
+            </label>
 
-              <div>
-                <label className="block text-sm font-semibold">
-                  Confirm New Password *
-                </label>
-                <Input
-                  {...register("new_password_confirmation")}
-                  className="mt-2"
-                  placeholder="Confirm new password"
-                  type="password"
-                />
-              </div>
+            <div className="relative">
+              <Input
+                type={showOld ? "text" : "password"}
+                placeholder={t("ChangePassword.oldPlaceholder")}
+                {...form.register("oldPassword", {
+                  required: t("ChangePassword.validation.oldRequired"),
+                })}
+                className="w-full py-5 mt-2"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowOld(!showOld)}
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "left-4" : "right-4"
+                }`}
+              >
+                {showOld ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Save Change Button */}
-        <div className="flex justify-end mt-4">
-          <Button type="submit" className="cursor-pointer">
-            Save Change
-          </Button>
-        </div>
-      </form>
+            {form.formState.errors.oldPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {form.formState.errors.oldPassword.message}
+              </p>
+            )}
+          </div>
+
+          {/* New Password */}
+          <div>
+            <label className="text-[14px] font-medium">
+              {t("ChangePassword.newPassword")}
+            </label>
+
+            <div className="relative">
+              <Input
+                type={showNew ? "text" : "password"}
+                placeholder={t("ChangePassword.newPlaceholder")}
+                {...form.register("newPassword", {
+                  required: t("ChangePassword.validation.newRequired"),
+                  minLength: {
+                    value: 6,
+                    message: t("ChangePassword.validation.min"),
+                  },
+                })}
+                className="w-full py-5 mt-2"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "left-4" : "right-4"
+                }`}
+              >
+                {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+
+            {form.formState.errors.newPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {form.formState.errors.newPassword.message}
+              </p>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="text-[14px] font-medium">
+              {t("ChangePassword.confirmPassword")}
+            </label>
+
+            <div className="relative">
+              <Input
+                type={showConfirm ? "text" : "password"}
+                placeholder={t("ChangePassword.confirmPlaceholder")}
+                {...form.register("confirmPassword", {
+                  required: t("ChangePassword.validation.confirmRequired"),
+                  validate: (value) =>
+                    value === form.getValues("newPassword") ||
+                    t("ChangePassword.validation.match"),
+                })}
+                className="w-full py-5 mt-2"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-400 ${
+                  isRTL ? "left-4" : "right-4"
+                }`}
+              >
+                {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+
+            {form.formState.errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {form.formState.errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          {/* Submit */}
+          <div className="flex justify-end">
+            <Button
+              className="cursor-pointer"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading
+                ? t("ChangePassword.changing")
+                : t("ChangePassword.save")}
+            </Button>
+          </div>
+        </form>
+      </Card>
     </div>
   );
 }
 
 // Dynamic content based on active section
-function getActiveSectionContent(activeSection: string) {
+function getActiveSectionContent(activeSection: string, t: any) {
   switch (activeSection) {
     case "business":
       return <BusinessSetting />;
@@ -384,23 +456,28 @@ function getActiveSectionContent(activeSection: string) {
 
 export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("account");
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   return (
     <div className="border rounded-xl mt-4">
       <h1 className="text-[18px] p-4 font-semibold">
-        {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Setting
+        {/* {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Setting */}
+        {t("Admin.AccountSettings.title")}
       </h1>
       <div className="flex flex-col sm:flex-row">
         <MobileSidebar
           setActiveSection={setActiveSection}
           activeSection={activeSection}
+          t={t}
         />
         <Sidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
+          t={t}
         />
         <div className="w-full max-w-4xl">
-          {getActiveSectionContent(activeSection)}
+          {getActiveSectionContent(activeSection, t)}
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
   useUpdateMerchantTapkeyMutation,
 } from "@/redux/features/merchant/settingApi";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type TapkeyFormData = {
   tap_mode: string;
@@ -17,6 +18,8 @@ type TapkeyFormData = {
 };
 
 export default function MerchantTapkey() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { data, isLoading } = useGetMerchantTapkeyQuery({});
   const [updateTapkey, { isLoading: isUpdateLoading }] =
     useUpdateMerchantTapkeyMutation();
@@ -52,22 +55,24 @@ export default function MerchantTapkey() {
         tap_secret_key: result.data.tap_secret_key,
       });
       // console.log("Updated data:", result.data);
-      toast.success("Tap key updated successfully!");
+      // toast.success("Tap key updated successfully!");
+      toast.success(t("TapKey.success"));
     } catch (err) {
       //   console.error("Update failed:", err);
-      toast.error("Failed to update Tap key. Please try again.");
+      // toast.error("Failed to update Tap key. Please try again.");
+      toast.error(t("TapKey.error"));
     }
   };
 
-  if (isLoading) return <div>Loading Tap key...</div>;
+  if (isLoading) return <div>{t("TapKey.loading")}</div>;
 
   return (
     <div className="max-w-3xl mx-auto my-10 p-6 border rounded-lg shadow-sm">
-      <h2 className="text-xl font-semibold mb-4">Tap Key Settings</h2>
+      <h2 className="text-xl font-semibold mb-4">{t("TapKey.title")}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Tap Mode */}
         <div>
-          <label className="block mb-1 font-medium">Mode</label>
+          <label className="block mb-1 font-medium">{t("TapKey.mode")}</label>
           <select
             {...register("tap_mode", { required: true })}
             className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -80,19 +85,27 @@ export default function MerchantTapkey() {
 
         {/* Public Key */}
         <div>
-          <label className="block mb-1 font-medium">Public Key</label>
+          <label className="block mb-1 font-medium">
+            {t("TapKey.publicKey")}
+          </label>
           <Input {...register("tap_public_key", { required: true })} />
         </div>
 
         {/* Secret Key */}
         <div>
-          <label className="block mb-1 font-medium">Secret Key</label>
+          <label className="block mb-1 font-medium">
+            {t("TapKey.secretKey")}
+          </label>
           <Input {...register("tap_secret_key", { required: true })} />
         </div>
 
         <div className="pt-4">
-          <Button type="submit" disabled={isUpdateLoading}>
-            {isUpdateLoading ? "Updating..." : "Update Tap Key"}
+          <Button
+            className="cursor-pointer"
+            type="submit"
+            disabled={isUpdateLoading}
+          >
+            {isUpdateLoading ? t("TapKey.updating") : t("TapKey.update")}
           </Button>
         </div>
       </form>

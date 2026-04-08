@@ -11,6 +11,7 @@ import {
 } from "@/redux/features/admin/adminApi";
 import { toast } from "sonner";
 import { getImageUrl } from "@/helper/formatImage";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type ProfileFormData = {
   name: string;
@@ -19,7 +20,8 @@ type ProfileFormData = {
 };
 
 export default function MerchantProfile() {
-  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
   console.log;
@@ -89,7 +91,7 @@ export default function MerchantProfile() {
   return (
     <div>
       <div className="">
-        <h2 className="text-[16px] font-medium mb-8">Profile</h2>
+        <h2 className="text-[16px] font-medium mb-8">{t("Profile.title")}</h2>
 
         {/* Profile Header */}
         <div className="flex items-start gap-6 mb-10">
@@ -130,31 +132,40 @@ export default function MerchantProfile() {
 
         {/* Form */}
         <Card className="rounded-xl p-8 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-          <h3 className="text-[18px] font-semibold mb-6">Information</h3>
+          <h3 className="text-[18px] font-semibold mb-6">
+            {t("Profile.information")}
+          </h3>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <label className="text-sm font-medium">Full Name</label>
+              <label className="text-sm font-medium">
+                {t("Profile.fullName")}
+              </label>
               <Input {...register("name")} className="mt-2 py-5" />
             </div>
 
             <div>
-              <label className="text-sm font-medium">Phone Number</label>
+              <label className="text-sm font-medium">
+                {" "}
+                {t("Profile.phone")}
+              </label>
               <Input {...register("phone")} className="mt-2 py-5" />
             </div>
 
             <div>
-              <label className="text-sm font-medium">Street Address</label>
+              <label className="text-sm font-medium">
+                {t("Profile.address")}
+              </label>
               <Input {...register("address")} className="mt-2 py-5" />
             </div>
 
             <div className="flex justify-end pt-6 cursor-pointer">
               <Button
+                className="cursor-pointer"
                 type="submit"
                 disabled={isUpdating}
-                className="cursor-pointer"
               >
-                {isUpdating ? "Updating..." : "Save Changes"}
+                {isUpdating ? t("Profile.updating") : t("Profile.saveChanges")}
               </Button>
             </div>
           </form>

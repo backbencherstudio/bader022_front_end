@@ -16,6 +16,7 @@ import {
   useUpdateBusinessSettingMutation,
 } from "@/redux/features/merchant/settingApi";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type WorkingHour = {
   day: string;
@@ -46,6 +47,8 @@ const DAYS = [
 ];
 
 export default function BusinessSetting() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const {
     control,
     handleSubmit,
@@ -70,7 +73,7 @@ export default function BusinessSetting() {
 
   const [updateBusinessSetting] = useUpdateBusinessSettingMutation();
 
-  const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
+  const TIME_OPTIONS = Array.from({ length: 49 }, (_, i) => {
     const hour = Math.floor(i / 2)
       .toString()
       .padStart(2, "0");
@@ -146,20 +149,25 @@ export default function BusinessSetting() {
     <div className="container max-w-3xl mx-auto p-4">
       <div className="border rounded-xl p-4 sm:p-6">
         <h2 className="text-xl font-semibold mb-4">
-          Business / Store Settings
+          {locale === "ar"
+            ? "إعدادات النشاط التجاري / المتجر"
+            : "Business / Store Settings"}
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Store Name */}
           <div>
             <label className="block mb-2 text-sm font-medium text-muted-foreground">
-              Business / Store Name
+              {locale === "ar"
+                ? "اسم النشاط التجاري / المتجر"
+                : "Business / Store Name "}
             </label>
 
             <Input
               {...register("store_name", {
                 required: "Business name is required",
               })}
+              disabled
               placeholder="My Store"
             />
 
@@ -172,7 +180,9 @@ export default function BusinessSetting() {
 
           {/* Working Hours */}
           <div className="space-y-3 overflow-x-auto">
-            <h3 className="text-sm font-medium">Working Hours</h3>
+            <h3 className="text-sm font-medium">
+              {locale === "ar" ? "ساعات العمل" : "Working Hours"}
+            </h3>
 
             {watch("workingHours")?.map((item, index) => (
               <div
@@ -217,9 +227,7 @@ export default function BusinessSetting() {
                   )}
                 />
 
-                <span className="hidden sm:block text-xs text-gray-500">
-                  to
-                </span>
+                <span className="hidden sm:block text-xs text-gray-500">-</span>
 
                 <Controller
                   control={control}
@@ -249,7 +257,10 @@ export default function BusinessSetting() {
 
           {/* Category */}
           <div>
-            <label className="block mb-2 text-sm">Business Category</label>
+            <label className="block mb-2 text-sm">
+              {" "}
+              {locale === "ar" ? "فئة المتجر" : "Business Category"}
+            </label>
             <Input
               {...register("business_category", {})}
               disabled
@@ -257,7 +268,10 @@ export default function BusinessSetting() {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm">Business Address</label>
+            <label className="block mb-2 text-sm">
+              {" "}
+              {locale === "ar" ? "عنوان المتجر" : "Business Address"}
+            </label>
 
             <Input
               {...register("business_address", {
@@ -274,7 +288,7 @@ export default function BusinessSetting() {
           </div>
 
           {/* Country */}
-          <div>
+          {/* <div>
             <label className="block mb-2 text-sm">Country</label>
             <Controller
               control={control}
@@ -291,10 +305,10 @@ export default function BusinessSetting() {
                 </Select>
               )}
             />
-          </div>
+          </div> */}
 
           {/* City */}
-          <div>
+          {/* <div>
             <label className="block mb-2 text-sm">City</label>
             <Controller
               control={control}
@@ -312,10 +326,10 @@ export default function BusinessSetting() {
                 </Select>
               )}
             />
-          </div>
+          </div> */}
 
           {/* Timezone */}
-          <div>
+          {/* <div>
             <label className="block mb-2 text-sm">Timezone</label>
             <Controller
               control={control}
@@ -332,10 +346,10 @@ export default function BusinessSetting() {
                 </Select>
               )}
             />
-          </div>
+          </div> */}
 
           {/* Currency */}
-          <div>
+          {/* <div>
             <label className="block mb-2 text-sm">Currency </label>
             <Controller
               control={control}
@@ -351,11 +365,11 @@ export default function BusinessSetting() {
                 </Select>
               )}
             />
-          </div>
+          </div> */}
 
           {/* Submit */}
           <Button type="submit" className="w-full cursor-pointer">
-            Save Changes
+            {locale === "ar" ? "حفظ التغييرات" : "Save Changes"}
           </Button>
         </form>
       </div>

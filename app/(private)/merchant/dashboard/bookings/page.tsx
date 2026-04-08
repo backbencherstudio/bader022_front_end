@@ -23,6 +23,7 @@ import AllBookingHistory from "../components/bookings/AllBookingHistory";
 import AddBookingModal from "../components/bookings/AddBookingModal";
 import { BookingPopup } from "../components/bookings/BookingPopup";
 import { useAllBookingsQuery } from "@/redux/features/merchant/bookingsApi";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TBooking = {
   id: string;
@@ -42,6 +43,8 @@ export type TBooking = {
 export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function Page() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { data: allBookings, isLoading } = useAllBookingsQuery({});
   // console.log({ allBookings });
   const [tab, setTab] = useState<"calendar" | "table">("calendar");
@@ -95,7 +98,9 @@ export default function Page() {
     <div className="w-full py-4">
       {/* Top Bar */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <h1 className="text-xl font-semibold">All Bookings History</h1>
+        <h1 className="text-xl font-semibold">
+          {locale === "ar" ? "كل سجلات الحجوزات" : "All Booking History"}
+        </h1>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
           <div className="relative w-full sm:w-65">
@@ -119,7 +124,8 @@ export default function Page() {
                 onClick={() => setIsPopup(false)}
                 className="data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black cursor-pointer"
               >
-                <CalendarIcon className="h-4 w-4" /> Calendar
+                <CalendarIcon className="h-4 w-4" />{" "}
+                {locale === "ar" ? "التقويم" : "Calendar"}
               </TabsTrigger>
 
               <TabsTrigger
@@ -127,7 +133,8 @@ export default function Page() {
                 onClick={() => setIsPopup(true)}
                 className="data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black cursor-pointer"
               >
-                <Table2 className="h-4 w-4" /> Table
+                <Table2 className="h-4 w-4" />{" "}
+                {locale === "ar" ? "طاولة" : "Table"}
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -136,7 +143,7 @@ export default function Page() {
             onClick={() => setIsModalOpen(true)}
             className="w-full sm:w-auto cursor-pointer dark:bg-gray-700 dark:text-white"
           >
-            Add Booking
+            {locale === "ar" ? "إضافة حجز" : "Add Booking"}
           </Button>
         </div>
       </div>
@@ -147,7 +154,9 @@ export default function Page() {
         <TabsContent value="calendar" className="mt-0">
           {/* Filters */}
           <div className="mt-5 flex flex-wrap items-center gap-3">
-            <div className="text-sm text-muted-foreground">Filter by:</div>
+            <div className="text-sm text-muted-foreground">
+              {locale === "ar" ? "تصفية حسب" : "Filter by:"}
+            </div>
             <Select
               value={filterBy}
               onValueChange={(v) => setFilterBy(v as any)}
@@ -208,7 +217,7 @@ export default function Page() {
   `}
                         onClick={() => setView("monthly")}
                       >
-                        Monthly
+                        {locale === "ar" ? "شهري" : "Monthly"}
                       </Button>
                       <Button
                         // variant={view === "monthly" ? "ghost" : "default"}
@@ -223,7 +232,7 @@ export default function Page() {
   `}
                         onClick={() => setView("weekly")}
                       >
-                        Weekly
+                        {locale === "ar" ? "أسبوعي" : "Weekly"}
                       </Button>
                     </div>
                   </div>

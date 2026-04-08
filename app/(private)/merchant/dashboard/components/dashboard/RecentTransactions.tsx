@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type TxStatus = "completed" | "cancel" | "pending";
 
@@ -61,6 +62,8 @@ function StatusPill({ status }: { status: TxStatus }) {
 }
 
 export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const filtered = useMemo(() => {
@@ -88,7 +91,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
       <CardHeader>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <CardTitle className="text-xl font-semibold">
-            Recent Transactions
+            {locale === "ar" ? "المعاملات الأخيرة" : "Recent Transactions"}
           </CardTitle>
 
           <div className="flex items-center gap-4">
@@ -106,7 +109,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
             </div>
 
             <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white">
-              View All
+              {locale === "ar" ? "عرض الكل" : "View All"}
             </Button>
           </div>
         </div>
@@ -118,12 +121,33 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="pl-8">Customer</TableHead>
-                  <TableHead>Service</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Status</TableHead>
-                  {/* <TableHead>Action</TableHead> */}
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {locale === "ar" ? "العميل" : "Customer"}
+                  </TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {" "}
+                    {locale === "ar" ? "الخدمة" : "Service"}
+                  </TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {" "}
+                    {locale === "ar" ? "المبلغ" : "Amount"}
+                  </TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {locale === "ar" ? "التاريخ" : "Date & Time"}
+                  </TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {locale === "ar" ? "الحالة" : "Status"}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -166,7 +190,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
 
             {paginated.length === 0 && (
               <div className="py-10 text-center text-muted-foreground">
-                No transactions.
+                {locale === "ar" ? "لا توجد معاملات" : "No transactions"}
               </div>
             )}
           </div>

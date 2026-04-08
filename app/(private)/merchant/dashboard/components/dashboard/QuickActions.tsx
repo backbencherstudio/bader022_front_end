@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type QuickActionItem = {
   id: string;
@@ -53,7 +54,6 @@ function ActionTile({ item }: { item: QuickActionItem }) {
 }
 
 export function QuickActions({
-  title = "Quick Actions",
   items,
   className,
 }: {
@@ -61,9 +61,13 @@ export function QuickActions({
   items: QuickActionItem[];
   className?: string;
 }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   return (
     <div className={className}>
-      <h3 className="text-xl font-semibold">{title}</h3>
+      <h3 className="text-xl font-semibold">
+        {locale === "ar" ? "الإجراءات السريعة" : "Quick Actions"}
+      </h3>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         {items.slice(0, 4).map((item) => (

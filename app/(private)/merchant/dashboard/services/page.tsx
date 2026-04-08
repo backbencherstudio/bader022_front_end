@@ -17,8 +17,11 @@ import {
 } from "@/redux/features/merchant/servicesApi";
 import { getImageUrl } from "@/helper/formatImage";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function ServicesPage() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All Services");
   const [open, setOpen] = useState(false);
@@ -148,7 +151,9 @@ export default function ServicesPage() {
     <section className="md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h2 className="text-xl font-semibold">Services</h2>
+        <h2 className="text-xl font-semibold">
+          {locale === "ar" ? "الخدمات" : "Services"}
+        </h2>
 
         <div className="flex flex-col md:flex-row items-center gap-3">
           {/* Search */}
@@ -171,7 +176,7 @@ export default function ServicesPage() {
             }}
             className="bg-gray-900 dark:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
           >
-            Add Service
+            {locale === "ar" ? "إضافة خدمة" : "Add Service"}
           </button>
         </div>
       </div>
@@ -179,7 +184,10 @@ export default function ServicesPage() {
       {/* Filter */}
       <div className="relative w-fit">
         <div className="flex items-center gap-3 text-sm">
-          <span className="text-gray-500 dark:text-gray-400">Filter by:</span>
+          <span className="text-gray-500 dark:text-gray-400">
+            {" "}
+            {locale === "ar" ? "تصفية حسب" : "Filter by:"}
+          </span>
 
           <button
             onClick={() => setOpen(!open)}
@@ -212,71 +220,77 @@ export default function ServicesPage() {
         )}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredServices.map((service: any) => (
-          <div
-            key={service.id}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
-          >
-            <div className="relative h-48">
-              <Image
-                src={getImageUrl(service.image) || "/images/company3.png"}
-                alt={service?.service_name || "service image"}
-                fill
-                className="object-cover"
-                unoptimized={true}
-              />
-            </div>
+      {filteredServices.length != 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredServices.map((service: any) => (
+            <div
+              key={service.id}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={getImageUrl(service.image) || "/images/company3.png"}
+                  alt={service?.service_name || "service image"}
+                  fill
+                  className="object-cover"
+                  unoptimized={true}
+                />
+              </div>
 
-            <div className="p-5 space-y-3">
-              <h3 className="font-semibold">{service?.service_name}</h3>
-              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                <div className="flex items-center gap-1">
-                  <FiClock />
-                  {service.duration}
+              <div className="p-5 space-y-3">
+                <h3 className="font-semibold">{service?.service_name}</h3>
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-1">
+                    <FiClock />
+                    {service.duration}
+                  </div>
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">
+                    {service.price} SAR
+                  </span>
                 </div>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {service.price} SAR
-                </span>
-              </div>
 
-              <h3 className="font-semibold">{service.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {service.description}
-              </p>
-              <div className="flex gap-3 pt-3">
-                <button
-                  onClick={() => {
-                    setMode("edit");
-                    setSelectedService(service);
-                    setOpenModal(true);
-                  }}
-                  className="flex-1 flex items-center justify-center gap-2 bg-gray-900 dark:bg-blue-600 text-white py-2 rounded-lg text-sm cursor-pointer"
-                >
-                  <FiEdit />
-                  Edit
-                </button>
+                <h3 className="font-semibold">{service.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {service.description}
+                </p>
+                <div className="flex gap-3 pt-3">
+                  <button
+                    onClick={() => {
+                      setMode("edit");
+                      setSelectedService(service);
+                      setOpenModal(true);
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 bg-gray-900 dark:bg-blue-600 text-white py-2 rounded-lg text-sm cursor-pointer"
+                  >
+                    <FiEdit />
+                    {locale === "ar" ? "تعديل" : "Edit"}
+                  </button>
 
-                <button
-                  onClick={() => handleDelete(service.id)}
-                  disabled={isDeleteServiceLoading}
-                  className="flex-1 flex items-center justify-center gap-2 border text-red-500 dark:text-red-400 py-2 rounded-lg text-sm cursor-pointer"
-                >
-                  {isDeleteServiceLoading ? (
-                    "Deleting..."
-                  ) : (
-                    <>
-                      <FiTrash2 />
-                      Delete
-                    </>
-                  )}
-                </button>
+                  <button
+                    onClick={() => handleDelete(service.id)}
+                    disabled={isDeleteServiceLoading}
+                    className="flex-1 flex items-center justify-center gap-2 border text-red-500 dark:text-red-400 py-2 rounded-lg text-sm cursor-pointer"
+                  >
+                    {isDeleteServiceLoading ? (
+                      "Deleting..."
+                    ) : (
+                      <>
+                        <FiTrash2 />
+                        {locale === "ar" ? "حذف" : "Delete"}
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20">
+          {" "}
+          {locale === "ar" ? "الخدمات غير متوفرة" : "Services not Available"}
+        </div>
+      )}
 
       <ServiceModal
         open={openModal}

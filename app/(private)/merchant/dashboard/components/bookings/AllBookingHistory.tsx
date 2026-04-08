@@ -15,9 +15,10 @@ import Pagination from "@/components/reusable/Pagination";
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
 import { useLazyGetDownloadInvoiceByIdQuery } from "@/redux/features/merchant/bookingsApi";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TxStatus =
-  | "completed"
+  | "complete"
   | "cancel"
   | "pending"
   | "confirm"
@@ -67,7 +68,7 @@ function initials(name: string) {
 
 function StatusPill({ status }: { status: TxStatus }) {
   const statusStyles: Record<TxStatus, string> = {
-    completed: "border-emerald-500 bg-emerald-50 text-emerald-700",
+    complete: "border-emerald-500 bg-emerald-50 text-emerald-700",
     cancel: "border-red-500 bg-red-50 text-[#DC2626]",
     pending: "border-[#F9C80E] bg-[#FFFAE7] text-[#F9C80E]",
     confirm: "border-[#2F9765] bg-[#EBFEF2] text-[#2F9765]",
@@ -75,7 +76,7 @@ function StatusPill({ status }: { status: TxStatus }) {
   };
 
   const statusLabels: Record<TxStatus, string> = {
-    completed: "Completed",
+    complete: "Completed",
     cancel: "Cancelled",
     pending: "Pending",
     confirm: "Confirmed",
@@ -91,7 +92,20 @@ function StatusPill({ status }: { status: TxStatus }) {
   );
 }
 
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleString("en-US", {
+    year: "numeric",
+    day: "numeric",
+    month: "short",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
 export default function AllBookingHistory({ data }: { data: any[] }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [serviceName, setServiceName] = useState("");
@@ -115,7 +129,7 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
   const filtered = useMemo(() => {
     const keyword = search.toLowerCase();
 
-    return mappedBookings.filter((r:any) => {
+    return mappedBookings.filter((r: any) => {
       const service = r.service?.toLowerCase() ?? "";
       return service.includes(keyword);
     });
@@ -148,20 +162,27 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
   };
 
   return (
-    <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
+    <Card
+      dir={isRTL ? "rtl" : "ltr"}
+      className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm"
+    >
       <CardHeader className="flex justify-between items-center">
         <CardTitle className="text-xl font-semibold">
-          All Booking History
+          {locale === "ar" ? "كل سجلات الحجوزات" : "All Booking History"}
         </CardTitle>
 
         <div className="relative w-full max-w-xs gap-3 flex">
-          <Search
+          {/* <Search
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-          />
+          /> */}
           <input
             type="text"
-            placeholder="Filter by service name"
+            placeholder={
+              locale === "ar"
+                ? "تصفية حسب اسم الخدمة"
+                : "Filter by service name"
+            }
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -170,7 +191,7 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
             className="h-10  rounded-xl border border-gray-300 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
           <button className="text-white bg-black px-2 rounded-lg">
-            View all
+            {locale === "ar" ? "عرض الكل" : "View all"}
           </button>
         </div>
       </CardHeader>
@@ -180,13 +201,44 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="">Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "رقم الحجز" : "ID"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "العميل" : "Customer"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الخدمة" : "Service"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "المبلغ" : "Amount"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "التاريخ" : "Date & Time"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "الحالة" : "Status"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الإجراء" : "Action"}
+                </TableHead>
               </TableRow>
             </TableHeader>
             {paginated?.length !== 0 ? (
@@ -197,7 +249,8 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
                     <TableCell>{r.customerName}</TableCell>
                     <TableCell>{r.service}</TableCell>
                     <TableCell>{r.amountLabel}</TableCell>
-                    <TableCell>{r.dateLabel}</TableCell>
+                    {/* <TableCell>{r.dateLabel}</TableCell> */}
+                    <TableCell>{formatDate(r.dateLabel)}</TableCell>
                     <TableCell>
                       <StatusPill status={r.status} />
                     </TableCell>
@@ -230,7 +283,9 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
               <TableBody>
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-10">
-                    No bookings found.
+                    {locale === "ar"
+                      ? "لم يتم العثور على أي حجوزات"
+                      : "No bookings found. "}
                   </TableCell>
                 </TableRow>
               </TableBody>

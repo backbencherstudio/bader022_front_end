@@ -330,7 +330,9 @@ export default function AllBookingHistory() {
                     colSpan={7}
                     className="py-10 text-center text-muted-foreground"
                   >
-                    No transactions.
+                    {locale === "ar"
+                      ? "لم يتم العثور على أي حجوزات"
+                      : "No transactions."}
                   </TableCell>
                 </TableRow>
               )}

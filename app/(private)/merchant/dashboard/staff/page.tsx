@@ -12,7 +12,10 @@ import {
 } from "@/redux/features/merchant/staffApi";
 import { getImageUrl } from "@/helper/formatImage";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 export default function StaffPage() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [search, setSearch] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
@@ -118,7 +121,7 @@ export default function StaffPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          All Staff
+          {locale === "ar" ? "جميع الموظفين" : "All Staff"}
         </h2>
 
         <div className="flex flex-col md:flex-row items-center gap-3">
@@ -156,134 +159,140 @@ export default function StaffPage() {
               hover:opacity-90 cursor-pointer
             "
           >
-            Add New Staff
+            {locale === "ar" ? "إضافة موظف جديد" : "Add New Staff"}
           </button>
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredStaff.map((staff: any) => (
-          <div
-            key={staff.id}
-            className="
+      {filteredStaff.length != 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredStaff.map((staff: any) => (
+            <div
+              key={staff.id}
+              className="
               bg-white dark:bg-gray-800
               border border-gray-200 dark:border-gray-700
               rounded-2xl shadow-sm
               p-5 flex flex-col justify-between
             "
-          >
-            {/* Top */}
-            <div className="flex gap-4">
-              <Image
-                src={getImageUrl(staff.image) || "/images/staffs/staff3.png"}
-                alt={staff.name}
-                width={56}
-                height={56}
-                className="rounded-full object-cover"
-                unoptimized={true}
-              />
+            >
+              {/* Top */}
+              <div className="flex gap-4">
+                <Image
+                  src={getImageUrl(staff.image) || "/images/staffs/staff3.png"}
+                  alt={staff.name}
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                  unoptimized={true}
+                />
 
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                  {staff.name}
-                </h3>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    {staff.name}
+                  </h3>
 
-                <div className="flex gap-2 mt-1 text-xs">
-                  <span
-                    className={`px-2 py-1 rounded-md ${
-                      staff.role === "Admin"
-                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
-                        : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                    }`}
-                  >
-                    {staff.role}
-                  </span>
+                  <div className="flex gap-2 mt-1 text-xs">
+                    <span
+                      className={`px-2 py-1 rounded-md ${
+                        staff.role === "Admin"
+                          ? "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
+                          : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                      }`}
+                    >
+                      {staff.role}
+                    </span>
 
-                  <span
-                    className={`px-2 py-1 rounded-md ${
-                      staff.status === 1
-                        ? "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400"
-                        : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
-                    }`}
-                  >
-                    {staff.status === 1 ? "Active" : "Inactive"}
-                  </span>
+                    <span
+                      className={`px-2 py-1 rounded-md ${
+                        staff.status === 1
+                          ? "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400"
+                          : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+                      }`}
+                    >
+                      {staff.status === 1 ? "Active" : "Inactive"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* Assigned Services */}
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                Assigned Service:
-              </p>
+              {/* Assigned Services */}
+              <div className="mt-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                  {locale === "ar" ? "الخدمة المخصصة" : "Assigned Service:"}
+                </p>
 
-              {staff.service ? (
-                <div className="flex flex-wrap gap-2">
-                  <span
-                    className="
+                {staff.service ? (
+                  <div className="flex flex-wrap gap-2">
+                    <span
+                      className="
                         px-3 py-1 text-xs rounded-md
                         bg-gray-100 dark:bg-gray-700
                         text-gray-700 dark:text-gray-300
                       "
-                  >
-                    {staff.service.service_name}
-                  </span>
-                </div>
-              ) : (
-                <p className="text-xs text-gray-400">No service assigned</p>
-              )}
-            </div>
-            {/* Actions */}
-            <div className="mt-5 flex items-center gap-3">
-              <button
-                className={`flex-1 py-2 rounded-lg text-sm font-medium cursor-pointer ${
-                  staff.status === 1
-                    ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                    : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
-                }`}
-              >
-                {staff.status === "Active" ? "Deactivate" : "Activate"}
-              </button>
+                    >
+                      {staff.service.service_name}
+                    </span>
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-400">No service assigned</p>
+                )}
+              </div>
+              {/* Actions */}
+              <div className="mt-5 flex items-center gap-3">
+                <button
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium cursor-pointer ${
+                    staff.status === 1
+                      ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                      : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+                  }`}
+                >
+                  {staff.status === "Active" ? "Deactivate" : "Activate"}
+                </button>
 
-              <button
-                onClick={() => handleDelete(staff.id)}
-                disabled={isDeleteStaffLoading}
-                className="
+                <button
+                  onClick={() => handleDelete(staff.id)}
+                  disabled={isDeleteStaffLoading}
+                  className="
                   p-2 rounded-lg
                   border border-gray-200 dark:border-gray-700
                   text-red-500
                   hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer
                 "
-              >
-                {isDeleteStaffLoading ? (
-                  "Deleting..."
-                ) : (
-                  <>
-                    <FiTrash2 />
-                  </>
-                )}
-              </button>
+                >
+                  {isDeleteStaffLoading ? (
+                    "Deleting..."
+                  ) : (
+                    <>
+                      <FiTrash2 />
+                    </>
+                  )}
+                </button>
 
-              <button
-                onClick={() => {
-                  setMode("edit");
-                  setSelectedStaff(staff);
-                  setOpenModal(true);
-                }}
-                className="
+                <button
+                  onClick={() => {
+                    setMode("edit");
+                    setSelectedStaff(staff);
+                    setOpenModal(true);
+                  }}
+                  className="
                   p-2 rounded-lg
                   border border-gray-200 dark:border-gray-700
                   text-gray-700 dark:text-gray-300
                   hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer
                 "
-              >
-                <FiEdit />
-              </button>
+                >
+                  <FiEdit />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20">
+          {" "}
+          {locale === "ar" ? "الموظفون غير متوفرين" : "Staff not Available"}
+        </div>
+      )}
 
       <StaffModal
         open={openModal}

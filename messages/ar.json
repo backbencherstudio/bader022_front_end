@@ -711,5 +711,58 @@
               "alreadyAccount": "هل لديك حساب بالفعل؟",
               "login": "تسجيل الدخول"
             }
-  }
+  },
+  "Profile": {
+          "title": "الملف الشخصي",
+          "information": "المعلومات",
+          "fullName": "الاسم الكامل",
+          "phone": "رقم الهاتف",
+          "address": "العنوان",
+          "saveChanges": "حفظ التغييرات",
+          "updating": "جارٍ التحديث...",
+          "success": "تم تحديث الملف الشخصي بنجاح",
+          "loading": "جارٍ التحميل..."
+        },
+        "ChangePassword": {
+              "title": "تغيير كلمة المرور",
+              "oldPassword": "كلمة المرور الحالية",
+              "newPassword": "كلمة المرور الجديدة",
+              "confirmPassword": "تأكيد كلمة المرور",
+              "oldPlaceholder": "أدخل كلمة المرور الحالية",
+              "newPlaceholder": "أدخل كلمة المرور الجديدة",
+              "confirmPlaceholder": "أكد كلمة المرور الجديدة",
+              "save": "حفظ التغيير",
+              "changing": "جارٍ التغيير...",
+              "success": "تم تغيير كلمة المرور بنجاح",
+              "error": "فشل تغيير كلمة المرور",
+
+              "validation": {
+                "oldRequired": "كلمة المرور الحالية مطلوبة",
+                "newRequired": "كلمة المرور الجديدة مطلوبة",
+                "min": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+                "confirmRequired": "يرجى تأكيد كلمة المرور",
+                "match": "كلمات المرور غير متطابقة"
+              }
+  },
+  "TapKey": {
+          "title": "إعدادات Tap Key",
+          "mode": "الوضع",
+          "selectMode": "اختر الوضع",
+          "test": "تجريبي",
+          "live": "مباشر",
+          "publicKey": "المفتاح العام",
+          "secretKey": "المفتاح السري",
+          "update": "تحديث Tap Key",
+          "updating": "جارٍ التحديث...",
+          "success": "تم تحديث Tap Key بنجاح",
+          "error": "فشل تحديث Tap Key",
+          "loading": "جارٍ تحميل Tap key...",
+          "loadError": "فشل تحميل Tap key",
+
+          "validation": {
+            "mode": "الوضع مطلوب",
+            "publicKey": "المفتاح العام مطلوب",
+            "secretKey": "المفتاح السري مطلوب"
+          }
+        }
 }

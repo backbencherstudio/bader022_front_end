@@ -708,5 +708,59 @@
               "alreadyAccount": "Already have an account?",
               "login": "Login"
             }
-  }
+  },
+    "Profile": {
+          "title": "Profile",
+          "information": "Information",
+          "fullName": "Full Name",
+          "phone": "Phone Number",
+          "address": "Street Address",
+          "saveChanges": "Save Changes",
+          "updating": "Updating...",
+          "success": "Profile Updated Successfully",
+          "loading": "Loading..."
+        },
+         "ChangePassword": {
+                  "title": "Change Password",
+                  "oldPassword": "Old Password",
+                  "newPassword": "New Password",
+                  "confirmPassword": "Confirm Password",
+                  "oldPlaceholder": "Enter your current password",
+                  "newPlaceholder": "Enter your new password",
+                  "confirmPlaceholder": "Confirm your new password",
+                  "save": "Save Change",
+                  "changing": "Changing...",
+                  "success": "Password changed successfully",
+                  "error": "Password change failed",
+
+                  "validation": {
+                    "oldRequired": "Old password is required",
+                    "newRequired": "New password is required",
+                    "min": "Password must be at least 6 characters",
+                    "confirmRequired": "Please confirm your password",
+                    "match": "Passwords do not match"
+                  }
+  },
+  "TapKey": {
+            "title": "Tap Key Settings",
+            "mode": "Mode",
+            "selectMode": "Select mode",
+            "test": "Test",
+            "live": "Live",
+            "publicKey": "Public Key",
+            "secretKey": "Secret Key",
+            "update": "Update Tap Key",
+            "updating": "Updating...",
+            "success": "Tap-Key Updated Successfully",
+            "error": "Tap-Key update failed",
+            "loading": "Loading Tap key...",
+            "loadError": "Failed to load Tap key.",
+
+            "validation": {
+              "mode": "Mode is required",
+              "publicKey": "Public key is required",
+              "secretKey": "Secret key is required"
+            }
+          }
+        
 }

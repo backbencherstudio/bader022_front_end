@@ -66,7 +66,10 @@ export default function Footer() {
             </div> */}
             <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
               {/* LinkedIn */}
-              <Link href="https://linkedin.com" target="_blank">
+              <Link
+                href="https://www.linkedin.com/company/bokli-platform"
+                target="_blank"
+              >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
                   <FaLinkedinIn />
                 </div>

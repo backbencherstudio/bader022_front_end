@@ -24,6 +24,7 @@ import {
   useUserPaymentHistoryQuery,
 } from "@/redux/features/userDashboard/userDashboard";
 import Pagination from "@/components/reusable/Pagination";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TxStatus = "paid" | "failed" | "due" | "refunded" | "refund_failed";
 
@@ -93,14 +94,21 @@ export function RecentTransactionsCard({
   setSearch: (value: string) => void;
   handleDownload: (bookingID: number) => void;
 }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   return (
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <CardContent className="pb-8">
-        <div className="text-lg font-medium pb-4">Payment History</div>
+        <div className="text-lg font-medium pb-4">
+          {" "}
+          {locale === "ar" ? "سجل المدفوعات" : "Payment History"}
+        </div>
 
         {/* Filter */}
         <div className="mb-6 flex flex-wrap items-center gap-4">
-          <div className="mr-2 text-base font-semibold">Filter by:</div>
+          <div className="mr-2 text-base font-semibold">
+            {locale === "ar" ? "تصفية حسب" : "Filter by:"}
+          </div>
 
           <Select
             value={search || "all"}
@@ -129,19 +137,44 @@ export function RecentTransactionsCard({
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30">
-                <TableHead className="text-muted-foreground">
-                  Booking ID
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "رقم الحجز" : "Booking ID"}
                 </TableHead>
-                <TableHead className="text-muted-foreground">
-                  Customer
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "العميل" : "Customer"}
                 </TableHead>
-                <TableHead className="text-muted-foreground">Service</TableHead>
-                <TableHead className="text-muted-foreground">
-                  Date & Time
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الخدمة" : "Service"}
                 </TableHead>
-                <TableHead className="text-muted-foreground">Amount</TableHead>
-                <TableHead className="text-muted-foreground">Status</TableHead>
-                <TableHead className="text-muted-foreground">Invoice</TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "التاريخ" : "Date & Time"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "المبلغ" : "Amount"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "الحالة" : "Status"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الإجراء" : "Invoice"}
+                </TableHead>
               </TableRow>
             </TableHeader>
 
@@ -229,6 +262,8 @@ export function RecentTransactionsCard({
 }
 
 export default function UserPaymentHistory() {
+  const { t, locale } = useI18n();
+
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 

@@ -30,8 +30,14 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
 import { UserBookingDetailsModal } from "../bookings/UserBookingViewModal";
+import { useI18n } from "@/components/provider/I18nProvider";
 
-export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
+export type TxStatus =
+  | "completed"
+  | "cancel"
+  | "pending"
+  | "confirm"
+  | "rescheduled";
 
 export type TransactionRow = {
   bookingID: string;
@@ -77,7 +83,6 @@ function StatusPill({ status }: { status: TxStatus }) {
     pending: "border-amber-500 bg-amber-50 text-amber-700",
     confirm: "border-sky-500 bg-sky-50 text-sky-700",
     rescheduled: "border-sky-500 bg-sky-50 text-sky-700",
-
   };
 
   const statusLabels: Record<TxStatus, string> = {
@@ -85,7 +90,7 @@ function StatusPill({ status }: { status: TxStatus }) {
     cancel: "Cancelled",
     pending: "Pending",
     confirm: "Confirmed",
-    rescheduled:"rescheduled"
+    rescheduled: "rescheduled",
   };
 
   return (
@@ -98,36 +103,43 @@ function StatusPill({ status }: { status: TxStatus }) {
 }
 
 export default function BookingHistory() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [page, setPage] = useState(1);
   const [dateFilter, setDateFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(
+    null,
+  );
   // const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
-  
 
-const [service, setService] = useState("");
+  const [service, setService] = useState("");
   // RTK Query
   const { data, isLoading, error } = useBookingHistoryQuery({
     page,
     date_filter: dateFilter,
     status: statusFilter,
     service_name: serviceFilter,
-  }) as { data?: DashboardBookingResponse; isLoading: boolean; error?: unknown };
+  }) as {
+    data?: DashboardBookingResponse;
+    isLoading: boolean;
+    error?: unknown;
+  };
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
-  
-  
+
   useEffect(() => {
     setPage(1);
   }, [dateFilter, statusFilter, serviceFilter]);
 
-  const filteredBookings = bookings.filter((b) =>
-    b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredBookings = bookings.filter(
+    (b) =>
+      b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.status.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const mappedBookings: TransactionRow[] = filteredBookings.map((b) => ({
@@ -147,46 +159,75 @@ const [service, setService] = useState("");
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       {/* Header */}
       <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <CardTitle className="text-xl font-semibold">All Booking History</CardTitle>
+        <CardTitle className="text-xl font-semibold">
+          {locale === "ar" ? "كل سجلات الحجوزات" : "All Booking History"}
+        </CardTitle>
 
         <div className="flex items-center gap-4">
-         <div className="flex gap-3">
-             <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search anything"
-              className="h-12 rounded-xl pl-10"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-           
+          <div className="flex gap-3">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search anything"
+                className="h-12 rounded-xl pl-10"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center items-center">
+              <button className="bg-black text-white px-2 py-1 rounded-sm ">
+                {locale === "ar" ? "عرض الكل" : "View All"}
+              </button>
+            </div>
           </div>
-                      <div className="flex justify-center items-center">
-                      <button className="bg-black text-white px-2 py-1 rounded-sm ">View
-                          All</button>
-          </div>
-         </div>
-
-         
         </div>
       </CardHeader>
 
       {/* Filters */}
       <CardContent className="pb-4">
-      
-
         {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-muted/40">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30 hover:bg-muted/30">
-                <TableHead>ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "رقم الحجز" : "Booking ID"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "العميل" : "Customer"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الخدمة" : "Service"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "المبلغ" : "Amount"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "التاريخ" : "Date & Time"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "الحالة" : "Status"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الإجراء" : "Action"}
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -197,8 +238,13 @@ const [service, setService] = useState("");
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
-                        <AvatarImage src={r.customerAvatar} alt={r.customerName} />
-                        <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
+                        <AvatarImage
+                          src={r.customerAvatar}
+                          alt={r.customerName}
+                        />
+                        <AvatarFallback>
+                          {initials(r.customerName)}
+                        </AvatarFallback>
                       </Avatar>
                       <span className="">{r.customerName}</span>
                     </div>
@@ -217,7 +263,8 @@ const [service, setService] = useState("");
                   </TableCell>
                   <TableCell>
                     {/* `/user/bookings/${r.bookingID}` */}
-                    <Button className="cursor-pointer"
+                    <Button
+                      className="cursor-pointer"
                       size="sm"
                       variant="outline"
                       onClick={() => setSelectedBooking(r)}
@@ -230,7 +277,10 @@ const [service, setService] = useState("");
 
               {mappedBookings.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="py-10 text-center text-muted-foreground"
+                  >
                     No transactions.
                   </TableCell>
                 </TableRow>
@@ -253,14 +303,16 @@ const [service, setService] = useState("");
         <UserBookingDetailsModal
           booking={selectedBooking}
           open={!!selectedBooking}
-          onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+          onOpenChange={(open) => {
+            if (!open) setSelectedBooking(null);
+          }}
         />
-            //  <BookingDetailsModal
-            //    bookingId={selectedBooking}
-            //    open={!!selectedBooking}
-            //    onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
-            //  />
-           )}
+        //  <BookingDetailsModal
+        //    bookingId={selectedBooking}
+        //    open={!!selectedBooking}
+        //    onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
+        //  />
+      )}
     </Card>
   );
 }

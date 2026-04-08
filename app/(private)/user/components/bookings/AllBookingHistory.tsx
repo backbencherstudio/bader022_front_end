@@ -30,8 +30,14 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BookingDetailsModal } from "@/app/(private)/merchant/dashboard/components/bookings/BookingViewModal";
 import { UserBookingDetailsModal } from "./UserBookingViewModal";
+import { useI18n } from "@/components/provider/I18nProvider";
 
-export type TxStatus = "completed" | "cancel" | "pending" | "confirm" | "rescheduled";
+export type TxStatus =
+  | "completed"
+  | "cancel"
+  | "pending"
+  | "confirm"
+  | "rescheduled";
 
 export type TransactionRow = {
   bookingID: string;
@@ -77,7 +83,6 @@ function StatusPill({ status }: { status: TxStatus }) {
     pending: "border-amber-500 bg-amber-50 text-amber-700",
     confirm: "border-sky-500 bg-sky-50 text-sky-700",
     rescheduled: "border-sky-500 bg-sky-50 text-sky-700",
-
   };
 
   const statusLabels: Record<TxStatus, string> = {
@@ -85,7 +90,7 @@ function StatusPill({ status }: { status: TxStatus }) {
     cancel: "Cancelled",
     pending: "Pending",
     confirm: "Confirmed",
-    rescheduled:"rescheduled"
+    rescheduled: "rescheduled",
   };
 
   return (
@@ -98,22 +103,30 @@ function StatusPill({ status }: { status: TxStatus }) {
 }
 
 export default function AllBookingHistory() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [page, setPage] = useState(1);
   const [dateFilter, setDateFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<TransactionRow | null>(
+    null,
+  );
   // const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
 
-const [service, setService] = useState("");
+  const [service, setService] = useState("");
   // RTK Query
   const { data, isLoading, error } = useBookingHistoryQuery({
     page,
     date_filter: dateFilter,
     status: statusFilter,
     service_name: serviceFilter,
-  }) as { data?: DashboardBookingResponse; isLoading: boolean; error?: unknown };
+  }) as {
+    data?: DashboardBookingResponse;
+    isLoading: boolean;
+    error?: unknown;
+  };
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
@@ -124,9 +137,10 @@ const [service, setService] = useState("");
     setPage(1);
   }, [dateFilter, statusFilter, serviceFilter]);
 
-  const filteredBookings = bookings.filter((b) =>
-    b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.service_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredBookings = bookings.filter(
+    (b) =>
+      b.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.service_name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const mappedBookings: TransactionRow[] = filteredBookings.map((b) => ({
@@ -146,7 +160,9 @@ const [service, setService] = useState("");
     <Card className="rounded-3xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       {/* Header */}
       <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <CardTitle className="text-xl font-semibold">All Booking History</CardTitle>
+        <CardTitle className="text-xl font-semibold">
+          {locale === "ar" ? "كل سجلات الحجوزات" : "All Booking History"}
+        </CardTitle>
 
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -160,7 +176,9 @@ const [service, setService] = useState("");
           </div>
 
           <Link href="/user/bookings/add-booking">
-            <Button className="cursor-pointer">Book Now</Button>
+            <Button className="cursor-pointer">
+              {locale === "ar" ? "احجز الآن" : "Book Now"}
+            </Button>
           </Link>
         </div>
       </CardHeader>
@@ -168,7 +186,9 @@ const [service, setService] = useState("");
       {/* Filters */}
       <CardContent className="pb-4">
         <div className="mb-6 flex flex-wrap items-center gap-2">
-          <div className="text-base font-semibold mr-2">Filter by:</div>
+          <div className="text-base font-semibold mr-2">
+            {locale === "ar" ? "تصفية حسب" : "Filter by:"}
+          </div>
 
           <Select onValueChange={(v) => setDateFilter(v === "all" ? "" : v)}>
             <SelectTrigger>
@@ -185,18 +205,18 @@ const [service, setService] = useState("");
             <SelectTrigger>
               <SelectValue placeholder="All Services" />
             </SelectTrigger>
-            {
-              bookings.length > 0 && (
-                <SelectContent>
-                  <SelectItem value="all">All Services</SelectItem>
-                  {Array.from(new Set(bookings.map((b) => b.service_name))).map((service) => (
+            {bookings.length > 0 && (
+              <SelectContent>
+                <SelectItem value="all">All Services</SelectItem>
+                {Array.from(new Set(bookings.map((b) => b.service_name))).map(
+                  (service) => (
                     <SelectItem key={service} value={service}>
                       {service}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              )
-            }
+                  ),
+                )}
+              </SelectContent>
+            )}
           </Select>
 
           <Select onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)}>
@@ -209,10 +229,8 @@ const [service, setService] = useState("");
               <SelectItem value="confirm">Confirmed</SelectItem>
               <SelectItem value="cancel">Canceled</SelectItem>
               <SelectItem value="rescheduled">Rescheduled</SelectItem>
-
             </SelectContent>
           </Select>
-
         </div>
 
         {/* Table */}
@@ -220,13 +238,44 @@ const [service, setService] = useState("");
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30 hover:bg-muted/30">
-                <TableHead>ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "رقم الحجز" : "Booking ID"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "العميل" : "Customer"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الخدمة" : "Service"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "المبلغ" : "Amount"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "التاريخ" : "Date & Time"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {locale === "ar" ? "الحالة" : "Status"}
+                </TableHead>
+                <TableHead
+                  className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                >
+                  {" "}
+                  {locale === "ar" ? "الإجراء" : "Action"}
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -237,8 +286,13 @@ const [service, setService] = useState("");
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
-                        <AvatarImage src={r.customerAvatar} alt={r.customerName} />
-                        <AvatarFallback>{initials(r.customerName)}</AvatarFallback>
+                        <AvatarImage
+                          src={r.customerAvatar}
+                          alt={r.customerName}
+                        />
+                        <AvatarFallback>
+                          {initials(r.customerName)}
+                        </AvatarFallback>
                       </Avatar>
                       <span className="">{r.customerName}</span>
                     </div>
@@ -263,7 +317,6 @@ const [service, setService] = useState("");
                       variant="outline"
                       onClick={() => setSelectedBooking(r)}
                       // onClick={() => setSelectedBooking(r.bookingID)}
-
                     >
                       View Details
                     </Button>
@@ -273,7 +326,10 @@ const [service, setService] = useState("");
 
               {mappedBookings.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="py-10 text-center text-muted-foreground"
+                  >
                     No transactions.
                   </TableCell>
                 </TableRow>
@@ -301,7 +357,7 @@ const [service, setService] = useState("");
           }}
         />
         // <UserBookingDetailsModal
-        //   booking={selectedBooking}  
+        //   booking={selectedBooking}
         //   open={!!selectedBooking}
         //   onOpenChange={(open) => { if (!open) setSelectedBooking(null); }}
         // />

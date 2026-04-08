@@ -5,15 +5,10 @@ import { useState } from "react";
 import { Info, Lock } from "lucide-react";
 import ProfileSection from "../../admin/components/settings/ProfileSection";
 import ChangePasswordCard from "../../admin/components/settings/ChangePassword";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 // Sidebar component with dynamic content handling
-function Sidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function Sidebar({ activeSection, setActiveSection, t }: any) {
   return (
     <div className="w-full sm:w-72 p-4 sm:block hidden">
       <ul className="flex flex-col gap-4">
@@ -22,7 +17,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "personal_info"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("personal_info")}
         >
@@ -30,7 +25,7 @@ function Sidebar({
             <span className="text-lg">
               <Info />
             </span>
-            Personal Info
+            {t("Admin.AccountSettings.personalInfo", "Personal Info")}
           </div>
         </li>
         <li
@@ -38,7 +33,7 @@ function Sidebar({
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "password"
               ? "bg-gray-300 text-black"
-              : "text-muted-foreground hover:bg-muted/30"
+              : "text-muted-foreground hover:bg-muted/30",
           )}
           onClick={() => setActiveSection("password")}
         >
@@ -46,7 +41,7 @@ function Sidebar({
             <span className="text-lg">
               <Lock />
             </span>
-            Password
+            {t("Admin.AccountSettings.password", "Password")}
           </div>
         </li>
       </ul>
@@ -55,13 +50,7 @@ function Sidebar({
 }
 
 // Mobile Sidebar (Hamburger menu)
-function MobileSidebar({
-  activeSection,
-  setActiveSection,
-}: {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
-}) {
+function MobileSidebar({ activeSection, setActiveSection, t }: any) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -71,7 +60,7 @@ function MobileSidebar({
         onClick={() => setIsOpen(!isOpen)}
         className="text-muted-foreground w-full"
       >
-        Menu
+        {t("Admin.AccountSettings.menu", "Menu")}
       </Button>
       {isOpen && (
         <ul className="flex flex-col gap-4 mt-4">
@@ -80,7 +69,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "personal_info"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("personal_info")}
           >
@@ -88,7 +77,7 @@ function MobileSidebar({
               <span className="text-lg">
                 <Info />
               </span>
-              Personal Info
+              {t("Admin.AccountSettings.personalInfo", "Personal Info")}
             </div>
           </li>
           <li
@@ -96,7 +85,7 @@ function MobileSidebar({
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "password"
                 ? "bg-gray-300 text-black"
-                : "text-muted-foreground hover:bg-muted/30"
+                : "text-muted-foreground hover:bg-muted/30",
             )}
             onClick={() => setActiveSection("password")}
           >
@@ -104,7 +93,7 @@ function MobileSidebar({
               <span className="text-lg">
                 <Lock />
               </span>
-              Password
+              {t("Admin.AccountSettings.password", "Password")}
             </div>
           </li>
         </ul>
@@ -136,20 +125,26 @@ function getActiveSectionContent(activeSection: string) {
 
 export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("personal_info");
+  const { t, locale } = useI18n();
+
+  const isRTL = locale === "ar";
 
   return (
-    <div className="border rounded-xl mt-4">
+    <div dir={isRTL ? "rtl" : "ltr"} className="border rounded-xl mt-4">
       <h1 className="text-[18px] p-4 font-semibold">
-        {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Setting
+        {" "}
+        {t("Admin.AccountSettings.title")}
       </h1>
       <div className="flex flex-col sm:flex-row">
         <MobileSidebar
           setActiveSection={setActiveSection}
           activeSection={activeSection}
+          t={t}
         />
         <Sidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
+          t={t}
         />
         <div className="w-full max-w-4xl">
           {getActiveSectionContent(activeSection)}

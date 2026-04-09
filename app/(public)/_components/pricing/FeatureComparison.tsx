@@ -37,7 +37,7 @@ export function FeatureComparison() {
   const currency = "SAR";
   const monthlyPrice = monthlyPlan?.price;
   const annualMonths = 12;
-  const annualDiscount = 0.2; // 20%
+  const annualDiscount = 0.15; // 20%
 
   const annualFull = monthlyPrice * annualMonths;
   const annualPayable = Math.round(annualFull * (1 - annualDiscount));

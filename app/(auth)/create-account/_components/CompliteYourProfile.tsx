@@ -12,13 +12,13 @@ interface CompleteYourProfileProps {
 
 export default function CompleteYourProfile({
   domain,
-  subscriptionLink = `https://bokli.io/${domain}`,
+  // subscriptionLink = `https://bokli.io/${domain}`,
 }: CompleteYourProfileProps) {
   const { t } = useI18n();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(subscriptionLink);
+    await navigator.clipboard.writeText(`https://bokli.io/${domain}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -34,31 +34,36 @@ export default function CompleteYourProfile({
         </div>
 
         {/* Text */}
-        <div className="space-y-2">
+        <div className="">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
             {t("completeProfile.title")}
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-            {t("completeProfile.subtitle")}
-          </p>
         </div>
-
         {/* Link Copy */}
-        <div className="flex flex-col sm:flex-row items-center gap-2 rounded-lg border bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 px-3 py-2 transition-colors">
-          <input
-            readOnly
-            value={subscriptionLink}
-            className="flex-1 bg-transparent text-sm sm:text-base outline-none text-gray-900 dark:text-gray-100"
-          />
+        {domain != "" && (
+          <div>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5">
+              {t("completeProfile.subtitle")}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-2 rounded-lg border bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 px-3 py-2 transition-colors">
+              <input
+                readOnly
+                value={`https://bokli.io/${domain}`}
+                className="flex-1 bg-transparent text-sm sm:text-base outline-none text-gray-900 dark:text-gray-100"
+              />
 
-          <button
-            onClick={handleCopy}
-            className="flex items-center cursor-pointer justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
-          >
-            <FiCopy />
-            {copied ? t("completeProfile.copied") : t("completeProfile.copy")}
-          </button>
-        </div>
+              <button
+                onClick={handleCopy}
+                className="flex items-center cursor-pointer justify-center gap-2 rounded-md bg-gray-900 dark:bg-blue-600 text-white dark:text-gray-900 px-4 py-2 text-sm sm:text-base transition-colors hover:bg-gray-700 dark:hover:bg-gray-200"
+              >
+                <FiCopy />
+                {copied
+                  ? t("completeProfile.copied")
+                  : t("completeProfile.copy")}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Dashboard Button */}
         <Link href="/login">

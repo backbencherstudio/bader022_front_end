@@ -44,7 +44,7 @@ export default function CreateAccountPage() {
   const { t, locale, setLocale } = useI18n(); // localization
   // const [step, setStep] = useState(4);
   const { step, setStep } = useCreateAccount();
-  const [domain, setDomain] = useState("barik");
+  const [domain, setDomain] = useState("");
   const router = useRouter();
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
@@ -61,11 +61,13 @@ export default function CreateAccountPage() {
   // console.log(step);
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
+  const website = searchParams.get("website");
   // console.log(userId);
   const { data: paymentStatus, isLoading: paymentLoading } =
     useGetPaymentStatusQuery({ user_id: userId }, { skip: !userId });
   useEffect(() => {
     if (paymentStatus?.data?.status === "paid") {
+      setDomain(`${website}`);
       setStep(4);
     }
   }, [paymentStatus]);
@@ -113,7 +115,7 @@ export default function CreateAccountPage() {
       plan_id: finalPlanId,
     };
     // console.log("body===========", body);
-    setDomain(body.name);
+    // setDomain(body.name);
     try {
       const response = await registerMerchant(body).unwrap();
       // console.log(response);

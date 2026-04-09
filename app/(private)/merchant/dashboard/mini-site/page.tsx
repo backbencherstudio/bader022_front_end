@@ -214,7 +214,7 @@ export default function page() {
               >
                 <span className="absolute inset-0 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="relative z-10 text-black group-hover:text-white dark:text-white">
-                  Go Back Subscription
+                  Go to Subscription
                 </span>
               </Link>
             </motion.div>

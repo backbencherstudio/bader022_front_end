@@ -21,7 +21,7 @@ import { motion } from "framer-motion";
 export default function page() {
   const { user } = useAppSelector((state) => state.auth);
 
-  console.log(user, "=================user");
+  // console.log(user, "=================user");
 
   const {
     heroData,

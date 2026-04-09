@@ -59,7 +59,7 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  console.log("loggg============", data);
+  // console.log("loggg============", data);
   return (
     <div>
       {/* hero section */}

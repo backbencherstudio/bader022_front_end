@@ -50,8 +50,8 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
     <div>
       <footer
         style={{
-          backgroundColor: data.global_setting.footer_background || undefined,
-          color: data.global_setting.footer_text_color || undefined,
+          backgroundColor: data?.global_setting?.footer_background || undefined,
+          color: data?.global_setting?.footer_text_color || undefined,
         }}
         className="dark:bg-gray-900 transition-colors"
       >
@@ -62,10 +62,10 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             <div className="flex items-center gap-3">
               <Image
                 src={
-                  getImageUrl(data.global_setting.branding_logo as string) ||
+                  getImageUrl(data?.global_setting?.branding_logo as string) ||
                   "/images/image 259.png"
                 }
-                alt={data.global_setting.website_name || ""}
+                alt={data?.global_setting?.website_name || ""}
                 width={40}
                 height={40}
                 unoptimized={true}
@@ -73,14 +73,14 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             </div>
 
             <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
-              {data.global_setting.footer_des ||
+              {data?.global_setting?.footer_des ||
                 "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
             </p>
 
             {/* Social Links */}
             <div className="flex gap-3 mt-6">
               <Link
-                href={`${data.global_setting.facebook_url}`}
+                href={`${data?.global_setting?.facebook_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center
@@ -91,7 +91,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <FaFacebookF />
               </Link>
               <Link
-                href={`${data.global_setting.instagram_url}`}
+                href={`${data?.global_setting?.instagram_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center
@@ -102,7 +102,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <FaInstagram />
               </Link>
               <Link
-                href={`${data.global_setting.twitter_url}`}
+                href={`${data?.global_setting?.twitter_url}`}
                 target="_blank"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
                              flex items-center justify-center
@@ -122,22 +122,22 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             <ul className="space-y-3 text-sm opacity-90">
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.home}
+                  {data?.global_setting?.home}
                 </Link>
               </li>
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.about}
+                  {data?.global_setting?.about}
                 </Link>
               </li>
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.why_choose_us}
+                  {data?.global_setting?.why_choose_us}
                 </Link>
               </li>
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.service}
+                  {data?.global_setting?.service}
                 </Link>
               </li>
             </ul>
@@ -150,17 +150,17 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             <ul className="space-y-3 text-sm opacity-90">
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.contact_us}
+                  {data?.global_setting?.contact_us}
                 </Link>
               </li>
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.privacy_policy}
+                  {data?.global_setting?.privacy_policy}
                 </Link>
               </li>
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
-                  {data.global_setting.terms_condition}
+                  {data?.global_setting?.terms_condition}
                 </Link>
               </li>
             </ul>
@@ -174,21 +174,21 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <IconCircle>
                   <FaPhoneAlt />
                 </IconCircle>
-                {data.global_setting.contact_info || "097515......."}
+                {data?.global_setting?.contact_info || "097515......."}
               </li>
 
               <li className="flex items-center gap-3">
                 <IconCircle>
                   <FaEnvelope />
                 </IconCircle>
-                {data.global_setting.contact_email || "example@gmail.com"}
+                {data?.global_setting?.contact_email || "example@gmail.com"}
               </li>
 
               <li className="flex items-center gap-3">
                 <IconCircle>
                   <FaMapMarkerAlt />
                 </IconCircle>
-                {data.global_setting.country || "Jeddah Saudi Arabia"}
+                {data?.global_setting?.country || "Jeddah Saudi Arabia"}
               </li>
             </ul>
           </div>
@@ -199,8 +199,9 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           className="border-t border-black/10 dark:border-white/10 py-4 text-center text-sm opacity-70"
           //   style={{ color: footerData.footerTextColor || undefined }}
         >
-          © {new Date().getFullYear()} {data.global_setting.website_name} | All
-          Rights Reserved {data.global_setting.turn_off && "| Powered By Bokli"}
+          © {new Date().getFullYear()} {data?.global_setting?.website_name} |
+          All Rights Reserved{" "}
+          {data?.global_setting?.turn_off && "| Powered By Bokli"}
         </div>
       </footer>
     </div>

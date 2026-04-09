@@ -17,7 +17,7 @@ export default function BookingFailedPage() {
 
   useEffect(() => {
     // Show error toast
-    toast.error("Booking Payment Failed");
+    toast.error("Payment Failed");
     // Redirect after 2 seconds
     const timer = setTimeout(() => {
       router.push("/user/bookings");

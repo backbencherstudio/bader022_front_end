@@ -69,6 +69,8 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
   const filtered = useMemo(() => {
     const keyword = search.toLowerCase();
 
+    console.log(rows);
+
     return rows.filter((r) => {
       const name = r.customerName?.toLowerCase() ?? "";
       const service = r.service?.toLowerCase() ?? "";
@@ -240,7 +242,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
 }
 
 export default function RecentTransactions({ data }: any) {
-  // console.log(data);
+  console.log(data);
 
   const rows: TransactionRow[] =
     data?.map((item: any) => ({
@@ -249,7 +251,15 @@ export default function RecentTransactions({ data }: any) {
       customerAvatar: item.user?.image ?? "",
       service: item.booking?.service?.service_name,
       amount: item.amount,
-      date: new Date(item.created_at).toLocaleDateString(),
+      // date: new Date(item?.booking?.date_time).toLocaleDateString(),
+      date: new Date(item?.booking?.date_time).toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
       status:
         item.payment_status === "paid"
           ? "completed"

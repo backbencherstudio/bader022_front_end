@@ -18,11 +18,11 @@ export default function DynamicMiniSitePage() {
 
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
-  // console.log(data);
+  console.log(data);
 
-  if (!data) {
-    return <Loader />;
-  }
+  // if (!data) {
+  //   return <Loader />;
+  // }
 
   return (
     <div>

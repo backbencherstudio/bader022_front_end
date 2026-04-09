@@ -153,6 +153,8 @@ export default function AllBookingHistory() {
     status: b.status.toLowerCase() as TxStatus,
   }));
 
+  // console.log(filteredBookings);
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong</p>;
 

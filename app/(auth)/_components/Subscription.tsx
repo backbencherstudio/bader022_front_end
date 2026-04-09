@@ -38,12 +38,12 @@ export default function Subscription() {
 
   const selectedPlanId = watch("planId");
 
-  useEffect(() => {
-    const auth = authorize(["Merchant", "Admin", "User"]);
-    if (auth.authorized) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const auth = authorize(["Merchant", "Admin", "User"]);
+  //   if (auth.authorized) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     const plan = plans.find((p: any) => p.id === Number(selectedPlanId));
@@ -125,9 +125,15 @@ export default function Subscription() {
               {...register("planId", { required: "Plan is required" })}
               className="w-full p-3 border rounded-md"
             >
-              <option value="">Choose Plan</option>
+              <option className="bg-white dark:bg-gray-800" value="">
+                Choose Plan
+              </option>
               {plans.map((plan: any) => (
-                <option key={plan.id} value={plan.id}>
+                <option
+                  className="bg-white dark:bg-gray-800"
+                  key={plan.id}
+                  value={plan.id}
+                >
                   {plan.name} ({plan.package}-{plan?.price})
                 </option>
               ))}
@@ -143,7 +149,7 @@ export default function Subscription() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black text-white py-3 rounded-md"
+            className="w-full bg-black text-white py-3 rounded-md cursor-pointer"
           >
             {isLoading ? "Loading..." : "Subscribe"}
           </button>

@@ -15,39 +15,6 @@ import { useEffect, useState } from "react";
 import { authorize } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
-// const USER_NAV_ITEMS = [
-//   {
-//     label: "Dashboard",
-//     href: "/user/dashboard",
-//     icon: (p: any) => <LayoutDashboard {...p} />,
-//   },
-//   {
-//     label: "Bookings",
-//     href: "/user/bookings",
-//     icon: (p: any) => <Calendar {...p} />,
-//   },
-//   {
-//     label: "Payments",
-//     href: "/user/payments",
-//     icon: (p: any) => <CreditCard {...p} />,
-//   },
-//   {
-//     label: "Profile",
-//     href: "/user/profile",
-//     icon: (p: any) => <User {...p} />,
-//   },
-// ];
-
-// export const USER_FOOTER_ITEMS = [
-//   {
-//     label: "Logout",
-//     href: "/",
-//     icon: (p: any) => <LogOut {...p} />,
-//     iconClassName: "text-red-400",
-//     action: "logout",
-//   },
-// ];
-
 export default function DashboardLayout({
   children,
 }: {

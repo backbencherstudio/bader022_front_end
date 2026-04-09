@@ -11,17 +11,6 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    //  Login
-
-    // login: builder.mutation({
-    //   query: (body) => ({
-    //     url: "/login",
-    //     method: "POST",
-    //     body
-    //   }),
-    // }),
-
-
   login: builder.mutation({
   query: (body) => ({
     url: "/login",

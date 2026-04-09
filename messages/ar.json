@@ -690,7 +690,13 @@
           "revenueStats": "إحصائيات الإيرادات",
           "weekly": "أسبوعي",
           "monthly": "شهري"
-        }
+        },
+      "QuickActions": {
+        "addnewservice": "إضافة خدمة جديدة",
+        "addstaff": "إضافة موظف",
+        "addbooking": "إضافة حجز",
+        "seetransaction": "عرض\nالمعاملات"
+      }
     },
     "Auth": {
         "Login": {

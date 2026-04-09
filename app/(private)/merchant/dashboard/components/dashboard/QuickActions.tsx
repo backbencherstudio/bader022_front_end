@@ -7,12 +7,14 @@ import { useI18n } from "@/components/provider/I18nProvider";
 
 export type QuickActionItem = {
   id: string;
-  label: string;
+  label: any;
   url?: string;
   onClick?: () => void;
 };
 
 function ActionTile({ item }: { item: QuickActionItem }) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const content = (
     <Card
       className={[
@@ -78,30 +80,31 @@ export function QuickActions({
   );
 }
 
-const actions: QuickActionItem[] = [
-  {
-    id: "1",
-    label: "Add New\nService",
-    url: "/merchant/dashboard/services",
-  },
-  {
-    id: "2",
-    label: "Add Staff",
-    url: "/merchant/dashboard/staff",
-  },
-  {
-    id: "3",
-    label: "Add Booking",
-    url: "/merchant/dashboard/bookings/",
-  },
-  {
-    id: "4",
-    label: "See\nTransactions",
-    url: "/merchant/dashboard/transactions",
-  },
-];
-
 export default function QuickActionsComponents() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+  const actions: QuickActionItem[] = [
+    {
+      id: "1",
+      label: t("Merchant.QuickActions.addnewservice"),
+      url: "/merchant/dashboard/services",
+    },
+    {
+      id: "2",
+      label: t("Merchant.QuickActions.addstaff"),
+      url: "/merchant/dashboard/staff",
+    },
+    {
+      id: "3",
+      label: t("Merchant.QuickActions.addbooking"),
+      url: "/merchant/dashboard/bookings/",
+    },
+    {
+      id: "4",
+      label: t("Merchant.QuickActions.seetransaction"),
+      url: "/merchant/dashboard/transactions",
+    },
+  ];
   return (
     <div className="space-y-8">
       <QuickActions items={actions} />

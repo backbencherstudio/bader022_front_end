@@ -686,7 +686,13 @@
           "revenueStats": "Revenue Statistics",
           "weekly": "Weekly",
           "monthly": "Monthly"
-        } 
+        } ,
+      "QuickActions": {
+        "addnewservice": "Add New\nService",
+        "addstaff": "Add Staff",
+        "addbooking": "Add Booking",
+        "seetransaction": "See\nTransactions"
+      }
     }
     ,
      "Auth": {

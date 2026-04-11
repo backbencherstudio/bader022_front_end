@@ -34,9 +34,9 @@ import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TxStatus =
   | "completed"
-  | "cancel"
+  | "canceled"
   | "pending"
-  | "confirm"
+  | "confirmed"
   | "rescheduled";
 
 export type TransactionRow = {
@@ -79,18 +79,18 @@ function initials(name: string) {
 function StatusPill({ status }: { status: TxStatus }) {
   const statusStyles: Record<TxStatus, string> = {
     completed: "border-emerald-500 bg-emerald-50 text-emerald-700",
-    cancel: "border-red-500 bg-red-50 text-red-600",
+    canceled: "border-red-500 bg-red-50 text-red-600",
     pending: "border-amber-500 bg-amber-50 text-amber-700",
-    confirm: "border-sky-500 bg-sky-50 text-sky-700",
+    confirmed: "border-sky-500 bg-sky-50 text-sky-700",
     rescheduled: "border-sky-500 bg-sky-50 text-sky-700",
   };
 
   const statusLabels: Record<TxStatus, string> = {
     completed: "Completed",
-    cancel: "Cancelled",
+    canceled: "Cancelled",
     pending: "Pending",
-    confirm: "Confirmed",
-    rescheduled: "rescheduled",
+    confirmed: "Confirmed",
+    rescheduled: "Rescheduled",
   };
 
   return (
@@ -130,7 +130,10 @@ export default function AllBookingHistory() {
 
   const bookings = data?.data ?? [];
   const pagination = data?.pagination;
-  // console.log(bookings, "=================booking history data====================");
+  // console.log(
+  //   bookings,
+  //   "=================booking history data====================",
+  // );
 
   // Reset page when filter changes
   useEffect(() => {

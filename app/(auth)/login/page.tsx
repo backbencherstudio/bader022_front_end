@@ -39,6 +39,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const [isSubscroption, setIsSubscription] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -74,11 +75,8 @@ export default function LoginPage() {
             },
           }),
         );
-
         toast.success(t("Auth.Login.success"));
-
         const role = response.data.user_type;
-
         setTimeout(() => {
           if (role === "Admin") {
             router.replace("/admin/dashboard");
@@ -93,6 +91,7 @@ export default function LoginPage() {
       const message = error?.message || t("Auth.Login.invalid");
       if (error?.status === 403) {
         toast.error(message);
+        setIsSubscription(true);
       } else {
         setError(message);
       }
@@ -229,21 +228,33 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50"
+            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium hover:opacity-90 disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? t("Auth.Login.loading") : t("Auth.Login.login")}
           </button>
         </form>
 
         {/* Footer */}
-        <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
-          {t("Auth.Login.noAccount")}{" "}
-          <Link href="/create-account">
-            <span className="text-blue-600 hover:underline">
-              {t("Auth.Login.signup")}
-            </span>
-          </Link>
-        </p>
+        {!isSubscroption ? (
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+            {t("Auth.Login.noAccount")}{" "}
+            <Link href="/create-account">
+              <span className="text-blue-600 hover:underline cursor-pointer">
+                {t("Auth.Login.signup")}
+              </span>
+            </Link>
+          </p>
+        ) : (
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+            {/* {t("Auth.Login.noAccount")}{" "} */}
+            <Link href="/subscription">
+              <span className="text-blue-600 hover:underline cursor-pointer">
+                {/* {t("Auth.Login.signup")} */}
+                {locale === "ar" ? "تجديد الاشتراك" : "Renew Subscription"}
+              </span>
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

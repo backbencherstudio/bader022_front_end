@@ -23,11 +23,11 @@ function AppointmentRow({ item }: { item: Appointment }) {
 
       {/* Text */}
       <div className="pb-6">
-        <p className="text-xs text-muted-foreground">{item.datetimeLabel}</p>
         <p className="mt-1 text-sm font-semibold leading-none text-foreground">
           {item.customerName}
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{item.serviceName}</p>
+        <p className="text-xs text-muted-foreground">{item.datetimeLabel}</p>
       </div>
     </div>
   );

@@ -94,7 +94,7 @@ export default function Banner() {
             </Link>
 
             <Link
-              href={"/create-account"}
+              href={"/book-demo"}
               className="h-12 px-4 text-black border-[1.8px] justify-center cursor-pointer border-blue-500 rounded-md flex items-center font-medium"
             >
               {t("Banner.secondaryBtn")}

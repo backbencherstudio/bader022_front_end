@@ -405,7 +405,7 @@
       "two": "Booking Management System",
       "three": "Nursery management system",
       "four": "Car wash management system",
-      "terms": "Terms & Conditions"
+      "terms": "Terms of Service"
     },
     "contact": {
       "title": "Contact us",
@@ -415,7 +415,7 @@
       "address": "Riyadh, Saudi Arabia "
     },
     "copyright": "All Rights Reserved.",
-    "terms": "Terms & Conditions"
+    "terms": "Terms of Service"
   },
   "FeatureComparison": {
     "title": "Detailed Feature Comparison",
@@ -825,6 +825,22 @@
               "publicKey": "Public key is required",
               "secretKey": "Secret key is required"
             }
-          }
+          },
+  "DetailsDemo": {
+    "heading": "In 20 minutes, we'll show you how Bokli grows your business",
+    "feature_1_title": "Complete digital platform + professional website",
+    "feature_1_desc": "A website designed specifically for your services ensuring a unique customer experience",
+    "feature_2_title": "Secure and easy payments",
+    "feature_2_desc": "Accept payments from Apple Pay, Tamara and Tabby with no commission",
+    "feature_3_title": "Automatic WhatsApp reminders",
+    "feature_3_desc": "Send reminders and messages automatically to increase attendance",
+    "feature_4_title": "Detailed reports and statistics",
+    "feature_4_desc": "Track sales, bookings, expenses, profits, attendance rate, and employee performance in one place with detailed reports and advanced analytics",
+    "stat_1_title": "Over 100 million SAR in sales for our clients",
+    "stat_1_desc": "Bokli system is your partner in growth and success",
+    "stat_2_title": "Number one in booking and subscription management",
+    "stat_2_desc": "Trusted by 10,000+ businesses",
+    "footer": "Over 100 million SAR achieved by Bokli clients together"
+  }
         
 }

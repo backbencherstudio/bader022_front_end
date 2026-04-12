@@ -2,8 +2,23 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Scissors, Dumbbell, HeartPulse, Leaf, Home } from "lucide-react";
+import {
+  Scissors,
+  Dumbbell,
+  HeartPulse,
+  Leaf,
+  Home,
+  PlusCircle,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+  House,
+  Car,
+  GraduationCap,
+  Ticket,
+} from "lucide-react";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { FaPaw } from "react-icons/fa";
 
 type Step1Data = {
   business_name: string;
@@ -20,11 +35,41 @@ interface Step1Props {
 }
 
 const CATEGORIES = [
-  { key: "salon_beauty", label: "Salon Beauty", icon: Scissors },
-  { key: "home_services", label: "Home Services", icon: Dumbbell },
-  { key: "health", label: "Health", icon: HeartPulse },
-  { key: "fitness_pro_gym", label: "Fitness Pro Gym", icon: Leaf },
-  { key: "others", label: "Others", icon: Home },
+  {
+    key: "Beauty & Personal Care",
+    label: "Beauty & Personal Care",
+    icon: Scissors,
+  },
+  {
+    key: "Wellness & Lifestyle",
+    label: "Wellness & Lifestyle",
+    icon: Sparkles,
+  },
+  { key: "Fitness & Training", label: "Fitness & Training", icon: Dumbbell },
+  { key: "Medical & Clinics", label: "Medical & Clinics", icon: Stethoscope },
+  { key: "Home & Maintenance", label: "Home & Maintenance", icon: House },
+  { key: "Automotive & Detailing", label: "Automotive & Detailing", icon: Car },
+  {
+    key: "Education & Skills",
+    label: "Education & Skills",
+    icon: GraduationCap,
+  },
+  {
+    key: "Events & Experiences",
+    label: "Events & Experiences",
+    icon: Ticket,
+  },
+  {
+    key: "Professional Services",
+    label: "Professional Services",
+    icon: ShieldCheck,
+  },
+  {
+    key: "Pet Care & Grooming",
+    label: "Pet Care & Grooming",
+    icon: FaPaw,
+  },
+  { key: "others", label: "Other Service", icon: PlusCircle },
 ];
 
 const BRANCH_OPTIONS = [
@@ -105,7 +150,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                     shouldDirty: true,
                   })
                 }
-                className={`flex flex-col items-center justify-center gap-2 rounded-lg border p-3 text-sm transition
+                className={`flex flex-col items-center justify-center gap-2 rounded-lg border p-3 text-sm transition cursor-pointer
                   ${
                     active
                       ? "border-purple-600 bg-purple-50 text-purple-700 dark:bg-purple-900/30"

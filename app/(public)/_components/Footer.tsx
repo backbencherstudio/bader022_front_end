@@ -45,26 +45,9 @@ export default function Footer() {
               {t("Footer.brandDesc")}
             </p>
 
-            {/* <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
-              <Link href="https://instagram.com" target="_blank">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-linear-to-r from-[#3CB3FF] to-[#7153FF] text-white">
-                  <FaInstagram />
-                </div>
-              </Link>
-
-              <Link href="https://x.com" target="_blank">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
-                  <FaXTwitter />
-                </div>
-              </Link>
-
-              <Link href="https://youtube.com" target="_blank">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow text-gray-600 hover:bg-linear-to-r from-[#3CB3FF] to-[#7153FF] hover:text-white transition">
-                  <FaYoutube />
-                </div>
-              </Link>
-            </div> */}
-            <div className={`mt-6 flex gap-4 ${isRTL ? "justify-end" : ""}`}>
+            <div
+              className={`mt-6 flex flex-wrap gap-4 ${isRTL ? "justify-end" : ""}`}
+            >
               {/* LinkedIn */}
               <Link
                 href="https://www.linkedin.com/company/bokli-platform"

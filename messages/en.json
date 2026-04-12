@@ -285,61 +285,110 @@
     "subtitleLine2": "features built to support your business from day one.",
     "button": "Start Accepting Bookings Today"
   },
-
 "Terms": {
-    "title": "Terms & Conditions",
-    "subtitle": "Please read these terms and conditions carefully before using our platform. By accessing our services, you agree to be bound by these legal requirements.",
-    "legal_update": "Last Updated: April 2, 2026",
+    "legal_update": "Last Updated: April 2026",
+    "title": "Terms of Service",
+    "subtitle": "By using Bokli, you agree to these Terms of Service. If you do not agree, you may not access or use the platform.",
     "contact_title": "Questions about our terms?",
-    "contact_text": "If you have any questions regarding these terms, please contact our legal department at legal@yourplatform.com",
+    "contact_text": "Please reach out to our legal team at Support@bokli.io\n\nRiyadh, Kingdom of Saudi Arabia",
     "items": [
       {
-        "title": "Acceptance of Agreement",
-        "content": "By using this website, you represent that you are at least 18 years of age. These terms constitute a legally binding agreement between you and our company regarding your use of the service."
+        "title": "Acceptance & Eligibility",
+        "content": "Agreement: By creating an account or using any part of the platform, you enter into a legally binding agreement with Bokli.\n\nAge Requirement: You must be at least 18 years old and possess the legal capacity to enter into contracts under the laws of the Kingdom of Saudi Arabia.\n\nElectronic Communication: You consent to receive communications from us electronically (including email, SMS, or app notifications)."
       },
       {
         "title": "Account Registration",
-        "content": "To access certain features, you must register for an account. You agree to provide accurate, current, and complete information and to update such information to keep it accurate.\n\nYou are responsible for safeguarding your password and any activities under your account."
+        "content": "Accuracy: You must provide accurate, current, and complete information during registration.\n\nSecurity: You are solely responsible for safeguarding your account credentials. Any activity performed under your account is deemed your own.\n\nCorporate Use: If you are using Bokli on behalf of a business, you represent that you have the authority to bind that entity to these Terms."
       },
       {
-        "title": "Merchant Responsibilities",
-        "content": "Merchants using our dashboard agree to provide authentic services to customers. Any fraudulent activity or misrepresentation of pricing will result in immediate account suspension."
+        "title": "Bokli’s Role: The Platform Provider",
+        "content": "The Marketplace: Bokli provides a digital platform (SaaS) that enables Merchants to manage bookings and customer interactions.\n\nNo Agency: Bokli is not a service provider, agent, or partner of any Merchant. We do not employ Merchants, nor do we provide the services listed on the platform.\n\nQuality & Safety: Bokli does not endorse, verify, or guarantee the quality, safety, legality, or suitability of any Merchant services. All transactions are strictly between the Merchant and the Customer."
       },
       {
-        "title": "Privacy & Data Protection",
-        "content": "Your privacy is important to us. Our Privacy Policy describes how we collect, use, and disclose your personal information. By using our services, you consent to our data practices."
+        "title": "Merchant Responsibilities & Taxes",
+        "content": "Merchants using the platform represent and warrant that they:\n\n• Licensing: Hold all necessary professional licenses and permits required by applicable laws in the Kingdom of Saudi Arabia.\n• Accuracy: Maintain accurate pricing, descriptions, and availability.\n• Taxes & VAT: Are solely responsible for determining, reporting, and remitting all applicable taxes, including Value Added Tax (VAT), to the Zakat, Tax and Customs Authority (ZATCA).\n• Legal Compliance: Comply with all applicable laws and regulations, including Saudi consumer protection and e-commerce laws."
+      },
+      {
+        "title": "Payments & Financial Terms",
+        "content": "Third-Party Processors: Payments are handled by authorized third-party gateways. Bokli does not store full credit card details.\n\nNo Financial Role: Bokli does not act as a financial institution or payment intermediary.\n\nNo Liability for Failures: Bokli is not responsible for payment delays, banking failures, or unauthorized charges resulting from third-party processor errors.\n\nRefund Disputes: Since Bokli is not a party to the service contract, all refund requests must be directed to the Merchant. Bokli may, at its sole discretion, facilitate communication between parties but bears no responsibility for the outcome."
+      },
+      {
+        "title": "Intellectual Property & Data",
+        "content": "Ownership: All software, user interface design, logos, and platform content are the exclusive property of Bokli or its licensors.\n\nLicense to Use: Bokli grants you a limited, non-transferable, non-exclusive license to use the platform for its intended purpose.\n\nUser Data: By using the platform, you grant Bokli the right to use anonymized and aggregated data for analytics, platform improvement, and business development."
+      },
+      {
+        "title": "Prohibited Use",
+        "content": "You agree not to:\n• Use the platform for any fraudulent, unlawful, or unauthorized purpose.\n• Misrepresent services, pricing, or business information.\n• Interfere with or disrupt the platform or its infrastructure.\n• Attempt unauthorized access to any part of the system.\n• Scrape, copy, or misuse Bokli’s content or code without permission.\n• Use the platform in a way that harms Bokli’s reputation or operations.\n• Post defamatory, obscene, or abusive content."
       },
       {
         "title": "Limitation of Liability",
-        "content": "To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, or consequential damages resulting from your use or inability to use the service."
+        "content": "“As Is” Basis: Bokli is provided on an “as is” and “as available” basis without warranties of any kind, whether express or implied.\n\nNo Consequential Damages: To the maximum extent permitted by applicable law, Bokli shall not be liable for any indirect, incidental, or consequential damages, including loss of profits, data, or business opportunities.\n\nLiability Cap: In no event shall Bokli’s total aggregate liability exceed the total fees paid by you to Bokli in the six (6) months preceding the claim."
+      },
+      {
+        "title": "Indemnification",
+        "content": "You agree to defend, indemnify, and hold Bokli and its affiliates harmless from any claims, liabilities, damages, or legal expenses arising from:\n\n• Your breach of these Terms.\n• Your violation of any applicable laws or third-party rights.\n• Any dispute between a Merchant and a Customer."
+      },
+      {
+        "title": "Force Majeure",
+        "content": "Bokli shall not be liable for any delay or failure in performance resulting from events beyond its reasonable control, including but not limited to acts of God, internet outages, government actions, labor disputes, or pandemics."
+      },
+      {
+        "title": "Termination",
+        "content": "By Bokli: We may suspend or terminate your access immediately, with or without notice, if you violate these Terms or if your actions may expose Bokli or its users to legal risk.\n\nBy You: You may stop using the platform and close your account at any time."
+      },
+      {
+        "title": "Governing Law & Dispute Resolution",
+        "content": "Governing Law: These Terms are governed by and construed in accordance with the laws of the Kingdom of Saudi Arabia.\n\nJurisdiction: Any disputes arising out of or related to these Terms shall be subject to the exclusive jurisdiction of the competent courts in Riyadh, Saudi Arabia."
+      },
+      {
+        "title": "Changes to Terms",
+        "content": "We may update these Terms from time to time to reflect changes in our services or legal requirements. We will notify users of significant changes where appropriate. Continued use of Bokli after updates constitutes acceptance of the revised Terms."
       }
     ]
   },
-  "Privacy": {
-    "title": "Privacy Policy",
-    "last_updated": "Last Updated: April 2026",
-    "subtitle": "We value your privacy and are committed to protecting your personal information.",
-    "contact_title": "Questions about your privacy?",
-    "contact_text": "Contact us at privacy@example.com",
-    "items": [
-      {
-        "title": "Information We Collect",
-        "content": "We collect personal data such as name, email, and usage data."
-      },
-      {
-        "title": "How We Use Information",
-        "content": "We use your data to provide and improve our services."
-      },
-      {
-        "title": "Data Protection",
-        "content": "We implement security measures to protect your data."
-      },
-      {
-        "title": "Third-Party Services",
-        "content": "We may share data with trusted partners."
-      }
-    ]
-  },
+    "Privacy": {
+      "last_updated": "Last Updated: April 2026",
+      "title": "Privacy Policy",
+      "subtitle": "At Bokli Company (“Bokli”, “we”, “us”, or “our”), we are committed to protecting your privacy and personal data.\n\nThis Privacy Policy explains how we collect, use, and protect your information when you use Bokli.",
+
+      "items": [
+        {
+          "title": "Information We Collect",
+          "content": "Information you provide\nWe collect information you provide when using Bokli, including:\n• Name, email, and phone number\n• Account and login details\n• Business information (for merchants)\n• Booking and customer information\n\nInformation collected automatically\nWe may automatically collect:\n• IP address\n• Device and browser information\n• Usage data"
+        },
+        {
+          "title": "Cookies",
+          "content": "We use cookies to improve your experience and maintain sessions. You can disable cookies in your browser settings."
+        },
+        {
+          "title": "How We Use Your Information",
+          "content": "We use your information to:\n• Provide and operate Bokli services\n• Manage bookings and accounts\n• Communicate with you\n• Improve the platform\n• Comply with legal obligations"
+        },
+        {
+          "title": "Sharing of Information",
+          "content": "We do not sell your personal data.\n\nWe may share information:\n• With merchants (if you book through Bokli)\n• With service providers (hosting, payments, communications)\n• When required by law"
+        },
+        {
+          "title": "Bokli’s Role",
+          "content": "Bokli acts as a data controller for its own operations.\n\nBokli acts as a data processor for customer data handled by merchants."
+        },
+        {
+          "title": "Data Security",
+          "content": "We use appropriate security measures to protect your data. However, no system is completely secure."
+        },
+        {
+          "title": "Your Rights",
+          "content": "You may request access, correction, or deletion of your personal data by contacting us."
+        },
+        {
+          "title": "Changes to This Policy",
+          "content": "We may update this Privacy Policy at any time. Updates will be published on our website."
+        }
+      ],
+
+      "contact_title": "Contact Us",
+      "contact_text": "Bokli Company\nRiyadh, Saudi Arabia\nSupport@bokli.io"
+    },
   "Footer": {
     "brandDesc": "Smart booking management for modern service businesses.",
     "quickLinks": {

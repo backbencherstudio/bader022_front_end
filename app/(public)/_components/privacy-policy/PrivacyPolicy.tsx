@@ -1,3 +1,5 @@
+//
+
 "use client";
 
 import { useMemo } from "react";
@@ -36,9 +38,10 @@ export default function PrivacyPolicy() {
     <section
       id="privacy-section"
       className="w-full bg-slate-50 py-20 scroll-mt-20"
+      dir={isRTL ? "rtl" : "ltr"}
     >
       <div className="container mx-auto px-4 max-w-5xl">
-        {/* --- Header --- */}
+        {/* Header */}
         <div
           className={`mb-16 flex flex-col ${
             isRTL ? "items-end text-right" : "items-start text-left"
@@ -49,7 +52,7 @@ export default function PrivacyPolicy() {
             whileInView={{ opacity: 1 }}
             className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-3"
           >
-            {t("Privacy.last_updated") || "Last Updated: April 2026"}
+            {t("Privacy.last_updated")}
           </motion.span>
 
           <motion.h1
@@ -57,18 +60,17 @@ export default function PrivacyPolicy() {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6"
           >
-            {t("Privacy.title") || "Privacy Policy"}
+            {t("Privacy.title")}
           </motion.h1>
 
           <div className="h-1.5 w-24 bg-indigo-600 rounded-full mb-6" />
 
-          <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">
-            {t("Privacy.subtitle") ||
-              "We value your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data."}
+          <p className="text-lg text-slate-600 max-w-3xl leading-relaxed whitespace-pre-line">
+            {t("Privacy.subtitle")}
           </p>
         </div>
 
-        {/* --- Content List --- */}
+        {/* Content */}
         <motion.div
           variants={containerVariant}
           initial="hidden"
@@ -92,22 +94,62 @@ export default function PrivacyPolicy() {
               </div>
 
               {/* Content */}
-              <div className="flex-grow">
-                <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-4">
+              <div className="flex-grow space-y-3">
+                <h2 className="text-xl md:text-2xl font-bold text-slate-800">
                   {item.title}
                 </h2>
 
                 <div className="prose prose-slate max-w-none">
-                  <p className="text-slate-600 text-lg leading-relaxed whitespace-pre-line">
-                    {item.content}
-                  </p>
+                  {item.content.split("\n").map((line, i) => {
+                    // bullet points
+                    if (line.trim().startsWith("•")) {
+                      return (
+                        <li
+                          key={i}
+                          className="ml-5 list-disc text-slate-600 text-lg"
+                        >
+                          {line.replace("• ", "")}
+                        </li>
+                      );
+                    }
+
+                    // empty line spacing
+                    if (line.trim() === "") {
+                      return <div key={i} className="h-2" />;
+                    }
+
+                    // sub-heading style (optional improvement)
+                    if (
+                      line === line.toUpperCase() &&
+                      line.length < 50 &&
+                      !line.includes(".")
+                    ) {
+                      return (
+                        <p
+                          key={i}
+                          className="font-semibold text-slate-800 mt-3"
+                        >
+                          {line}
+                        </p>
+                      );
+                    }
+
+                    return (
+                      <p
+                        key={i}
+                        className="text-slate-600 text-lg leading-relaxed"
+                      >
+                        {line}
+                      </p>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* --- Footer --- */}
+        {/* Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -116,12 +158,11 @@ export default function PrivacyPolicy() {
           }`}
         >
           <h3 className="text-indigo-900 font-bold mb-2">
-            {t("Privacy.contact_title") || "Questions about your privacy?"}
+            {t("Privacy.contact_title")}
           </h3>
 
-          <p className="text-indigo-800/80">
-            {t("Privacy.contact_text") ||
-              "If you have any questions, contact us at privacy@example.com"}
+          <p className="text-indigo-800/80 whitespace-pre-line">
+            {t("Privacy.contact_text")}
           </p>
         </motion.div>
       </div>

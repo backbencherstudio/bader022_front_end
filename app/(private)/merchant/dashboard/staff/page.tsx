@@ -33,25 +33,29 @@ export default function StaffPage() {
   const filteredStaff = staffList?.filter((staff: any) =>
     staff.name.toLowerCase().includes(search.toLowerCase()),
   );
+
+  console.log(filteredStaff);
+
   const handleSubmitStaff = async (data: any) => {
     if (mode === "add") {
-      console.log("Add Staff:", data);
-
-      // const serviceIdsString = data.service_ids.join(",");
-
-      // console.log("serviceIdsString=-", serviceIdsString);
-
+      console.log("Add Staff:", data?.service_ids);
       try {
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("role", data.role);
         // formData.append("service_id", data.service_id);
-        formData.append("service_id", data.service_ids);
+        // formData.append("service_id", data.serviceIdsAsNumbers);
+        if (Array.isArray(data.service_ids)) {
+          data.service_ids.forEach((id: string) => {
+            formData.append("service_id[]", id); // Note the [] suffix
+          });
+        }
         formData.append("status", "1");
 
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
+
         await createStaff(formData).unwrap();
         toast.success("Staff created successfully");
         setOpenModal(false);
@@ -66,7 +70,12 @@ export default function StaffPage() {
 
         formData.append("name", data.name);
         formData.append("role", data.role);
-        formData.append("service_id", data.service_id);
+        // formData.append("service_id", data.service_id);
+        if (Array.isArray(data.service_ids)) {
+          data.service_ids.forEach((id: string) => {
+            formData.append("service_id[]", id); // Note the [] suffix
+          });
+        }
         formData.append("status", "1");
         formData.append("_method", "put");
         if (data.image && data.image.length > 0) {
@@ -80,37 +89,6 @@ export default function StaffPage() {
       }
     }
   };
-
-  // const handleSubmitStaff = async (data: any) => {
-  //   const formData = new FormData();
-  //   formData.append("name", data.name);
-  //   formData.append("role", data.role);
-  //   formData.append("status", "1");
-
-  //   // Ensure array is converted to comma-separated string
-  //   const serviceIdsString = Array.isArray(data.service_ids)
-  //     ? data.service_ids.join(",")
-  //     : data.service_ids;
-  //   formData.append("service_id", serviceIdsString);
-
-  //   if (data.image?.[0]) {
-  //     formData.append("image", data.image[0]);
-  //   }
-
-  //   try {
-  //     if (mode === "add") {
-  //       await createStaff(formData).unwrap();
-  //       toast.success("Staff created successfully");
-  //     } else {
-  //       formData.append("_method", "put");
-  //       await updateStaffById({ id: data.id, formData }).unwrap();
-  //       toast.success("Staff updated successfully");
-  //     }
-  //     setOpenModal(false);
-  //   } catch (error: any) {
-  //     toast.error(error?.data?.message || "Operation failed");
-  //   }
-  // };
 
   const handleDelete = (id: string) => {
     toast("Delete Staff Member?", {
@@ -232,12 +210,12 @@ export default function StaffPage() {
 
                     <span
                       className={`px-2 py-1 rounded-md ${
-                        staff.status === 1
+                        staff.status === true
                           ? "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400"
                           : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
                       }`}
                     >
-                      {staff.status === 1 ? "Active" : "Inactive"}
+                      {staff.status === true ? "Active" : "Inactive"}
                     </span>
                   </div>
                 </div>
@@ -247,28 +225,31 @@ export default function StaffPage() {
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                   {locale === "ar" ? "الخدمة المخصصة" : "Assigned Service:"}
                 </p>
-
-                {staff.service ? (
-                  <div className="flex flex-wrap gap-2">
-                    <span
-                      className="
+                {staff.service_names.map((service: any, index: any) => (
+                  <div key={index}>
+                    {service ? (
+                      <button
+                        className="m-1
                         px-3 py-1 text-xs rounded-md
                         bg-gray-100 dark:bg-gray-700
                         text-gray-700 dark:text-gray-300
                       "
-                    >
-                      {staff.service.service_name}
-                    </span>
+                      >
+                        {service}
+                      </button>
+                    ) : (
+                      <p className="text-xs text-gray-400">
+                        No service assigned
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <p className="text-xs text-gray-400">No service assigned</p>
-                )}
+                ))}
               </div>
               {/* Actions */}
               <div className="mt-5 flex items-center gap-3">
                 <button
                   className={`flex-1 py-2 rounded-lg text-sm font-medium cursor-pointer ${
-                    staff.status === 1
+                    staff.status === true
                       ? "bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400"
                       : "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
                   }`}

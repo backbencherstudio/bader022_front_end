@@ -229,7 +229,7 @@ export default function ServicesPage() {
             >
               <div className="relative h-48">
                 <Image
-                  src={getImageUrl(service.image) || "/images/company3.png"}
+                  src={getImageUrl(service.image) || ""}
                   alt={service?.service_name || "service image"}
                   fill
                   className="object-cover"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { getImageUrl } from "@/helper/formatImage";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ type Service = {
   id?: number;
   service_name: string;
   duration: string;
-  price: number;
+  price: string | number;
   description?: string;
   // image?: string;
   image?: any;
@@ -33,6 +34,8 @@ export default function ServiceModal({
   onSubmitService,
   isLoading,
 }: Props) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [preview, setPreview] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const {
@@ -79,7 +82,7 @@ export default function ServiceModal({
         reset({
           service_name: "",
           duration: "",
-          price: 0,
+          price: "",
           description: "",
         });
         setPreview(null);
@@ -97,86 +100,19 @@ export default function ServiceModal({
     onClose();
   };
 
-  // // Handle Image Preview logic
-  // useEffect(() => {
-  //   if (imageFile && imageFile.length > 0) {
-  //     const file = imageFile[0];
-  //     const objectUrl = URL.createObjectURL(file);
-  //     setPreview(objectUrl);
-
-  //     // Free memory when component unmounts or file changes
-  //     return () => URL.revokeObjectURL(objectUrl);
-  //   } else if (mode === "edit" && initialData?.image) {
-  //     // Show existing image if editing and no new file selected
-  //     setPreview(initialData.image);
-  //   } else {
-  //     setPreview(null);
-  //   }
-  // }, [imageFile, initialData, mode]);
-
-  // // Reset form and preview
-  // useEffect(() => {
-  //   if (mode === "edit" && initialData) {
-  //     reset({
-  //       service_name: initialData.service_name,
-  //       duration: initialData.duration,
-  //       price: initialData.price,
-  //       description: initialData.description,
-  //       image: initialData.image,
-  //     });
-  //   }
-  //   if (mode === "add") {
-  //     reset({});
-  //     setPreview(null);
-  //   }
-  // }, [mode, initialData, reset]);
-
-  // if (!open) return null;
-
-  // const onSubmit = (data: Service) => {
-  //   // console.log(data);
-  //   onSubmitService({ ...initialData, ...data });
-  //   reset();
-  //   setPreview(null);
-  //   onClose();
-  // };
-
-  // Populate form on Edit
-  // useEffect(() => {
-  //   if (mode === "edit" && initialData) {
-  //     reset({
-  //       service_name: initialData.service_name,
-  //       duration: initialData.duration,
-  //       price: initialData.price,
-  //       description: initialData.description,
-  //     });
-  //   }
-
-  //   if (mode === "add") {
-  //     reset({});
-  //   }
-  // }, [mode, initialData, reset]);
-
-  // if (!open) return null;
-
-  // const onSubmit = (data: Service) => {
-  //   onSubmitService({ ...initialData, ...data });
-  //   reset({
-  //     service_name: "",
-  //     duration: "",
-  //     price: 0,
-  //     description: "",
-  //   });
-  //   onClose();
-  // };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto">
       <div className="w-full max-w-lg rounded-xl shadow-lg bg-white dark:bg-gray-900">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-xl">
           <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
-            {mode === "add" ? "Add New Service" : "Edit Service"}
+            {mode === "add" ? (
+              <div>
+                {locale == "ar" ? "إضافة خدمة جديدة" : "Add New Service"}{" "}
+              </div>
+            ) : (
+              <div>{locale == "ar" ? "تعديل الخدمة" : "Edit Service"} </div>
+            )}
           </h3>
           <button
             onClick={onClose}
@@ -191,7 +127,8 @@ export default function ServiceModal({
           {/* Name */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Service Name <span className="text-red-500">*</span>
+              {locale == "ar" ? "اسم الخدمة" : "Service Name "}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               {...register("service_name", { required: true })}
@@ -199,7 +136,7 @@ export default function ServiceModal({
                 mt-1 w-full rounded-lg px-4 py-2
                 bg-white dark:bg-gray-800
                 border border-gray-300 dark:border-gray-700
-                text-gray-900 dark:text-gray-100
+                text-gray-900 dark:text-gray-100 
                 focus:outline-none focus:ring-2
                 focus:ring-gray-300 dark:focus:ring-gray-700
               "
@@ -209,7 +146,8 @@ export default function ServiceModal({
           {/* Duration */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Duration (minutes) <span className="text-red-500">*</span>
+              {locale == "ar" ? "المدة (بالدقائق)" : "Duration (minutes) "}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
@@ -228,7 +166,8 @@ export default function ServiceModal({
           {/* Price */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Price <span className="text-red-500">*</span>
+              {locale == "ar" ? "السعر" : "Price"}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
@@ -247,7 +186,7 @@ export default function ServiceModal({
           {/* Description */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Description
+              {locale == "ar" ? "الوصف" : "Description "}
             </label>
             <textarea
               {...register("description")}
@@ -265,7 +204,7 @@ export default function ServiceModal({
           {/* Image */}
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Service Image{" "}
+              {locale == "ar" ? "صورة الخدمة" : "Service Image"}
               {mode === "add" && <span className="text-red-500">*</span>}
             </label>
 
@@ -289,7 +228,7 @@ export default function ServiceModal({
                   />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                     <p className="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded">
-                      Change Image
+                      {locale == "ar" ? "تغيير الصورة" : "Change Image"}
                     </p>
                   </div>
                 </div>
@@ -297,7 +236,7 @@ export default function ServiceModal({
                 <div className="flex flex-col items-center py-8">
                   <FiImage size={26} className="text-gray-400" />
                   <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
-                    Click to upload
+                    {locale == "ar" ? "انقر للرفع" : "Click to upload "}
                   </span>
                 </div>
               )}
@@ -324,7 +263,7 @@ export default function ServiceModal({
                 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer
               "
             >
-              Cancel
+              {locale == "ar" ? "إلغاء" : " Cancel"}
             </button>
             <button
               type="submit"
@@ -336,11 +275,13 @@ export default function ServiceModal({
                 hover:opacity-90 cursor-pointer
               "
             >
-              {isLoading
-                ? "Saving..."
-                : mode === "add"
-                  ? "Add Service"
-                  : "Update Service"}
+              {isLoading ? (
+                "Saving..."
+              ) : mode === "add" ? (
+                <div>{locale == "ar" ? "إضافة خدمة" : "Add Service"} </div>
+              ) : (
+                <div>{locale == "ar" ? "تحديث الخدمة" : "Update Service"} </div>
+              )}
             </button>
           </div>
         </form>

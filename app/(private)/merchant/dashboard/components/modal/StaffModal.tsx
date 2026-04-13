@@ -8,20 +8,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX, FiImage } from "react-icons/fi";
 
-// type Service = {
-//   id: number;
-//   service_name: string;
-// };
-// type Staff = {
-//   id?: number;
-//   name: string;
-//   role: "admin" | "staff";
-//   // service_id: number;
-//   service_ids: string[];
-//   services?: Service[];
-//   image?: any;
-// };
-
 type Service = {
   id: number;
   service_name: string;
@@ -136,7 +122,13 @@ export default function StaffModal({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50 dark:bg-gray-900 rounded-t-xl">
           <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
-            {mode === "add" ? "Add Staff Member" : "Edit Staff Member"}
+            {mode === "add" ? (
+              <div>{locale == "ar" ? "إضافة موظف" : "Add Staff Member"}</div>
+            ) : (
+              <div>
+                {locale == "ar" ? "تعديل بيانات الموظف" : "Edit Staff Member"}
+              </div>
+            )}
           </h3>
           <button
             onClick={onClose}
@@ -152,18 +144,20 @@ export default function StaffModal({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Full Name <span className="text-red-500">*</span>
+                {locale == "ar" ? "الاسم الكامل" : "Full Name"}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <input
                 {...register("name", { required: true })}
-                placeholder="Sarah Jones"
+                placeholder=""
                 className="mt-1 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               />
             </div>
 
             <div>
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Role <span className="text-red-500">*</span>
+                {locale == "ar" ? "الدور" : "Role"}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <select
                 {...register("role", { required: true })}
@@ -177,25 +171,10 @@ export default function StaffModal({
 
           {/* Assigned Services */}
           <div>
-            {/* <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Assigned Service <span className="text-red-500">*</span>
-            </label>
-            <select
-              {...register("service_id", { required: true })}
-              className="mt-2 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
-              disabled={isServicesLoading}
-            >
-              <option value="">Select service</option>
-              {serviceOptions.map((service: any) => (
-                <option key={service.id} value={service.id}>
-                  {service.name}
-                </option>
-              ))}
-            </select> */}
-
             <div>
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Assigned Services <span className="text-red-500">*</span>
+                {locale == "ar" ? "الخدمات المخصصة" : "Assigned Services "}{" "}
+                <span className="text-red-500">*</span>
               </label>
 
               <div className="mt-2 grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 p-2 rounded-lg">
@@ -218,7 +197,7 @@ export default function StaffModal({
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Staff Image{" "}
+              {locale == "ar" ? "صورة الموظف" : "Staff Image"}
               {mode === "add" && <span className="text-red-500">*</span>}
             </label>
 
@@ -242,7 +221,7 @@ export default function StaffModal({
                   />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                     <p className="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded">
-                      Change Image
+                      {locale == "ar" ? "تغيير الصورة" : "Change Image"}
                     </p>
                   </div>
                 </div>
@@ -250,7 +229,7 @@ export default function StaffModal({
                 <div className="flex flex-col items-center py-8">
                   <FiImage size={26} className="text-gray-400" />
                   <span className="text-sm font-medium mt-2 text-gray-600 dark:text-gray-300">
-                    Click to upload
+                    {locale == "ar" ? "انقر للرفع" : "Click to upload"}
                   </span>
                 </div>
               )}
@@ -273,17 +252,21 @@ export default function StaffModal({
               disabled={isLoading}
               className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 cursor-pointer"
             >
-              Cancel
+              {locale == "ar" ? "إلغاء" : "Cancel"}
             </button>
             <button
               type="submit"
               className="px-4 py-2 rounded-lg bg-gray-900 dark:bg-blue-600 text-white cursor-pointer"
             >
-              {isLoading
-                ? "Saving..."
-                : mode === "add"
-                  ? "Add Staff"
-                  : "Update Staff"}
+              {isLoading ? (
+                "Saving..."
+              ) : mode === "add" ? (
+                <div>{locale == "ar" ? "إضافة موظف" : "Add Staff"}</div>
+              ) : (
+                <div>
+                  {locale == "ar" ? "تحديث بيانات الموظف" : "Update Staff"}
+                </div>
+              )}
             </button>
           </div>
         </form>

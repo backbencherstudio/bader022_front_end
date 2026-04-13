@@ -17,8 +17,11 @@ import {
 import { toast } from "sonner";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function page() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { user } = useAppSelector((state) => state.auth);
 
   // console.log(user, "=================user");
@@ -197,8 +200,10 @@ export default function page() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="mt-4 text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl"
             >
-              The Mini Site feature is not included in your current plan. To
-              gain access, please upgrade to the Premium plan.
+              {" "}
+              {locale == "ar"
+                ? "ميزة الموقع المصغر غير متوفرة في خطتك الحالية. للحصول على إمكانية الوصول، يرجى الترقية إلى الخطة المميزة"
+                : "The Mini Site feature is not included in your current plan. To gain access, please upgrade to the Premium plan"}
             </motion.p>
 
             {/* Button */}
@@ -214,7 +219,9 @@ export default function page() {
               >
                 <span className="absolute inset-0 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="relative z-10 text-black group-hover:text-white dark:text-white">
-                  Go to Subscription
+                  {locale == "ar"
+                    ? "الذهاب إلى الاشتراك"
+                    : "Go to Subscription"}
                 </span>
               </Link>
             </motion.div>
@@ -248,10 +255,12 @@ export default function page() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Mini-Site Builder
+                  {locale == "ar" ? "منشئ الموقع المصغر" : "Mini-Site Builder "}
                 </h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Customize your booking mini-site
+                  {locale == "ar"
+                    ? "تخصيص موقع الحجز المصغر الخاص بك"
+                    : "Customize your booking mini-site"}
                 </p>
               </div>
 
@@ -260,7 +269,7 @@ export default function page() {
                 className="flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition cursor-pointer"
               >
                 <FiSave size={16} />
-                Save Changes
+                {locale == "ar" ? "حفظ التغييرات" : "Save Changes"}
               </button>
             </div>
             <MiniSiteCopyLink subdomain={user?.website_domain} />

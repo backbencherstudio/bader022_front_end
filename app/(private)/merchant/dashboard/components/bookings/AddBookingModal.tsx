@@ -462,6 +462,7 @@ import {
   useGetBookingStaffScheduleQuery,
 } from "@/redux/features/merchant/bookingsApi";
 import { skipToken } from "@reduxjs/toolkit/query/react";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 const defaultValues = {
   customer: "",
@@ -481,7 +482,8 @@ export default function AddBookingModal({
   onClose: () => void;
 }) {
   const { control, handleSubmit, setValue, reset } = useForm({ defaultValues });
-
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [createBooking] = useCreateBookingMutation();
 
   // Services list
@@ -558,9 +560,14 @@ export default function AddBookingModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
         <DialogHeader className="px-6 pt-6 pb-4 border-b">
-          <DialogTitle>Add New Booking</DialogTitle>
+          <DialogTitle>
+            {" "}
+            {locale == "ar" ? "إضافة حجز جديد" : "Add New Booking"}
+          </DialogTitle>
           <p className="text-sm text-muted-foreground">
-            Auto-checks availability and conflicts
+            {locale == "ar"
+              ? "التحقق التلقائي من التوافر وتعارض المواعيد"
+              : "Auto-checks availability and conflicts"}
           </p>
         </DialogHeader>
 
@@ -570,7 +577,9 @@ export default function AddBookingModal({
             <div className="md:col-span-2 space-y-4">
               {/* Service */}
               <div>
-                <label className="text-[16px] font-medium">Service</label>
+                <label className="text-[16px] font-medium">
+                  {locale == "ar" ? "الخدمة" : "Service"}
+                </label>
                 <Controller
                   name="service"
                   control={control}
@@ -593,7 +602,9 @@ export default function AddBookingModal({
 
               {/* Date */}
               <div>
-                <label className="text-[16px] font-medium">Date</label>
+                <label className="text-[16px] font-medium">
+                  {locale == "ar" ? "التاريخ" : "Date"}
+                </label>
                 <Controller
                   name="date"
                   control={control}
@@ -606,7 +617,10 @@ export default function AddBookingModal({
               {/* Time */}
               {availableTimes.length > 0 && (
                 <div>
-                  <label className="text-[16px] font-medium">Time</label>
+                  <label className="text-[16px] font-medium">
+                    {" "}
+                    {locale == "ar" ? "الوقت" : "Time"}
+                  </label>
                   <Controller
                     name="time"
                     control={control}
@@ -634,7 +648,9 @@ export default function AddBookingModal({
               {/* Staff */}
               {availableStaff.length > 0 && (
                 <div>
-                  <label className="text-[16px] font-medium">Staff</label>
+                  <label className="text-[16px] font-medium">
+                    {locale == "ar" ? "الموظفون" : "Staff"}
+                  </label>
                   <Controller
                     name="staff"
                     control={control}
@@ -661,7 +677,10 @@ export default function AddBookingModal({
 
               {/* Customer */}
               <div>
-                <label className="text-[16px] font-medium">Customer</label>
+                <label className="text-[16px] font-medium">
+                  {" "}
+                  {locale == "ar" ? "العميل" : "Customer"}
+                </label>
                 <Controller
                   name="customer"
                   control={control}
@@ -677,7 +696,10 @@ export default function AddBookingModal({
 
               {/* Email */}
               <div>
-                <label className="text-[16px] font-medium">Email</label>
+                <label className="text-[16px] font-medium">
+                  {" "}
+                  {locale == "ar" ? "البريد الإلكتروني" : "Email"}
+                </label>
                 <Controller
                   name="email"
                   control={control}
@@ -693,7 +715,9 @@ export default function AddBookingModal({
 
               {/* phone */}
               <div>
-                <label className="text-[16px] font-medium">Phone</label>
+                <label className="text-[16px] font-medium">
+                  {locale == "ar" ? "الهاتف" : "Phone "}
+                </label>
                 <Controller
                   name="phone"
                   control={control}
@@ -710,11 +734,15 @@ export default function AddBookingModal({
 
             {/* RIGHT SIDE */}
             <div className="border rounded-xl p-4 flex flex-col items-center justify-center text-center">
-              <p className="font-semibold text-xl mb-4">Availability</p>
+              <p className="font-semibold text-xl mb-4">
+                {locale == "ar" ? "التوافر" : "Availability"}
+              </p>
               <Check className="h-14 w-14 text-white rounded-full bg-green-500 p-2" />
-              <p className="font-semibold text-xl mt-4">Available</p>
+              <p className="font-semibold text-xl mt-4">
+                {locale == "ar" ? "متاح" : "Available"}
+              </p>
               <p className="text-sm text-muted-foreground mt-4">
-                Suggested times
+                {locale == "ar" ? "الأوقات المقترحة" : "Suggested times"}
               </p>
 
               <div className="flex gap-2 mt-2 flex-wrap justify-center">
@@ -740,10 +768,10 @@ export default function AddBookingModal({
               type="button"
               onClick={onClose}
             >
-              Cancel
+              {locale == "ar" ? "إلغاء" : "Cancel"}
             </Button>
             <Button className="cursor-pointer" type="submit">
-              Add Booking
+              {locale == "ar" ? "إضافة حجز" : "Add Booking"}
             </Button>
           </DialogFooter>
         </form>

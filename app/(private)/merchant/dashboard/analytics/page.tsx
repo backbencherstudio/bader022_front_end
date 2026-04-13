@@ -19,6 +19,7 @@ import {
   useStaffPerformanceQuery,
   useWeeklyRevenueQuery,
 } from "@/redux/features/merchant/analyticsApi";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export type TData = {
   name: string;
@@ -50,6 +51,8 @@ const weeklyData: TData[] = [
 ];
 
 export default function page() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const {
     data: analyticsData,
     isLoading,
@@ -85,34 +88,42 @@ export default function page() {
           {/* Statistics Cards */}
           <div className="pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <StatCard
-              title="Revenue"
+              title={t("Merchant.Dashboard.revenue")}
               Currency={SaudiRiyal}
               value={analyticsData?.revenue}
               Icon={SaudiRiyal}
             />
             <StatCard
-              title="Total Bookings"
+              title={t("Merchant.Dashboard.totalBooking")}
               value={analyticsData?.total_bookings}
               Icon={Calendar}
             />
             <StatCard
-              title="New Customers"
+              title={locale == "ar" ? "العملاء الجدد" : "New Customers"}
               value={analyticsData?.new_customers}
               Icon={User}
             />
             <StatCard
-              title="Returning Customers"
+              title={
+                locale == "ar" ? "العملاء العائدون" : "Returning Customers"
+              }
               value={analyticsData?.returning_customers}
               Icon={UserCheck}
             />
-            <StatCard title="Top Service" value={"Haircut"} Icon={Star} />
+            <StatCard
+              title={locale == "ar" ? "أفضل خدمة" : "Top Service"}
+              value={locale == "ar" ? "قص الشعر" : "Haircut"}
+              Icon={Star}
+            />
           </div>
           <div className="flex flex-col gap-4 lg:flex-row ">
             <div className="pl-4 pt-2 pb-4 rounded-xl w-full p-4  border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
               <Tabs defaultValue="monthly">
                 <div className="flex justify-between">
                   <p className="text-xl font-semibold text-[#444950] dark:text-white">
-                    Revenue Statistics
+                    {locale == "ar"
+                      ? "إحصائيات الإيرادات"
+                      : "Revenue Statistics"}
                   </p>
                   <TabsList className="h-14 p-2 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm ">
                     <TabsTrigger
@@ -122,7 +133,7 @@ export default function page() {
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
     "
                     >
-                      Weekly
+                      {locale == "ar" ? "أسبوعي" : "Weekly"}
                     </TabsTrigger>
 
                     <TabsTrigger
@@ -132,7 +143,7 @@ export default function page() {
       dark:data-[state=active]:bg-white dark:data-[state=active]:text-black
     "
                     >
-                      Monthly
+                      {locale == "ar" ? "شهري" : "Monthly"}
                     </TabsTrigger>
                   </TabsList>
                 </div>

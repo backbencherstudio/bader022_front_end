@@ -65,18 +65,17 @@ export default function CreateDemo() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // await registerUser({
-      //   name: data.fullName,
-      //   email: data.email,
-      //   phone: data.phone,
-      // }).unwrap();
+      await registerUser({
+        name: data.fullName,
+        email: data.email,
+        phone: data.phone,
+      }).unwrap();
 
       // console.log("data===========", data);
       setSubmittedData(data);
       setIsModalOpen(true);
 
       toast.success(t("Auth.Signup.success"));
-      // router.push("/user-login");
       reset();
     } catch (error: any) {
       toast.error(error?.data?.message || t("Auth.Signup.error"));

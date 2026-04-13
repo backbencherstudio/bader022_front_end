@@ -35,12 +35,18 @@ export default function StaffPage() {
   );
   const handleSubmitStaff = async (data: any) => {
     if (mode === "add") {
-      // console.log("Add Staff:", data);
+      console.log("Add Staff:", data);
+
+      // const serviceIdsString = data.service_ids.join(",");
+
+      // console.log("serviceIdsString=-", serviceIdsString);
+
       try {
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("role", data.role);
-        formData.append("service_id", data.service_id);
+        // formData.append("service_id", data.service_id);
+        formData.append("service_id", data.service_ids);
         formData.append("status", "1");
 
         if (data.image && data.image.length > 0) {
@@ -63,7 +69,6 @@ export default function StaffPage() {
         formData.append("service_id", data.service_id);
         formData.append("status", "1");
         formData.append("_method", "put");
-
         if (data.image && data.image.length > 0) {
           formData.append("image", data.image[0]);
         }
@@ -75,6 +80,38 @@ export default function StaffPage() {
       }
     }
   };
+
+  // const handleSubmitStaff = async (data: any) => {
+  //   const formData = new FormData();
+  //   formData.append("name", data.name);
+  //   formData.append("role", data.role);
+  //   formData.append("status", "1");
+
+  //   // Ensure array is converted to comma-separated string
+  //   const serviceIdsString = Array.isArray(data.service_ids)
+  //     ? data.service_ids.join(",")
+  //     : data.service_ids;
+  //   formData.append("service_id", serviceIdsString);
+
+  //   if (data.image?.[0]) {
+  //     formData.append("image", data.image[0]);
+  //   }
+
+  //   try {
+  //     if (mode === "add") {
+  //       await createStaff(formData).unwrap();
+  //       toast.success("Staff created successfully");
+  //     } else {
+  //       formData.append("_method", "put");
+  //       await updateStaffById({ id: data.id, formData }).unwrap();
+  //       toast.success("Staff updated successfully");
+  //     }
+  //     setOpenModal(false);
+  //   } catch (error: any) {
+  //     toast.error(error?.data?.message || "Operation failed");
+  //   }
+  // };
+
   const handleDelete = (id: string) => {
     toast("Delete Staff Member?", {
       description: "Are you sure? This action cannot be undone.",
@@ -98,16 +135,6 @@ export default function StaffPage() {
       },
     });
   };
-
-  // const handleDelete = async (id: string) => {
-  //   if (!confirm("Are you sure you want to delete this staff?")) return;
-
-  //   await toast.promise(deleteStaffById(id).unwrap(), {
-  //     loading: "Deleting service...",
-  //     success: "Staff deleted successfully",
-  //     error: (err) => err?.data?.message || "Delete failed ",
-  //   });
-  // };
 
   if (isLoading) {
     return <div className="p-6">Loading staff...</div>;
@@ -179,7 +206,7 @@ export default function StaffPage() {
               {/* Top */}
               <div className="flex gap-4">
                 <Image
-                  src={getImageUrl(staff.image) || "/images/staffs/staff3.png"}
+                  src={getImageUrl(staff.image) || "/images/user.png"}
                   alt={staff.name}
                   width={56}
                   height={56}

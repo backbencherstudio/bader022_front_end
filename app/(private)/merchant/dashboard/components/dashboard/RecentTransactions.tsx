@@ -69,12 +69,11 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
   const filtered = useMemo(() => {
     const keyword = search.toLowerCase();
 
-    console.log(rows);
+    // console.log(rows);
 
     return rows.filter((r) => {
       const name = r.customerName?.toLowerCase() ?? "";
       const service = r.service?.toLowerCase() ?? "";
-
       return name.includes(keyword) || service.includes(keyword);
     });
   }, [rows, search]);
@@ -110,7 +109,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
               />
             </div>
 
-            <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white">
+            <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white cursor-pointer">
               {locale === "ar" ? "عرض الكل" : "View All"}
             </Button>
           </div>
@@ -242,7 +241,7 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
 }
 
 export default function RecentTransactions({ data }: any) {
-  console.log(data);
+  // console.log(data);
 
   const rows: TransactionRow[] =
     data?.map((item: any) => ({

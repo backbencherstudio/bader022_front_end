@@ -1,20 +1,18 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { useNewReturnQuery } from "@/redux/features/merchant/analyticsApi";
 import { useTheme } from "next-themes";
 import { useEffect, useState, useMemo } from "react";
 import { Pie, PieChart, Label } from "recharts";
 
-
 export default function NewVSReturningCusChart() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const {
-    data: newReturnData,
-    isLoading,
-    isError,
-  } = useNewReturnQuery({});
+  const { data: newReturnData, isLoading, isError } = useNewReturnQuery({});
 
   useEffect(() => {
     setMounted(true);
@@ -44,7 +42,7 @@ export default function NewVSReturningCusChart() {
         fill: isDark ? "#fff" : "black",
       },
     ],
-    [returningCustomers, newCustomers, isDark]
+    [returningCustomers, newCustomers, isDark],
   );
 
   //  Now safe to return conditionally AFTER hooks
@@ -55,14 +53,10 @@ export default function NewVSReturningCusChart() {
   return (
     <div style={{ width: "100%" }}>
       <h1 className="px-4 font-semibold text-xl text-[#444950] dark:text-white">
-        New VS Returning
+        {locale == "ar" ? "الجدد مقابل العائدين" : "New VS Returning"}
       </h1>
 
-      <PieChart
-        width={300}
-        height={300}
-        style={{ margin: "0 auto" }}
-      >
+      <PieChart width={300} height={300} style={{ margin: "0 auto" }}>
         <Pie
           data={chartData}
           dataKey="value"
@@ -82,11 +76,11 @@ export default function NewVSReturningCusChart() {
 
       <div className="px-6 mt-4">
         <div className="flex justify-between pb-2">
-          <span>Returning</span>
+          <span> {locale == "ar" ? "العائدون" : "Returning"}</span>
           <span>{returningCustomers}</span>
         </div>
         <div className="flex justify-between">
-          <span>New</span>
+          <span> {locale == "ar" ? "الجدد" : "New"}</span>
           <span>{newCustomers}</span>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type TxStatus = "completed" | "cancel" | "pending";
 
@@ -59,6 +60,9 @@ function StatusPill({ status }: { status: TxStatus }) {
 export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
   // console.log(rows);
 
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const filtered = useMemo(() => {
@@ -86,14 +90,14 @@ export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
       <CardHeader>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <CardTitle className="text-xl font-semibold">
-            Staff Performance
+            {locale == "ar" ? "أداء الموظفين" : "Staff Performance"}
           </CardTitle>
 
           <div className="flex items-center gap-4">
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search anything"
+                placeholder={locale == "ar" ? "" : "Search anything"}
                 className="h-12 rounded-xl pl-10"
                 value={search}
                 onChange={(e) => {
@@ -103,8 +107,8 @@ export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
               />
             </div>
 
-            <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white">
-              View All
+            <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white cursor-pointer">
+              {locale == "ar" ? "عرض الكل" : "View All"}
             </Button>
           </div>
         </div>
@@ -116,10 +120,26 @@ export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="pl-8"> Staff Name</TableHead>
-                  <TableHead> Service</TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {" "}
+                    {locale == "ar" ? "اسم الموظف" : "Staff Name"}
+                  </TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {" "}
+                    {locale == "ar" ? "الخدمة" : "Service"}
+                  </TableHead>
                   {/* <TableHead>Amount</TableHead> */}
-                  <TableHead>Revenue Generated</TableHead>
+                  <TableHead
+                    className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
+                  >
+                    {locale == "ar"
+                      ? "الإيرادات المُحققة"
+                      : "Revenue Generated"}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -148,7 +168,9 @@ export function StaffPerformanceCard({ rows }: { rows: TransactionRow[] }) {
 
             {paginated.length === 0 && (
               <div className="py-10 text-center text-muted-foreground">
-                No Staff Performance data available.
+                {locale == "ar"
+                  ? "لا توجد بيانات متاحة لأداء الموظفين"
+                  : "No Staff Performance data available"}
               </div>
             )}
           </div>

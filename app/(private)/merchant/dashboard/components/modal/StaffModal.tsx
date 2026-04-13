@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { getImageUrl } from "@/helper/formatImage";
 import { useAllServicesQuery } from "@/redux/features/merchant/servicesApi";
 import Image from "next/image";
@@ -7,11 +8,31 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX, FiImage } from "react-icons/fi";
 
+// type Service = {
+//   id: number;
+//   service_name: string;
+// };
+// type Staff = {
+//   id?: number;
+//   name: string;
+//   role: "admin" | "staff";
+//   // service_id: number;
+//   service_ids: string[];
+//   services?: Service[];
+//   image?: any;
+// };
+
+type Service = {
+  id: number;
+  service_name: string;
+};
+
 type Staff = {
   id?: number;
   name: string;
   role: "admin" | "staff";
-  service_id: number;
+  service_ids: string[];
+  services?: Service[]; // Defined to satisfy TypeScript
   image?: any;
 };
 
@@ -32,6 +53,8 @@ export default function StaffModal({
   onSubmitStaff,
   isLoading,
 }: Props) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [preview, setPreview] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const {
@@ -78,16 +101,19 @@ export default function StaffModal({
   useEffect(() => {
     if (open) {
       if (mode === "edit" && initialData) {
+        const serviceIds =
+          initialData?.services?.map((s: any) => String(s.id)) || [];
         reset({
           name: initialData.name,
           role: initialData.role,
-          service_id: initialData.service_id,
+          service_ids: serviceIds,
         });
       } else {
         reset({
           name: "",
           role: "staff",
-          service_id: undefined,
+          // service_id: undefined,
+          service_ids: [],
         });
         setPreview(null);
       }
@@ -103,32 +129,6 @@ export default function StaffModal({
     setPreview(null);
     onClose();
   };
-
-  /* ---------------- Prefill on Edit ---------------- */
-  // useEffect(() => {
-  //   if (mode === "edit" && initialData) {
-  //     reset({
-  //       name: initialData.name,
-  //       role: initialData.role,
-  //       service_id: initialData.service_id,
-  //     });
-  //   }
-
-  //   if (mode === "add") {
-  //     reset({
-  //       name: "",
-  //       role: "staff",
-  //       service_id: undefined,
-  //     });
-  //   }
-  // }, [mode, initialData, reset]);
-
-  // if (!open) return null;
-  // const onSubmit = (data: Staff) => {
-  //   onSubmitStaff({ ...initialData, ...data });
-  //   reset();
-  //   onClose();
-  // };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 overflow-y-auto">
@@ -177,10 +177,9 @@ export default function StaffModal({
 
           {/* Assigned Services */}
           <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {/* <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Assigned Service <span className="text-red-500">*</span>
             </label>
-
             <select
               {...register("service_id", { required: true })}
               className="mt-2 w-full border rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
@@ -192,7 +191,30 @@ export default function StaffModal({
                   {service.name}
                 </option>
               ))}
-            </select>
+            </select> */}
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Assigned Services <span className="text-red-500">*</span>
+              </label>
+
+              <div className="mt-2 grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 p-2 rounded-lg">
+                {serviceOptions.map((service: any) => (
+                  <label
+                    key={service.id}
+                    className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                  >
+                    <input
+                      type="checkbox"
+                      value={service.id}
+                      {...register("service_ids")}
+                      className="rounded border-gray-300 text-blue-600"
+                    />
+                    {service.name}
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">

@@ -9,6 +9,17 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
+    }),
+
+    // Book Demo 
+    bookDemo: builder.mutation({
+      query: (body) => ({
+        url: "/book-demo",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Auth"],
     }),
 
   login: builder.mutation({
@@ -17,7 +28,6 @@ export const authApi = baseApi.injectEndpoints({
     method: "POST",
     body,
   }),
-
   //  success response
   transformResponse: (response: any) => {
     return {
@@ -26,7 +36,6 @@ export const authApi = baseApi.injectEndpoints({
       data: response?.data,
     };
   },
-
   //  error response
   transformErrorResponse: (error: any) => {
     return {
@@ -37,6 +46,7 @@ export const authApi = baseApi.injectEndpoints({
         "Something went wrong",
     };
   },
+   invalidatesTags: ["Auth"],
 }),
 
     //  Send OTP
@@ -46,6 +56,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
     }),
 
     //  Verify OTP
@@ -55,20 +66,22 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
     }),
 
     //  Forgot Password
- forgotPassword: builder.mutation({
-  query: (body) => {
-    // console.log(body);
-    return {
-      url: "/forgot-password",
-      method: "POST",
-      body,
-    };
-  },
-}),
- 
+    forgotPassword: builder.mutation({
+      query: (body) => {
+        // console.log(body);
+        return {
+          url: "/forgot-password",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["Auth"],
+
+    }),
     //  Reset Password
     resetPassword: builder.mutation({
       query: (body) => ({
@@ -76,6 +89,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
     }),
 
     // Change Password
@@ -92,6 +106,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useBookDemoMutation,
   useLoginMutation,
   useSendOtpMutation,
   useVerifyOtpMutation,

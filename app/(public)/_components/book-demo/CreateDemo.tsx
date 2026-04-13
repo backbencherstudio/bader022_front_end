@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 // @ts-ignore
 import "react-phone-number-input/style.css";
-import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { useBookDemoMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { authorize } from "@/lib/auth";
 import { toast } from "sonner";
@@ -44,12 +44,8 @@ export default function CreateDemo() {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const dispatch = useAppDispatch();
-
-  const [registerUser, { isLoading }] = useRegisterMutation();
+  const [createDemo, { isLoading }] = useBookDemoMutation();
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
     if (auth.authorized) {
@@ -65,17 +61,21 @@ export default function CreateDemo() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await registerUser({
+      await createDemo({
         name: data.fullName,
         email: data.email,
         phone: data.phone,
+        business_name: data.businessName,
       }).unwrap();
 
       // console.log("data===========", data);
       setSubmittedData(data);
       setIsModalOpen(true);
-
-      toast.success(t("Auth.Signup.success"));
+      toast.success(
+        locale == "ar"
+          ? "تم إنشاء حجز العرض التوضيحي بنجاح"
+          : "Book Demo Created Successfully",
+      );
       reset();
     } catch (error: any) {
       toast.error(error?.data?.message || t("Auth.Signup.error"));

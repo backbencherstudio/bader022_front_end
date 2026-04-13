@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import PhoneInput from "react-phone-number-input";
+// @ts-ignore
 import "react-phone-number-input/style.css";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { useMerchantRegMutation } from "@/redux/features/merchant/merchantRegitraion";

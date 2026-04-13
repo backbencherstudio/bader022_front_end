@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
   FaEye,
@@ -14,12 +14,15 @@ import {
   FaBusinessTime,
 } from "react-icons/fa";
 import Image from "next/image";
-
+// @ts-ignore
+import "react-phone-number-input/style.css";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { authorize } from "@/lib/auth";
 import { toast } from "sonner";
 import { useI18n } from "@/components/provider/I18nProvider";
+import PhoneInputWithCountrySelect from "react-phone-number-input";
+import { SuccessModal } from "./SuccessModal";
 
 type FormValues = {
   fullName: string;
@@ -31,10 +34,14 @@ type FormValues = {
 export default function CreateDemo() {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
 
   const {
     register,
     handleSubmit,
+    control,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -43,13 +50,6 @@ export default function CreateDemo() {
   const dispatch = useAppDispatch();
 
   const [registerUser, { isLoading }] = useRegisterMutation();
-
-  // useEffect(() => {
-  //   const auth = authorize(["Merchant", "Admin", "User"]);
-  //   if (auth.authorized) {
-  //     router.push("/");
-  //   }
-  // }, []);
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
     if (auth.authorized) {
@@ -65,14 +65,19 @@ export default function CreateDemo() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await registerUser({
-        name: data.fullName,
-        email: data.email,
-        phone: data.phone,
-      }).unwrap();
+      // await registerUser({
+      //   name: data.fullName,
+      //   email: data.email,
+      //   phone: data.phone,
+      // }).unwrap();
+
+      // console.log("data===========", data);
+      setSubmittedData(data);
+      setIsModalOpen(true);
 
       toast.success(t("Auth.Signup.success"));
-      router.push("/user-login");
+      // router.push("/user-login");
+      reset();
     } catch (error: any) {
       toast.error(error?.data?.message || t("Auth.Signup.error"));
     }
@@ -99,12 +104,12 @@ export default function CreateDemo() {
         {/* Title */}
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
           {/* {t("Auth.Signup.title")} */}
-          {locale == "ar" ? "" : "Book a Meeting with Us"}
+          {locale == "ar" ? "احجز اجتماعًا معنا" : "Book a Meeting with Us"}
         </h2>
         <p className="text-center mb-4">
           {" "}
           {locale == "ar"
-            ? ""
+            ? "خطط لرحلة نجاحك مع بوكلي واكتشف كيف يمكنك زيادة مبيعاتك"
             : "Plan your successful journey with Bokli and discover how you can increase your sales"}
         </p>
 
@@ -130,21 +135,55 @@ export default function CreateDemo() {
           />
 
           <Input
-            label={locale == "ar" ? "" : "Your Business Name"}
-            // label={t("Auth.Signup.fullName")}
+            label={locale == "ar" ? "اسم نشاطك التجاري" : "Your Business Name"}
             icon={<FaBusinessTime />}
             register={register("businessName", { required: true })}
             error={errors.businessName && "Business Name is Required"}
             isRTL={isRTL}
           />
 
-          <Input
-            label={t("Auth.Signup.phone")}
-            icon={<FaPhoneAlt />}
-            register={register("phone", { required: true })}
-            error={errors.phone && "Phone Number is Required"}
-            isRTL={isRTL}
-          />
+          {/* Phone */}
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t("AccountCreation.phone")} *
+            </label>
+            <Controller
+              name="phone"
+              control={control}
+              rules={{ required: "Phone number is required" }}
+              render={({ field }) => (
+                <PhoneInputWithCountrySelect
+                  international
+                  defaultCountry="SA"
+                  countryCallingCodeEditable={false}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  className="
+        w-full
+
+        [&_input]:h-11
+        [&_input]:w-full
+        [&_input]:rounded-md
+        [&_input]:border
+        [&_input]:border-gray-300
+        dark:[&_input]:border-gray-600
+        [&_input]:bg-white
+        dark:[&_input]:bg-gray-800
+        [&_input]:px-3
+
+        [&_.PhoneInputCountry]:pointer-events-none
+        [&_.PhoneInputCountry]:opacity-70
+      "
+                />
+              )}
+            />
+            {errors.phone && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.phone.message}
+              </p>
+            )}
+          </div>
+
           {/* Button */}
           <button
             type="submit"
@@ -152,20 +191,25 @@ export default function CreateDemo() {
             className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium cursor-pointer"
           >
             {/* {isLoading ? t("Auth.Signup.loading") : t("Auth.Signup.signup")} */}
-            {locale == "ar" ? "" : "Book Demo"}
+            {locale == "ar" ? "احجز عرضًا تجريبيًا" : "Book Demo"}
           </button>
           {/* Footer */}
           <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
-            {/* {t("Auth.Signup.alreadyAccount")}{" "} */}
-            ⭐⭐⭐⭐⭐ 4.9/5 from 1000+ clients
-            <Link href="/user-login">
-              <span className="text-blue-600 hover:underline">
-                {/* {t("Auth.Signup.login")} */}
-              </span>
-            </Link>
+            ⭐⭐⭐⭐⭐{" "}
+            {locale == "ar"
+              ? "4.9/5 من أكثر من 1000 عميل"
+              : "4.9/5 from 1000+ clients"}
           </p>
         </form>
       </div>
+
+      <SuccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        userName={submittedData?.fullName || ""}
+        email={submittedData?.email || ""}
+        phone={submittedData?.phone || ""}
+      />
     </div>
   );
 }

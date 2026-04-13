@@ -225,7 +225,7 @@ export default function StaffPage() {
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                   {locale === "ar" ? "الخدمة المخصصة" : "Assigned Service:"}
                 </p>
-                {staff.service_names.map((service: any, index: any) => (
+                {staff?.service_names?.map((service: any, index: any) => (
                   <div key={index}>
                     {service ? (
                       <button

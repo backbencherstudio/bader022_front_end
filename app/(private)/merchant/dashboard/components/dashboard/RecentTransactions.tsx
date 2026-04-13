@@ -109,7 +109,10 @@ export function RecentTransactionsCard({ rows }: { rows: TransactionRow[] }) {
               />
             </div>
 
-            <Button className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white cursor-pointer">
+            <Button
+              onClick={() => setSearch("")}
+              className="h-12 rounded-xl dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 text-white cursor-pointer"
+            >
               {locale === "ar" ? "عرض الكل" : "View All"}
             </Button>
           </div>

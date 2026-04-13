@@ -465,7 +465,7 @@ export default function MerchantManagement() {
               {/* BUTTON */}
               <Button
                 onClick={() => setSearch("")}
-                className="h-10 bg-black text-white w-full sm:w-auto"
+                className="h-10 bg-black text-white w-full sm:w-auto cursor-pointer"
               >
                 {t("Admin.Merchants.viewAll")}
               </Button>

@@ -22,6 +22,34 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
 
+//   login: builder.mutation({
+//   query: (body) => ({
+//     url: "/login",
+//     method: "POST",
+//     body,
+//   }),
+//   //  success response
+//   transformResponse: (response: any) => {
+//     return {
+//       success: response?.success,
+//       token: response?.token,
+//       data: response?.data,
+//     };
+//   },
+//   //  error response
+//   transformErrorResponse: (error: any) => {
+//     return {
+//       status: error?.status,
+//       message:
+//         error?.data?.message ||
+//         error?.data?.error ||
+//         "Something went wrong",
+//     };
+//   },
+//    invalidatesTags: ["Auth"],
+// }),
+
+
   login: builder.mutation({
   query: (body) => ({
     url: "/login",
@@ -32,8 +60,9 @@ export const authApi = baseApi.injectEndpoints({
   transformResponse: (response: any) => {
     return {
       success: response?.success,
-      token: response?.token,
-      data: response?.data,
+      otp_required: response?.otp_required,
+      email: response?.email,
+      message: response?.message,
     };
   },
   //  error response
@@ -48,6 +77,17 @@ export const authApi = baseApi.injectEndpoints({
   },
    invalidatesTags: ["Auth"],
 }),
+
+    //Login  Verify 
+    loginVerify: builder.mutation({
+      query: (body) => ({
+        url: "/login-otp",
+        method: "POST",
+        body,
+      }),
+       invalidatesTags: ["Auth"],
+    }),
+
 
     //  Send OTP
     sendOtp: builder.mutation({
@@ -108,6 +148,7 @@ export const {
   useRegisterMutation,
   useBookDemoMutation,
   useLoginMutation,
+  useLoginVerifyMutation,
   useSendOtpMutation,
   useVerifyOtpMutation,
   useForgotPasswordMutation,

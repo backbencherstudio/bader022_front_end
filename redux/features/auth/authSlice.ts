@@ -15,13 +15,16 @@ interface User {
 
 interface AuthState {
   token: string | null;
+  remember_token: string | null;
   user: User | null;
+
 }
 
 const getInitialState = (): AuthState => {
   if (typeof window !== "undefined") {
     return {
       token: localStorage.getItem("token"),
+      remember_token: localStorage.getItem("remember_token"),
       user: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user") as string)
         : null,
@@ -30,6 +33,7 @@ const getInitialState = (): AuthState => {
 
   return {
     token: null,
+    remember_token: null,
     user: null,
   };
 };
@@ -42,13 +46,15 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ token: string; user: User }>,
+      action: PayloadAction<{ token: string; remember_token: string; user: User }>,
     ) => {
       state.token = action.payload.token;
+      state.remember_token = action.payload.remember_token;
       state.user = action.payload.user;
 
       if (typeof window !== "undefined") {
         localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("remember_token", action.payload.remember_token);
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       }
     },

@@ -1,6 +1,9 @@
 "use client";
 import { useI18n } from "@/components/provider/I18nProvider";
-import { useLoginVerifyMutation } from "@/redux/features/auth/authApi";
+import {
+  useLoginVerifyMutation,
+  useResendOtpMutation,
+} from "@/redux/features/auth/authApi";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
@@ -26,6 +29,7 @@ export default function Emailverification({ email }: EmailVerificationProps) {
   const isRTL = locale === "ar";
   const router = useRouter();
   const [loginVerify, { isLoading }] = useLoginVerifyMutation();
+  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const otpValues = watch("otp");
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +38,6 @@ export default function Emailverification({ email }: EmailVerificationProps) {
   const onSubmit = async () => {
     const otp = otpValues.join("");
     // const email = localStorage.getItem("resetEmail");
-
     const body = {
       email,
       otp,
@@ -42,24 +45,22 @@ export default function Emailverification({ email }: EmailVerificationProps) {
 
     try {
       const response = await loginVerify(body).unwrap();
-      console.log("OTP verified:", response);
-
+      //   console.log("OTP verified:", response);
       if (response.success) {
         setError(null);
         dispatch(
           setCredentials({
             token: response?.token,
+            remember_token: response.data.remember_token,
             user: {
               ...response?.data?.user,
               role: response?.data?.user_type,
             },
           }),
         );
-
+        // localStorage.setItem("remember_token", response.data.remember_token);
         toast.success(t("Auth.Login.success"));
-
         const role = response.data.user_type;
-
         setTimeout(() => {
           if (role === "Admin") {
             router.replace("/admin/dashboard");
@@ -95,6 +96,21 @@ export default function Emailverification({ email }: EmailVerificationProps) {
   ) => {
     if (e.key === "Backspace" && !otpValues[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
+    }
+  };
+
+  const handleResendOtp = async () => {
+    try {
+      // Assuming your backend expects the email to resend the OTP
+      const response = await resendOtp({ email }).unwrap();
+
+      if (response.success) {
+        toast.success("OTP has been resent successfully!");
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Failed to resend OTP. Please try again.",
+      );
     }
   };
   return (
@@ -159,13 +175,11 @@ export default function Emailverification({ email }: EmailVerificationProps) {
           {/* Resend */}
           <button
             type="button"
-            className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer"
-            onClick={() => {
-              // Trigger OTP resend logic here
-              alert("Resend OTP functionality is not yet implemented.");
-            }}
+            className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer disabled:opacity-50"
+            onClick={handleResendOtp}
+            disabled={isResending}
           >
-            Resend OTP
+            {isResending ? "Resending..." : "Resend OTP"}
           </button>
         </form>
       </div>

@@ -51,33 +51,22 @@ export const authApi = baseApi.injectEndpoints({
 
 
   login: builder.mutation({
-  query: (body) => ({
-    url: "/login",
-    method: "POST",
-    body,
-  }),
-  //  success response
-  transformResponse: (response: any) => {
-    return {
-      success: response?.success,
-      otp_required: response?.otp_required,
-      email: response?.email,
-      message: response?.message,
-    };
-  },
-  //  error response
-  transformErrorResponse: (error: any) => {
-    return {
-      status: error?.status,
-      message:
-        error?.data?.message ||
-        error?.data?.error ||
-        "Something went wrong",
-    };
-  },
-   invalidatesTags: ["Auth"],
-}),
+      query: (body) => ({
+        url: "/login",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
 
+  resendOtp: builder.mutation({
+    query: (body) => ({
+      url: "/reset-otp",
+      method: "POST",
+      body,
+    }),
+    invalidatesTags: ["Auth"],
+  }),
     //Login  Verify 
     loginVerify: builder.mutation({
       query: (body) => ({
@@ -148,6 +137,7 @@ export const {
   useRegisterMutation,
   useBookDemoMutation,
   useLoginMutation,
+  useResendOtpMutation,
   useLoginVerifyMutation,
   useSendOtpMutation,
   useVerifyOtpMutation,

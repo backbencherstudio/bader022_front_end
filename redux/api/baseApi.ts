@@ -26,13 +26,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../store";
 
+
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    const remember_token = (getState() as RootState).auth.remember_token;
 
+    console.log(token);
+    
+    console.log(remember_token);
+    
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
+    }
+    else if (remember_token) {
+      headers.set("remember_token", remember_token);
     }
 
     return headers;

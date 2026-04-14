@@ -57,64 +57,43 @@ export default function UserLoginPage() {
     }
   }, []);
 
-  // const onSubmit = async (data: FormValues) => {
-  //   try {
-  //     const response = await login({
-  //       email: data.email,
-  //       password: data.password,
-  //     }).unwrap();
-
-  //     if (response.success) {
-  //       setError(null);
-
-  //       dispatch(
-  //         setCredentials({
-  //           token: response?.token,
-  //           user: {
-  //             ...response?.data?.user,
-  //             role: response?.data?.user_type,
-  //           },
-  //         }),
-  //       );
-
-  //       toast.success(t("Auth.Login.success"));
-
-  //       const role = response.data.user_type;
-
-  //       setTimeout(() => {
-  //         if (role === "Admin") {
-  //           router.replace("/admin/dashboard");
-  //         } else if (role === "Merchant") {
-  //           router.replace("/merchant/dashboard");
-  //         } else {
-  //           router.replace("/user/dashboard");
-  //         }
-  //       }, 100);
-  //     }
-  //   } catch (error: any) {
-  //     const message = error?.message || t("Auth.Login.invalid");
-  //     if (error?.status === 403) {
-  //       toast.error(message);
-  //     } else {
-  //       setError(message);
-  //     }
-  //   }
-  // };
-
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login({
         email: data.email,
         password: data.password,
       }).unwrap();
-      console.log("response========", response);
-      if (response.success) {
+      // console.log("response========", response);
+      if (response.otp_required) {
         setError(null);
         setIsEmail(response.email);
         setIsEmailVerification(true);
         toast.success(
           locale == "ar" ? "" : "OTP sent to your email successfully",
         );
+      } else {
+        setError(null);
+        dispatch(
+          setCredentials({
+            token: response?.token,
+            remember_token: response.data.remember_token,
+            user: {
+              ...response?.data?.user,
+              role: response?.data?.user_type,
+            },
+          }),
+        );
+        toast.success(t("Auth.Login.success"));
+        const role = response.data.user_type;
+        setTimeout(() => {
+          if (role === "Admin") {
+            router.replace("/admin/dashboard");
+          } else if (role === "Merchant") {
+            router.replace("/merchant/dashboard");
+          } else {
+            router.replace("/user/dashboard");
+          }
+        }, 100);
       }
     } catch (error: any) {
       const message = error?.message || t("Auth.Login.invalid");

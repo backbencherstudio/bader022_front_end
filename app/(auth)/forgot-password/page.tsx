@@ -45,8 +45,19 @@ export default function ForgotPasswordPage() {
         router.push("/otp");
       }
     } catch (err: any) {
-      setError(err?.data?.message || "Failed to send OTP. Please try again.");
-      toast.error(error || "Failed to send OTP. Please try again.");
+      // console.log(err);
+      const errors = err?.data?.errors;
+      if (errors) {
+        Object.values(errors).forEach((msgs: any) => {
+          toast.error(msgs?.[0]);
+        });
+        return;
+      }
+      toast.error(
+        err?.data?.message || "Failed to send OTP. Please try again.",
+      );
+      // setError(err?.data?.message || "Failed to send OTP. Please try again.");
+      // toast.error(error || "Failed to send OTP. Please try again.");
     }
   };
 
@@ -80,7 +91,7 @@ export default function ForgotPasswordPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder=""
                 className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
                 {...register("email", {
                   required: "Email is required",

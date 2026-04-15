@@ -185,7 +185,9 @@ export function RecentTransactionsCard({
               {rows.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-10">
-                    No transactions.
+                    {locale == "ar"
+                      ? "لا يوجد سجل مدفوعات"
+                      : "No Payment History"}
                   </TableCell>
                 </TableRow>
               )}

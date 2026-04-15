@@ -10,6 +10,7 @@ import Step0 from "../../components/bookings/Step0";
 import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
 import BookingSuccessPage from "@/app/booking-success/page";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type Service = {
   id: number;
@@ -67,6 +68,9 @@ function Stepper({
 }
 
 export default function BookingCheckoutStepper() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+
   const router = useRouter(); // Use Next.js router
   const steps = [
     "Select Services",
@@ -128,11 +132,18 @@ export default function BookingCheckoutStepper() {
 
       {/* Title */}
       <h2 className="mt-8 text-xl sm:text-2xl font-semibold">
-        {currentStep === 0 && "Select Services"}
-        {currentStep === 1 && "Select Date Time & Staff"}
-        {currentStep === 2 && "Payment Information"}
-        {currentStep === 4 && "Booking Confirmed!"}
-        {currentStep === 3 && "Card Information"}
+        {currentStep === 0 &&
+          (locale == "ar" ? "اختر الخدمات" : "Select Services")}
+        {currentStep === 1 &&
+          (locale == "ar"
+            ? "اختر التاريخ والوقت والموظف"
+            : "Select Date Time & Staff")}
+        {currentStep === 2 &&
+          (locale == "ar" ? "معلومات الدفع" : "Payment Information")}
+        {currentStep === 4 &&
+          (locale == "ar" ? "تم تأكيد الحجز!" : "Booking Confirmed!")}
+        {currentStep === 3 &&
+          (locale == "ar" ? "معلومات البطاقة" : "Card Information")}
       </h2>
 
       {/* Step Content */}

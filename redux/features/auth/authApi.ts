@@ -77,10 +77,19 @@ export const authApi = baseApi.injectEndpoints({
        invalidatesTags: ["Auth"],
     }),
 
-    // Register Verify
+    // Register User Verify
     registerVerify:builder.mutation({
       query: (body) => ({
         url: "/verify-register-otp",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+    // Register Merchant Verify
+    registerMerchantVerify:builder.mutation({
+      query: (body) => ({
+        url: "/marchant-verify-otp",
         method: "POST",
         body,
       }),
@@ -149,6 +158,7 @@ export const {
   useResendOtpMutation,
   useLoginVerifyMutation,
   useRegisterVerifyMutation,
+  useRegisterMerchantVerifyMutation,
   useSendOtpMutation,
   useVerifyOtpMutation,
   useForgotPasswordMutation,

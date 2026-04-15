@@ -1,3 +1,4 @@
+import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { getImageUrl } from "@/helper/formatImage";
 import { FileClock } from "lucide-react";
@@ -17,11 +18,13 @@ export default function Step0({
   onNext,
 }: Step0Props) {
   // console.log(selectedService);
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   return (
     <div>
       <div className="flex items-center gap-4 mb-4">
-        <p>Filter by:</p>
+        <p> {locale == "ar" ? "تصفية حسب:" : "Filter by:"}</p>
         <select
           className="border p-1 rounded-md px-2 bg-white text-black dark:bg-gray-800 dark:text-white"
           value={selectedService?.name || ""}
@@ -95,7 +98,7 @@ export default function Step0({
                   }}
                   className="cursor-pointer py-5 bg-gray-400 hover:bg-black text-white"
                 >
-                  Book Now
+                  {locale == "ar" ? "احجز الآن" : "Book Now"}
                 </Button>
               </div>
             </div>

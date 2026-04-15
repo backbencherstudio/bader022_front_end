@@ -175,7 +175,10 @@ export default function BookingHistory() {
               />
             </div>
             <div className="flex justify-center items-center">
-              <button className="bg-black text-white px-2 py-1 rounded-sm ">
+              <button
+                onClick={() => setSearchTerm("")}
+                className="bg-black text-white px-2 py-1 rounded-sm cursor-pointer"
+              >
                 {locale === "ar" ? "عرض الكل" : "View All"}
               </button>
             </div>
@@ -269,7 +272,7 @@ export default function BookingHistory() {
                       variant="outline"
                       onClick={() => setSelectedBooking(r)}
                     >
-                      View Details
+                      {locale == "ar" ? "عرض التفاصيل" : "View Details"}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -281,7 +284,9 @@ export default function BookingHistory() {
                     colSpan={7}
                     className="py-10 text-center text-muted-foreground"
                   >
-                    No transactions.
+                    {locale == "ar"
+                      ? "لا يوجد سجل حجوزات"
+                      : "No Booking History"}
                   </TableCell>
                 </TableRow>
               )}

@@ -97,9 +97,11 @@ export default function LoginPage() {
         }, 100);
       }
     } catch (error: any) {
-      const message = error?.message || t("Auth.Login.invalid");
+      // console.log("error=====", error);
+      const message = error?.data.message || t("Auth.Login.invalid");
       if (error?.status === 403) {
         toast.error(message);
+        setIsSubscription(true);
       } else {
         setError(message);
       }

@@ -38,13 +38,6 @@ export default function Subscription() {
 
   const selectedPlanId = watch("planId");
 
-  // useEffect(() => {
-  //   const auth = authorize(["Merchant", "Admin", "User"]);
-  //   if (auth.authorized) {
-  //     router.push("/");
-  //   }
-  // }, []);
-
   useEffect(() => {
     const plan = plans.find((p: any) => p.id === Number(selectedPlanId));
     setSelectedPlan(plan);
@@ -101,7 +94,7 @@ export default function Subscription() {
               <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
-                placeholder="john@example.com"
+                placeholder=""
                 {...register("email", {
                   required: "Email is required",
                 })}

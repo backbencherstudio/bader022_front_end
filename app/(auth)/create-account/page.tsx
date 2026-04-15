@@ -21,6 +21,7 @@ import { authorize } from "@/lib/auth";
 import { useGetPaymentStatusQuery } from "@/redux/features/payment/paymentApi";
 import { toast } from "sonner";
 import { useCreateAccount } from "./context/CreateAccount";
+import RegisterMerchantEmailVerification from "../_components/RegisterMerchantEmailVerification";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -46,6 +47,8 @@ export default function CreateAccountPage() {
   const { step, setStep } = useCreateAccount();
   const [domain, setDomain] = useState("");
   const router = useRouter();
+  const [isEmailVerification, setIsEmailVerification] = useState(false);
+  const [isEmail, setIsEmail] = useState("");
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
     if (auth.authorized) {
@@ -118,14 +121,22 @@ export default function CreateAccountPage() {
     // setDomain(body.name);
     try {
       const response = await registerMerchant(body).unwrap();
-      // console.log(response);
-      if (response?.success) {
-        if (response?.tap_payment_url) {
-          router.push(response.tap_payment_url);
-        } else if (response?.token) {
-          setStep(4);
-        }
+      console.log(response);
+      if (response.success) {
+        setIsEmail(body.email);
+        setIsEmailVerification(true);
+        toast.success(
+          locale == "ar" ? "" : "OTP sent to your email successfully",
+        );
       }
+
+      // if (response?.success) {
+      //   if (response?.tap_payment_url) {
+      //     router.push(response.tap_payment_url);
+      //   } else if (response?.token) {
+      //     setStep(4);
+      //   }
+      // }
     } catch (err: any) {
       // console.log(err);
       const errors = err?.data?.errors;
@@ -187,123 +198,137 @@ export default function CreateAccountPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-md shadow">
-      {/* Header Section */}
-      {step != 5 && (
-        <div>
-          {step <= 3 && (
-            <div className="flex items-center justify-between pb-4">
-              <div className="flex flex-col gap-2">
-                <h1 className="font-inter text-2xl font-medium text-black dark:text-white">
-                  {step === 1 && t("createAccount.step1Title")}
-                  {step === 2 && t("createAccount.step2Title")}
-                  {step === 3 && t("createAccount.step3Title")}
-                </h1>
-                <p className="font-inter text-base text-[#777980] dark:text-[#a1a4ad]">
-                  {step === 1 &&
-                    t("createAccount.step1Desc", { step, total: 3 })}
+    <div>
+      {isEmailVerification == false ? (
+        <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-md shadow">
+          {/* Header Section */}
+          {step != 5 && (
+            <div>
+              {step <= 3 && (
+                <div className="flex items-center justify-between pb-4">
+                  <div className="flex flex-col gap-2">
+                    <h1 className="font-inter text-2xl font-medium text-black dark:text-white">
+                      {step === 1 && t("createAccount.step1Title")}
+                      {step === 2 && t("createAccount.step2Title")}
+                      {step === 3 && t("createAccount.step3Title")}
+                    </h1>
+                    <p className="font-inter text-base text-[#777980] dark:text-[#a1a4ad]">
+                      {step === 1 &&
+                        t("createAccount.step1Desc", { step, total: 3 })}
 
-                  {step === 2 &&
-                    t("createAccount.step2Desc", { step, total: 3 })}
+                      {step === 2 &&
+                        t("createAccount.step2Desc", { step, total: 3 })}
 
-                  {step === 3 &&
-                    t("createAccount.step3Desc", { step, total: 3 })}
-                </p>
-              </div>
+                      {step === 3 &&
+                        t("createAccount.step3Desc", { step, total: 3 })}
+                    </p>
+                  </div>
 
-              {/* Language Dropdown for Step 1 */}
-              <div className="flex justify-end mb-4">
-                {step === 1 && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
-                        <Image
-                          src={LANGS[locale].flag}
-                          alt={LANGS[locale].label}
-                          width={22}
-                          height={22}
-                        />
-                        <span className="uppercase">{locale}</span>
-                        <ChevronDown size={14} />
-                      </button>
-                    </DropdownMenuTrigger>
-
-                    <DropdownMenuContent
-                      align="end"
-                      className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
-                    >
-                      {(Object.keys(LANGS) as Array<keyof typeof LANGS>).map(
-                        (key) => (
-                          <DropdownMenuItem
-                            key={key}
-                            onClick={() => setLocale(key)}
-                            className="flex cursor-pointer items-center gap-2 py-1"
-                          >
+                  {/* Language Dropdown for Step 1 */}
+                  <div className="flex justify-end mb-4">
+                    {step === 1 && (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 hover:dark:bg-blue-600 dark:text-white">
                             <Image
-                              src={LANGS[key].flag}
-                              alt={LANGS[key].label}
+                              src={LANGS[locale].flag}
+                              alt={LANGS[locale].label}
                               width={22}
                               height={22}
                             />
-                            <span>{LANGS[key].label}</span>
-                          </DropdownMenuItem>
-                        ),
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-              </div>
-            </div>
-          )}
-          {/* Progress Bar */}
-          <div className="flex items-center justify-between mb-10">
-            {steps.map((s, i) => {
-              const isActive = step === i + 1;
-              const isCompleted = step > i + 1;
+                            <span className="uppercase">{locale}</span>
+                            <ChevronDown size={14} />
+                          </button>
+                        </DropdownMenuTrigger>
 
-              return (
-                <div key={s.key} className="flex-1 relative flex items-center">
-                  <div
-                    className={`h-10 w-10 flex items-center justify-center rounded-full text-sm font-medium
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-40 rounded-md border bg-gray-100 p-2 shadow-2xl dark:bg-blue-600 dark:text-white  z-10"
+                        >
+                          {(
+                            Object.keys(LANGS) as Array<keyof typeof LANGS>
+                          ).map((key) => (
+                            <DropdownMenuItem
+                              key={key}
+                              onClick={() => setLocale(key)}
+                              className="flex cursor-pointer items-center gap-2 py-1"
+                            >
+                              <Image
+                                src={LANGS[key].flag}
+                                alt={LANGS[key].label}
+                                width={22}
+                                height={22}
+                              />
+                              <span>{LANGS[key].label}</span>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* Progress Bar */}
+              <div className="flex items-center justify-between mb-10">
+                {steps.map((s, i) => {
+                  const isActive = step === i + 1;
+                  const isCompleted = step > i + 1;
+
+                  return (
+                    <div
+                      key={s.key}
+                      className="flex-1 relative flex items-center"
+                    >
+                      <div
+                        className={`h-10 w-10 flex items-center justify-center rounded-full text-sm font-medium
                   ${
                     isCompleted || isActive
                       ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white"
                       : "border border-gray-300 text-gray-400 bg-white dark:bg-gray-900 dark:border-gray-600"
                   }`}
-                  >
-                    {isCompleted ? "✓" : i + 1}
-                  </div>
+                      >
+                        {isCompleted ? "✓" : i + 1}
+                      </div>
 
-                  {i !== steps.length - 1 && (
-                    <div
-                      className={`flex-1 h-2.5 ${
-                        isCompleted
-                          ? "bg-linear-to-r from-purple-500 to-indigo-500"
-                          : "bg-gray-200 dark:bg-gray-700"
-                      }`}
-                    />
-                  )}
+                      {i !== steps.length - 1 && (
+                        <div
+                          className={`flex-1 h-2.5 ${
+                            isCompleted
+                              ? "bg-linear-to-r from-purple-500 to-indigo-500"
+                              : "bg-gray-200 dark:bg-gray-700"
+                          }`}
+                        />
+                      )}
 
-                  <span
-                    className={`absolute top-12 text-xs ${
-                      isActive || isCompleted
-                        ? "text-gray-900 dark:text-white"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {s.label}
-                  </span>
-                </div>
-              );
-            })}
+                      <span
+                        className={`absolute top-12 text-xs ${
+                          isActive || isCompleted
+                            ? "text-gray-900 dark:text-white"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        {s.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Step Content */}
+          <div className={isLoading ? "opacity-70 pointer-events-none" : ""}>
+            {renderStep()}
           </div>
         </div>
+      ) : (
+        <div>
+          <RegisterMerchantEmailVerification
+            email={isEmail}
+            setIsEmailVerification={setIsEmailVerification}
+          />
+        </div>
       )}
-
-      {/* Step Content */}
-      <div className={isLoading ? "opacity-70 pointer-events-none" : ""}>
-        {renderStep()}
-      </div>
     </div>
   );
 }

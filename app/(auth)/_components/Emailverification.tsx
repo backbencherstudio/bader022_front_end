@@ -173,14 +173,14 @@ export default function Emailverification({ email }: EmailVerificationProps) {
           </button>
 
           {/* Resend */}
-          <button
+          {/* <button
             type="button"
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer disabled:opacity-50"
             onClick={handleResendOtp}
             disabled={isResending}
           >
             {isResending ? "Resending..." : "Resend OTP"}
-          </button>
+          </button> */}
         </form>
       </div>
     </div>

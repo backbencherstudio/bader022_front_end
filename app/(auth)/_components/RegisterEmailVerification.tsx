@@ -1,9 +1,11 @@
 "use client";
-
+import { useI18n } from "@/components/provider/I18nProvider";
 import {
+  useRegisterVerifyMutation,
   useResendOtpMutation,
-  useVerifyOtpMutation,
 } from "@/redux/features/auth/authApi";
+import { setCredentials } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,31 +17,42 @@ type FormValues = {
   otp: string[];
 };
 
-export default function OTPPage() {
-  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
-  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
-  const router = useRouter();
+type EmailVerificationProps = {
+  email: string;
+};
+
+export default function RegisterEmailVerification({
+  email,
+}: EmailVerificationProps) {
   const { handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: { otp: ["", "", "", "", "", ""] },
   });
-
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
+  const router = useRouter();
+  const [registerVerify, { isLoading }] = useRegisterVerifyMutation();
+  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const otpValues = watch("otp");
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
     const otp = otpValues.join("");
-    const email = localStorage.getItem("resetEmail");
-
+    // const email = localStorage.getItem("resetEmail");
     const body = {
       email,
       otp,
     };
 
     try {
-      const response = await verifyOtp(body).unwrap();
-      // console.log("OTP verified:", response);
-      router.push("/reset-password");
+      const response = await registerVerify(body).unwrap();
+      //   console.log("OTP verified:", response);
+      if (response.success) {
+        setError(null);
+        toast.success(locale == "ar" ? "" : "User Registered Successfully");
+        router.push("/user-login");
+      }
     } catch (error: any) {
       // console.error("Error verifying OTP:", error);
       if (error?.data?.message === "OTP expired") {
@@ -69,14 +82,12 @@ export default function OTPPage() {
   };
 
   const handleResendOtp = async () => {
-    const email = localStorage.getItem("resetEmail");
     try {
       // Assuming your backend expects the email to resend the OTP
       const response = await resendOtp({ email }).unwrap();
 
       if (response.success) {
         toast.success("OTP has been resent successfully!");
-        router.push("/reset-password");
       }
     } catch (error: any) {
       toast.error(
@@ -84,7 +95,6 @@ export default function OTPPage() {
       );
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
@@ -111,7 +121,6 @@ export default function OTPPage() {
         </p>
 
         {error && <div className="text-center text-red-500 mb-4">{error}</div>}
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
           <div className="flex justify-center gap-3">
@@ -146,14 +155,14 @@ export default function OTPPage() {
           </button>
 
           {/* Resend */}
-          <button
+          {/* <button
             type="button"
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer disabled:opacity-50"
             onClick={handleResendOtp}
             disabled={isResending}
           >
             {isResending ? "Resending..." : "Resend OTP"}
-          </button>
+          </button> */}
         </form>
       </div>
     </div>

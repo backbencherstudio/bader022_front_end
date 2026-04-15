@@ -77,6 +77,15 @@ export const authApi = baseApi.injectEndpoints({
        invalidatesTags: ["Auth"],
     }),
 
+    // Register Verify
+    registerVerify:builder.mutation({
+      query: (body) => ({
+        url: "/verify-register-otp",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
 
     //  Send OTP
     sendOtp: builder.mutation({
@@ -139,6 +148,7 @@ export const {
   useLoginMutation,
   useResendOtpMutation,
   useLoginVerifyMutation,
+  useRegisterVerifyMutation,
   useSendOtpMutation,
   useVerifyOtpMutation,
   useForgotPasswordMutation,

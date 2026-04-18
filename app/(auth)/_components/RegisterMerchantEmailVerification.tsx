@@ -55,7 +55,7 @@ export default function RegisterMerchantEmailVerification({
       // if (response.success) {
       //   setError(null);
       //   toast.success(locale == "ar" ? "" : "User Registered Successfully");
-      //   router.push("/user-login");
+      //   router.push("/login");
       // }
       if (response?.success) {
         if (response?.tap_payment_url) {

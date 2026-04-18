@@ -7,7 +7,7 @@ interface User {
   name: string;
   email: string;
   role: Role;
-  miniSiteAccess?: boolean;
+  miniSiteAccess: boolean;
   website_domain:string
   phone?:string
   image?: String;

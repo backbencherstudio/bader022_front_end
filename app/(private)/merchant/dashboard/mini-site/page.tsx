@@ -24,8 +24,6 @@ export default function page() {
   const isRTL = locale === "ar";
   const { user } = useAppSelector((state) => state.auth);
 
-  // console.log(user, "=================user");
-
   const {
     heroData,
     aboutData,
@@ -46,9 +44,10 @@ export default function page() {
   const [createGlobalSetting, { isLoading: isCreateGlobalSettingLoading }] =
     useCreateGlobalSettingMutation();
 
+  // console.log("=================user", user);
+
   const handleSubmit = async () => {
     // console.log(footerData?.showPoweredBy);
-
     try {
       const formData = new FormData();
 

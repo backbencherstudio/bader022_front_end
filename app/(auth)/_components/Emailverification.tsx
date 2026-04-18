@@ -55,6 +55,7 @@ export default function Emailverification({ email }: EmailVerificationProps) {
             user: {
               ...response?.data?.user,
               role: response?.data?.user_type,
+              miniSiteAccess: response?.data?.has_mini_site_menu,
             },
           }),
         );

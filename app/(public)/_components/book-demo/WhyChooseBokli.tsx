@@ -55,7 +55,7 @@ export default function WhyChooseBokli() {
       <div className="container mx-auto py-20 px-4">
         {/* ---------------- Heading (SCROLL BASED, FROM TOP) ---------------- */}
         <motion.div
-          className="flex flex-col items-center gap-5 py-10 text-center"
+          className="flex flex-col items-center gap-5  text-center"
           variants={titleVariant}
           initial="hidden"
           whileInView="visible"
@@ -64,10 +64,10 @@ export default function WhyChooseBokli() {
             amount: 0.6,
           }}
         >
-          <h2 className="text-2xl md:text-3xl text-black lg:text-5xl font-semibold">
+          <h2 className="text-2xl md:text-3xl text-black lg:text-3xl font-semibold">
             {t("WhyChooseBokli.title")}
           </h2>
-          <p className="w-11/12 md:w-9/12 lg:w-4/12 mx-auto text-[#4A4C56] py-4">
+          <p className=" text-center text-[#4A4C56] py-4">
             {t("WhyChooseBokli.subtitle")}
           </p>
         </motion.div>

@@ -85,7 +85,7 @@ export default function CreateDemo() {
   return (
     <div
       dir={isRTL ? "rtl" : "ltr"}
-      className="min-h-screen flex items-center justify-center px-4 flex-col gap-8 p-6 md:p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm"
+      className="min-h-screen flex items-center justify-center px-4 flex-col gap-8 p-6 md:p-8 text-black"
     >
       <div className="w-full max-w-md">
         <Link href={"/"}>
@@ -95,13 +95,13 @@ export default function CreateDemo() {
               alt="Company Logo"
               width={120}
               height={40}
-              className="dark:brightness-0 dark:invert"
+              className=""
             />
           </div>
         </Link>
 
         {/* Title */}
-        <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
+        <h2 className="text-xl font-semibold text-center py-4">
           {/* {t("Auth.Signup.title")} */}
           {locale == "ar" ? "احجز اجتماعًا معنا" : "Book a Meeting with Us"}
         </h2>
@@ -114,7 +114,7 @@ export default function CreateDemo() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4 bg-white dark:bg-gray-800 rounded-xl shadow-md p-8"
+          className="space-y-4 text-black p-8 bg-white border border-slate-100 shadow-sm rounded-xl transition-shadow hover:shadow-lg"
         >
           <Input
             label={t("Auth.Signup.fullName")}
@@ -143,7 +143,7 @@ export default function CreateDemo() {
 
           {/* Phone */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="mb-1 block text-sm font-medium">
               {t("AccountCreation.phone")} *
             </label>
             <Controller
@@ -165,9 +165,9 @@ export default function CreateDemo() {
         [&_input]:rounded-md
         [&_input]:border
         [&_input]:border-gray-300
-        dark:[&_input]:border-gray-600
+        dark:[&_input]:border-gray-300
         [&_input]:bg-white
-        dark:[&_input]:bg-gray-800
+        dark:[&_input]:bg-white
         [&_input]:px-3
 
         [&_.PhoneInputCountry]:pointer-events-none
@@ -187,7 +187,7 @@ export default function CreateDemo() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-md font-medium cursor-pointer"
+            className="w-full py-3 rounded-md font-medium cursor-pointer bg-white border border-slate-100 shadow-sm transition-shadow hover:shadow-lg"
           >
             {/* {isLoading ? t("Auth.Signup.loading") : t("Auth.Signup.signup")} */}
             {locale == "ar" ? "احجز عرضًا تجريبيًا" : "Book Demo"}
@@ -217,9 +217,7 @@ export default function CreateDemo() {
 function Input({ label, icon, register, type = "text", error, isRTL }: any) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-        {label} *
-      </label>
+      <label className="block text-sm font-medium mb-1">{label} *</label>
 
       <div className="relative">
         <span
@@ -233,7 +231,7 @@ function Input({ label, icon, register, type = "text", error, isRTL }: any) {
         <input
           type={type}
           {...register}
-          className={`w-full py-3 border rounded-md bg-white dark:bg-gray-700 ${
+          className={`w-full py-3 border rounded-md bg-white dark:bg-white ${
             isRTL ? "pr-10 text-right" : "pl-10"
           } ${error ? "border-red-500" : "border-gray-300"}`}
         />

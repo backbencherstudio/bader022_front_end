@@ -119,6 +119,9 @@ export default function CreateDemo() {
         >
           <Input
             label={t("Auth.Signup.fullName")}
+            placeholder={
+              locale === "ar" ? "أدخل الاسم الكامل" : "Enter Full Name"
+            }
             icon={<FaUser />}
             register={register("fullName", { required: true })}
             error={errors.fullName && "Full Name is Required"}
@@ -127,6 +130,9 @@ export default function CreateDemo() {
 
           <Input
             label={t("Auth.Signup.email")}
+            placeholder={
+              locale === "ar" ? "أدخل البريد الإلكتروني" : "Enter Email"
+            }
             icon={<FaEnvelope />}
             type="email"
             register={register("email", { required: true })}
@@ -135,7 +141,12 @@ export default function CreateDemo() {
           />
 
           <Input
-            label={locale == "ar" ? "اسم نشاطك التجاري" : "Your Business Name"}
+            label={locale == "ar" ? "اسم نشاطك التجاري" : "Business Name"}
+            placeholder={
+              locale === "ar"
+                ? "أدخل اسم النشاط التجاري"
+                : "Enter Business Name"
+            }
             icon={<FaBusinessTime />}
             register={register("businessName", { required: true })}
             error={errors.businessName && "Business Name is Required"}
@@ -145,7 +156,9 @@ export default function CreateDemo() {
           {/* Phone */}
           <div>
             <label className="mb-1 block text-sm font-medium">
-              {t("AccountCreation.phone")} *
+              {/* {t("AccountCreation.phone")}{" "} */}
+              {locale == "ar" ? "" : "Phone Number"}
+              <span className="text-red-600"> *</span>
             </label>
             <Controller
               name="phone"
@@ -195,7 +208,7 @@ export default function CreateDemo() {
                       ? "يجب الموافقة على الشروط والأحكام"
                       : "You must agree to Privacy Policy & Terms",
                 })}
-                className="mt-1 h-4 w-4 accent-blue-500 rounded border border-gray-300 bg-white checked:bg-blue-500 checked:border-blue-500"
+                className="mt-1 h-4 w-4 accent-blue-500"
               />
 
               <span className="text-sm text-gray-600 leading-6">
@@ -250,8 +263,13 @@ export default function CreateDemo() {
             disabled={isLoading}
             className="w-full py-3 rounded-md font-medium cursor-pointer bg-linear-to-r from-blue-500 to-indigo-500 text-white border border-slate-100 shadow-sm transition-shadow hover:shadow-lg"
           >
-            {/* {isLoading ? t("Auth.Signup.loading") : t("Auth.Signup.signup")} */}
-            {locale == "ar" ? "احجز عرضًا تجريبيًا" : "Book a Demo"}
+            {isLoading
+              ? locale == "ar"
+                ? "احجز عرضًا تجريبيًا..."
+                : "Book a Demo..."
+              : locale == "ar"
+                ? "احجز عرضًا تجريبيًا"
+                : "Book a Demo"}
           </button>
           {/* Footer */}
           <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
@@ -275,10 +293,20 @@ export default function CreateDemo() {
 }
 
 /* Reusable Input */
-function Input({ label, icon, register, type = "text", error, isRTL }: any) {
+function Input({
+  label,
+  icon,
+  register,
+  type = "text",
+  error,
+  isRTL,
+  placeholder,
+}: any) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1">{label} *</label>
+      <label className="block text-sm font-medium mb-1">
+        {label} <span className="text-red-600"> *</span>
+      </label>
 
       <div className="relative">
         <span
@@ -291,6 +319,7 @@ function Input({ label, icon, register, type = "text", error, isRTL }: any) {
 
         <input
           type={type}
+          placeholder={placeholder}
           {...register}
           className={`w-full py-3 border rounded-md bg-white dark:bg-white ${
             isRTL ? "pr-10 text-right" : "pl-10"

@@ -198,7 +198,7 @@ export default function BusinessSetting() {
                         type="checkbox"
                         checked={field.value}
                         onChange={field.onChange}
-                        disabled
+                        // disabled
                       />
                       {DAYS[index]}
                     </label>
@@ -212,8 +212,8 @@ export default function BusinessSetting() {
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
-                      // disabled={!item.enabled}
-                      disabled
+                      disabled={!item.enabled}
+                      // disabled
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -238,8 +238,8 @@ export default function BusinessSetting() {
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
-                      // disabled={!item.enabled}
-                      disabled
+                      disabled={!item.enabled}
+                      // disabled
                     >
                       <SelectTrigger>
                         <SelectValue />

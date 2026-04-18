@@ -50,10 +50,10 @@ export default function DashboardPage() {
     isLoading: isTransactionOverviewLoading,
     isError: isTransactionOverviewError,
   } = useMerchantTransactionOverviewQuery({});
+  // console.log("====================================");
+  // console.log({ dashboardOverview });
   // console.log('====================================');
-  // console.log({dashboardOverview});
-  // console.log('====================================');
-  // console.log('====================================');
+  // console.log("====================================");
   // console.log({ todayAppointmentData });
   // console.log('====================================');
 

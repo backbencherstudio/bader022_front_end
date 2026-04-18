@@ -110,7 +110,7 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
   const [page, setPage] = useState(1);
   const [serviceName, setServiceName] = useState("");
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
-  // console.log(data);
+  // console.log(selectedBooking);
   const mappedBookings: TransactionRow[] = data?.map((b: any) => ({
     bookingID: String(b.id),
     customerName: b.customer_name,
@@ -122,6 +122,7 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
     amountLabel: b.service?.price,
     dateLabel: b.date_time,
     status: b.status?.toLowerCase() as TxStatus,
+    duration: b?.service?.duration,
   }));
 
   // console.log(mappedBookings);
@@ -190,12 +191,14 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
             }}
             className="h-10  rounded-xl border border-gray-300 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-          <button className="text-white bg-black px-2 rounded-lg">
+          <button
+            onClick={() => setSearch("")}
+            className="text-white bg-black px-2 rounded-lg cursor-pointer"
+          >
             {locale === "ar" ? "عرض الكل" : "View all"}
           </button>
         </div>
       </CardHeader>
-
       <CardContent>
         <div className="overflow-hidden rounded-2xl border border-muted/40">
           <Table>

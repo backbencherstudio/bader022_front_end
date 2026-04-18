@@ -57,6 +57,7 @@ type Booking = {
   amount: string;
   booking_date: string;
   status: string;
+  duration: string | number;
 };
 
 type PaginationType = {
@@ -142,6 +143,8 @@ export default function BookingHistory() {
       b.status.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  // console.log(bookings);
+
   const mappedBookings: TransactionRow[] = filteredBookings.map((b) => ({
     bookingID: String(b.booking_id),
     customerName: b.customer,
@@ -149,6 +152,7 @@ export default function BookingHistory() {
     service: b.service_name,
     amountLabel: b.amount,
     dateLabel: b.booking_date,
+    duration: b?.duration,
     status: b.status.toLowerCase() as TxStatus,
   }));
 

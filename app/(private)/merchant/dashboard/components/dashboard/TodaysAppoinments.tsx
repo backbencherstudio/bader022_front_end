@@ -10,7 +10,7 @@ export type Appointment = {
 };
 
 function AppointmentRow({ item }: { item: Appointment }) {
-  // console.log(item);
+  // console.log("item==========", item);
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
 

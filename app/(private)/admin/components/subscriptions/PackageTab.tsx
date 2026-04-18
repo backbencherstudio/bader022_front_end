@@ -98,7 +98,7 @@ export default function PackageTab() {
             <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
               className="pl-8"
-              placeholder="Search anything"
+              placeholder="Search Anything"
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,

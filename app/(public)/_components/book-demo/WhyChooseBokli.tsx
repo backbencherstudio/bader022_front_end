@@ -92,7 +92,7 @@ export default function WhyChooseBokli() {
               className="bg-white border border-slate-100 shadow-sm rounded-xl p-6 space-y-4 transition-shadow hover:shadow-lg"
             >
               {/* Icon */}
-              <div className="flex items-center justify-center h-24 w-24 rounded-full bg-gray-100 mx-auto">
+              <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 mx-auto">
                 <Image
                   src={item.icon}
                   alt={item.title}
@@ -102,11 +102,11 @@ export default function WhyChooseBokli() {
                 />
               </div>
 
-              <h3 className="text-xl font-semibold pt-4 text-center text-black">
+              <h3 className="font-semibold pt-4 text-center text-black">
                 {item.title}
               </h3>
 
-              <p className="text-gray-600 leading-relaxed text-center">
+              <p className="text-gray-600 text-sm leading-relaxed text-center">
                 {item.description}
               </p>
             </motion.div>

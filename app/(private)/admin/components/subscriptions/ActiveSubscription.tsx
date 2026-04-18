@@ -122,6 +122,8 @@ export default function Packages() {
     plan_type: "",
   });
 
+  console.log(filters);
+
   const [page, setPage] = useState(1);
   const pageSize = 10; // You can adjust this value
 
@@ -188,11 +190,11 @@ export default function Packages() {
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   className="pl-8"
-                  placeholder="Search anything"
+                  placeholder="Search by Package"
                   onChange={(e) =>
                     setFilters((prev) => ({
                       ...prev,
-                      search: e.target.value,
+                      filters: e.target.value,
                     }))
                   }
                 />

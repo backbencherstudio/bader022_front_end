@@ -469,7 +469,7 @@
   },
   "createAccount": {
     "step1Title": "Create your Bokli Business Account",
-    "step2Title": "Business Info",
+    "step2Title": "Business Details",
     "step3Title": "Choose your plan",
 
     "step1Desc": "Step {{step}} of {{total}} -  Account Details",

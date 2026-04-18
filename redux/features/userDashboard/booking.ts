@@ -19,6 +19,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           service_name,
         },
       }),
+      providesTags: ["UserBooking"],
     }),
 
     // booking services
@@ -30,6 +31,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           service_name,
         },
       }),
+      providesTags: ["UserBooking"],
     }),
 
     // select step 2 time and date
@@ -42,6 +44,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           date,
         },
       }),
+      providesTags: ["UserBooking"],
     }),
 
     // select staff
@@ -55,6 +58,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           time,
         },
       }),
+      providesTags: ["UserBooking"],
     }),
 
     // payment information
@@ -64,6 +68,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+       invalidatesTags: ["Bookings"],
     }),
 
     // booking successful

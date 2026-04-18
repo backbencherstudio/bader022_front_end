@@ -29,6 +29,7 @@ type FormValues = {
   email: string;
   phone: string;
   businessName: string;
+  agree: boolean;
 };
 
 export default function CreateDemo() {
@@ -101,7 +102,7 @@ export default function CreateDemo() {
         </Link>
 
         {/* Title */}
-        <h2 className="text-xl font-semibold text-center py-4">
+        <h2 className="text-4xl font-semibold text-center py-4">
           {/* {t("Auth.Signup.title")} */}
           {locale == "ar" ? "احجز اجتماعًا معنا" : "Book a Meeting with Us"}
         </h2>
@@ -183,14 +184,74 @@ export default function CreateDemo() {
             )}
           </div>
 
+          {/* Privacy Policy & Terms */}
+          <div>
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                {...register("agree", {
+                  required:
+                    locale === "ar"
+                      ? "يجب الموافقة على الشروط والأحكام"
+                      : "You must agree to Privacy Policy & Terms",
+                })}
+                className="mt-1 h-4 w-4 accent-blue-500 rounded border border-gray-300 bg-white checked:bg-blue-500 checked:border-blue-500"
+              />
+
+              <span className="text-sm text-gray-600 leading-6">
+                {locale === "ar" ? (
+                  <>
+                    أوافق على{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="underline font-medium"
+                    >
+                      سياسة الخصوصية
+                    </Link>{" "}
+                    و{" "}
+                    <Link
+                      href="/terms-condition"
+                      className="underline font-medium"
+                    >
+                      الشروط والأحكام
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    I agree to the{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="underline font-medium text-blue-500"
+                    >
+                      Privacy Policy
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                      href="/terms"
+                      className="underline font-medium text-blue-500"
+                    >
+                      Terms & Conditions
+                    </Link>
+                  </>
+                )}
+              </span>
+            </label>
+
+            {errors.agree && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.agree.message}
+              </p>
+            )}
+          </div>
+
           {/* Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-md font-medium cursor-pointer bg-white border border-slate-100 shadow-sm transition-shadow hover:shadow-lg"
+            className="w-full py-3 rounded-md font-medium cursor-pointer bg-linear-to-r from-blue-500 to-indigo-500 text-white border border-slate-100 shadow-sm transition-shadow hover:shadow-lg"
           >
             {/* {isLoading ? t("Auth.Signup.loading") : t("Auth.Signup.signup")} */}
-            {locale == "ar" ? "احجز عرضًا تجريبيًا" : "Book Demo"}
+            {locale == "ar" ? "احجز عرضًا تجريبيًا" : "Book a Demo"}
           </button>
           {/* Footer */}
           <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">

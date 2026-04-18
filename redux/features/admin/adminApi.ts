@@ -141,14 +141,11 @@ export const adminApi = baseApi.injectEndpoints({
       invalidatesTags: ["Subscription"],
     }),
 
-    // get subscription plan======qqqqqqqqqqqq
+    // get subscription plan
     getSubscriptionsPlan: builder.query({
       query: ({ search = "" }) => ({
         url: `/admin/plan/index?name=${search}`,
         method: "GET",
-        // params: {
-        //   search,
-        // },
       }),
       providesTags: ["Plan"],
     }),

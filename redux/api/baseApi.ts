@@ -77,6 +77,7 @@ export const baseApi = createApi({
     "Plan",
     "Subscription",
     "information",
+    "UserBooking",
     "Tapkey",
     "merchant",
     "Merchants",

@@ -19,7 +19,7 @@ export function BookingDetailsModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  // console.log(booking);
+  console.log(booking);
 
   if (!booking) return null;
 
@@ -81,9 +81,7 @@ export function BookingDetailsModal({
 
             <div className="flex justify-between">
               <span className="font-medium text-gray-700">Duration:</span>
-              <span className="text-gray-900">
-                {booking.service?.duration} min
-              </span>
+              <span className="text-gray-900">{booking?.duration} min</span>
             </div>
 
             <div className="flex justify-between">

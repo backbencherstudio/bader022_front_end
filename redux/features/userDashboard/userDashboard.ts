@@ -9,6 +9,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/dashboard/activity",
         method: "GET",
       }),
+      providesTags: ["UserBooking"],
     }),
 
     // payment history
@@ -22,6 +23,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           page,
         },
       }),
+      providesTags: ["UserBooking"],
     }),
 
     
@@ -34,6 +36,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "GET",
         responseHandler: (response:any) => response.blob(), 
       }),
+      providesTags: ["UserBooking"],
 
     }),
 
@@ -49,14 +52,16 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "GET",
         params: { page, service_name, status, search, data_filter },
       }),
+      providesTags: ["UserBooking"],
     }),
 
-    //single bokk details
+    //single booking details
     getSingleBooking: builder.query({
       query: (id) => ({
         url: `/admin/dashboard/show/${id}`,
         method: "GET",
       }),
+      providesTags: ["UserBooking"],
     }),
     //upcomming
     Upcomming: builder.query({
@@ -64,7 +69,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: "/admin/dashboard/upcoming",
         method: "GET",
       }),
-      providesTags: ["Reschedule"]
+      providesTags: ["UserBooking"]
     }),
 
     //orders details
@@ -73,7 +78,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: `/admin/dashboard/view-order-details/${booking_id}`,
         method: "GET",
       }),
-      providesTags: ["Reschedule"]
+      providesTags: ["UserBooking"]
     }),
 
     //resedule appointment
@@ -86,7 +91,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           service_id,
           date,
         },
-        providesTags: ["Reschedule"],
+        providesTags: ["UserBooking"],
       }),
     }),
 
@@ -99,7 +104,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           service_id,
           date,
         },
-        providesTags: ["Reschedule"],
+        providesTags: ["UserBooking"],
       }),
     }),
 
@@ -112,7 +117,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           date,
           time,
         },
-        providesTags: ["Reschedule"],
+        providesTags: ["UserBooking"],
       }),
     }),
 
@@ -126,7 +131,7 @@ export const dashboardApi = baseApi.injectEndpoints({
           time,
           staff_id,
         },
-        invalidatesTags: ["Reschedule"],
+        invalidatesTags: ["UserBooking"],
       }),
     }),
     //cancel appointment
@@ -135,7 +140,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: `/admin/dashboard/cancel-preview/${booking_id}`,
         method: "GET",
       }),
-      providesTags: ["Reschedule"],
+      providesTags: ["UserBooking"],
     }),
 
     //confirm cancel appointment
@@ -144,7 +149,7 @@ export const dashboardApi = baseApi.injectEndpoints({
         url: `/admin/dashboard/cancel-booking/${booking_id}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["Reschedule"],
+      invalidatesTags: ["UserBooking"],
     }),
   }),
 });

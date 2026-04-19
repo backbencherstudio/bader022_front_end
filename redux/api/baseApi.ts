@@ -34,14 +34,14 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth.token;
     const remember_token = (getState() as RootState).auth.remember_token;
 
-    // console.log(token);
-    // console.log(remember_token);
+    console.log(token);
+    console.log(remember_token);
     
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
     else if (remember_token) {
-      headers.set("remember_token", remember_token);
+      headers.set("Remember-Token", remember_token);
     }
 
     return headers;

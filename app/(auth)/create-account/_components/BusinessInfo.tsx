@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { FaPaw } from "react-icons/fa";
+import Link from "next/link";
 
 type Step1Data = {
   business_name: string;
@@ -26,6 +27,7 @@ type Step1Data = {
   business_category: string;
   number_of_branches: "1" | "3" | "6";
   error?: string;
+  agree: boolean;
 };
 
 interface Step1Props {
@@ -89,7 +91,8 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
     defaultValues: data,
   });
 
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const isRTL = locale === "ar";
 
   const selectedCategory = watch("business_category");
   const selectedBranches = watch("number_of_branches");
@@ -104,8 +107,12 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
         <input
           {...register("business_name", {
             required: "Business Name is required",
+            pattern: {
+              value: /^[A-Za-z\s]+$/,
+              message: "Only letters are allowed",
+            },
           })}
-          // placeholder={t("BusinessInfo.businessNamePlaceholder")}
+          placeholder={locale == "ar" ? "اسم النشاط التجاري" : "Business Name"}
           className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
         {errors.business_name && (
@@ -122,7 +129,9 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
         </label>
         <input
           {...register("address", { required: "Address is required" })}
-          // placeholder={t("BusinessInfo.businessAddressPlaceholder")}
+          placeholder={
+            locale == "ar" ? "عنوان النشاط التجاري" : "Business Address"
+          }
           className="w-full rounded-md border border-gray-300 bg-white p-3 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
         {errors.address && (
@@ -218,6 +227,58 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
           <p className="mt-1 text-xs text-red-500">
             {t("BusinessInfo.selectBranches")}
           </p>
+        )}
+      </div>
+
+      {/* Privacy Policy & Terms */}
+      <div>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            {...register("agree", {
+              required:
+                locale === "ar"
+                  ? "يجب الموافقة على الشروط والأحكام"
+                  : "You must agree to Privacy Policy & Terms",
+            })}
+            className="mt-1 h-4 w-4 accent-blue-500"
+          />
+
+          <span className="text-sm text-gray-600 leading-6">
+            {locale === "ar" ? (
+              <>
+                أوافق على{" "}
+                <Link href="/privacy-policy" className="underline font-medium">
+                  سياسة الخصوصية
+                </Link>{" "}
+                و{" "}
+                <Link href="/terms-condition" className="underline font-medium">
+                  الشروط والأحكام
+                </Link>
+              </>
+            ) : (
+              <>
+                I agree to the{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="underline font-medium text-blue-500"
+                >
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/terms"
+                  className="underline font-medium text-blue-500"
+                >
+                  Terms & Conditions
+                </Link>
+              </>
+            )}
+          </span>
+        </label>
+
+        {errors.agree && (
+          <p className="mt-1 text-sm text-red-500">{errors.agree.message}</p>
         )}
       </div>
 

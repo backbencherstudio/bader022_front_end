@@ -55,7 +55,9 @@ export default function AccountCreation({
       <Input
         label={t("AccountCreation.fullName")}
         icon={<FaUser />}
-        placeholder={t("AccountCreation.fullNamePlaceholder")}
+        placeholder={
+          locale == "ar" ? "أدخل اسمك الكامل" : "Enter Your Full Name"
+        }
         register={register("fullName", {
           required: "Full name is required",
         })}
@@ -67,7 +69,11 @@ export default function AccountCreation({
         label={t("AccountCreation.email")}
         icon={<FaEnvelope />}
         type="email"
-        placeholder={t("AccountCreation.emailPlaceholder")}
+        placeholder={
+          locale == "ar"
+            ? "أدخل عنوان بريدك الإلكتروني"
+            : "Enter Your Email Address"
+        }
         register={register("email", {
           required: "Email is required",
           pattern: {
@@ -87,7 +93,21 @@ export default function AccountCreation({
         <Controller
           name="phone"
           control={control}
-          rules={{ required: "Phone number is required" }}
+          rules={{
+            required: "Phone number is required",
+            validate: (value) => {
+              const digits = value?.replace(/\D/g, "") || "";
+              // must include 966 + more than 9 digits total
+              if (!digits.startsWith("966")) {
+                return "Phone number must start with +966";
+              }
+              if (digits.length <= 8) {
+                return "Phone number must be more than 9 digits including 966";
+              }
+
+              return true;
+            },
+          }}
           render={({ field }) => (
             <PhoneInput
               international
@@ -107,7 +127,6 @@ export default function AccountCreation({
         [&_input]:bg-white
         dark:[&_input]:bg-gray-800
         [&_input]:px-3
-
         [&_.PhoneInputCountry]:pointer-events-none
         [&_.PhoneInputCountry]:opacity-70
       "

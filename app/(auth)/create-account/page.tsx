@@ -35,6 +35,7 @@ type CreateAccountData = {
     address: string;
     business_category: string;
     number_of_branches: "1" | "3" | "6";
+    agree: boolean;
   };
   step3: {
     plan_id: number;
@@ -83,6 +84,7 @@ export default function CreateAccountPage() {
         address: "",
         business_category: "",
         number_of_branches: "1",
+        agree: false,
       },
       step3: { plan_id: 3 },
     },
@@ -151,8 +153,14 @@ export default function CreateAccountPage() {
   };
 
   const steps = [
-    { key: "step1", label: t("createAccount.steps.accountCreation") },
-    { key: "step2", label: t("createAccount.steps.accountCreation") },
+    {
+      key: "step1",
+      label: locale == "ar" ? "تفاصيل الحساب" : "Account Details",
+    },
+    {
+      key: "step2",
+      label: locale == "ar" ? "تفاصيل النشاط التجاري" : "Business Details",
+    },
     { key: "step3", label: t("createAccount.steps.choosePlan") },
   ];
 

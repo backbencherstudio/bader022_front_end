@@ -1,16 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import Step1 from "../../components/bookings/Step1";
-import Step2 from "../../components/bookings/Step2";
-import Step3 from "../../components/bookings/Step3";
-import Step4 from "../../components/bookings/Step4";
-import Step0 from "../../components/bookings/Step0";
-import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
 import BookingSuccessPage from "@/app/booking-success/page";
-import { useRouter } from "next/navigation";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
+import { useBookingServiceQuery } from "@/redux/features/userDashboard/booking";
+import { useParams } from "next/navigation";
+import React, { useState } from "react";
+import Step0 from "./_components/Step0";
+import Step1 from "./_components/Step1";
+import Step2 from "./_components/Step2";
+import Step3 from "./_components/Step3";
 
 type Service = {
   id: number;
@@ -67,11 +66,11 @@ function Stepper({
   );
 }
 
-export default function BookingCheckoutStepper() {
+export default function BookingPage() {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
-
-  const router = useRouter(); // Use Next.js router
+  const params = useParams();
+  const domain = params.slug;
   const steps = [
     "Select Services",
     "Select Date",
@@ -79,56 +78,25 @@ export default function BookingCheckoutStepper() {
     "Card Info",
     "Confirmed",
   ];
-  const [bookingId, setBookingId] = useState<string | number>("");
+
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  // const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toLocaleDateString("en-CA"),
   );
   const [selectedTime, setSelectedTime] = useState<string>("");
-  const { data, isLoading, error } = useBookingServiceQuery(
-    selectedService?.name || "",
-    // { skip: !selectedService }
-  );
 
-  console.log(data);
+  //   const { data, isLoading, error } = useBookingServiceQuery(
+  //     selectedService?.name || "",
+  //     // { skip: !selectedService }
+  //   );
 
-  const handleBooking = async () => {
-    const payload = {
-      service_id: selectedService?.id,
-      staff_id: "",
-      date: selectedDate,
-      time: selectedTime,
-      customer_name: "John Doe",
-      email: "johndoe@example.com",
-      phone: "017xxxxxxxx",
-      special_note: "Please call before appointment",
-      payment_method: "tap",
-    };
+  const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
-    try {
-      const res = await fetch("your-api-endpoint", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      }).then((response) => response.json());
-
-      // console.log("Booking Success:", res);
-
-      setBookingId(res.booking_id);
-
-      if (res?.payment_url) {
-        window.location.href = res.payment_url;
-      } else {
-        router.push(`/booking-success?booking_id=${res.booking_id}`);
-      }
-    } catch (err) {
-      // console.error("Booking Error:", err);
-    }
-  };
+  console.log(data?.data?.services);
 
   return (
-    <div className="w-full mx-auto py-8">
+    <div className="container mx-auto py-8">
       {/* Stepper */}
       <Stepper steps={steps} currentStep={currentStep + 1} />
 
@@ -154,7 +122,7 @@ export default function BookingCheckoutStepper() {
           <Step0
             selectedService={selectedService}
             setSelectedService={setSelectedService}
-            data={data}
+            data={data?.data?.services}
             onNext={() => setCurrentStep(1)}
           />
         )}

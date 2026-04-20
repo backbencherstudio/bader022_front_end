@@ -51,6 +51,7 @@ interface Service {
 
 interface DynamicMiniSiteProps {
   data: {
+    website_domain: string;
     minisite: MiniSiteData;
     why_choose_us: WhyChooseUs;
     services: Service[];
@@ -157,24 +158,25 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               justify-center lg:justify-start
             "
                 >
-                  <Link href="/user/bookings/add-booking">
+                  <Link href={`/${data?.website_domain}/booking`}>
                     <button
                       style={{
-                        backgroundColor: data?.global_setting?.primary_color,
+                        backgroundColor:
+                          data?.global_setting?.primary_color || "gray",
                       }}
-                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md text-white font-medium transition hover:opacity-90"
+                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md text-white font-medium transition hover:opacity-90 cursor-pointer"
                     >
                       {data?.minisite?.cta_button_text || "Get Started"}
                     </button>
                   </Link>
 
-                  <Link href="/user/bookings/add-booking">
+                  <Link href={`/${data?.website_domain}/booking`}>
                     <button
                       style={{
                         color: data?.global_setting?.secondary_color,
                         borderColor: data?.global_setting?.secondary_color,
                       }}
-                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md border font-medium transition hover:bg-white/10"
+                      className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md border font-medium transition hover:bg-white/10 cursor-pointer"
                     >
                       {data?.minisite?.cta_button_text_two ||
                         "Book A Consultation"}
@@ -240,7 +242,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
               <button
                 style={{
-                  backgroundColor: data?.global_setting?.primary_color,
+                  backgroundColor:
+                    data?.global_setting?.primary_color || "gray",
                 }}
                 className="
                       px-6 py-3 rounded-md
@@ -473,15 +476,18 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 {data?.minisite?.service_description ||
                   "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
               </p>
-              <button
-                style={{
-                  backgroundColor: data?.global_setting?.primary_color,
-                }}
-                className="px-6 py-3 rounded-md text-white font-medium transition
+              <Link href={`/${data?.website_domain}/booking`}>
+                <button
+                  style={{
+                    backgroundColor:
+                      data?.global_setting?.primary_color || "gray",
+                  }}
+                  className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
-              >
-                View More
-              </button>
+                >
+                  View More
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -539,10 +545,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     </p>
 
                     {/* Button */}
-                    <Link href={"/user/bookings/add-booking"}>
+                    <Link href={`/${data?.website_domain}/booking`}>
                       <button
                         style={{
-                          backgroundColor: data?.global_setting?.primary_color,
+                          backgroundColor:
+                            data?.global_setting?.primary_color || "gray",
                         }}
                         className="
                 px-5 py-2 rounded-md
@@ -619,10 +626,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
             </p>
 
-            <Link href={"/user/bookings/add-booking"}>
+            <Link href={`/${data?.website_domain}/booking`}>
               <button
                 style={{
-                  backgroundColor: data?.global_setting?.primary_color,
+                  backgroundColor:
+                    data?.global_setting?.primary_color || "gray",
                 }}
                 className="
               px-6 py-3 rounded-md

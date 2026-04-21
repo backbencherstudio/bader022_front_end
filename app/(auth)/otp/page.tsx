@@ -119,9 +119,13 @@ export default function OTPPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
-          <div className="flex justify-center gap-3">
+          <div
+            dir={isRTL ? "ltr" : "ltr"}
+            className="flex justify-center gap-3"
+          >
             {otpValues.map((_, index) => (
               <input
+                dir={isRTL ? "ltr" : "ltr"}
                 key={index}
                 ref={(el) => {
                   inputsRef.current[index] = el;
@@ -151,14 +155,14 @@ export default function OTPPage() {
           </button>
 
           {/* Resend */}
-          <button
+          {/* <button
             type="button"
             className="w-full text-sm text-gray-500 dark:text-gray-400 py-3 rounded-md border border-gray-200 hover:underline cursor-pointer disabled:opacity-50"
             onClick={handleResendOtp}
             disabled={isResending}
           >
             {isResending ? "Resending..." : "Resend OTP"}
-          </button>
+          </button> */}
         </form>
       </div>
     </div>

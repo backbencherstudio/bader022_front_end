@@ -137,7 +137,7 @@ export default function page() {
       formData.append("typography_h1", String(typographyData.h1Size) || "");
       formData.append("typography_h2", String(typographyData.h1Size) || "");
       formData.append("body_text_size", String(typographyData.bodySize) || "");
-      formData.append("font_family", typographyData.fontFamily || "");
+      formData.append("font_family", typographyData.fontFamily || "Inter");
       formData.append(
         "section_spacing",
         String(layoutSettingsData.sectionSpacing) || "",

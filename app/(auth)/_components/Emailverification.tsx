@@ -144,9 +144,13 @@ export default function Emailverification({ email }: EmailVerificationProps) {
         {error && <div className="text-center text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
-          <div className="flex justify-center gap-3">
+          <div
+            dir={isRTL ? "ltr" : "ltr"}
+            className="flex justify-center gap-3"
+          >
             {otpValues.map((_, index) => (
               <input
+                dir={isRTL ? "ltr" : "ltr"}
                 key={index}
                 ref={(el) => {
                   inputsRef.current[index] = el;

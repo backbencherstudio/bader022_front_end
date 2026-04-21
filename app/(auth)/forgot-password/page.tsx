@@ -10,6 +10,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
   email: string;
@@ -24,10 +25,12 @@ export default function ForgotPasswordPage() {
   } = useForm<FormValues>();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const { locale, t } = useI18n();
+  const isRTL = locale === "ar";
 
-  const click = () => {
-    console.log(click);
-  };
+  // const click = () => {
+  //   console.log(click);
+  // };
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   //  console.log(forgotPassword,"dfsdfsd")
   const onSubmit = async (data: FormValues) => {
@@ -78,20 +81,26 @@ export default function ForgotPasswordPage() {
         </Link>
 
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-          Forgot Password
+          {locale == "ar" ? "نسيت كلمة المرور" : "Forgot Password "}
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
+            <Label htmlFor="email">
+              {" "}
+              {locale == "ar" ? "عنوان البريد الإلكتروني" : "Email Address"}
+            </Label>
 
             <div className="relative">
               <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
 
               <Input
+                dir={isRTL ? "ltr" : "ltr"}
                 id="email"
                 type="email"
-                placeholder=""
+                placeholder={
+                  locale == "ar" ? "عنوان البريد الإلكتروني" : "Email Address"
+                }
                 className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
                 {...register("email", {
                   required: "Email is required",

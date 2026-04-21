@@ -114,18 +114,24 @@ export default function RegisterEmailVerification({
 
         {/* Title */}
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-          Enter OTP
+          {locale == "ar" ? "أدخل رمز التحقق" : "Enter OTP "}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
-          We have sent a code to your registered email address
+          {locale == "ar"
+            ? "لقد أرسلنا رمزًا إلى عنوان بريدك الإلكتروني المسجل"
+            : "We have sent a code to your registered email address"}
         </p>
 
         {error && <div className="text-center text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* OTP Inputs */}
-          <div className="flex justify-center gap-3">
+          <div
+            dir={isRTL ? "ltr" : "ltr"}
+            className="flex justify-center gap-3"
+          >
             {otpValues.map((_, index) => (
               <input
+                dir={isRTL ? "ltr" : "ltr"}
                 key={index}
                 ref={(el) => {
                   inputsRef.current[index] = el;

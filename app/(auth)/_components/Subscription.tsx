@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/components/provider/I18nProvider";
 import { authorize } from "@/lib/auth";
 import {
   useGetSubscriptionPlanQuery,
@@ -26,7 +27,8 @@ export default function Subscription() {
     watch,
     formState: { errors },
   } = useForm<FormValues>();
-
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const router = useRouter();
   const [subscription, { isLoading }] = useSubscriptionMutation();
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
@@ -81,18 +83,19 @@ export default function Subscription() {
         </Link>
 
         <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-          Subscription to Bokli
+          {locale == "ar" ? "الاشتراك في بوكلي" : "Subscription to Bokli"}
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* EMAIL */}
           <div>
             <label className="block text-sm font-medium mb-1">
-              Email Address *
+              {locale == "ar" ? "*عنوان البريد الإلكتروني" : "Email Address *"}
             </label>
             <div className="relative">
               <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
+                dir={isRTL ? "ltr" : "ltr"}
                 type="email"
                 placeholder=""
                 {...register("email", {
@@ -111,7 +114,7 @@ export default function Subscription() {
           {/* PLAN DROPDOWN */}
           <div>
             <label className="block text-sm font-medium mb-1">
-              Select Plan *
+              {locale == "ar" ? "*اختر الخطة" : "Select Plan *"}
             </label>
 
             <select
@@ -119,7 +122,7 @@ export default function Subscription() {
               className="w-full p-3 border rounded-md"
             >
               <option className="bg-white dark:bg-gray-800" value="">
-                Choose Plan
+                {locale == "ar" ? "اختر الخطة" : "Choose Plan"}
               </option>
               {plans.map((plan: any) => (
                 <option

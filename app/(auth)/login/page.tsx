@@ -160,10 +160,12 @@ export default function LoginPage() {
                   />
 
                   <input
+                    dir={isRTL ? "ltr" : "ltr"}
                     type="email"
                     {...register("email", {
                       required: "Email is required",
                     })}
+                    // placeholder={t("Auth.Login.email")}
                     className={`w-full py-3 border rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       isRTL ? "pr-10 text-right" : "pl-10"
                     }`}

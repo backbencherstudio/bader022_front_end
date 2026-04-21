@@ -51,17 +51,17 @@ export default function Step1({
     ? new Date(selectedDate).toLocaleDateString("en-CA")
     : new Date().toLocaleDateString("en-CA");
 
+  console.log(serviceId, selectedDate, selectedTime, formattedDate);
+
   // Get available times
   const { data, isLoading } = useBookingTimeDateQuery(
     { service_id: serviceId, date: formattedDate },
     { skip: !(serviceId && formattedDate) },
   );
-
   const timeSlots = data?.available_times || [];
-
   const noAvailableSlot = data?.message || "";
 
-  // console.log(data);
+  console.log(data);
 
   // Get staff based on selected time
   const { data: staffData } = useSelectStaffQuery(

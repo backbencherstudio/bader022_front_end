@@ -9,6 +9,7 @@ import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
   password: string;
@@ -16,6 +17,8 @@ type FormValues = {
 };
 
 export default function ResetPasswordPage() {
+  const { locale, t } = useI18n();
+  const isRTL = locale === "ar";
   const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
   useEffect(() => {
@@ -81,17 +84,21 @@ export default function ResetPasswordPage() {
 
           {/* Title */}
           <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white py-4">
-            Reset Your Password
+            {locale == "ar"
+              ? "إعادة تعيين كلمة المرور الخاصة بك"
+              : "Reset Your Password"}
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
-            Enter your new password below
+            {locale == "ar"
+              ? "أدخل كلمة المرور الجديدة أدناه"
+              : "Enter your new password below"}
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Password */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                Password *
+                {locale == "ar" ? "كلمة المرور" : "Password *"}
               </label>
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />

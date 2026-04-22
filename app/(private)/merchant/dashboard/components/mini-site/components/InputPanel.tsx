@@ -18,8 +18,11 @@ import FooterSettings from "./inputpanel/globalsettings/FooterSettings";
 import ColorSystem from "./inputpanel/globalsettings/ColorSystem";
 import Typography from "./inputpanel/globalsettings/Typography";
 import LayoutSettings from "./inputpanel/globalsettings/LayoutSettings";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function InputPanel() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   return (
     <Accordion type="single" collapsible className="w-full">
       {/* Global Settings */}
@@ -27,7 +30,8 @@ export default function InputPanel() {
         <AccordionTrigger>
           {" "}
           <h3 className="flex gap-2 items-center text-xl">
-            <TfiWorld /> Global Settings
+            <TfiWorld />{" "}
+            {locale == "ar" ? "الإعدادات العامة" : "Global Settings"}
           </h3>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
@@ -46,7 +50,11 @@ export default function InputPanel() {
         [&[data-state=open]>svg]:rotate-0
       "
               >
-                <span className="font-medium">Branding</span>
+                <span className="font-medium">
+                  {locale == "ar"
+                    ? "الهوية البصرية (العلامة التجارية)"
+                    : "Branding"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <Branding />
@@ -67,7 +75,9 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Color System</span>
+                <span className="font-medium">
+                  {locale == "ar" ? "نظام الألوان" : "Color System"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <ColorSystem />
@@ -88,7 +98,9 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Typography</span>
+                <span className="font-medium">
+                  {locale == "ar" ? "الطباعة (تنسيق الخطوط)" : "Typography"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <Typography />
@@ -109,7 +121,9 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Layout Settings</span>
+                <span className="font-medium">
+                  {locale == "ar" ? "إعدادات التخطيط" : "Layout Settings"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <LayoutSettings />
@@ -130,7 +144,10 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Footer Settings</span>
+                <span className="font-medium">
+                  {" "}
+                  {locale == "ar" ? "إعدادات التذييل" : "Footer Settings"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <FooterSettings />
@@ -143,7 +160,7 @@ export default function InputPanel() {
       <AccordionItem value="item-2">
         <AccordionTrigger>
           <h3 className="flex gap-2 items-center text-xl">
-            <TbSmartHome /> Home Page
+            <TbSmartHome /> {locale == "ar" ? "الصفحة الرئيسية" : "Home Page"}
           </h3>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
@@ -162,7 +179,11 @@ export default function InputPanel() {
         [&[data-state=open]>svg]:rotate-0
       "
               >
-                <span className="font-medium">Hero Section</span>
+                <span className="font-medium">
+                  {locale == "ar"
+                    ? "قسم البطل (الواجهة الرئيسية)"
+                    : "Hero Section"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <HeroSection />
@@ -183,7 +204,10 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">About Section</span>
+                <span className="font-medium">
+                  {" "}
+                  {locale == "ar" ? "قسم من نحن" : "About Section"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <AboutSection />
@@ -204,7 +228,10 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Why Choose Us</span>
+                <span className="font-medium">
+                  {" "}
+                  {locale == "ar" ? "لماذا تختارنا" : "Why Choose Us"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <WhyChooseUs />
@@ -225,7 +252,9 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">Services</span>
+                <span className="font-medium">
+                  {locale == "ar" ? "الخدمات" : "Services"}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <ServicesPreview />
@@ -246,7 +275,9 @@ export default function InputPanel() {
                       [&[data-state=open]>svg]:rotate-0
                     "
               >
-                <span className="font-medium">CTA Banner</span>
+                <span className="font-medium">
+                  {locale == "ar" ? "بانر" : "CTA Banner "}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <CTABanner />

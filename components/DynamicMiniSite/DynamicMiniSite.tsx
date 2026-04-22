@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import MiniSiteFooter from "./MiniSiteFooter";
+import { useI18n } from "../provider/I18nProvider";
 
 interface MiniSiteData {
   hero_image?: string;
@@ -60,11 +61,13 @@ interface DynamicMiniSiteProps {
 }
 
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   // console.log("loggg============", data);
   return (
     <div>
       {/* hero section */}
-      <section className="relative w-full">
+      <section className="relative w-full bg-gray-50 dark:bg-gray-800 dark:text-white">
         <div className="relative w-full min-h-[65vh] sm:min-h-[75vh] lg:min-h-[90vh] overflow-hidden">
           {/* Background Image */}
           <Image
@@ -82,7 +85,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: data?.minisite?.hero_overlay_color || "#808080",
+              backgroundColor: data?.minisite?.hero_overlay_color || "",
               opacity: 0.25,
             }}
           />
@@ -128,7 +131,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   style={{ color: data?.global_setting?.heading_color }}
                   className="text-xs sm:text-sm uppercase tracking-wide opacity-90"
                 >
-                  {data?.minisite?.hero_subtitle || "Care your hair"}
+                  {data?.minisite?.hero_subtitle || locale == "ar"
+                    ? "اعتنِ بشعرك"
+                    : "Care your hair"}
                 </h3>
 
                 {/* Title */}
@@ -137,8 +142,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   className="font-bold mt-3 leading-tight 
                        text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
                 >
-                  {data?.minisite?.hero_title ||
-                    "Nourish Your Scalp for Strong, Healthy Hair Growth"}
+                  {data?.minisite?.hero_title || locale == "ar"
+                    ? "غذِّ فروة رأسك لنمو شعر قوي وصحي"
+                    : "Nourish Your Scalp for Strong, Healthy Hair Growth"}
                 </h1>
 
                 {/* Description */}
@@ -146,8 +152,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   style={{ color: data?.global_setting?.body_text_color }}
                   className="mt-3 text-sm sm:text-base md:text-lg lg:text-xl"
                 >
-                  {data?.minisite?.hero_description ||
-                    "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair."}
+                  {data?.minisite?.hero_description || locale == "ar"
+                    ? "يبدأ تعزيز نمو الشعر بفروة رأس صحية ومتوازنة. إن العناية بفروة الرأس توفر الأساس لشعر أقوى وأكثر حيوية، مما يسمح لكل خصلة بالوصول إلى كامل إمكاناتها"
+                    : "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
                 </p>
 
                 {/* Buttons */}
@@ -166,7 +173,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                       }}
                       className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md text-white font-medium transition hover:opacity-90 cursor-pointer"
                     >
-                      {data?.minisite?.cta_button_text || "Get Started"}
+                      {data?.minisite?.cta_button_text || locale == "ar"
+                        ? "ابدأ الآن"
+                        : "Get Started"}
                     </button>
                   </Link>
 
@@ -178,8 +187,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                       }}
                       className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-md border font-medium transition hover:bg-white/10 cursor-pointer"
                     >
-                      {data?.minisite?.cta_button_text_two ||
-                        "Book A Consultation"}
+                      {data?.minisite?.cta_button_text_two || locale == "ar"
+                        ? "احجز استشارة"
+                        : "Book A Consultation"}
                     </button>
                   </Link>
                 </div>
@@ -191,18 +201,19 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
       {/* About Section  */}
       <section
+        id="#about"
         style={{
           backgroundColor: data?.minisite?.background_color || "transparent",
           // marginTop: data.global_setting.section_spacing,
           paddingTop: `${data?.minisite?.about_padding || 40}px`,
           paddingBottom: `${data?.minisite?.about_padding}px`,
         }}
-        className="transition-colors dark:bg-gray-900"
+        className="transition-colors"
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             {/* Image */}
-            <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md dark:shadow-black/40">
+            <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md ">
               <Image
                 src={
                   getImageUrl(data?.minisite?.about_hero_image) ||
@@ -223,10 +234,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   color: data?.global_setting?.heading_color,
                   fontSize: data?.global_setting?.typography_h1,
                 }}
-                className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white"
+                className="text-2xl md:text-3xl font-semibold mb-4"
               >
-                {data?.minisite?.about_title ||
-                  "Elevate Your Look with Bespoke Hair Care & Expert"}
+                {data?.minisite?.about_title || locale == "ar"
+                  ? "ارتقِ بإطلالتك مع العناية المخصصة بالشعر والخبرة الاحترافية"
+                  : "Elevate Your Look with Bespoke Hair Care & Expert"}
               </h3>
 
               <p
@@ -234,10 +246,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   color: data?.global_setting?.body_text_color,
                   fontSize: data?.global_setting?.body_text_size,
                 }}
-                className="text-gray-600 dark:text-gray-300 mb-6"
+                className="mb-6"
               >
-                {data?.minisite?.about_description ||
-                  "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication."}
+                {data?.minisite?.about_description || locale == "ar"
+                  ? "اختبر مستوى جديدًا من الثقة مع عناية بالشعر مصممة خصيصًا لك. يجمع خبراؤنا في تصفيف الشعر بين التقنيات الشخصية والمنتجات الفاخرة لإبراز جمالك الطبيعي. من خلال الاستشارات المخصصة والرعاية الاحترافية، نمنح كل خصلة لمسة تحول تعزز إطلالتك العامة بالأناقة والرقي."
+                  : "Experience a new level of confidence with hair care tailored uniquely to you. Our expert stylists combine personalized techniques with premium products to enhance your natural beauty Through personalized consultations and expert care, we transform each strand to enhance your overall look with elegance and sophistication."}
               </p>
 
               <button
@@ -246,12 +259,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     data?.global_setting?.primary_color || "gray",
                 }}
                 className="
-                      px-6 py-3 rounded-md
-                      text-white font-medium
+                      px-6 py-3 rounded-md font-medium
                       transition hover:opacity-90
                     "
               >
-                About Us
+                {locale == "ar" ? "من نحن" : "About Us"}
               </button>
             </div>
           </div>
@@ -260,6 +272,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
 
       {/* WhyChooseUs Section  */}
       <section
+        id="#why-choose-us"
         style={{
           backgroundColor: data?.minisite?.background_color || "transparent",
           // marginTop: data.global_setting.section_spacing,
@@ -273,9 +286,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               color: data?.global_setting?.heading_color,
               fontSize: data?.global_setting?.typography_h1,
             }}
-            className="text-center text-4xl font-semibold mb-3 text-gray-900 dark:text-white"
+            className="text-center text-4xl font-semibold mb-3"
           >
-            {data?.why_choose_us?.section_title || "Why We’re Right Choice"}
+            {data?.why_choose_us?.section_title || locale == "ar"
+              ? "لماذا نحن الخيار الأمثل"
+              : "Why We’re Right Choice"}
           </h3>
 
           {/* Subtitle */}
@@ -284,10 +299,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               color: data?.global_setting?.body_text_color,
               fontSize: data?.global_setting?.body_text_size,
             }}
-            className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12"
+            className="text-center max-w-2xl mx-auto mb-12"
           >
-            {data?.why_choose_us?.section_subtitle ||
-              "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results"}
+            {data?.why_choose_us?.section_subtitle || locale == "ar"
+              ? "نأخذ الوقت لفهم احتياجاتك الفريدة، لضمان أن كل خدمة مصممة خصيصًا لتحقيق نتائج استثنائية."
+              : "We take the time to understand your unique needs, ensuring every service is tailored to deliver exceptional results"}
           </p>
 
           {/* Feature Cards */}
@@ -297,14 +313,13 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                          bg-gray-100 text-black dark:bg-gray-700 dark:text-white
-                          border border-gray-200 dark:border-gray-700
+                          border border-gray-100
                           shadow-sm hover:shadow-md
                           transition
                         "
               >
                 {/* Icon */}
-                <div className="relative w-14 h-14 rounded-full bg-gray-100 text-black dark:bg-gray-700 dark:text-white overflow-hidden">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden">
                   <Image
                     src={
                       getImageUrl(
@@ -326,16 +341,18 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     style={{ color: data?.global_setting?.heading_color }}
                     className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
                   >
-                    {data?.why_choose_us?.feature_one_title ||
-                      "Certified Hair Experts"}
+                    {data?.why_choose_us?.feature_one_title || locale == "ar"
+                      ? "خبراء شعر معتمدون"
+                      : "Certified Hair Experts"}
                   </h3>
 
                   <p
                     style={{ color: data?.global_setting?.body_text_color }}
-                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                    className=" line-clamp-2"
                   >
-                    {data?.why_choose_us?.feature_one_des ||
-                      "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise"}
+                    {data?.why_choose_us?.feature_one_des || locale == "ar"
+                      ? "يتكون فريقنا من خبراء شعر معتمدين وذوي تدريب عالي، يتمتعون بسنوات من الخبرة والاحترافية في تقديم أفضل خدمات العناية بالشعر"
+                      : "Our team consists of highly trained, certified hair specialists who bring years of experience and professional expertise"}
                   </p>
                 </div>
               </div>
@@ -345,14 +362,13 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                          bg-gray-100 text-black dark:bg-gray-700 dark:text-white
-                          border border-gray-200 dark:border-gray-700
+                          border border-gray-100 
                           shadow-sm hover:shadow-md
                           transition
                         "
               >
                 {/* Icon */}
-                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                <div className="relative w-14 h-14 rounded-full  overflow-hidden">
                   <Image
                     src={
                       getImageUrl(
@@ -372,18 +388,20 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 <div>
                   <h3
                     style={{ color: data?.global_setting?.heading_color }}
-                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                    className="text-lg font-semibold mb-2 line-clamp-1 "
                   >
-                    {data?.why_choose_us?.feature_two_title ||
-                      "FDA-Approved Products"}
+                    {data?.why_choose_us?.feature_two_title || locale == "ar"
+                      ? "منتجات معتمدة من إدارة الغذاء والدواء (FDA)"
+                      : "FDA-Approved Products"}
                   </h3>
 
                   <p
                     style={{ color: data?.global_setting?.body_text_color }}
-                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                    className=" line-clamp-2"
                   >
-                    {data?.why_choose_us?.feature_two_des ||
-                      "We use only FDA-approved products that meet the highest safety and quality standards, ensuring every treatment"}
+                    {data?.why_choose_us?.feature_two_des || locale == "ar"
+                      ? "نستخدم فقط منتجات معتمدة من هيئة الغذاء والدواء (FDA) وتلبي أعلى معايير السلامة والجودة، لضمان أن كل علاج يتم بأمان وفعالية"
+                      : "We use only FDA-approved products that meet the highest safety and quality standards, ensuring every treatment"}
                   </p>
                 </div>
               </div>
@@ -393,14 +411,13 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 className="
                           flex flex-col items-center text-center gap-4
                           rounded-xl p-6
-                         bg-gray-100 text-black dark:bg-gray-700 dark:text-white
-                          border border-gray-200 dark:border-gray-700
+                          border border-gray-100 
                           shadow-sm hover:shadow-md
                           transition
                         "
               >
                 {/* Icon */}
-                <div className="relative w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden">
                   <Image
                     src={
                       getImageUrl(
@@ -420,18 +437,20 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 <div>
                   <h3
                     style={{ color: data?.global_setting?.heading_color }}
-                    className="text-lg font-semibold mb-2 line-clamp-1 text-gray-900 dark:text-white"
+                    className="text-lg font-semibold mb-2 line-clamp-1 "
                   >
-                    {data?.why_choose_us?.feature_three_title ||
-                      "Personalized Treatment"}
+                    {data?.why_choose_us?.feature_three_title || locale == "ar"
+                      ? "علاج مخصص حسب احتياجاتك"
+                      : "Personalized Treatment"}
                   </h3>
 
                   <p
                     style={{ color: data?.global_setting?.body_text_color }}
-                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                    className=" line-clamp-2"
                   >
-                    {data?.why_choose_us?.feature_three_des ||
-                      "We customize every hair treatment to match your unique texture, concerns, and goals, ensuring results that are tailored"}
+                    {data?.why_choose_us?.feature_three_des || locale == "ar"
+                      ? "نقوم بتخصيص كل علاج للشعر ليتناسب مع ملمس شعرك الفريد، واهتماماتك، وأهدافك، لضمان نتائج مصممة خصيصًا لك"
+                      : "We customize every hair treatment to match your unique texture, concerns, and goals, ensuring results that are tailored"}
                   </p>
                 </div>
               </div>
@@ -443,6 +462,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
       {/* Services Section  */}
 
       <section
+        id="#services"
         style={{
           backgroundColor: data?.minisite?.service_background,
           //   marginTop: layoutSettingsData.sectionSpacing,
@@ -458,10 +478,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 color: data?.global_setting?.heading_color,
                 fontSize: data?.global_setting?.typography_h1,
               }}
-              className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
+              className="text-4xl lg:w-6/12 font-semibold mb-3"
             >
-              {data?.minisite?.service_title ||
-                "Customized Hair Treatments & Styling to Suit You"}
+              {data?.minisite?.service_title || locale == "ar"
+                ? "علاجات وتصفيف شعر مخصص يناسبك"
+                : "Customized Hair Treatments & Styling to Suit You"}
             </h3>
 
             <div className="flex flex-col md:flex-row gap-4 md:justify-between">
@@ -471,10 +492,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   color: data?.global_setting?.body_text_color,
                   fontSize: data?.global_setting?.body_text_size,
                 }}
-                className="text-gray-600 dark:text-gray-300 max-w-4xl"
+                className=" max-w-4xl"
               >
-                {data?.minisite?.service_description ||
-                  "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
+                {data?.minisite?.service_description || locale == "ar"
+                  ? "استمتع بعناية متجددة وحلول تصفيف احترافية مصممة لتناسب جميع أنواع الشعر. تم تصميم علاجاتنا المغذية لاستعادة صحة الشعر."
+                  : "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
               </p>
               <Link href={`/${data?.website_domain}/booking`}>
                 <button
@@ -482,10 +504,10 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     backgroundColor:
                       data?.global_setting?.primary_color || "gray",
                   }}
-                  className="px-6 py-3 rounded-md text-white font-medium transition
+                  className="px-6 py-3 rounded-md  font-medium transition
                  hover:opacity-90 cursor-pointer"
                 >
-                  View More
+                  {locale == "ar" ? "عرض المزيد" : "View More"}
                 </button>
               </Link>
             </div>
@@ -498,8 +520,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 <div
                   className="
                     rounded-2xl overflow-hidden
-                    bg-white dark:bg-gray-800
-                    border border-gray-200 dark:border-gray-700
+                    border border-gray-100 
                     shadow-sm hover:shadow-md
                     transition
                   "
@@ -521,25 +542,23 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                     className="p-5 space-y-4"
                   >
                     {/* Meta */}
-                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <span>⏱</span>
                         <span>{item?.service_name}</span>
                       </div>
-                      <span className="font-semibold text-gray-900 dark:text-white">
-                        {item?.duration}
-                      </span>
+                      <span className="font-semibold">{item?.duration}</span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-lg font-semibold ">
                       {item?.service_name}
                     </h3>
 
                     {/* Description */}
                     <p
                       //   style={{ fontSize: typographyData.bodySize }}
-                      className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                      className=" line-clamp-2"
                     >
                       {item?.description}
                     </p>
@@ -557,7 +576,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 transition hover:opacity-90 cursor-pointer
               "
                       >
-                        Book Now
+                        {locale == "ar" ? "احجز الآن" : "Book Now"}
                       </button>
                     </Link>
                   </div>
@@ -569,8 +588,8 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
       </section>
 
       {/* CTA Banner Section  */}
-
       <section
+        id="#banner"
         className="relative"
         // style={{ marginTop: layoutSettingsData.sectionSpacing }}
       >
@@ -589,7 +608,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           />
 
           {/* Overlay (light + dark) */}
-          <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
+          <div className="absolute inset-0" />
 
           {/* Content */}
           <div
@@ -602,7 +621,6 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             text-center
             px-4 sm:px-8 md:px-16
             py-12 sm:py-16
-            text-white
           "
           >
             <h2
@@ -612,7 +630,9 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
               }}
               className="text-xl sm:text-2xl md:text-3xl font-bold"
             >
-              {data?.minisite?.cta_title || "Your Hair Deserves the Best Care"}
+              {data?.minisite?.cta_title || locale == "ar"
+                ? "شعرك يستحق أفضل عناية"
+                : "Your Hair Deserves the Best Care"}
             </h2>
 
             <p
@@ -620,10 +640,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 color: data?.global_setting?.body_text_color,
                 fontSize: data?.global_setting?.body_text_size,
               }}
-              className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
+              className="mt-4 mb-6 max-w-2xl text-sm sm:text-base"
             >
-              {data?.minisite?.cta_subtitle ||
-                "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
+              {data?.minisite?.cta_subtitle || locale == "ar"
+                ? "احجز استشارة مع خبراء الشعر المعتمدين لدينا واختبر علاجات احترافية ومخصصة لشعرك. المقاعد محدودة! احجز موعدك الآن"
+                : "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
             </p>
 
             <Link href={`/${data?.website_domain}/booking`}>
@@ -634,11 +655,11 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                 }}
                 className="
               px-6 py-3 rounded-md
-              text-white font-medium            
+               font-medium            
               transition hover:opacity-90 cursor-pointer
             "
               >
-                Book A Consultation
+                {locale == "ar" ? "احجز استشارة" : "Book A Consultation"}
               </button>
             </Link>
           </div>

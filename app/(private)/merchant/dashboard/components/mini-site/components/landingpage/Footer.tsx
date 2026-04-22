@@ -15,8 +15,11 @@ import {
 } from "react-icons/fa";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import { getImageUrl } from "@/helper/formatImage";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function Footer() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { footerData, layoutSettingsData } = useLandingPage();
 
   // console.log(footerData.footerLogo);
@@ -28,7 +31,7 @@ export default function Footer() {
         color: footerData.footerTextColor || undefined,
         marginTop: layoutSettingsData.sectionSpacing,
       }}
-      className="dark:bg-gray-900 transition-colors"
+      className="transition-colors"
     >
       {/* Top Section */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -47,15 +50,16 @@ export default function Footer() {
           </div>
 
           <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
-            {footerData.footerSubTitle ||
-              "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
+            {footerData.footerSubTitle || locale == "ar"
+              ? "أبدأ بالتعاطف. أبتكر الأفكار، وأتحدى الافتراضات، وأتعاون مع المصممين، وأعمل على توحيد رؤية أصحاب المصلحة."
+              : "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
           </p>
           {/* Social Links */}
           <div className="flex gap-3 mt-6">
             <Link
               href={`${footerData.facebookUrl}`}
               target="_blank"
-              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+              className="w-9 h-9 rounded-full bg-gray-400 
                              flex items-center justify-center
                              hover:bg-orange-500 hover:text-white
                              transition"
@@ -66,7 +70,7 @@ export default function Footer() {
             <Link
               href={`${footerData.instagramUrl}`}
               target="_blank"
-              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+              className="w-9 h-9 rounded-full bg-gray-400 
                              flex items-center justify-center
                              hover:bg-orange-500 hover:text-white
                              transition"
@@ -77,7 +81,7 @@ export default function Footer() {
             <Link
               href={`${footerData.twitterUrl}`}
               target="_blank"
-              className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800
+              className="w-9 h-9 rounded-full bg-gray-400 
                              flex items-center justify-center
                              hover:bg-orange-500 hover:text-white
                              transition"
@@ -91,7 +95,10 @@ export default function Footer() {
         {/* Navigation */}
         {/* <FooterLinks title="Navigation" links={footerData.navigation} /> */}
         <div>
-          <h3 className="font-semibold mb-4">Navigation</h3>
+          <h3 className="font-semibold mb-4">
+            {" "}
+            {locale == "ar" ? "التنقل" : "Navigation"}
+          </h3>
           <ul className="space-y-3 text-sm opacity-90">
             <li>
               <Link href={""} className="hover:text-orange-500 transition">
@@ -119,10 +126,17 @@ export default function Footer() {
         {/* Support */}
         {/* <FooterLinks title="Support" links={footerData.support} /> */}
         <div>
-          <h3 className="font-semibold mb-4">Support</h3>
+          <h3 className="font-semibold mb-4">
+            {" "}
+            {locale == "ar" ? "الدعم" : "Support"}
+          </h3>
           <ul className="space-y-3 text-sm opacity-90">
             <li>
-              <Link href={""} className="hover:text-orange-500 transition">
+              <Link
+                href={""}
+                className="hover:text-orange-500 transition"
+                target="_blank"
+              >
                 {footerData.contact_us}
               </Link>
             </li>
@@ -141,7 +155,10 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="font-semibold mb-4">Contact</h3>
+          <h3 className="font-semibold mb-4">
+            {" "}
+            {locale == "ar" ? "اتصل بنا" : "Contact"}
+          </h3>
           <ul className="space-y-4 text-sm opacity-90">
             <li className="flex items-center gap-3">
               <IconCircle>
@@ -172,8 +189,9 @@ export default function Footer() {
         className="border-t border-black/10 dark:border-white/10 py-4 text-center text-sm opacity-70"
         style={{ color: footerData.footerTextColor || undefined }}
       >
-        © {new Date().getFullYear()} {footerData.footerTitle} | All Rights
-        Reserved {footerData.showPoweredBy && "| Powered By Bokli"}
+        © {new Date().getFullYear()} {footerData.footerTitle} |{" "}
+        {locale == "ar" ? "جميع الحقوق محفوظة" : "All Rights Reserved"}{" "}
+        {footerData.showPoweredBy && "| Powered By Bokli"}
       </div>
     </footer>
   );

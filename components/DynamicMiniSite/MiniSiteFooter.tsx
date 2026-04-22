@@ -10,6 +10,7 @@ import {
   FaPhoneAlt,
   FaTwitter,
 } from "react-icons/fa";
+import { useI18n } from "../provider/I18nProvider";
 
 interface FooterData {
   branding_logo?: string;
@@ -44,6 +45,8 @@ interface MiniSiteFooterProps {
 }
 
 export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   // console.log(data.global_setting);
 
   return (
@@ -73,8 +76,9 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
             </div>
 
             <p className="mt-4 text-sm leading-relaxed max-w-sm opacity-80">
-              {data?.global_setting?.footer_des ||
-                "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
+              {data?.global_setting?.footer_des || locale == "ar"
+                ? "أبدأ بالتعاطف. أبتكر الأفكار، وأتحدى الافتراضات، وأتعاون مع المصممين، وأعمل على توحيد رؤية أصحاب المصلحة."
+                : "Start with empathy. I create ideas, challenge assumptions, collaborate with designers, and align stakeholders,"}
             </p>
 
             {/* Social Links */}
@@ -118,15 +122,23 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           {/* Navigation */}
           {/* <FooterLinks title="Navigation" links={footerData.navigation} /> */}
           <div>
-            <h3 className="font-semibold mb-4">Navigation</h3>
+            <h3 className="font-semibold mb-4">
+              {locale == "ar" ? "التنقل" : "Navigation"}
+            </h3>
             <ul className="space-y-3 text-sm opacity-90">
               <li>
-                <Link href={""} className="hover:text-orange-500 transition">
+                <Link
+                  href={"#home"}
+                  className="hover:text-orange-500 transition"
+                >
                   {data?.global_setting?.home}
                 </Link>
               </li>
               <li>
-                <Link href={""} className="hover:text-orange-500 transition">
+                <Link
+                  href={"#abdul"}
+                  className="hover:text-orange-500 transition"
+                >
                   {data?.global_setting?.about}
                 </Link>
               </li>
@@ -136,7 +148,10 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href={""} className="hover:text-orange-500 transition">
+                <Link
+                  href={"#services"}
+                  className="hover:text-orange-500 transition"
+                >
                   {data?.global_setting?.service}
                 </Link>
               </li>
@@ -146,7 +161,10 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           {/* Support */}
           {/* <FooterLinks title="Support" links={footerData.support} /> */}
           <div>
-            <h3 className="font-semibold mb-4">Support</h3>
+            <h3 className="font-semibold mb-4">
+              {" "}
+              {locale == "ar" ? "الدعم" : "Support"}
+            </h3>
             <ul className="space-y-3 text-sm opacity-90">
               <li>
                 <Link href={""} className="hover:text-orange-500 transition">
@@ -188,7 +206,9 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
                 <IconCircle>
                   <FaMapMarkerAlt />
                 </IconCircle>
-                {data?.global_setting?.country || "Jeddah Saudi Arabia"}
+                {data?.global_setting?.country || locale == "ar"
+                  ? "جدة، المملكة العربية السعودية"
+                  : "Jeddah Saudi Arabia"}
               </li>
             </ul>
           </div>
@@ -200,7 +220,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
           //   style={{ color: footerData.footerTextColor || undefined }}
         >
           © {new Date().getFullYear()} {data?.global_setting?.website_name} |
-          All Rights Reserved{" "}
+          {locale == "ar" ? "جميع الحقوق محفوظة" : "All Rights Reserved"}
           {data?.global_setting?.turn_off && "| Powered By Bokli"}
         </div>
       </footer>

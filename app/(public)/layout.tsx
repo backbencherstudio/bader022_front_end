@@ -11,22 +11,22 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  useEffect(() => {
-    const auth = authorize(["User", "Merchant", "Admin"]);
+  // const router = useRouter();
+  // useEffect(() => {
+  //   const auth = authorize(["User", "Merchant", "Admin"]);
 
-    if (auth.authorized) {
-      const role = auth.user?.role;
+  //   if (auth.authorized) {
+  //     const role = auth.user?.role;
 
-      const roleRedirectMap: Record<string, string> = {
-        Admin: "/admin/dashboard",
-        Merchant: "/merchant/dashboard",
-        User: "/user/dashboard",
-      };
+  //     const roleRedirectMap: Record<string, string> = {
+  //       Admin: "/admin/dashboard",
+  //       Merchant: "/merchant/dashboard",
+  //       User: "/user/dashboard",
+  //     };
 
-      router.push(roleRedirectMap[role] || "/");
-    }
-  }, []);
+  //     router.push(roleRedirectMap[role] || "/");
+  //   }
+  // }, []);
   return (
     <div className="flex min-h-screen flex-col">
       {/* Main Content */}

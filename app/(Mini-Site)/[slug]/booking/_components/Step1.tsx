@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 interface Step1Props {
   onNext: () => void;
@@ -45,14 +46,16 @@ export default function Step1({
   setSelectedTime,
 }: Step1Props) {
   const [staffId, setStaffId] = useState<string>("");
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   // Ensure date is always a Date object
   const formattedDate = selectedDate
     ? new Date(selectedDate).toLocaleDateString("en-CA")
     : new Date().toLocaleDateString("en-CA");
-  console.log(domain);
+  // console.log(domain);
 
-  console.log(serviceId, selectedDate, selectedTime, formattedDate);
+  // console.log(serviceId, selectedDate, selectedTime, formattedDate);
 
   // Get available times
   const { data, isLoading } = useServiceBookingTimeDateQuery(
@@ -62,7 +65,7 @@ export default function Step1({
   const timeSlots = data?.available_times || [];
   const noAvailableSlot = data?.message || "";
 
-  console.log(data);
+  // console.log(data);
 
   // Get staff based on selected time
   const { data: staffData } = useSelectStaffQuery(
@@ -76,7 +79,7 @@ export default function Step1({
     },
   );
 
-  console.log(staffData);
+  // console.log(staffData);
 
   const [noSlot, setNoSlot] = useState(false);
   useEffect(() => {
@@ -97,7 +100,7 @@ export default function Step1({
         {/* Calendar */}
         <div className="border rounded-xl overflow-hidden ">
           <div className="border-gray-200 dark:border-gray-700 dark:bg-gray-800  px-5 py-4 font-semibold">
-            Select Date
+            Select Date {locale == "ar" ? "" : ""}
           </div>
 
           <div className="p-5">
@@ -116,12 +119,12 @@ export default function Step1({
         {/* Time Slots */}
         <div className="border rounded-xl overflow-hidden">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Available Times
+            Available Times {locale == "ar" ? "" : ""}
           </div>
 
           <div className="p-5 sm:p-6">
             {isLoading ? (
-              <p>Loading...</p>
+              <p>Loading... {locale == "ar" ? "" : ""}</p>
             ) : noSlot ? (
               <p className="text-red-500 font-medium">
                 {/* No slots available for this date */}
@@ -151,7 +154,7 @@ export default function Step1({
         {/* Staff */}
         <div className="border rounded-xl overflow-hidden">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Select Staff
+            Select Staff {locale == "ar" ? "" : ""}
           </div>
 
           <div className="p-5">
@@ -161,10 +164,14 @@ export default function Step1({
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value="no-preference">No preference</SelectItem>
+                <SelectItem value="no-preference">
+                  No preference {locale == "ar" ? "" : ""}
+                </SelectItem>
 
                 {staffs.length === 0 ? (
-                  <SelectItem value="no-staff">No staff available</SelectItem>
+                  <SelectItem value="no-staff">
+                    No staff available {locale == "ar" ? "" : ""}
+                  </SelectItem>
                 ) : (
                   staffs.map((staff: any) => (
                     <SelectItem key={staff.id} value={String(staff.id)}>
@@ -180,7 +187,7 @@ export default function Step1({
         {/* Buttons */}
         <div className="flex items-end gap-4">
           <Button variant="outline" onClick={onBack}>
-            Back
+            {locale == "ar" ? "رجوع" : "Back"}
           </Button>
 
           <Button
@@ -188,7 +195,7 @@ export default function Step1({
             onClick={onNext}
             disabled={!selectedDate || !selectedTime}
           >
-            Continue to Checkout
+            {locale == "ar" ? "المتابعة إلى الدفع" : "Continue to Checkout"}
           </Button>
         </div>
       </div>

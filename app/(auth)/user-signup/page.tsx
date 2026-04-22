@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   FaEye,
   FaEyeSlash,
@@ -40,6 +40,8 @@ export default function UserSignUpPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "";
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
@@ -195,7 +197,13 @@ export default function UserSignUpPage() {
             {/* Footer */}
             <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
               {t("Auth.Signup.alreadyAccount")}{" "}
-              <Link href="/user-login">
+              <Link
+                href={
+                  redirect
+                    ? `/user-login?redirect=${encodeURIComponent(redirect)}`
+                    : "/user-login"
+                }
+              >
                 <span className="text-blue-600 hover:underline">
                   {t("Auth.Signup.login")}
                 </span>

@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useI18n } from "./provider/I18nProvider";
 
 export default function NotFoundPage() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-6">
       <div className="text-center max-w-lg">
@@ -13,19 +16,21 @@ export default function NotFoundPage() {
 
         {/* Title */}
         <h2 className="mt-4 text-2xl font-semibold text-gray-800 dark:text-gray-200">
-          Page Not Found
+          {locale == "ar" ? "الصفحة غير موجودة" : "Page Not Found"}
         </h2>
 
         {/* Description */}
         <p className="mt-3 text-gray-600 dark:text-gray-400">
-          Sorry, the page you are looking for doesn't exist or has been moved.
+          {locale == "ar"
+            ? "عذرًا، الصفحة التي تبحث عنها غير موجودة أو تم نقلها"
+            : "Sorry, the page you are looking for doesn't exist or has been moved"}
         </p>
 
         {/* Buttons */}
         <div className="mt-6 flex justify-center gap-4">
           <Link href="/">
             <button className="px-6 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
-              Back to Home
+              {locale == "ar" ? "العودة إلى الرئيسية" : "Back to Home"}
             </button>
           </Link>
 
@@ -33,7 +38,7 @@ export default function NotFoundPage() {
             onClick={() => window.history.back()}
             className="px-6 py-2 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
-            Go Back
+            {locale == "ar" ? "العودة" : "Go Back"}
           </button>
         </div>
       </div>

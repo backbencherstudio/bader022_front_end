@@ -38,9 +38,9 @@ export default function TopBar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const handlelogout = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    // dispatch(logout());
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("user");
     router.push("/");
   };
 
@@ -77,12 +77,12 @@ export default function TopBar() {
         </button>
 
         {/* Notifications */}
-        {/* <button
+        <button
           aria-label={t("Topbar.notifications")}
           className="p-2 sm:p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
           <BellDot className="w-5 h-5 text-black dark:text-white" />
-        </button> */}
+        </button>
 
         {/* Language Switch */}
         <DropdownMenu>

@@ -12,6 +12,8 @@ import {
 import { toast } from "sonner";
 import { getImageUrl } from "@/helper/formatImage";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useAppDispatch } from "@/redux/hooks";
+import { setCredentials } from "@/redux/features/auth/authSlice";
 
 type ProfileFormData = {
   name: string;
@@ -22,6 +24,7 @@ type ProfileFormData = {
 export default function ProfileSection() {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
+  const dispatch = useAppDispatch();
   const { data, isLoading, refetch } = useGetPersonaltHistoryQuery({});
   const [updateInformation, { isLoading: isUpdating }] =
     useUpdateInformationMutation();
@@ -63,9 +66,17 @@ export default function ProfileSection() {
         body.append("image", selectedFile);
       }
 
-      await updateInformation(body).unwrap();
+      const response = await updateInformation(body).unwrap();
       refetch();
-
+      dispatch(
+        setCredentials({
+          user: {
+            name: response?.data?.name,
+            phone: response?.data?.phone,
+            image: response?.data?.image,
+          },
+        }),
+      );
       toast("Profile Updated Successfully ");
     } catch (error) {
       console.error(error);

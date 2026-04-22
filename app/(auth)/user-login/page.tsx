@@ -39,16 +39,15 @@ export default function UserLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const redirect = searchParams.get("redirect");
+  const redirect = searchParams.get("redirect") || "";
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isEmail, setIsEmail] = useState("");
   // const currentPath = window.location.pathname + window.location.search;
-  const redirect = searchParams.get("redirect") || "";
 
-  console.log(redirect);
+  // console.log(redirect);
 
   // useEffect(() => {
   //   const auth = authorize(["User", "Merchant", "Admin"]);

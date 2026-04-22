@@ -112,7 +112,7 @@ export default function Step0({
         onClick={() => window.history.back()}
         className="px-6 py-2 rounded-md border mt-5 cursor-pointer border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
       >
-        Go Back
+        {locale == "ar" ? "العودة" : "Go Back"}
       </button>
     </div>
   );

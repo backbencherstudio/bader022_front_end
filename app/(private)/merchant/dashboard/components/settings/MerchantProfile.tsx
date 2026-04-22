@@ -12,6 +12,8 @@ import {
 import { toast } from "sonner";
 import { getImageUrl } from "@/helper/formatImage";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useAppDispatch } from "@/redux/hooks";
+import { setCredentials } from "@/redux/features/auth/authSlice";
 
 type ProfileFormData = {
   name: string;
@@ -31,6 +33,7 @@ export default function MerchantProfile() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   // 🔹 React Hook Form
   const { register, handleSubmit, reset } = useForm<ProfileFormData>({
@@ -66,8 +69,18 @@ export default function MerchantProfile() {
         body.append("image", selectedFile);
       }
 
-      await updateInformation(body).unwrap();
+      const response = await updateInformation(body).unwrap();
       refetch();
+      // console.log(response);
+      dispatch(
+        setCredentials({
+          user: {
+            name: response?.data?.name,
+            phone: response?.data?.phone,
+            image: response?.data?.image,
+          },
+        }),
+      );
 
       toast("Profile Updated Successfully ");
     } catch (error) {

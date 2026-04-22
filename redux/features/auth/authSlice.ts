@@ -44,21 +44,47 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (
-      state,
-      action: PayloadAction<{ token: string; remember_token: string; user: User }>,
-    ) => {
-      state.token = action.payload.token;
-      state.remember_token = action.payload.remember_token;
-      state.user = action.payload.user;
+    // setCredentials: (
+    //   state,
+    //   action: PayloadAction<{ token: string; remember_token: string; user: User }>,
+    // ) => {
+    //   state.token = action.payload.token;
+    //   state.remember_token = action.payload.remember_token;
+    //   state.user = action.payload.user;
 
-      if (typeof window !== "undefined") {
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("remember_token", action.payload.remember_token);
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
-      }
-    },
+    //   if (typeof window !== "undefined") {
+    //     localStorage.setItem("token", action.payload.token);
+    //     localStorage.setItem("remember_token", action.payload.remember_token);
+    //     localStorage.setItem("user", JSON.stringify(action.payload.user));
+    //   }
+    // },
+setCredentials: (
+  state,
+  action: PayloadAction<{
+    token?: string;
+    remember_token?: string;
+    user?: Partial<User>;
+  }>,
+) => {
+  if (action.payload.token) {
+    state.token = action.payload.token;
+    localStorage.setItem("token", action.payload.token);
+  }
 
+  if (action.payload.remember_token) {
+    state.remember_token = action.payload.remember_token;
+    localStorage.setItem("remember_token", action.payload.remember_token);
+  }
+
+  if (action.payload.user) {
+    state.user = {
+      ...state.user,
+      ...action.payload.user,
+    } as User;
+
+    localStorage.setItem("user", JSON.stringify(state.user));
+  }
+},
     logout: (state) => {
       state.token = null;
       state.user = null;

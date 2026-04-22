@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authorize } from "@/lib/auth";
 import { useGetPaymentStatusQuery } from "@/redux/features/payment/paymentApi";
@@ -204,6 +204,10 @@ export default function CreateAccountPage() {
         return null;
     }
   };
+
+  if (paymentLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

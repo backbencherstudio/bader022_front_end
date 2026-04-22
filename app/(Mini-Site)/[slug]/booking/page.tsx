@@ -75,8 +75,8 @@ export default function BookingPage() {
     "Select Services",
     "Select Date",
     "Payment Info",
-    "Card Info",
-    "Confirmed",
+    // "Card Info",
+    // "Confirmed",
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -93,7 +93,7 @@ export default function BookingPage() {
 
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
-  console.log(data?.data?.services);
+  // console.log(data?.data?.services);
 
   return (
     <div className="container mx-auto py-8">
@@ -131,6 +131,7 @@ export default function BookingPage() {
           <Step1
             onNext={() => setCurrentStep(2)}
             onBack={() => setCurrentStep(0)}
+            domain={data?.data?.website_domain}
             serviceId={selectedService.id}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}

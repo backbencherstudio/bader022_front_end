@@ -6,7 +6,7 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
@@ -38,21 +38,46 @@ export default function UserLoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // const redirect = searchParams.get("redirect");
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isEmail, setIsEmail] = useState("");
+  // const currentPath = window.location.pathname + window.location.search;
+  const redirect = searchParams.get("redirect") || "";
+
+  console.log(redirect);
+
+  // useEffect(() => {
+  //   const auth = authorize(["User", "Merchant", "Admin"]);
+  //   if (auth.authorized) {
+  //     const role = auth.user?.role;
+  //     const roleRedirectMap: Record<string, string> = {
+  //       Admin: "/admin/dashboard",
+  //       Merchant: "/merchant/dashboard",
+  //       User: "/user/dashboard",
+  //     };
+  //     router.push(roleRedirectMap[role] || "/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     const auth = authorize(["User", "Merchant", "Admin"]);
+
     if (auth.authorized) {
       const role = auth.user?.role;
+      if (redirect) {
+        router.replace(redirect);
+        return;
+      }
       const roleRedirectMap: Record<string, string> = {
         Admin: "/admin/dashboard",
         Merchant: "/merchant/dashboard",
         User: "/user/dashboard",
       };
+
       router.push(roleRedirectMap[role] || "/");
     }
   }, []);
@@ -84,8 +109,13 @@ export default function UserLoginPage() {
           }),
         );
         toast.success(t("Auth.Login.success"));
-        const role = response.data.user_type;
         setTimeout(() => {
+          if (redirect) {
+            router.replace(redirect);
+            return;
+          }
+          const role = response.data.user_type;
+
           if (role === "Admin") {
             router.replace("/admin/dashboard");
           } else if (role === "Merchant") {
@@ -245,7 +275,13 @@ export default function UserLoginPage() {
             {/* Footer */}
             <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
               {t("Auth.Login.noAccount")}{" "}
-              <Link href="/user-signup">
+              <Link
+                href={
+                  redirect
+                    ? `/user-signup?redirect=${encodeURIComponent(redirect)}`
+                    : "/user-signup"
+                }
+              >
                 <span className="text-blue-600 hover:underline">
                   {t("Auth.Login.signup")}
                 </span>

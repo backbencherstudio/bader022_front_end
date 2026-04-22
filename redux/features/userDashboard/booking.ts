@@ -47,6 +47,19 @@ export const dashboardApi = baseApi.injectEndpoints({
       providesTags: ["UserBooking"],
     }),
 
+   // select step 2 time and date
+    serviceBookingTimeDate: builder.query({
+      query: ({ service_id, date ,domain }) => ({
+        url: `/bokli/schedule/${domain}`,
+        method: "GET",
+        params: {
+          service_id,
+          date,
+        },
+      }),
+      providesTags: ["UserBooking"],
+    }),
+
     // select staff
     selectStaff: builder.query({
       query: ({ service_id, date, time }) => ({
@@ -86,6 +99,7 @@ export const {
   useBookingHistoryQuery,
   useBookingServiceQuery,
   useBookingTimeDateQuery,
+  useServiceBookingTimeDateQuery,
   usePaymentInformationMutation,
   useSelectStaffQuery,
   useBookingSuccessfullQuery,

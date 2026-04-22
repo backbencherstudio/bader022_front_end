@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { authorize } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { usePaymentInformationMutation } from "@/redux/features/userDashboard/booking";
 import { useRouter } from "next/navigation";
@@ -39,7 +40,7 @@ export default function Step2({
   ];
 
   const [method, setMethod] = useState("tap");
-
+  const router = useRouter();
   const [formData, setFormData] = useState({
     customer_name: "",
     email: "",
@@ -48,12 +49,16 @@ export default function Step2({
   });
 
   const [paymentInformation, { isLoading }] = usePaymentInformationMutation();
-
-  // const router = useRouter();
-  // useEffect(() => {
-  //   router.push("/booking-success")
-  // })
   const handleBooking = async () => {
+    const auth = authorize(["User", "Merchant", "Admin"]);
+    if (!auth.authorized) {
+      toast.error("Please login to proceed with your booking.");
+      const currentPath = window.location.pathname + window.location.search;
+      router.push(`/user-login?redirect=${encodeURIComponent(currentPath)}`);
+
+      return;
+    }
+
     const payload = {
       service_id: service.id,
       staff_id: "",
@@ -130,21 +135,6 @@ export default function Step2({
                     }
                   />
                 </div>
-                {/* <div>
-                  <Label>Phone *</Label>
-                  <Input
-                    className="mt-2"
-                    type="phone"
-                    placeholder="017xxxxxxxx"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        phone: e.target.value,
-                      })
-                    }
-                  />
-                </div> */}
                 <div>
                   <Label>Phone *</Label>
                   <Input

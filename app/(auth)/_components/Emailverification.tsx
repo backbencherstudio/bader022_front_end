@@ -8,7 +8,7 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,6 +28,8 @@ export default function Emailverification({ email }: EmailVerificationProps) {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
   const [loginVerify, { isLoading }] = useLoginVerifyMutation();
   const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -61,8 +63,14 @@ export default function Emailverification({ email }: EmailVerificationProps) {
         );
         // localStorage.setItem("remember_token", response.data.remember_token);
         toast.success(t("Auth.Login.success"));
-        const role = response.data.user_type;
+
         setTimeout(() => {
+          if (redirect) {
+            router.replace(redirect);
+            return;
+          }
+
+          const role = response.data.user_type;
           if (role === "Admin") {
             router.replace("/admin/dashboard");
           } else if (role === "Merchant") {

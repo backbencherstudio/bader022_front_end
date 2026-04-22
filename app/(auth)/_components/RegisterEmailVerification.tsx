@@ -8,7 +8,7 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,6 +30,8 @@ export default function RegisterEmailVerification({
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "";
   const [registerVerify, { isLoading }] = useRegisterVerifyMutation();
   const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -51,7 +53,11 @@ export default function RegisterEmailVerification({
       if (response.success) {
         setError(null);
         toast.success(locale == "ar" ? "" : "User Registered Successfully");
-        router.push("/user-login");
+        router.push(
+          redirect
+            ? `/user-login?redirect=${encodeURIComponent(redirect)}`
+            : "/user-login",
+        );
       }
     } catch (error: any) {
       // console.error("Error verifying OTP:", error);

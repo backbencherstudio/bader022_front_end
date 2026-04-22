@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 import {
-  useBookingTimeDateQuery,
   useSelectStaffQuery,
+  useServiceBookingTimeDateQuery,
 } from "@/redux/features/userDashboard/booking";
 
 import {
@@ -22,12 +22,11 @@ import {
 interface Step1Props {
   onNext: () => void;
   onBack: () => void;
-
+  domain: any;
   duration: string | number;
   price: number;
   serviceId: number;
   serviceName: string;
-
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
 
@@ -38,6 +37,7 @@ interface Step1Props {
 export default function Step1({
   onNext,
   onBack,
+  domain,
   serviceId,
   selectedDate,
   setSelectedDate,
@@ -50,13 +50,14 @@ export default function Step1({
   const formattedDate = selectedDate
     ? new Date(selectedDate).toLocaleDateString("en-CA")
     : new Date().toLocaleDateString("en-CA");
+  console.log(domain);
 
   console.log(serviceId, selectedDate, selectedTime, formattedDate);
 
   // Get available times
-  const { data, isLoading } = useBookingTimeDateQuery(
-    { service_id: serviceId, date: formattedDate },
-    { skip: !(serviceId && formattedDate) },
+  const { data, isLoading } = useServiceBookingTimeDateQuery(
+    { service_id: serviceId, date: formattedDate, domain },
+    { skip: !(serviceId && formattedDate && domain) },
   );
   const timeSlots = data?.available_times || [];
   const noAvailableSlot = data?.message || "";
@@ -74,6 +75,8 @@ export default function Step1({
       skip: !selectedTime,
     },
   );
+
+  console.log(staffData);
 
   const [noSlot, setNoSlot] = useState(false);
   useEffect(() => {

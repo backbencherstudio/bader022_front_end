@@ -3,8 +3,11 @@ import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
 import { getImageUrl } from "@/helper/formatImage";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function ServicesPreview() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const {
     servicesPreviewData,
     colorSystemData,
@@ -31,10 +34,11 @@ export default function ServicesPreview() {
               color: colorSystemData.headingColor,
               fontSize: typographyData.h1Size,
             }}
-            className="text-4xl lg:w-6/12 font-semibold text-gray-900 dark:text-white mb-3"
+            className="text-4xl lg:w-6/12 font-semibold mb-3"
           >
-            {servicesPreviewData.servicesPreviewTitle ||
-              "Customized Hair Treatments & Styling to Suit You"}
+            {servicesPreviewData.servicesPreviewTitle || locale == "ar"
+              ? "علاجات وتصفيف شعر مخصص يناسبك"
+              : "Customized Hair Treatments & Styling to Suit You"}
           </h3>
 
           <div className="flex flex-col md:flex-row gap-4 md:justify-between">
@@ -44,19 +48,20 @@ export default function ServicesPreview() {
                 color: colorSystemData.bodyTextColor,
                 fontSize: typographyData.bodySize,
               }}
-              className="text-gray-600 dark:text-gray-300 max-w-xl"
+              className="max-w-xl"
             >
-              {servicesPreviewData.servicesPreviewSubtitle ||
-                "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
+              {servicesPreviewData.servicesPreviewSubtitle || locale == "ar"
+                ? "استمتع بعناية متجددة وحلول تصفيف احترافية مصممة لتناسب جميع أنواع الشعر. تم تصميم علاجاتنا المغذية لاستعادة صحة الشعر."
+                : "Experience revitalizing care and expert styling solutions tailored to every hair type. Our nourishing treatments are designed to restore health"}
             </p>
             <button
               style={{
-                backgroundColor: colorSystemData.primaryColor,
+                backgroundColor: colorSystemData.primaryColor || "gray",
               }}
-              className="px-6 py-3 rounded-md text-white font-medium transition
+              className="px-6 py-3 rounded-md font-medium transition
                  hover:opacity-90 cursor-pointer"
             >
-              View More
+              {locale == "ar" ? "عرض المزيد" : "View More"}
             </button>
           </div>
         </div>
@@ -68,8 +73,7 @@ export default function ServicesPreview() {
               <div
                 className="
           rounded-2xl overflow-hidden
-          bg-white dark:bg-gray-800
-          border border-gray-200 dark:border-gray-700
+          border border-gray-200
           shadow-sm hover:shadow-md
           transition
         "
@@ -94,26 +98,24 @@ export default function ServicesPreview() {
                   className="p-5 space-y-4"
                 >
                   {/* Meta */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                       <span>⏱</span>
                       <span>{item.title || "Service"}</span>
                     </div>
 
-                    <span className="font-semibold text-gray-900 dark:text-white">
-                      {item.duration}
-                    </span>
+                    <span className="font-semibold ">{item.duration}</span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-lg font-semibold ">
                     {item.title || "Service"}
                   </h3>
 
                   {/* Description */}
                   <p
                     style={{ fontSize: typographyData.bodySize }}
-                    className="text-gray-600 dark:text-gray-300 line-clamp-2"
+                    className=" line-clamp-2"
                   >
                     {item.description}
                   </p>
@@ -122,15 +124,14 @@ export default function ServicesPreview() {
                   <Link href="/user/bookings/add-booking">
                     <button
                       style={{
-                        backgroundColor: colorSystemData.primaryColor,
+                        backgroundColor: colorSystemData.primaryColor || "gray",
                       }}
                       className="
-                px-5 py-2 rounded-md
-                text-white font-medium
+                px-5 py-2 rounded-md font-medium
                 transition hover:opacity-90 cursor-pointer
               "
                     >
-                      Book Now
+                      {locale == "ar" ? "احجز الآن" : "Book Now"}
                     </button>
                   </Link>
                 </div>

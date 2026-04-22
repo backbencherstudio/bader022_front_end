@@ -3,8 +3,11 @@ import React from "react";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import Link from "next/link";
 import { getImageUrl } from "@/helper/formatImage";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function CTABanner() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { ctaBannerData, colorSystemData, layoutSettingsData, typographyData } =
     useLandingPage();
 
@@ -42,7 +45,7 @@ export default function CTABanner() {
         )}
 
         {/* Overlay (light + dark) */}
-        <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
+        <div className="absolute inset-0" />
 
         {/* Content */}
         <div
@@ -54,9 +57,7 @@ export default function CTABanner() {
             flex flex-col items-center justify-center
             text-center
             px-4 sm:px-8 md:px-16
-            py-12 sm:py-16
-            text-white
-          "
+            py-12 sm:py-16"
         >
           <h2
             style={{
@@ -65,7 +66,9 @@ export default function CTABanner() {
             }}
             className="text-xl sm:text-2xl md:text-3xl font-bold"
           >
-            {ctaBannerData.ctaBannerTitle || "Your Hair Deserves the Best Care"}
+            {ctaBannerData.ctaBannerTitle || locale == "ar"
+              ? "شعرك يستحق أفضل عناية"
+              : "Your Hair Deserves the Best Care"}
           </h2>
 
           {/* {ctaBannerData.ctaBannerSubTitle && ( */}
@@ -74,25 +77,26 @@ export default function CTABanner() {
               color: colorSystemData.bodyTextColor,
               fontSize: typographyData.bodySize,
             }}
-            className="mt-4 mb-6 max-w-2xl text-sm sm:text-base text-gray-200"
+            className="mt-4 mb-6 max-w-2xl text-sm sm:text-base"
           >
-            {ctaBannerData.ctaBannerSubTitle ||
-              "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
+            {ctaBannerData.ctaBannerSubTitle || locale == "ar"
+              ? "احجز استشارة مع خبراء الشعر المعتمدين لدينا واختبر علاجات احترافية ومخصصة لشعرك. المقاعد محدودة! احجز موعدك الآن"
+              : "Book a consultation with our certified hair experts and experience professional, personalized hair treatments. Limited slots available! Secure your appointment"}
           </p>
           {/* )} */}
 
           <Link href={"/user/bookings/add-booking"}>
             <button
               style={{
-                backgroundColor: colorSystemData.primaryColor,
+                backgroundColor: colorSystemData.primaryColor || "gray",
               }}
               className="
               px-6 py-3 rounded-md
-              text-white font-medium            
+              font-medium            
               transition hover:opacity-90 cursor-pointer
             "
             >
-              Book A Consultation
+              {locale == "ar" ? "احجز استشارة" : "Book A Consultation"}
             </button>
           </Link>
         </div>

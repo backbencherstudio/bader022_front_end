@@ -2,8 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLandingPage } from "../../context/LandingBuilderContext";
 import { getImageUrl } from "@/helper/formatImage";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function Hero() {
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { heroData, brandingData, typographyData, colorSystemData } =
     useLandingPage();
   // console.log("====================================");
@@ -76,33 +79,30 @@ export default function Hero() {
     px-4 md:px-10 lg:px-16 pt-30 pb-10
   "
         >
-          <div
-            className="
-      max-w-5xl
-      text-white
-      text-left
-    "
-          >
+          <div className="max-w-5xl ">
             {/* {heroData.heroSubtitle && ( */}
             <h3
               style={{
                 color: colorSystemData.headingColor,
                 fontSize: Number(typographyData.h2Size),
               }}
-              className="text-xs md:text-sm uppercase tracking-wide opacity-90 text-white"
+              className="text-xs md:text-sm uppercase tracking-wide opacity-90"
             >
-              {heroData.heroSubtitle || "Care your hair"}
+              {heroData.heroSubtitle || locale == "ar"
+                ? "اعتنِ بشعرك"
+                : "Care your hair"}
             </h3>
             {/* )} */}
             <h1
-              className="font-bold mt-3 leading-tight lg:w-8/12 text-white "
+              className="font-bold mt-3 leading-tight lg:w-8/12 "
               style={{
                 fontSize: Number(typographyData.h1Size),
                 color: colorSystemData.headingColor,
               }}
             >
-              {heroData.heroTitle ||
-                "Nourish Your Scalp for Strong, Healthy Hair Growth"}
+              {heroData.heroTitle || locale == "ar"
+                ? "غذِّ فروة رأسك لنمو شعر قوي وصحي"
+                : "Nourish Your Scalp for Strong, Healthy Hair Growth"}
             </h1>
             {/* {heroData.heroDescription && ( */}
             <p
@@ -110,10 +110,11 @@ export default function Hero() {
                 color: colorSystemData.bodyTextColor,
                 fontSize: Number(typographyData.bodySize),
               }}
-              className="mt-1 text-sm md:text-lg lg:w-8/12 text-white "
+              className="mt-1 text-sm md:text-lg lg:w-8/12 "
             >
-              {heroData.heroDescription ||
-                "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
+              {heroData.heroDescription || locale == "ar"
+                ? "يبدأ تعزيز نمو الشعر بفروة رأس صحية ومتوازنة. إن العناية بفروة الرأس توفر الأساس لشعر أقوى وأكثر حيوية، مما يسمح لكل خصلة بالوصول إلى كامل إمكاناتها"
+                : "Nourishing hair growth starts with a healthy, balanced scalp. Caring for your scalp provides the foundation for stronger, more vibrant hair, allowing each strand to reach its full potential"}
             </p>
             {/* )} */}
             {/* Buttons */}
@@ -122,12 +123,14 @@ export default function Hero() {
               <Link href={"/user/bookings/add-booking"}>
                 <button
                   style={{
-                    backgroundColor: colorSystemData.primaryColor,
+                    backgroundColor: colorSystemData.primaryColor || "gray",
                   }}
                   className="px-6 py-3 rounded-md text-white font-medium transition
                  hover:opacity-90 cursor-pointer"
                 >
-                  {heroData.primaryBtn || "Get Started"}
+                  {heroData.primaryBtn || locale == "ar"
+                    ? "ابدأ الآن"
+                    : "Get Started"}
                 </button>
               </Link>
               {/* )} */}
@@ -137,12 +140,14 @@ export default function Hero() {
                 <button
                   style={{
                     // color: colorSystemData.secondaryColor,
-                    borderColor: colorSystemData.secondaryColor,
+                    borderColor: colorSystemData.secondaryColor || "gray",
                   }}
                   className="px-6 py-3 rounded-md border font-medium transition
                  hover:text-white cursor-pointer"
                 >
-                  {heroData.secondaryBtn || "Book A Consultation"}
+                  {heroData.secondaryBtn || locale == "ar"
+                    ? "احجز استشارة"
+                    : "Book A Consultation"}
                 </button>
               </Link>
               {/* )} */}

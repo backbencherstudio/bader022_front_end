@@ -27,7 +27,7 @@ export default function Hero() {
           />
         ) : (
           <Image
-            src={getImageUrl(heroData.heroImage) || "/images/heroImage.png"}
+            src={getImageUrl(heroData.heroImage) || "/images/heroImage.jpg"}
             alt="Hero background"
             fill
             className="object-cover"
@@ -61,10 +61,10 @@ export default function Hero() {
             src={
               brandingData.brandingLogoPreview
                 ? brandingData.brandingLogoPreview
-                : getImageUrl(brandingData.logo) || "/images/image 259.png"
+                : getImageUrl(brandingData.logo) || "/images/yourlogo.png"
             }
             alt="Logo"
-            width={brandingData.logoSize || 120}
+            width={brandingData.logoSize || 80}
             height={brandingData.logoSize || 40}
             className="object-contain"
             priority

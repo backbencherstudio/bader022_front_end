@@ -66,7 +66,7 @@ export default function MiniSiteFooter({ data }: MiniSiteFooterProps) {
               <Image
                 src={
                   getImageUrl(data?.global_setting?.branding_logo as string) ||
-                  "/images/image 259.png"
+                  "/images/yourlogo.png"
                 }
                 alt={data?.global_setting?.website_name || ""}
                 width={40}

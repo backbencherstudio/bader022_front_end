@@ -66,7 +66,8 @@ export default function WhyChooseUs() {
                   src={
                     whyChooseUsData.cardPreviewImageOne
                       ? whyChooseUsData.cardPreviewImageOne
-                      : getImageUrl(whyChooseUsData.cardImageOne)
+                      : getImageUrl(whyChooseUsData.cardImageOne) ||
+                        "/icons/Icon.png"
                   }
                   alt={whyChooseUsData.whyChooseUsTitleOne || "Feature icon"}
                   fill
@@ -113,7 +114,8 @@ export default function WhyChooseUs() {
                   src={
                     whyChooseUsData.cardPreviewImageTwo
                       ? whyChooseUsData.cardPreviewImageTwo
-                      : getImageUrl(whyChooseUsData.cardImageTwo)
+                      : getImageUrl(whyChooseUsData.cardImageTwo) ||
+                        "/icons/Icon.png"
                   }
                   alt={whyChooseUsData.whyChooseUsTitleTwo || "Feature icon"}
                   fill
@@ -160,7 +162,8 @@ export default function WhyChooseUs() {
                   src={
                     whyChooseUsData.cardPreviewImageThree
                       ? whyChooseUsData.cardPreviewImageThree
-                      : getImageUrl(whyChooseUsData.cardImageThree)
+                      : getImageUrl(whyChooseUsData.cardImageThree) ||
+                        "/icons/Icon.png"
                   }
                   alt={whyChooseUsData.whyChooseUsTitleThree || "Feature icon"}
                   fill

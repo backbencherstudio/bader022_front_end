@@ -163,7 +163,21 @@ export default function CreateDemo() {
             <Controller
               name="phone"
               control={control}
-              rules={{ required: "Phone number is required" }}
+              rules={{
+                required: "Phone number is required",
+                validate: (value) => {
+                  const digits = value?.replace(/\D/g, "") || "";
+                  // must include 966 + more than 9 digits total
+                  if (!digits.startsWith("966")) {
+                    return "Phone number must start with +966";
+                  }
+                  if (digits.length <= 8) {
+                    return "Phone number must be more than 9 digits including 966";
+                  }
+
+                  return true;
+                },
+              }}
               render={({ field }) => (
                 <PhoneInputWithCountrySelect
                   international

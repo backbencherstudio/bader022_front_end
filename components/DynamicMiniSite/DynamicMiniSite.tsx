@@ -21,6 +21,7 @@ interface MiniSiteData {
   service_title?: string;
   service_description?: string;
   hero_overlay_color?: string | null;
+  cta_image?: string | null;
   cta_overlay_color?: string;
   cta_subtitle?: string;
   cta_title?: string;
@@ -63,7 +64,7 @@ interface DynamicMiniSiteProps {
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
-  // console.log("loggg============", data);
+  console.log("loggg============", data);
   return (
     <div>
       {/* hero section */}
@@ -72,7 +73,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           {/* Background Image */}
           <Image
             src={
-              getImageUrl(data?.minisite?.hero_image) || "/images/heroImage.png"
+              getImageUrl(data?.minisite?.hero_image) || "/images/heroImage.jpg"
             }
             alt="Hero background"
             fill
@@ -106,7 +107,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             <Image
               src={
                 getImageUrl(data?.global_setting?.branding_logo) ||
-                "/images/image 259.png"
+                "/images/yourlogo.png"
               }
               alt="Logo"
               width={120}
@@ -597,7 +598,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
           {/* Background Image */}
           <Image
             src={
-              //   ctaBannerData.ctaBannerImage ||
+              getImageUrl(data?.minisite?.cta_image ?? undefined) ||
               "/images/mini-site/ctaBannerImage.png"
             }
             alt="CTA"

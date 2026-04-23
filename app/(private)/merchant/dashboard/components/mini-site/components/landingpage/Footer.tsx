@@ -39,9 +39,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Image
-              src={
-                getImageUrl(footerData.footerLogo) || "/images/image 259.png"
-              }
+              src={getImageUrl(footerData.footerLogo) || "/images/yourlogo.png"}
               alt={footerData.footerTitle}
               width={40}
               height={40}
@@ -164,21 +162,21 @@ export default function Footer() {
               <IconCircle>
                 <FaPhoneAlt />
               </IconCircle>
-              {footerData.contact_info}
+              {footerData.contact_info || "+966..........."}
             </li>
 
             <li className="flex items-center gap-3">
               <IconCircle>
                 <FaEnvelope />
               </IconCircle>
-              {footerData.contact_email}
+              {footerData.contact_email || "gmail@example.com"}
             </li>
 
             <li className="flex items-center gap-3">
               <IconCircle>
                 <FaMapMarkerAlt />
               </IconCircle>
-              {footerData.address}
+              {footerData.address || "Saudi Arabia"}
             </li>
           </ul>
         </div>

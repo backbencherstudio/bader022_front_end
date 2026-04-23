@@ -112,7 +112,8 @@ export default function page() {
             />
             <StatCard
               title={locale == "ar" ? "أفضل خدمة" : "Top Service"}
-              value={locale == "ar" ? "قص الشعر" : "Haircut"}
+              // value={locale == "ar" ? "قص الشعر" : "Haircut"}
+              value={locale == "ar" ? "" : ""}
               Icon={Star}
             />
           </div>

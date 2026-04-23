@@ -95,12 +95,12 @@ export default function BusinessSetting() {
           day,
           enabled: found ? !found.is_closed : false,
           from: found?.open_time || "09:00",
-          to: found?.close_time || "18:00",
+          to: found?.close_time || "24:00",
         };
       });
 
       reset({
-        store_name: data.store_name || "",
+        store_name: data.store_name,
         business_category: data.business_category || "",
         business_address: data.business_address || "",
         country: data.country || "Saudi Arabia",
@@ -132,6 +132,8 @@ export default function BusinessSetting() {
     // console.log("payload", payload);
     try {
       const response = await updateBusinessSetting(payload);
+
+      console.log(response);
 
       if (response?.data?.success === false) {
         toast.error(response.data.message);
@@ -168,7 +170,7 @@ export default function BusinessSetting() {
                 required: "Business name is required",
               })}
               disabled
-              placeholder="My Store"
+              placeholder=""
             />
 
             {errors.store_name && (
@@ -265,7 +267,9 @@ export default function BusinessSetting() {
               {locale === "ar" ? "فئة المتجر" : "Business Category"}
             </label>
             <Input
-              {...register("business_category", {})}
+              {...register("business_category", {
+                required: "Business Category is required",
+              })}
               disabled
               className="opacity-100"
             />

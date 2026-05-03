@@ -37,6 +37,8 @@ export default function ServicesPage() {
   const [deleteServiceById, { isLoading: isDeleteServiceLoading }] =
     useDeleteServiceByIdMutation();
 
+  console.log(servicesData);
+
   // SAFE ARRAY (prevents map/filter crash)
   const services = servicesData?.data ?? [];
 
@@ -132,16 +134,6 @@ export default function ServicesPage() {
       },
     });
   };
-
-  // const handleDelete = async (id: string) => {
-  //   if (!confirm("Are you sure you want to delete this service?")) return;
-
-  //   await toast.promise(deleteServiceById(id).unwrap(), {
-  //     loading: "Deleting service...",
-  //     success: "Service deleted successfully",
-  //     error: (err) => err?.data?.message || "Delete failed ",
-  //   });
-  // };
 
   if (isLoading) return <p className="p-6">Loading services...</p>;
   if (isError)

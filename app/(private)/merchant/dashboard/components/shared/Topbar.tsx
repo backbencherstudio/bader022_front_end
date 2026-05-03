@@ -1,6 +1,16 @@
 "use client";
 
-import { Sun, Moon, BellDot, ChevronDown } from "lucide-react";
+import {
+  Sun,
+  Moon,
+  BellDot,
+  ChevronDown,
+  Building2,
+  User,
+  CreditCard,
+  LogOut,
+  Check,
+} from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import Image from "next/image";
@@ -12,10 +22,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { logout } from "@/redux/features/auth/authSlice";
+import { logout, setCredentials } from "@/redux/features/auth/authSlice";
+import { useAllBranchQuery } from "@/redux/features/merchant/branchApi";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -26,22 +43,39 @@ export default function TopBar() {
   const { user } = useAppSelector((state) => state.auth);
   const { setTheme } = useTheme();
   const { locale, setLocale, t } = useI18n();
-
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const isRTL = locale === "ar";
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { data: branchData, isLoading } = useAllBranchQuery({});
+  const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
+
+  console.log(branchData);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     setTheme(!isDarkMode ? "light" : "dark");
   };
 
-  const isRTL = locale === "ar";
-  const router = useRouter();
-  const dispatch = useAppDispatch();
   const handlelogout = () => {
-    // dispatch(logout());
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("user");
+    dispatch(logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     router.push("/");
+  };
+
+  const handleBranchSelect = (branch: any) => {
+    // Update the UI label
+    setSelectedBranch(branch.name);
+    console.log("Selected Branch ID:", branch.id);
+    dispatch(
+      setCredentials({
+        branch: branch?.id,
+      }),
+    );
+
+    // Tip: You can also dispatch an action here if you need
+    // the branch ID globally in your Redux store
   };
 
   return (
@@ -126,10 +160,10 @@ export default function TopBar() {
           {t("Topbar.visitWebsite")}
         </button>
 
-        {/* Profile */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <button className="flex items-center gap-2 rounded-full transition">
+        {/* Profile Dropdown */}
+        <DropdownMenu dir={isRTL ? "rtl" : "ltr"}>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 rounded-full transition outline-none">
               <Image
                 src={
                   getImageUrl(user?.image as string) || "/images/profile.png"
@@ -137,21 +171,79 @@ export default function TopBar() {
                 alt={user?.name || "User"}
                 width={40}
                 height={40}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover border border-gray-200"
               />
-
-              {/* Hide on mobile */}
               <div className="hidden md:block text-left">
-                <p className="text-black dark:text-white font-semibold text-sm">
+                <p className="text-black dark:text-white font-semibold text-sm leading-none">
                   {user?.name}
                 </p>
-                <p className="text-gray-500 dark:text-gray-300 text-xs">
+                <p className="text-gray-500 dark:text-gray-300 text-xs mt-1">
                   {user?.email}
                 </p>
               </div>
             </button>
-          </DialogTrigger>
-        </Dialog>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-64 p-2">
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">{user?.name}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
+            {/* Sub-menu for Branch Selection */}
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="flex justify-between items-center py-2 cursor-pointer">
+                {/* <div className="flex items-center gap-2">
+                  <Building2 size={16} />
+                  {selectedBranch == "Main Branch"
+                    ? "Default Branch"
+                    : selectedBranch}
+                </div> */}
+                <span className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded border ml-2">
+                  {selectedBranch}
+                </span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent className="w-48">
+                  {isLoading ? (
+                    <div className="p-2 text-xs text-center text-gray-400">
+                      Loading branches...
+                    </div>
+                  ) : (
+                    branchData?.data?.map((branch: any) => (
+                      <DropdownMenuItem
+                        key={branch.id}
+                        onClick={() => handleBranchSelect(branch)}
+                        className="flex justify-between items-center cursor-pointer"
+                      >
+                        {branch.name}
+                        {/* Show checkmark if this branch is currently selected */}
+                        {selectedBranch === branch.name && (
+                          <Check size={14} className="text-green-500" />
+                        )}
+                      </DropdownMenuItem>
+                    ))
+                  )}
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onClick={handlelogout}
+              className="flex items-center gap-2 py-2 cursor-pointer text-red-500 focus:text-red-500"
+            >
+              <LogOut size={16} />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

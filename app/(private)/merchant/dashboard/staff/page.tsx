@@ -34,7 +34,7 @@ export default function StaffPage() {
     staff.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  console.log(filteredStaff);
+  // console.log(filteredStaff);
 
   const handleSubmitStaff = async (data: any) => {
     if (mode === "add") {

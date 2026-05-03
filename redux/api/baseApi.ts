@@ -33,17 +33,22 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     const remember_token = (getState() as RootState).auth.remember_token;
+    const branch = (getState() as RootState).auth.branch;
+    
 
     // console.log(token);
     // console.log(remember_token);
+    // console.log(branch);
     
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
-    else if (remember_token) {
+   if (remember_token) {
       headers.set("Remember-Token", remember_token);
     }
-
+    if (branch) {
+        headers.set("X-Branch-Id", String(branch));
+      }
     return headers;
   },
 });
@@ -90,6 +95,7 @@ export const baseApi = createApi({
     "Transaction",
     "Setting",
     "Reschedule",
+    "Branch"
   ],
   endpoints: () => ({}),
 });

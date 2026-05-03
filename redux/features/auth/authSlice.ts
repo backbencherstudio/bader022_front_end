@@ -17,6 +17,7 @@ interface AuthState {
   token: string | null;
   remember_token: string | null;
   user: User | null;
+  branch:string | null
 
 }
 
@@ -28,6 +29,7 @@ const getInitialState = (): AuthState => {
       user: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user") as string)
         : null,
+      branch:localStorage.getItem("branch"),
     };
   }
 
@@ -35,6 +37,7 @@ const getInitialState = (): AuthState => {
     token: null,
     remember_token: null,
     user: null,
+    branch:null
   };
 };
 
@@ -64,6 +67,7 @@ setCredentials: (
     token?: string;
     remember_token?: string;
     user?: Partial<User>;
+    branch?:string;
   }>,
 ) => {
   if (action.payload.token) {
@@ -83,6 +87,11 @@ setCredentials: (
     } as User;
 
     localStorage.setItem("user", JSON.stringify(state.user));
+  }
+
+  if (action.payload.branch) {
+    state.branch = action.payload.branch;
+    localStorage.setItem("branch", action.payload.branch);
   }
 },
     logout: (state) => {

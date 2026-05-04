@@ -43,6 +43,19 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Setting"],
     }),
+   
+   createBranch: builder.mutation({
+      query: ({ body }) => {
+        // console.log("body in adminApi", body);
+        return {
+          url: "admin/branch/store",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["Setting"],
+    }),
+
   }),
 });
 
@@ -50,5 +63,6 @@ export const {
   useUpdateBusinessSettingMutation,
   useGetMerchantTapkeyQuery,
   useUpdateMerchantTapkeyMutation,
-  useGetMerchantDataShowQuery
+  useGetMerchantDataShowQuery,
+  useCreateBranchMutation
 } = settingApi;

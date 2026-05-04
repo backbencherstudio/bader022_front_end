@@ -33,6 +33,8 @@ import {
 import { useRouter } from "next/navigation";
 import { logout, setCredentials } from "@/redux/features/auth/authSlice";
 import { useAllBranchQuery } from "@/redux/features/merchant/branchApi";
+import Link from "next/link";
+import { baseApi } from "@/redux/api/baseApi";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -50,7 +52,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  console.log(branchData);
+  // console.log(branchData);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -67,12 +69,21 @@ export default function TopBar() {
   const handleBranchSelect = (branch: any) => {
     // Update the UI label
     setSelectedBranch(branch.name);
-    console.log("Selected Branch ID:", branch.id);
+    // console.log("Selected Branch ID:", branch.id);
     dispatch(
       setCredentials({
         branch: branch?.id,
       }),
     );
+    dispatch(
+      baseApi.util.invalidateTags([
+        "Dashboard",
+        "Bookings",
+        "Analytics",
+        "Services",
+      ]),
+    );
+    router.refresh();
 
     // Tip: You can also dispatch an action here if you need
     // the branch ID globally in your Redux store
@@ -153,12 +164,13 @@ export default function TopBar() {
         </DropdownMenu>
 
         {/* Visit Website */}
-        <button
-          onClick={handlelogout}
+        <Link
+          href={"/"}
+          // onClick={handlelogout}
           className="hidden md:block bg-[#262626] cursor-pointer text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm"
         >
           {t("Topbar.visitWebsite")}
-        </button>
+        </Link>
 
         {/* Profile Dropdown */}
         <DropdownMenu dir={isRTL ? "rtl" : "ltr"}>

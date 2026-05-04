@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import MerchantTapkey from "../components/settings/MerchantTapkey";
 import MerchantProfile from "../components/settings/MerchantProfile";
 import { useI18n } from "@/components/provider/I18nProvider";
+import BranchSettings from "../components/settings/BranchSettings";
 
 type PasswordFormData = {
   oldPassword: string;
@@ -104,22 +105,22 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
             Language
           </div>
         </li> */}
-        {/* <li
+        <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
-            activeSection === "support"
+            activeSection === "branch"
               ? "bg-gray-300 text-black"
               : "text-muted-foreground hover:bg-muted/30",
           )}
-          onClick={() => setActiveSection("support")}
+          onClick={() => setActiveSection("branch")}
         >
           <div className="flex items-center gap-2">
             <span className="text-lg">
               <ShieldQuestionMark />
             </span>
-            Support
+            {locale == "ar" ? "فرع" : "Branch"}
           </div>
-        </li> */}
+        </li>
         {/* Tap-key */}
         <li
           className={cn(
@@ -203,17 +204,17 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
           >
             Language
           </li> */}
-          {/* <li
+          <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
-              activeSection === "support"
+              activeSection === "branch"
                 ? "bg-gray-300 text-black"
                 : "text-muted-foreground hover:bg-muted/30",
             )}
-            onClick={() => setActiveSection("support")}
+            onClick={() => setActiveSection("branch")}
           >
-            Support
-          </li> */}
+            {locale == "ar" ? "فرع" : "Branch"}
+          </li>
           <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
@@ -269,35 +270,8 @@ function AccountSettingsForm() {
 
   return (
     <div className="flex flex-col gap-8 p-6 w-full">
-      {/* <Card className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold">Full Name *</label>
-              <Input className="mt-2" placeholder={user?.name} />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold">
-                Email Address *
-              </label>
-              <Input className="mt-2" placeholder={user?.email} />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold">
-                Phone Number *
-              </label>
-              <Input className="mt-2" placeholder={user?.phone} />
-            </div>
-          </div>
-        </CardContent>
-      </Card> */}
       <MerchantProfile />
-
       {/* Change Password Section */}
-
       <Card className="rounded-xl p-8 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
         <h3 className="text-[18px] font-semibold mb-4">
           {t("ChangePassword.title")}
@@ -448,6 +422,8 @@ function getActiveSectionContent(activeSection: string, t: any) {
       return <SupportSettings />;
     case "tapkey":
       return <MerchantTapkey />;
+    case "branch":
+      return <BranchSettings />;
     case "account":
     default:
       return <AccountSettingsForm />;

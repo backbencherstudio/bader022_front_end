@@ -91,9 +91,13 @@ export default function BookingPage() {
   //     // { skip: !selectedService }
   //   );
 
-  const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
+  // const { data, isLoading } = useMiniSiteByDomainNameQuery(`${domain}`);
+  const { data, isLoading } = useMiniSiteByDomainNameQuery({
+    domainName: domain as string,
+    branch_id: selectedService?.id?.toString(),
+  });
 
-  console.log(data?.data);
+  // console.log(data?.data);
 
   return (
     <div className="container mx-auto py-8">
@@ -122,7 +126,7 @@ export default function BookingPage() {
           <Step0
             selectedService={selectedService}
             setSelectedService={setSelectedService}
-            data={data?.data?.services}
+            data={data?.data}
             onNext={() => setCurrentStep(1)}
           />
         )}

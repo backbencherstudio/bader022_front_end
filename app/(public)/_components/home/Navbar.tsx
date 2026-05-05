@@ -7,13 +7,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getImageUrl } from "@/helper/formatImage";
 import { useAppSelector } from "@/redux/hooks";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const LANGS = {
@@ -24,6 +26,7 @@ const LANGS = {
 export default function Navbar() {
   const { locale, setLocale, t } = useI18n();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const { user } = useAppSelector((state) => state.auth);
   // console.log(user);
 
@@ -50,7 +53,6 @@ export default function Navbar() {
       { name: t("Nav.faqs"), href: "/#faq-section", hash: "#faq-section" },
       { name: t("Nav.pricing"), href: "/pricing", hash: "" },
     ];
-
     return (
       <>
         {links.map((link) => {
@@ -83,6 +85,16 @@ export default function Navbar() {
         })}
       </>
     );
+  };
+
+  const handleDashboard = () => {
+    if (user?.role === "Admin") {
+      router.replace("/admin/dashboard");
+    } else if (user?.role === "Merchant") {
+      router.replace("/merchant/dashboard");
+    } else {
+      router.replace("/user/dashboard");
+    }
   };
 
   return (
@@ -150,26 +162,59 @@ export default function Navbar() {
             </DropdownMenu>
 
             {/* CTA (desktop only) */}
-            <Link
-              href={"/login"}
-              className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
-            >
-              {t("Nav.button")}
-              {/* <ArrowUpRight
+            {user?.role ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    onClick={handleDashboard}
+                    className="flex items-center gap-2 rounded-full transition outline-none cursor-pointer"
+                  >
+                    <Image
+                      src={
+                        getImageUrl(user?.image as string) ||
+                        "/images/profile.png"
+                      }
+                      alt={user?.name || "User"}
+                      width={40}
+                      height={40}
+                      className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                    />
+                    <div className="hidden md:block text-left">
+                      <p className="text-black dark:text-white font-semibold text-sm leading-none">
+                        {user?.name}
+                      </p>
+                      <p className="text-gray-500 dark:text-gray-300 text-xs mt-1">
+                        {user?.email}
+                      </p>
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+              </DropdownMenu>
+            ) : (
+              <>
+                {" "}
+                <Link
+                  href={"/login"}
+                  className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
+                >
+                  {t("Nav.button")}
+                  {/* <ArrowUpRight
                 size={18}
                 className={locale === "ar" ? "rotate-270" : ""}
               /> */}
-            </Link>
-            <Link
-              href={"/create-account"}
-              className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
-            >
-              {t("Nav.signup")}
-              {/* <ArrowUpRight
+                </Link>
+                <Link
+                  href={"/create-account"}
+                  className="hidden md:flex rounded-2xl px-3 py-1.5 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold text-[16px]"
+                >
+                  {t("Nav.signup")}
+                  {/* <ArrowUpRight
                 size={18}
                 className={locale === "ar" ? "rotate-270" : ""}
               /> */}
-            </Link>
+                </Link>
+              </>
+            )}
 
             {/* Mobile Toggle */}
             <button
@@ -190,30 +235,34 @@ export default function Navbar() {
           >
             <nav className="flex flex-col gap-4 px-6 py-6 text-[18px] font-semibold text-black">
               <NavLinks onClick={() => setOpen(false)} />
-              <Link href={"/login"}>
-                <Button
-                  onClick={() => setOpen(false)}
-                  className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
-                >
-                  {t("Nav.button")}
-                  {/* <ArrowUpRight
+              {!user?.role && (
+                <>
+                  <Link href={"/login"}>
+                    <Button
+                      onClick={() => setOpen(false)}
+                      className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
+                    >
+                      {t("Nav.button")}
+                      {/* <ArrowUpRight
                     size={18}
                     className={locale === "ar" ? "rotate-270" : ""}
                   /> */}
-                </Button>
-              </Link>
-              <Link href={"/create-account"}>
-                <Button
-                  onClick={() => setOpen(false)}
-                  className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
-                >
-                  {t("Nav.signup")}
-                  {/* <ArrowUpRight
+                    </Button>
+                  </Link>
+                  <Link href={"/create-account"}>
+                    <Button
+                      onClick={() => setOpen(false)}
+                      className="mt-4 w-full rounded-md py-4 bg-linear-to-r from-blue-500 to-indigo-500 text-white font-semibold flex items-center"
+                    >
+                      {t("Nav.signup")}
+                      {/* <ArrowUpRight
                     size={18}
                     className={locale === "ar" ? "rotate-270" : ""}
                   /> */}
-                </Button>
-              </Link>
+                    </Button>
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         )}

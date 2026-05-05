@@ -11,7 +11,9 @@ export default function DynamicMiniSitePage() {
 
   // console.log(domain);
 
-  const { data, isLoading } = useMiniSiteByDomainNameQuery(`${domain}`);
+  const { data, isLoading } = useMiniSiteByDomainNameQuery({
+    domainName: domain as string,
+  });
 
   // console.log(data);
 

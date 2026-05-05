@@ -12,13 +12,26 @@ export const servicesApi = baseApi.injectEndpoints({
     }),
 
     // Get MiniSite By Domain Name
+    // miniSiteByDomainName: builder.query({
+    //   query: (domainName: string) => ({
+    //     url: `/bokli/${domainName}`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["MiniSite"],
+    // }),
+
     miniSiteByDomainName: builder.query({
-      query: (domainName: string) => ({
+    query: ({ domainName, branch_id }: { domainName: string; branch_id?: string }) => {
+      return {
         url: `/bokli/${domainName}`,
         method: "GET",
-      }),
-      providesTags: ["MiniSite"],
-    }),
+        params: {
+          branch_id: branch_id,
+        },
+      };
+    },
+    providesTags: ["MiniSite"],
+  }),
 
     // Create MiniSite
     createMiniSite: builder.mutation<any, FormData>({

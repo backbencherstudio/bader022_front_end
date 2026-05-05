@@ -44,16 +44,41 @@ export const settingApi = baseApi.injectEndpoints({
       providesTags: ["Setting"],
     }),
    
-   createBranch: builder.mutation({
-      query: ({ body }) => {
-        // console.log("body in adminApi", body);
-        return {
-          url: "admin/branch/store",
-          method: "POST",
-          body,
-        };
-      },
-      invalidatesTags: ["Setting"],
+  //  createBranch: builder.mutation({
+  //     query: ({ body }) => {
+  //       // console.log("body in adminApi", body);
+  //       return {
+  //         url: "admin/branch/store",
+  //         method: "POST",
+  //         body,
+  //       };
+  //     },
+  //     invalidatesTags: ["Setting"],
+  //   }),
+      createBranch: builder.mutation({
+      query: ({ body }) => ({
+        url: "admin/branch/store",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Setting", "Branch"],
+    }),
+
+    updateBranch: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `admin/branch/update/${id}`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Setting", "Branch"],
+    }),
+
+    deleteBranch: builder.mutation({
+      query: (id) => ({
+        url: `admin/branch/delete/${id}`,
+        method: "DELETE", 
+      }),
+      invalidatesTags: ["Setting", "Branch"],
     }),
 
   }),
@@ -64,5 +89,7 @@ export const {
   useGetMerchantTapkeyQuery,
   useUpdateMerchantTapkeyMutation,
   useGetMerchantDataShowQuery,
-  useCreateBranchMutation
+  useCreateBranchMutation,
+  useUpdateBranchMutation,
+  useDeleteBranchMutation
 } = settingApi;

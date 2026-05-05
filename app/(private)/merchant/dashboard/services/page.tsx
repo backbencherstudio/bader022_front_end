@@ -18,6 +18,7 @@ import {
 import { getImageUrl } from "@/helper/formatImage";
 import { toast } from "sonner";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { MdLocationOn } from "react-icons/md";
 
 export default function ServicesPage() {
   const { t, locale } = useI18n();
@@ -37,7 +38,7 @@ export default function ServicesPage() {
   const [deleteServiceById, { isLoading: isDeleteServiceLoading }] =
     useDeleteServiceByIdMutation();
 
-  console.log(servicesData);
+  // console.log(servicesData);
 
   // SAFE ARRAY (prevents map/filter crash)
   const services = servicesData?.data ?? [];
@@ -230,7 +231,13 @@ export default function ServicesPage() {
               </div>
 
               <div className="p-5 space-y-3">
-                <h3 className="font-semibold">{service?.service_name}</h3>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold">{service?.service_name}</h3>
+                  <p className="flex gap-1 items-center">
+                    <MdLocationOn />
+                    {service?.branch?.name}
+                  </p>
+                </div>
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <FiClock />

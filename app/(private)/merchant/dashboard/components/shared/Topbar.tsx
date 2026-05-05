@@ -52,7 +52,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  // console.log(user?.miniSiteAccess);
+  console.log(user);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -77,10 +77,23 @@ export default function TopBar() {
     );
     dispatch(
       baseApi.util.invalidateTags([
+        "Payment",
+        "Plan",
+        "Subscription",
+        "information",
+        "UserBooking",
+        "merchant",
+        "Merchants",
         "Dashboard",
         "Bookings",
-        "Analytics",
         "Services",
+        "Staff",
+        "MiniSite",
+        "Analytics",
+        "Transaction",
+        "Setting",
+        "Reschedule",
+        "Branch",
       ]),
     );
     router.refresh();
@@ -239,7 +252,7 @@ export default function TopBar() {
                           >
                             {branch.name}
                             {/* Show checkmark if this branch is currently selected */}
-                            {selectedBranch === branch.name && (
+                            {selectedBranch === branch?.name && (
                               <Check size={14} className="text-green-500" />
                             )}
                           </DropdownMenuItem>

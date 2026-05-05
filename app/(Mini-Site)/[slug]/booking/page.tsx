@@ -93,7 +93,7 @@ export default function BookingPage() {
 
   const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
 
-  // console.log(data?.data?.services);
+  console.log(data?.data);
 
   return (
     <div className="container mx-auto py-8">

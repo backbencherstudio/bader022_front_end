@@ -52,7 +52,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  // console.log(branchData);
+  // console.log(user?.miniSiteAccess);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -209,43 +209,48 @@ export default function TopBar() {
             <DropdownMenuSeparator />
 
             {/* Sub-menu for Branch Selection */}
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="flex justify-between items-center py-2 cursor-pointer">
-                {/* <div className="flex items-center gap-2">
+            {user?.website_domain && (
+              <>
+                {" "}
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="flex justify-between items-center py-2 cursor-pointer">
+                    {/* <div className="flex items-center gap-2">
                   <Building2 size={16} />
                   {selectedBranch == "Main Branch"
                     ? "Default Branch"
                     : selectedBranch}
                 </div> */}
-                <span className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded border ml-2">
-                  {selectedBranch}
-                </span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent className="w-48">
-                  {isLoading ? (
-                    <div className="p-2 text-xs text-center text-gray-400">
-                      Loading branches...
-                    </div>
-                  ) : (
-                    branchData?.data?.map((branch: any) => (
-                      <DropdownMenuItem
-                        key={branch.id}
-                        onClick={() => handleBranchSelect(branch)}
-                        className="flex justify-between items-center cursor-pointer"
-                      >
-                        {branch.name}
-                        {/* Show checkmark if this branch is currently selected */}
-                        {selectedBranch === branch.name && (
-                          <Check size={14} className="text-green-500" />
-                        )}
-                      </DropdownMenuItem>
-                    ))
-                  )}
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuSeparator />
+                    <span className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded border ml-2">
+                      {selectedBranch}
+                    </span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent className="w-48">
+                      {isLoading ? (
+                        <div className="p-2 text-xs text-center text-gray-400">
+                          Loading branches...
+                        </div>
+                      ) : (
+                        branchData?.data?.map((branch: any) => (
+                          <DropdownMenuItem
+                            key={branch.id}
+                            onClick={() => handleBranchSelect(branch)}
+                            className="flex justify-between items-center cursor-pointer"
+                          >
+                            {branch.name}
+                            {/* Show checkmark if this branch is currently selected */}
+                            {selectedBranch === branch.name && (
+                              <Check size={14} className="text-green-500" />
+                            )}
+                          </DropdownMenuItem>
+                        ))
+                      )}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+                <DropdownMenuSeparator />
+              </>
+            )}
 
             <DropdownMenuItem
               onClick={handlelogout}

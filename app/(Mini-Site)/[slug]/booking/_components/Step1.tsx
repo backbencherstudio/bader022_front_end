@@ -100,7 +100,7 @@ export default function Step1({
         {/* Calendar */}
         <div className="border rounded-xl overflow-hidden ">
           <div className="border-gray-200 dark:border-gray-700 dark:bg-gray-800  px-5 py-4 font-semibold">
-            Select Date {locale == "ar" ? "" : ""}
+            {locale == "ar" ? "اختر التاريخ" : "Select Date"}
           </div>
 
           <div className="p-5">
@@ -111,20 +111,20 @@ export default function Step1({
               onSelect={(newDate) =>
                 newDate && setSelectedDate(newDate.toLocaleDateString("en-CA"))
               }
-              className="w-full dark:bg-gray-800"
+              className="w-full h-90 dark:bg-gray-800 overflow-auto"
             />
           </div>
         </div>
 
         {/* Time Slots */}
-        <div className="border rounded-xl overflow-hidden">
+        <div className="border rounded-xl overflow-auto">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Available Times {locale == "ar" ? "" : ""}
+            {locale == "ar" ? "الأوقات المتاحة" : "Available Times"}
           </div>
 
           <div className="p-5 sm:p-6">
             {isLoading ? (
-              <p>Loading... {locale == "ar" ? "" : ""}</p>
+              <p> {locale == "ar" ? "جارٍ التحميل..." : "Loading..."}</p>
             ) : noSlot ? (
               <p className="text-red-500 font-medium">
                 {/* No slots available for this date */}
@@ -154,9 +154,8 @@ export default function Step1({
         {/* Staff */}
         <div className="border rounded-xl overflow-hidden">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Select Staff {locale == "ar" ? "" : ""}
+            {locale == "ar" ? "اختر الموظف" : "Select Staff"}
           </div>
-
           <div className="p-5">
             <Select onValueChange={(value) => setStaffId(value)}>
               <SelectTrigger className="h-11">
@@ -165,12 +164,14 @@ export default function Step1({
 
               <SelectContent>
                 <SelectItem value="no-preference">
-                  No preference {locale == "ar" ? "" : ""}
+                  {locale == "ar" ? "لا يوجد تفضيل" : "No preference"}
                 </SelectItem>
 
                 {staffs.length === 0 ? (
                   <SelectItem value="no-staff">
-                    No staff available {locale == "ar" ? "" : ""}
+                    {locale == "ar"
+                      ? "لا يوجد موظفون متاحون"
+                      : "No staff available"}
                   </SelectItem>
                 ) : (
                   staffs.map((staff: any) => (

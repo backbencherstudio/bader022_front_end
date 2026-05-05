@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/components/provider/I18nProvider";
 import { useCreateBranchMutation } from "@/redux/features/merchant/settingApi";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { baseApi } from "@/redux/api/baseApi";
 
 interface BranchFormData {
   name: string;
@@ -18,6 +21,8 @@ interface BranchFormData {
 export default function BranchSettings() {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [createBranch, { isLoading }] = useCreateBranchMutation();
 
   const form = useForm<BranchFormData>({
@@ -43,10 +48,11 @@ export default function BranchSettings() {
       toast.success(
         locale == "ar" ? "تم إنشاء الفرع بنجاح" : "Branch Created successfully",
       );
+      dispatch(baseApi.util.invalidateTags(["Branch", "Setting"]));
+      router.refresh();
       form.reset();
     } catch (error: any) {
-      console.log(error);
-
+      // console.log(error);
       toast.error(
         error?.data?.message,
         // locale == "ar" ? "فشل في إنشاء الفرع" : "Failed to Create branch",

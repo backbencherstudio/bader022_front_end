@@ -180,7 +180,9 @@ export function LandingPageProvider({
 }) {
   const { user } = useAppSelector((state) => state.auth);
   const domain = user?.website_domain;
-  const { data } = useMiniSiteByDomainNameQuery(`${domain}`);
+  const { data } = useMiniSiteByDomainNameQuery({
+    domainName: domain as string,
+  });
   // console.log(data);
 
   const [heroData, setHeroData] = useState<HeroData>({

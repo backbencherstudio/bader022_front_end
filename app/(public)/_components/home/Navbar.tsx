@@ -88,13 +88,14 @@ export default function Navbar() {
   };
 
   const handleDashboard = () => {
-    if (user?.role === "Admin") {
-      router.replace("/admin/dashboard");
-    } else if (user?.role === "Merchant") {
-      router.replace("/merchant/dashboard");
-    } else {
-      router.replace("/user/dashboard");
-    }
+    // if (user?.role === "Admin") {
+    //   router.replace("/admin/dashboard");
+    // } else if (user?.role === "Merchant") {
+    //   router.replace("/merchant/dashboard");
+    // } else {
+    //   router.replace("/user/dashboard");
+    // }
+    router.replace("/dashboard");
   };
 
   return (
@@ -180,10 +181,10 @@ export default function Navbar() {
                       className="w-10 h-10 rounded-full object-cover border border-gray-200"
                     />
                     <div className="hidden md:block text-left">
-                      <p className="text-black dark:text-white font-semibold text-sm leading-none">
+                      <p className="text-black dark:text-gray-600 font-semibold text-sm leading-none">
                         {user?.name}
                       </p>
-                      <p className="text-gray-500 dark:text-gray-300 text-xs mt-1">
+                      <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">
                         {user?.email}
                       </p>
                     </div>

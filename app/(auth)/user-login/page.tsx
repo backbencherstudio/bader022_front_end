@@ -62,24 +62,24 @@ export default function UserLoginPage() {
   //   }
   // }, []);
 
-  useEffect(() => {
-    const auth = authorize(["User", "Merchant", "Admin"]);
+  // useEffect(() => {
+  //   const auth = authorize(["User", "Merchant", "Admin"]);
 
-    if (auth.authorized) {
-      const role = auth.user?.role;
-      if (redirect) {
-        router.replace(redirect);
-        return;
-      }
-      const roleRedirectMap: Record<string, string> = {
-        Admin: "/admin/dashboard",
-        Merchant: "/merchant/dashboard",
-        User: "/user/dashboard",
-      };
+  //   if (auth.authorized) {
+  //     const role = auth.user?.role;
+  //     if (redirect) {
+  //       router.replace(redirect);
+  //       return;
+  //     }
+  //     const roleRedirectMap: Record<string, string> = {
+  //       Admin: "/admin/dashboard",
+  //       Merchant: "/merchant/dashboard",
+  //       User: "/user/dashboard",
+  //     };
 
-      router.push(roleRedirectMap[role] || "/");
-    }
-  }, []);
+  //     router.push(roleRedirectMap[role] || "/");
+  //   }
+  // }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {

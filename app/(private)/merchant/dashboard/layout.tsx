@@ -18,59 +18,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { authorize } from "@/lib/auth";
 
-// const MERCHANT_NAV_ITEMS = [
-//   {
-//     label: "Dashboard",
-//     href: "/merchant/dashboard",
-//     icon: (p: any) => <LayoutDashboard {...p} />,
-//   },
-//   {
-//     label: "Bookings",
-//     href: "/merchant/dashboard/bookings",
-//     icon: (p: any) => <Calendar {...p} />,
-//   },
-//   {
-//     label: "Services",
-//     href: "/merchant/dashboard/services",
-//     icon: (p: any) => <Handbag {...p} />,
-//   },
-//   {
-//     label: "Staff",
-//     href: "/merchant/dashboard/staff",
-//     icon: (p: any) => <Users {...p} />,
-//   },
-//   {
-//     label: "Mini-Site",
-//     href: "/merchant/dashboard/mini-site",
-//     icon: (p: any) => <Globe {...p} />,
-//   },
-//   {
-//     label: "Analytics",
-//     href: "/merchant/dashboard/analytics",
-//     icon: (p: any) => <SquareKanban {...p} />,
-//   },
-//   {
-//     label: "Transactions",
-//     href: "/merchant/dashboard/transactions",
-//     icon: (p: any) => <Captions {...p} />,
-//   },
-// ];
-
-// export const MERCHANT_FOOTER_ITEMS = [
-//   {
-//     label: "Settings",
-//     href: "/merchant/dashboard/settings",
-//     icon: (p: any) => <Settings {...p} />,
-//   },
-//   {
-//     label: "Logout",
-//     href: "/",
-//     icon: (p: any) => <LogOut {...p} />,
-//     iconClassName: "text-red-400",
-//     action: "logout",
-//   },
-// ];
-
 export default function DashboardLayout({
   children,
 }: {
@@ -135,12 +82,12 @@ export default function DashboardLayout({
     },
   ];
 
-  useEffect(() => {
-    const auth = authorize(["Merchant"]);
-    if (!auth.authorized) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const auth = authorize(["Merchant"]);
+  //   if (!auth.authorized) {
+  //     router.push("/");
+  //   }
+  // }, []);
   return (
     <div>
       <div>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Role = "Admin" | "User" | "Merchant";
+import Cookies from "js-cookie";
 
 interface User {
   id: string;
@@ -47,20 +48,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // setCredentials: (
-    //   state,
-    //   action: PayloadAction<{ token: string; remember_token: string; user: User }>,
-    // ) => {
-    //   state.token = action.payload.token;
-    //   state.remember_token = action.payload.remember_token;
-    //   state.user = action.payload.user;
-
-    //   if (typeof window !== "undefined") {
-    //     localStorage.setItem("token", action.payload.token);
-    //     localStorage.setItem("remember_token", action.payload.remember_token);
-    //     localStorage.setItem("user", JSON.stringify(action.payload.user));
-    //   }
-    // },
 setCredentials: (
   state,
   action: PayloadAction<{
@@ -73,11 +60,13 @@ setCredentials: (
   if (action.payload.token) {
     state.token = action.payload.token;
     localStorage.setItem("token", action.payload.token);
+    Cookies.set("auth_token", action.payload.token, { expires: 7 });
   }
 
   if (action.payload.remember_token) {
     state.remember_token = action.payload.remember_token;
     localStorage.setItem("remember_token", action.payload.remember_token);
+    
   }
 
   if (action.payload.user) {
@@ -87,6 +76,7 @@ setCredentials: (
     } as User;
 
     localStorage.setItem("user", JSON.stringify(state.user));
+    Cookies.set("user_role", state.user.role || "", { expires: 7 });
   }
 
   if (action.payload.branch) {
@@ -97,6 +87,9 @@ setCredentials: (
     logout: (state) => {
       state.token = null;
       state.user = null;
+      // localStorage.clear();
+      Cookies.remove("auth_token");
+      Cookies.remove("user_role");
 
       if (typeof window !== "undefined") {
         localStorage.removeItem("token");

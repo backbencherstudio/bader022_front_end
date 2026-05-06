@@ -45,18 +45,18 @@ export default function LoginPage() {
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isEmail, setIsEmail] = useState("");
 
-  useEffect(() => {
-    const auth = authorize(["User", "Merchant", "Admin"]);
-    if (auth.authorized) {
-      const role = auth.user?.role;
-      const roleRedirectMap: Record<string, string> = {
-        Admin: "/admin/dashboard",
-        Merchant: "/merchant/dashboard",
-        User: "/user/dashboard",
-      };
-      router.push(roleRedirectMap[role] || "/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const auth = authorize(["User", "Merchant", "Admin"]);
+  //   if (auth.authorized) {
+  //     const role = auth.user?.role;
+  //     const roleRedirectMap: Record<string, string> = {
+  //       Admin: "/admin/dashboard",
+  //       Merchant: "/merchant/dashboard",
+  //       User: "/user/dashboard",
+  //     };
+  //     router.push(roleRedirectMap[role] || "/");
+  //   }
+  // }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -87,15 +87,17 @@ export default function LoginPage() {
         );
         toast.success(t("Auth.Login.success"));
         const role = response.data.user_type;
-        setTimeout(() => {
-          if (role === "Admin") {
-            router.replace("/admin/dashboard");
-          } else if (role === "Merchant") {
-            router.replace("/merchant/dashboard");
-          } else {
-            router.replace("/user/dashboard");
-          }
-        }, 100);
+        // setTimeout(() => {
+        //   if (role === "Admin") {
+        //     router.replace("/admin/dashboard");
+        //   } else if (role === "Merchant") {
+        //     router.replace("/merchant/dashboard");
+        //   } else {
+        //     router.replace("/user/dashboard");
+        //   }
+        // }, 100);
+
+        router.push("/dashboard");
       }
     } catch (error: any) {
       // console.log("error=====", error);

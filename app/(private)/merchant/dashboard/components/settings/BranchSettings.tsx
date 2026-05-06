@@ -300,7 +300,7 @@ export default function BranchSettings() {
               {locale === "ar" ? "إنشاء فرع" : "Create Branch"}
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="dark:bg-gray-800">
             <DialogHeader>
               <DialogTitle>
                 {locale === "ar" ? "إضافة فرع جديد" : "Add New Branch"}
@@ -324,7 +324,7 @@ export default function BranchSettings() {
       </div>
 
       {/* Branch Table */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden  dark:bg-gray-800">
         <Table>
           <TableHeader>
             <TableRow>
@@ -371,7 +371,7 @@ export default function BranchSettings() {
 
       {/* Edit Modal */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent>
+        <DialogContent className="dark:bg-gray-800">
           <DialogHeader>
             <DialogTitle>
               {locale === "ar" ? "تعديل الفرع" : "Edit Branch"}
@@ -395,7 +395,7 @@ export default function BranchSettings() {
 
       {/* Delete Confirmation Modal */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent>
+        <DialogContent className="dark:bg-gray-800">
           <DialogHeader>
             <DialogTitle>
               {locale === "ar" ? "هل أنت متأكد؟" : "Are you sure?"}

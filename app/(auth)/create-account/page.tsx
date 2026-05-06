@@ -50,18 +50,18 @@ export default function CreateAccountPage() {
   const router = useRouter();
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isEmail, setIsEmail] = useState("");
-  useEffect(() => {
-    const auth = authorize(["User", "Merchant", "Admin"]);
-    if (auth.authorized) {
-      const role = auth.user?.role;
-      const roleRedirectMap: Record<string, string> = {
-        Admin: "/admin/dashboard",
-        Merchant: "/merchant/dashboard",
-        User: "/user/dashboard",
-      };
-      router.push(roleRedirectMap[role] || "/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const auth = authorize(["User", "Merchant", "Admin"]);
+  //   if (auth.authorized) {
+  //     const role = auth.user?.role;
+  //     const roleRedirectMap: Record<string, string> = {
+  //       Admin: "/admin/dashboard",
+  //       Merchant: "/merchant/dashboard",
+  //       User: "/user/dashboard",
+  //     };
+  //     router.push(roleRedirectMap[role] || "/");
+  //   }
+  // }, []);
   // console.log(step);
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");

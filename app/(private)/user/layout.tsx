@@ -59,21 +59,21 @@ export default function DashboardLayout({
     },
   ];
 
-  useEffect(() => {
-    const auth = authorize(["User"]);
-    if (!auth.authorized) {
-      router.push("/user-login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const auth = authorize(["User"]);
+  //   if (!auth.authorized) {
+  //     router.push("/user-login");
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/user-login");
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     router.push("/user-login");
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [router]);
 
   if (loading) {
     return <p>Loading...</p>;

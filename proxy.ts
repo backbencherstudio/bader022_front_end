@@ -8,7 +8,7 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get("auth_token")?.value;
   const userRole = request.cookies.get("user_role")?.value;
 
-  // console.log(token, userRole);
+  console.log(token, userRole);
 
   const isAdminRoute = pathname.startsWith("/admin");
   const isMerchantRoute = pathname.startsWith("/merchant");

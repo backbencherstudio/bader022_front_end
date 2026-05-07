@@ -88,7 +88,7 @@ export default function Step3({
         </div>
       </div>
 
-      {/* ✅ Mobile sticky CTA */}
+      {/*  Mobile sticky CTA */}
       <div className="sm:hidden mt-6 flex gap-3">
         <Button
           variant="outline"

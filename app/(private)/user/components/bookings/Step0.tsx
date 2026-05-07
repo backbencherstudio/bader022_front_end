@@ -21,16 +21,18 @@ export default function Step0({
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
 
+  // console.log(selectedService);
+
   return (
     <div>
       <div className="flex items-center gap-4 mb-4">
         <p> {locale == "ar" ? "تصفية حسب:" : "Filter by:"}</p>
         <select
           className="border p-1 rounded-md px-2 bg-white text-black dark:bg-gray-800 dark:text-white"
-          value={selectedService?.name || ""}
+          value={selectedService?.branch_name || ""}
           onChange={(e) => {
             const selected = data?.data?.find(
-              (item: any) => item.name === e.target.value,
+              (item: any) => item.branch_name === e.target.value,
             );
             setSelectedService(selected);
           }}
@@ -39,15 +41,15 @@ export default function Step0({
             value=""
             className="bg-white text-black dark:bg-gray-800 dark:text-white"
           >
-            Select Service
+            {locale == "ar" ? "اختر الفرع" : "Select Branch"}
           </option>
           {data?.data?.map((item: any) => (
             <option
               className="bg-white text-black dark:bg-gray-800 dark:text-white"
               key={item.id}
-              value={item.name}
+              value={item.branch_name}
             >
-              {item.name}
+              {item.branch_name}
             </option>
           ))}
         </select>

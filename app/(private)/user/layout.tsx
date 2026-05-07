@@ -75,9 +75,9 @@ export default function DashboardLayout({
   //   }
   // }, [router]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <div>

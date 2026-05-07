@@ -73,7 +73,7 @@ export default function AddBookingModal({
       : skipToken,
   );
 
-  console.log(bookingServiceSchedule);
+  // console.log(bookingServiceSchedule);
 
   const availableTimes = bookingServiceSchedule?.available_times || [];
 
@@ -311,21 +311,21 @@ export default function AddBookingModal({
                       value={field.value || ""}
                       onChange={field.onChange}
                       className="
-        w-full
+                      w-full
 
-        [&_input]:h-11
-        [&_input]:w-full
-        [&_input]:rounded-md
-        [&_input]:border
-        [&_input]:border-gray-300
-        dark:[&_input]:border-gray-300
-        [&_input]:bg-white
-        dark:[&_input]:bg-white
-        [&_input]:px-3
+                      [&_input]:h-11
+                      [&_input]:w-full
+                      [&_input]:rounded-md
+                      [&_input]:border
+                      [&_input]:border-gray-300
+                      dark:[&_input]:border-gray-300
+                      [&_input]:bg-white
+                      dark:[&_input]:bg-white
+                      [&_input]:px-3
 
-        [&_.PhoneInputCountry]:pointer-events-none
-        [&_.PhoneInputCountry]:opacity-70
-      "
+                      [&_.PhoneInputCountry]:pointer-events-none
+                      [&_.PhoneInputCountry]:opacity-70
+                      "
                     />
                   )}
                 />

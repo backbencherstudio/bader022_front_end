@@ -8,11 +8,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { authorize } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { usePaymentInformationMutation } from "@/redux/features/userDashboard/booking";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
-// Step2 Props Interface
+// Import the phone input components
+// @ts-ignore
+import "react-phone-number-input/style.css";
+import PhoneInputWithCountrySelect from "react-phone-number-input";
+import { useI18n } from "@/components/provider/I18nProvider";
+
 interface Step2Props {
   onNext: () => void;
   onBack: () => void;
@@ -34,13 +39,12 @@ export default function Step2({
   date,
   time,
 }: Step2Props) {
-  const methods = [
-    { id: "tap", label: "Tap Payment" },
-    // { id: "cash", label: "Cash" },
-  ];
-
+  const params = useParams();
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [method, setMethod] = useState("tap");
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     customer_name: "",
     email: "",
@@ -48,14 +52,38 @@ export default function Step2({
     special_note: "",
   });
 
+  const methods = [{ id: "tap", label: "Tap Payment" }];
+
   const [paymentInformation, { isLoading }] = usePaymentInformationMutation();
+
+  // Custom validation for the phone number
+  const validatePhone = (value: string) => {
+    const digits = value?.replace(/\D/g, "") || "";
+    if (!digits) return "Phone number is required";
+    if (!digits.startsWith("966")) return "Phone number must start with +966";
+    if (digits.length <= 8) return "Please enter a valid Saudi phone number";
+    return null;
+  };
+
   const handleBooking = async () => {
     const auth = authorize(["User", "Merchant", "Admin"]);
+
     if (!auth.authorized) {
       toast.error("Please login to proceed with your booking.");
       const currentPath = window.location.pathname + window.location.search;
       router.push(`/user-login?redirect=${encodeURIComponent(currentPath)}`);
+      return;
+    }
 
+    // Basic Validation
+    if (!formData.customer_name || !formData.email || !formData.phone) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const phoneError = validatePhone(formData.phone);
+    if (phoneError) {
+      toast.error(phoneError);
       return;
     }
 
@@ -73,9 +101,6 @@ export default function Step2({
 
     try {
       const res = await paymentInformation(payload).unwrap();
-
-      // console.log("Booking Success:", res);
-
       if (method === "tap" && res?.payment_url) {
         window.location.href = res.payment_url;
       } else {
@@ -86,95 +111,104 @@ export default function Step2({
         }
       }
     } catch (err: any) {
-      // console.error("Booking Error:", err);
-      if (err?.data?.errors) {
-        toast.error(err.data.message);
-      } else {
-        toast.error("Something went wrong. Please try again.");
-      }
+      toast.error(err?.data?.message || "Something went wrong.");
     }
   };
 
   return (
     <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* LEFT SIDE - Customer Details */}
         <div className="lg:col-span-2 space-y-6">
           <div className="rounded-xl border border-border overflow-hidden">
             <div className="bg-[#F4F6F8] dark:bg-gray-900 px-6 py-4 font-semibold text-sm">
-              Customer Details
+              {locale == "ar" ? "تفاصيل العميل" : "Customer Details"}
             </div>
             <div className="p-6 space-y-5">
               <div>
-                <Label>Full Name *</Label>
+                <Label>
+                  {locale == "ar" ? "الاسم الكامل *" : "Full Name * "}
+                </Label>
                 <Input
                   className="mt-2"
-                  placeholder="Your Name"
+                  placeholder={locale == "ar" ? "اسمك" : "Your Name"}
                   value={formData.customer_name}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      customer_name: e.target.value,
-                    })
+                    setFormData({ ...formData, customer_name: e.target.value })
                   }
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label>Email *</Label>
+                  <Label>
+                    {locale == "ar" ? "البريد الإلكتروني *" : "Email * "}
+                  </Label>
                   <Input
                     type="email"
                     className="mt-2"
                     placeholder="example@gmail.com"
                     value={formData.email}
                     onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        email: e.target.value,
-                      })
+                      setFormData({ ...formData, email: e.target.value })
                     }
                   />
                 </div>
-                <div>
-                  <Label>Phone *</Label>
-                  <Input
-                    className="mt-2"
-                    type="tel"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    placeholder="05XXXXXXXX"
-                    value={formData.phone}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, ""); // only numbers
-                      setFormData({
-                        ...formData,
-                        phone: value,
-                      });
-                    }}
-                  />
+
+                {/* Updated Phone Input Section */}
+                <div className="flex flex-col gap-0">
+                  <Label className="text-[14px] font-medium">
+                    {locale === "ar" ? "الهاتف *" : "Phone *"}
+                  </Label>
+                  <div className="phone-input-container">
+                    <PhoneInputWithCountrySelect
+                      international
+                      defaultCountry="SA"
+                      countryCallingCodeEditable={false}
+                      value={formData.phone}
+                      onChange={(value) =>
+                        setFormData({ ...formData, phone: value || "" })
+                      }
+                      className="
+                      w-full
+                      [&_input]:h-9
+                      [&_input]:w-full
+                      [&_input]:rounded-md
+                      [&_input]:border
+                      [&_input]:border-gray-300
+                      dark:[&_input]:border-gray-300
+                      [&_input]:bg-white
+                      dark:[&_input]:bg-white
+                      [&_input]:px-3
+
+                      [&_.PhoneInputCountry]:pointer-events-none
+                      [&_.PhoneInputCountry]:opacity-70
+                      "
+                    />
+                  </div>
                 </div>
               </div>
+
               <div>
-                <Label>Special Note</Label>
+                <Label>
+                  {" "}
+                  {locale == "ar" ? "ملاحظة خاصة" : "Special Note"}
+                </Label>
                 <Textarea
                   className="mt-2"
                   placeholder="Write a note..."
                   value={formData.special_note}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      special_note: e.target.value,
-                    })
+                    setFormData({ ...formData, special_note: e.target.value })
                   }
                 />
               </div>
             </div>
           </div>
 
-          {/* Payment Method */}
+          {/* Payment Method & Action Buttons remain the same */}
           <div className="rounded-xl border border-border overflow-hidden">
             <div className="bg-[#F4F6F8] dark:bg-gray-900 px-6 py-4 font-semibold text-sm">
-              Payment Method
+              {locale == "ar" ? "طريقة الدفع" : "Payment Method"}
             </div>
             <div className="p-6 space-y-3">
               {methods.map((m) => (
@@ -204,52 +238,43 @@ export default function Step2({
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-4 cursor-pointer">
             <Button variant="outline" onClick={onBack}>
-              Back
+              {locale == "ar" ? "رجوع" : "Back"}
             </Button>
             <Button
               className="cursor-pointer"
               onClick={handleBooking}
               disabled={isLoading}
             >
-              {isLoading ? "Proceed to Payment..." : "Proceed to Payment"}
+              {isLoading ? "Proceeding..." : "Proceed to Payment"}
             </Button>
           </div>
         </div>
 
-        {/* RIGHT SIDE - Booking Summary */}
+        {/* Summary side remains the same */}
         <div className="rounded-xl border border-border overflow-hidden h-fit">
           <div className="bg-[#F4F6F8] dark:bg-gray-900 px-5 sm:px-6 py-4 font-semibold text-sm">
-            Booking Summary
+            {locale == "ar" ? "ملخص الحجز" : "Booking Summary"}
           </div>
           <div className="p-5 sm:p-6 space-y-3 text-sm">
             <div className="flex justify-between">
-              <span>Service:</span>
+              <span> {locale == "ar" ? "الخدمة:" : "Service:"}</span>
               <span className="font-medium">{service.name}</span>
             </div>
             <div className="flex justify-between">
-              <span>Date & Time:</span>
+              <span>
+                {" "}
+                {locale == "ar" ? "التاريخ والوقت:" : "Date & Time:"}
+              </span>
               <span className="font-medium">
                 {date} {time}
               </span>
             </div>
             <div className="flex justify-between">
-              <span>Duration:</span>
-              <span className="font-medium">{service.duration} Min</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Price:</span>
+              <span> {locale == "ar" ? "السعر:" : "Price:"}</span>
               <span className="font-medium">{service.price} SAR</span>
             </div>
-            <div className="flex justify-between">
-              <span>Pay:</span>
-              <span className="font-medium capitalize">{method} Payment</span>
-            </div>
-            {/* <Button className="cursor-pointer py-2 w-full" onClick={onNext}>
-              Confirm Booking
-            </Button> */}
           </div>
         </div>
       </div>

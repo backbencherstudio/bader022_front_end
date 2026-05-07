@@ -19,6 +19,8 @@ type Service = {
   price: number;
   description?: string;
   service_name: string;
+  branch_name: string;
+  branch_id: string;
 };
 
 function Stepper({
@@ -76,8 +78,8 @@ export default function BookingCheckoutStepper() {
     "Select Services",
     "Select Date",
     "Payment Info",
-    "Card Info",
-    "Confirmed",
+    // "Card Info",
+    // "Confirmed",
   ];
   const [bookingId, setBookingId] = useState<string | number>("");
   const [currentStep, setCurrentStep] = useState(0);
@@ -88,11 +90,12 @@ export default function BookingCheckoutStepper() {
   );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const { data, isLoading, error } = useBookingServiceQuery(
-    selectedService?.name || "",
+    selectedService?.branch_id || "",
     // { skip: !selectedService }
   );
 
-  console.log(data);
+  // console.log(selectedService);
+  // console.log(data);
 
   const handleBooking = async () => {
     const payload = {
@@ -134,8 +137,7 @@ export default function BookingCheckoutStepper() {
 
       {/* Title */}
       <h2 className="mt-8 text-xl sm:text-2xl font-semibold">
-        {currentStep === 0 &&
-          (locale == "ar" ? "اختر الخدمات" : "Select Services")}
+        {currentStep === 0 && (locale == "ar" ? "" : "Select Branch")}
         {currentStep === 1 &&
           (locale == "ar"
             ? "اختر التاريخ والوقت والموظف"

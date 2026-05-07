@@ -41,7 +41,7 @@ export default function Step0({
             value=""
             className="bg-white text-black dark:bg-gray-800 dark:text-white"
           >
-            Select Service
+            {locale == "ar" ? "" : "Select Branch"}
           </option>
           {data?.branches?.map((item: any) => (
             <option
@@ -54,62 +54,62 @@ export default function Step0({
           ))}
         </select>
       </div>
-      {data?.services.length !== 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4 md:mt-8">
-          {data?.services?.map((service: any) => (
-            <div
-              key={service.id}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
-            >
-              <div className="relative h-48">
-                {/* Image section */}
-                <Image
-                  src={getImageUrl(service.image)}
-                  alt={service.name}
-                  height={300}
-                  width={500}
-                  unoptimized={true}
-                  className=" w-full h-full object-center"
-                />
-              </div>
+      {/* {data?.services.length !== 0 ? ( */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4 md:mt-8">
+        {data?.services?.map((service: any) => (
+          <div
+            key={service.id}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"
+          >
+            <div className="relative h-48">
+              {/* Image section */}
+              <Image
+                src={getImageUrl(service.image)}
+                alt={service.name}
+                height={300}
+                width={500}
+                unoptimized={true}
+                className=" w-full h-full object-center"
+              />
+            </div>
 
-              <div className="p-5 space-y-3">
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                  <div className="flex items-center gap-1">
-                    <FileClock />
-                    {service.duration}
-                  </div>
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">
-                    {service.price} SAR
-                  </span>
+            <div className="p-5 space-y-3">
+              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center gap-1">
+                  <FileClock />
+                  {service.duration}
                 </div>
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {service.name}
+                  {service.price} SAR
                 </span>
+              </div>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">
+                {service.name}
+              </span>
 
-                <h3 className="font-semibold">{service.service_name}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {service.description}
-                </p>
+              <h3 className="font-semibold">{service.service_name}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {service.description}
+              </p>
 
-                <div className="flex gap-3 pt-3">
-                  <Button
-                    onClick={() => {
-                      setSelectedService(service); // send full object
-                      onNext();
-                    }}
-                    className="cursor-pointer py-5 bg-gray-400 hover:bg-black text-white"
-                  >
-                    {locale == "ar" ? "احجز الآن" : "Book Now"}
-                  </Button>
-                </div>
+              <div className="flex gap-3 pt-3">
+                <Button
+                  onClick={() => {
+                    setSelectedService(service); // send full object
+                    onNext();
+                  }}
+                  className="cursor-pointer py-5 bg-gray-400 hover:bg-black text-white"
+                >
+                  {locale == "ar" ? "احجز الآن" : "Book Now"}
+                </Button>
               </div>
             </div>
-          ))}
-        </div>
-      ) : (
+          </div>
+        ))}
+      </div>
+      {/* ) : (
         <div>Services not available in this Branch</div>
-      )}
+      )} */}
 
       <button
         onClick={() => window.history.back()}

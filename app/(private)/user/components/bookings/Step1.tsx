@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 interface Step1Props {
   onNext: () => void;
@@ -45,6 +46,8 @@ export default function Step1({
   setSelectedTime,
 }: Step1Props) {
   const [staffId, setStaffId] = useState<string>("");
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
 
   // Ensure date is always a Date object
   const formattedDate = selectedDate
@@ -92,9 +95,9 @@ export default function Step1({
     <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar */}
-        <div className="border rounded-xl overflow-hidden ">
+        <div className="border rounded-xl overflow-auto ">
           <div className="border-gray-200 dark:border-gray-700 dark:bg-gray-800  px-5 py-4 font-semibold">
-            Select Date
+            {locale == "ar" ? "اختر التاريخ" : "Select Date"}
           </div>
 
           <div className="p-5">
@@ -105,15 +108,15 @@ export default function Step1({
               onSelect={(newDate) =>
                 newDate && setSelectedDate(newDate.toLocaleDateString("en-CA"))
               }
-              className="w-full dark:bg-gray-800"
+              className="w-full h-90 dark:bg-gray-800"
             />
           </div>
         </div>
 
         {/* Time Slots */}
-        <div className="border rounded-xl overflow-hidden">
+        <div className="border rounded-xl overflow-auto">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Available Times
+            {locale == "ar" ? "الأوقات المتاحة" : "Available Times"}
           </div>
 
           <div className="p-5 sm:p-6">
@@ -148,7 +151,7 @@ export default function Step1({
         {/* Staff */}
         <div className="border rounded-xl overflow-hidden">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
-            Select Staff
+            {locale == "ar" ? "اختر الموظف" : "Select Staff"}
           </div>
 
           <div className="p-5">
@@ -158,10 +161,18 @@ export default function Step1({
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value="no-preference">No preference</SelectItem>
+                <SelectItem value="no-preference">
+                  {" "}
+                  {locale == "ar" ? "لا يوجد تفضيل" : "No preference"}
+                </SelectItem>
 
                 {staffs.length === 0 ? (
-                  <SelectItem value="no-staff">No staff available</SelectItem>
+                  <SelectItem value="no-staff">
+                    {" "}
+                    {locale == "ar"
+                      ? "لا يوجد موظفون متاحون"
+                      : "No staff available"}
+                  </SelectItem>
                 ) : (
                   staffs.map((staff: any) => (
                     <SelectItem key={staff.id} value={String(staff.id)}>
@@ -177,7 +188,7 @@ export default function Step1({
         {/* Buttons */}
         <div className="flex items-end gap-4">
           <Button variant="outline" onClick={onBack}>
-            Back
+            {locale == "ar" ? "رجوع" : "Back"}
           </Button>
 
           <Button
@@ -185,7 +196,7 @@ export default function Step1({
             onClick={onNext}
             disabled={!selectedDate || !selectedTime}
           >
-            Continue to Checkout
+            {locale == "ar" ? "المتابعة إلى الدفع" : "Continue to Checkout"}
           </Button>
         </div>
       </div>

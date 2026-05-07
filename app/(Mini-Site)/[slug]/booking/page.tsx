@@ -106,8 +106,7 @@ export default function BookingPage() {
 
       {/* Title */}
       <h2 className="mt-8 text-xl sm:text-2xl font-semibold">
-        {currentStep === 0 &&
-          (locale == "ar" ? "اختر الخدمات" : "Select Services")}
+        {currentStep === 0 && (locale == "ar" ? "" : "Select Branch")}
         {currentStep === 1 &&
           (locale == "ar"
             ? "اختر التاريخ والوقت والموظف"

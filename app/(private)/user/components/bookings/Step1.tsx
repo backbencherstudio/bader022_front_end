@@ -114,7 +114,7 @@ export default function Step1({
         </div>
 
         {/* Time Slots */}
-        <div className="border rounded-xl overflow-auto">
+        <div className="border rounded-xl  overflow-auto">
           <div className="dark:bg-gray-800 px-5 py-4 font-semibold">
             {locale == "ar" ? "الأوقات المتاحة" : "Available Times"}
           </div>
@@ -128,7 +128,7 @@ export default function Step1({
                 {noAvailableSlot}
               </p>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 h-90">
                 {timeSlots.map((time: string) => (
                   <button
                     key={time}

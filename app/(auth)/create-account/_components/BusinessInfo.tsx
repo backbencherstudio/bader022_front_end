@@ -95,7 +95,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
   const isRTL = locale === "ar";
 
   const selectedCategory = watch("business_category");
-  const selectedBranches = watch("number_of_branches");
+  // const selectedBranches = watch("number_of_branches");
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-6">
@@ -186,7 +186,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
       </div>
 
       {/* Number of Branches */}
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
           {t("BusinessInfo.numberOfBranches")} *
         </label>
@@ -228,7 +228,7 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
             {t("BusinessInfo.selectBranches")}
           </p>
         )}
-      </div>
+      </div> */}
 
       {/* Privacy Policy & Terms */}
       <div>

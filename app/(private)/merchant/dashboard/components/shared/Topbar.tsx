@@ -52,7 +52,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  console.log(user);
+  console.log(branchData);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -102,6 +102,15 @@ export default function TopBar() {
     // the branch ID globally in your Redux store
   };
 
+  if (user?.role === "Merchant" && branchData?.data?.length > 0) {
+    const firstBranchId = branchData.data[0].id;
+    // console.log(firstBranchId);
+    dispatch(
+      setCredentials({
+        branch: firstBranchId,
+      }),
+    );
+  }
   return (
     <header
       dir={isRTL ? "rtl" : "ltr"}

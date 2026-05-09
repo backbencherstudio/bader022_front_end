@@ -5,23 +5,31 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { useBookingSuccessfullQuery } from "@/redux/features/userDashboard/booking";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function BookingSuccessClient() {
+  const { locale, t } = useI18n();
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
+  console.log(bookingId);
 
-  const id = bookingId ? Number(bookingId) : null;
+  // const id = bookingId ? Number(bookingId) : null;
 
   const {
     data: bookingData,
     isLoading,
     error,
-  } = useBookingSuccessfullQuery({ booking_id: id as number }, { skip: !id });
+  } = useBookingSuccessfullQuery(
+    { booking_id: bookingId! },
+    { skip: !bookingId },
+  );
+
+  console.log("Booking Success Data:", bookingData);
 
   const previewInvoice = async () => {
-    if (!id) return;
+    if (!bookingId) return;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/confirm-invoice/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/confirm-invoice/${bookingId}`,
     );
     const blob = await res.blob();
     const url = window.URL.createObjectURL(blob);
@@ -46,11 +54,11 @@ export default function BookingSuccessClient() {
   return (
     <Card className="rounded-2xl p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <h3 className="text-center text-5xl font-bold text-green-500 my-3">
-        Booking Confirmed!
+        {locale == "ar" ? "تم تأكيد الحجز!" : "Booking Confirmed!"}
       </h3>
       <div className="text-center">
         <p className="text-sm">
-          Booking ID:{" "}
+          {locale == "ar" ? "رقم الحجز:" : "Booking ID:"}
           <span className="font-semibold">{booking.booking_id}</span>
         </p>
 
@@ -63,8 +71,9 @@ export default function BookingSuccessClient() {
         </div>
 
         <p className="text-sm max-w-130 mx-auto leading-6">
-          Your appointment is successfully booked. A confirmation email has been
-          sent to your inbox.
+          {locale == "ar"
+            ? "تم حجز موعدك بنجاح. تم إرسال رسالة تأكيد إلى بريدك الإلكتروني."
+            : "Your appointment is successfully booked. A confirmation email has been sent to your inbox."}
         </p>
 
         <div className="mt-8 rounded-xl border border-border p-5 sm:p-6 text-sm text-left space-y-3">
@@ -85,14 +94,14 @@ export default function BookingSuccessClient() {
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4 ">
           <Button onClick={previewInvoice} className="py-2 cursor-pointer">
-            Download Invoice
+            {locale == "ar" ? "تحميل الفاتورة" : "Download Invoice"}
           </Button>
           {/* <Button onClick={downloadInvoice} variant="outline" className="py-2">
             Download Invoice
           </Button> */}
           <Link href="/user/bookings">
             <Button variant="outline" className="py-2 cursor-pointer">
-              Go to Dashboard
+              {locale == "ar" ? "الذهاب إلى لوحة التحكم" : "Go to Dashboard "}
             </Button>
           </Link>
         </div>

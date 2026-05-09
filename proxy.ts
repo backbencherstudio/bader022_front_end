@@ -1,5 +1,21 @@
-
 import { NextRequest, NextResponse } from "next/server";
+
+const getDashboardPath = (role?: string) => {
+  if (role === "Admin") return "/admin/dashboard";
+  if (role === "Merchant") return "/merchant/dashboard";
+  if (role === "User") return "/user/dashboard";
+  return null;
+};
+
+const getRoleBasePath = (role?: string) => {
+  if (role === "Admin") return "/admin";
+  if (role === "Merchant") return "/merchant";
+  if (role === "User") return "/user";
+  return null;
+};
+
+const startsWithRoute = (pathname: string, route: string) =>
+  pathname === route || pathname.startsWith(`${route}/`);
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -8,78 +24,39 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get("auth_token")?.value;
   const userRole = request.cookies.get("user_role")?.value;
 
-  // console.log(token, userRole);
+  const isAdminRoute = startsWithRoute(pathname, "/admin");
+  const isMerchantRoute = startsWithRoute(pathname, "/merchant");
+  const isUserRoute = startsWithRoute(pathname, "/user");
+  const isDashboardRoute = startsWithRoute(pathname, "/dashboard");
+  const isProtectedRoute =
+    isAdminRoute || isMerchantRoute || isUserRoute || isDashboardRoute;
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/user-login" ||
+    pathname === "/register";
 
-  const isAdminRoute = pathname.startsWith("/admin");
-  const isMerchantRoute = pathname.startsWith("/merchant");
-  const isUserRoute = pathname.startsWith("/user");
-  const isAuthPage = pathname === "/login" || pathname === "/user-login" || pathname === "/register";
-
-  // console.log(isAdminRoute, isMerchantRoute);
-
-
-  if (!token) {
-    if (isAdminRoute || isMerchantRoute) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-    // if (isUserRoute) {
-    //   return NextResponse.redirect(new URL("/user-login", request.url));
-    // }
-    return NextResponse.next();
+  if (!token && isProtectedRoute) {
+    const loginPath = isUserRoute ? "/user-login" : "/login";
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
 
+  if (token) {
+    const dashboardPath = getDashboardPath(userRole);
+    const roleBasePath = getRoleBasePath(userRole);
+    const isOwnRoute = roleBasePath
+      ? startsWithRoute(pathname, roleBasePath)
+      : false;
 
-  if (token && isAuthPage) {
-    // Redirect them to their specific dashboard
-    if (userRole === "Admin") return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    if (userRole === "Merchant") return NextResponse.redirect(new URL("/merchant/dashboard", request.url));
-    return NextResponse.redirect(new URL("/user/dashboard", request.url));
-  }
+    if (dashboardPath && (isAuthPage || isProtectedRoute)) {
+      if (isAuthPage || isDashboardRoute || pathname === roleBasePath) {
+        return NextResponse.redirect(new URL(dashboardPath, request.url));
+      }
 
-  if (pathname === "/merchant") {
-    if (token && userRole === "Merchant") {
-      return NextResponse.redirect(new URL("/merchant/dashboard", request.url));
-    }
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+      if (isOwnRoute) {
+        return NextResponse.next();
+      }
 
-  if (pathname === "/user") {
-    if (token && userRole === "User") {
-      return NextResponse.redirect(new URL("/user/dashboard", request.url));
-    }
-    return NextResponse.redirect(new URL("/user-login", request.url));
-  }
-
-
-  if (token && userRole) {
-    // Redirect generic "/dashboard" to specific dashboard
-
-    // console.log(token,userRole);
-    
-    if (pathname === "/dashboard") {
-      if (userRole === "Admin") return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-      if (userRole === "Merchant") return NextResponse.redirect(new URL("/merchant/dashboard", request.url));
-      return NextResponse.redirect(new URL("/user/dashboard", request.url));
-    }
-
-    // console.log(isAdminRoute, userRole !== "Admin");
-    // Protect Admin Routes
-    if (isAdminRoute && userRole !== "Admin") {
-      const target = userRole === "Merchant" ? "/merchant/dashboard" : "/user/dashboard";
-      return NextResponse.redirect(new URL(target, request.url));
-    }
-
-    // console.log(isMerchantRoute && userRole !== "Merchant");
-    // Protect Merchant Routes
-    if (isMerchantRoute && userRole !== "Merchant") {
-      const target = userRole === "Admin" ? "/admin/dashboard" : "/user/dashboard";
-      return NextResponse.redirect(new URL(target, request.url));
-    }
-    // console.log(isUserRoute && userRole !== "User");
-    // Protect User Routes
-    if (isUserRoute && userRole !== "User") {
-      const target = userRole === "Admin" ? "/admin/dashboard" : "/merchant/dashboard";
-      return NextResponse.redirect(new URL(target, request.url));
+      return NextResponse.redirect(new URL(dashboardPath, request.url));
     }
   }
 
@@ -91,6 +68,7 @@ export const config = {
     "/login",
     "/user-login",
     "/register",
+    "/dashboard",
     "/dashboard/:path*",
     "/user",
     "/user/:path*",
@@ -98,6 +76,5 @@ export const config = {
     "/merchant/:path*",
     "/admin",
     "/admin/:path*",
-   
   ],
 };

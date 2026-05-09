@@ -85,9 +85,9 @@ export default function DashboardLayout({
   //   }
   // }, [router]);
 
-  if (loading) {
-    return <p>{t("Common.loading")}</p>;
-  }
+  // if (loading) {
+  //   return <p>{t("Common.loading")}</p>;
+  // }
 
   return (
     <div dir={locale === "ar" ? "rtl" : "ltr"}>

@@ -4,8 +4,10 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authorize } from "@/lib/auth";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 export default function BookingFailedPage() {
+  const { locale, t } = useI18n();
   const router = useRouter();
 
   useEffect(() => {
@@ -34,12 +36,14 @@ export default function BookingFailedPage() {
 
         {/* Title */}
         <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
-          Payment Failed
+          {locale == "ar" ? "فشل الدفع" : "Payment Failed"}
         </h1>
 
         {/* Description */}
         <p className="text-gray-500 mt-2 text-sm sm:text-base">
-          Something went wrong with your booking payment. Please try again.
+          {locale == "ar"
+            ? "حدث خطأ أثناء دفع الحجز الخاص بك. يرجى المحاولة مرة أخرى."
+            : "Something went wrong with your booking payment. Please try again."}
         </p>
 
         {/* Button */}
@@ -47,7 +51,7 @@ export default function BookingFailedPage() {
           onClick={() => router.push("/user/bookings")}
           className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-md transition"
         >
-          Go to Bookings
+          {locale == "ar" ? "الذهاب إلى الحجوزات" : "Go to Bookings"}
         </button>
       </div>
     </div>

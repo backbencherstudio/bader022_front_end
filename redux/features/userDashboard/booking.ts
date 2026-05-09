@@ -47,9 +47,9 @@ export const dashboardApi = baseApi.injectEndpoints({
       providesTags: ["UserBooking"],
     }),
 
-   // select step 2 time and date
+    // select step 2 time and date
     serviceBookingTimeDate: builder.query({
-      query: ({ service_id, date ,domain }) => ({
+      query: ({ service_id, date, domain }) => ({
         url: `/bokli/schedule/${domain}`,
         method: "GET",
         params: {
@@ -81,11 +81,11 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-       invalidatesTags: ["Bookings"],
+      invalidatesTags: ["Bookings"],
     }),
 
     // booking successful
-    bookingSuccessfull: builder.query<any, { booking_id: number }>({
+    bookingSuccessfull: builder.query<any, { booking_id: number | string }>({
       query: ({ booking_id }) => ({
         url: `/booking-details/${booking_id}`,
         method: "GET",

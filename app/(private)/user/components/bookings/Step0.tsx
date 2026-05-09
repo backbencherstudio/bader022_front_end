@@ -1,8 +1,10 @@
 import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { getImageUrl } from "@/helper/formatImage";
-import { FileClock } from "lucide-react";
+import { Clock, Clock1, FileClock } from "lucide-react";
 import Image from "next/image";
+import { FaLocationPin } from "react-icons/fa6";
+import { FiClock } from "react-icons/fi";
 
 interface Step0Props {
   selectedService: any;
@@ -69,25 +71,30 @@ export default function Step0({
                 height={300}
                 width={500}
                 unoptimized={true}
-                className=" w-full h-full object-center"
+                className=" w-full h-full object-cover"
               />
             </div>
 
             <div className="p-5 space-y-3">
               <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-1">
-                  <FileClock />
+                  <FiClock />
                   {service.duration}
                 </div>
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {service.price} SAR
                 </span>
               </div>
-              <span className="font-semibold text-gray-900 dark:text-gray-100">
+              {/* <span className="font-semibold text-gray-900 dark:text-gray-100">
                 {service.name}
-              </span>
+              </span> */}
 
-              <h3 className="font-semibold">{service.service_name}</h3>
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-semibold">{service.name}</h3>
+                <p className="flex items-center gap-1">
+                  <FaLocationPin /> {service?.branch_name}
+                </p>
+              </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {service.description}
               </p>

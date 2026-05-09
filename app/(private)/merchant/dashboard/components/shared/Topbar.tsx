@@ -1,18 +1,7 @@
 "use client";
 
-import {
-  Sun,
-  Moon,
-  BellDot,
-  ChevronDown,
-  Building2,
-  User,
-  CreditCard,
-  LogOut,
-  Check,
-} from "lucide-react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { Sun, Moon, BellDot, ChevronDown, LogOut, Check } from "lucide-react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/components/provider/I18nProvider";
@@ -42,7 +31,9 @@ const LANGS = {
 };
 
 export default function TopBar() {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, branch: currentBranchId } = useAppSelector(
+    (state) => state.auth,
+  );
   const { setTheme } = useTheme();
   const { locale, setLocale, t } = useI18n();
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -52,7 +43,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  console.log(branchData);
+  // console.log(branchData);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -63,6 +54,7 @@ export default function TopBar() {
     dispatch(logout());
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("branch");
     router.push("/");
   };
 
@@ -70,11 +62,7 @@ export default function TopBar() {
     // Update the UI label
     setSelectedBranch(branch.name);
     // console.log("Selected Branch ID:", branch.id);
-    dispatch(
-      setCredentials({
-        branch: branch?.id,
-      }),
-    );
+    dispatch(setCredentials({ branch: String(branch?.id) }));
     dispatch(
       baseApi.util.invalidateTags([
         "Payment",
@@ -102,15 +90,24 @@ export default function TopBar() {
     // the branch ID globally in your Redux store
   };
 
-  if (user?.role === "Merchant" && branchData?.data?.length > 0) {
-    const firstBranchId = branchData.data[0].id;
-    // console.log(firstBranchId);
-    dispatch(
-      setCredentials({
-        branch: firstBranchId,
-      }),
+  useEffect(() => {
+    if (user?.role !== "Merchant" || !branchData?.data?.length) return;
+
+    const branches = branchData.data;
+    const storedBranchId = localStorage.getItem("branch");
+    const savedBranch = branches.find(
+      (branch: any) => String(branch.id) === String(storedBranchId),
     );
-  }
+    const branchToUse = savedBranch || branches[0];
+    const branchToUseId = String(branchToUse.id);
+
+    setSelectedBranch(branchToUse.name);
+
+    if (currentBranchId !== branchToUseId) {
+      dispatch(setCredentials({ branch: branchToUseId }));
+    }
+  }, [branchData?.data, currentBranchId, dispatch, user?.role]);
+
   return (
     <header
       dir={isRTL ? "rtl" : "ltr"}

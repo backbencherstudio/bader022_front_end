@@ -97,7 +97,7 @@ export default function BookingPage() {
     branch_id: selectedService?.id?.toString(),
   });
 
-  // console.log(data?.data);
+  // console.log("selectedService==============", selectedService);
 
   return (
     <div className="container mx-auto py-8">

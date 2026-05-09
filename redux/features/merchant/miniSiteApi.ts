@@ -21,49 +21,53 @@ export const servicesApi = baseApi.injectEndpoints({
     // }),
 
     miniSiteByDomainName: builder.query({
-    query: ({ domainName, branch_id }: { domainName: string; branch_id?: string }) => {
-      return {
-        url: `/bokli/${domainName}`,
-        method: "GET",
-        params: {
-          branch_id: branch_id,
-        },
-      };
-    },
-    providesTags: ["MiniSite"],
-  }),
+      query: ({
+        domainName,
+        branch_id,
+      }: {
+        domainName: string;
+        branch_id?: string;
+      }) => {
+        return {
+          url: `/bokli/${domainName}`,
+          method: "GET",
+          params: {
+            branch_id: branch_id,
+          },
+        };
+      },
+      providesTags: ["MiniSite"],
+    }),
 
     // Create MiniSite
     createMiniSite: builder.mutation<any, FormData>({
-          query: (formData) => ({
-            url: "/admin/mini-sites/store",
-            method: "POST",
-            body: formData,
-          }),
-          invalidatesTags: ["MiniSite"],
-        }),
+      query: (formData) => ({
+        url: "/admin/mini-sites/store",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["MiniSite"],
+    }),
 
     // Create Why Choose Us
     createWhyChooseUs: builder.mutation<any, FormData>({
-          query: (formData) => ({
-            url: "/admin/whychooseus/upsert",
-            method: "POST",
-            body: formData,
-          }),
-          invalidatesTags: ["MiniSite"],
-        }),
+      query: (formData) => ({
+        url: "/admin/whychooseus/upsert",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["MiniSite"],
+    }),
 
-      // Create Global Setting
-        createGlobalSetting: builder.mutation<any, FormData>({
-          query: (formData) => ({
-            url: "/admin/global-setting/store",
-            method: "POST",
-            body: formData,
-          }),
-          invalidatesTags: ["MiniSite"],
-        }),
-
-    
+    // Create Global Setting
+    createGlobalSetting: builder.mutation<any, FormData>({
+      query: (formData) => ({
+        url: "/admin/global-setting/store",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["MiniSite"],
+    }),
   }),
 });
 

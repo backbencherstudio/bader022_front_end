@@ -27,6 +27,7 @@ interface Step2Props {
     duration: number;
     price: number;
     description?: string;
+    branch_id?: string;
   };
   date?: string;
   time?: string;
@@ -44,6 +45,8 @@ export default function Step2({
   const isRTL = locale === "ar";
   const [method, setMethod] = useState("tap");
   const router = useRouter();
+
+  // console.log("service=======", service);
 
   const [formData, setFormData] = useState({
     customer_name: "",
@@ -92,6 +95,7 @@ export default function Step2({
       staff_id: "",
       date: date,
       time: time,
+      branch_id: service.branch_id,
       customer_name: formData.customer_name,
       email: formData.email,
       phone: formData.phone,

@@ -49,7 +49,7 @@ export default function AddBookingModal({
   onClose: () => void;
 }) {
   const { control, handleSubmit, setValue, reset } = useForm({ defaultValues });
-  const { t, locale } = useI18n();
+  const { locale } = useI18n();
   const isRTL = locale === "ar";
   const [createBooking] = useCreateBookingMutation();
 
@@ -57,14 +57,10 @@ export default function AddBookingModal({
   const { data: servicesData } = useAllServicesQuery({});
   const servicesList = servicesData?.data || [];
 
-  // console.log(servicesList);
-
   // Watch selected service and date
   const selectedService = useWatch({ control, name: "service" });
   const selectedDate = useWatch({ control, name: "date" });
   const selectedTime = useWatch({ control, name: "time" });
-
-  // console.log(selectedService, selectedDate, selectedTime);
 
   // Fetch available times for selected service & date
   const { data: bookingServiceSchedule } = useGetBookingScheduleQuery(
@@ -90,11 +86,7 @@ export default function AddBookingModal({
       : skipToken,
   );
 
-  // console.log(bookingStaffSchedule);
-
   const availableStaff = bookingStaffSchedule?.available_staff || [];
-
-  // console.log(availableStaff);
 
   // Submit booking
   const onSubmit = async (data: any) => {
@@ -103,10 +95,21 @@ export default function AddBookingModal({
       return;
     }
 
+    const selectedServiceData = servicesList.find(
+      (service: any) => String(service.id) === String(data.service),
+    );
+    const branchId = selectedServiceData?.branch_id;
+
+    if (!branchId) {
+      toast.error("Selected service branch not found");
+      return;
+    }
+
     try {
       await createBooking({
         service_id: Number(data.service),
         staff_id: Number(data.staff),
+        branch_id: branchId,
         date: data.date,
         time: data.time,
         customer_name: data.customer,

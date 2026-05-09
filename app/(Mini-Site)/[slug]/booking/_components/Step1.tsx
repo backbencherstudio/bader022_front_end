@@ -56,6 +56,7 @@ export default function Step1({
   // console.log(domain);
 
   // console.log(serviceId, selectedDate, selectedTime, formattedDate);
+  // console.log(selectedDate);
 
   // Get available times
   const { data, isLoading } = useServiceBookingTimeDateQuery(

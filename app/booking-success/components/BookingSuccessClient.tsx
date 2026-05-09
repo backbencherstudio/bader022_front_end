@@ -11,7 +11,7 @@ export default function BookingSuccessClient() {
   const { locale, t } = useI18n();
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
-  console.log(bookingId);
+  // console.log(bookingId);
 
   // const id = bookingId ? Number(bookingId) : null;
 
@@ -24,7 +24,7 @@ export default function BookingSuccessClient() {
     { skip: !bookingId },
   );
 
-  console.log("Booking Success Data:", bookingData);
+  // console.log("Booking Success Data:", bookingData);
 
   const previewInvoice = async () => {
     if (!bookingId) return;

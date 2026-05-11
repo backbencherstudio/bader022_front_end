@@ -1,9 +1,16 @@
+"use client";
+
 import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { getImageUrl } from "@/helper/formatImage";
 import { FileClock } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { FaLocationPin } from "react-icons/fa6";
+import Modal from "@/app/(auth)/_components/Modal";
+import { authorize } from "@/lib/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface Step0Props {
   selectedService: any;
@@ -21,8 +28,39 @@ export default function Step0({
   // console.log(selectedService);
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingService, setPendingService] = useState<any>(null);
+  const router = useRouter();
 
-  console.log(data);
+  // console.log(data);
+
+  const handleBooking = (service: any) => {
+    setPendingService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleContinueBokli = () => {
+    const service = pendingService;
+    const auth = authorize(["User", "Merchant", "Admin"]);
+
+    if (!auth.authorized) {
+      toast.error("Please login to proceed with your booking.");
+      const currentPath = window.location.pathname + window.location.search;
+      router.push(`/user-login?redirect=${encodeURIComponent(currentPath)}`);
+      return;
+    }
+
+    setSelectedService(service);
+    setIsModalOpen(false);
+    onNext();
+  };
+
+  const handleContinueGuest = () => {
+    const service = pendingService;
+    setSelectedService(service);
+    setIsModalOpen(false);
+    onNext();
+  };
 
   return (
     <div>
@@ -101,8 +139,7 @@ export default function Step0({
               <div className="flex gap-3 pt-3">
                 <Button
                   onClick={() => {
-                    setSelectedService(service); // send full object
-                    onNext();
+                    handleBooking(service);
                   }}
                   className="cursor-pointer py-5 bg-gray-400 hover:bg-black text-white"
                 >
@@ -123,6 +160,35 @@ export default function Step0({
       >
         {locale == "ar" ? "العودة" : "Go Back"}
       </button>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="p-6">
+          <h3 className="text-lg font-semibold mb-2">
+            {locale == "ar" ? "متابعة الحجز" : "Continue Booking"}
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            {locale == "ar"
+              ? "اختر متابعة بحساب بوكلي أو المتابعة كزائر."
+              : "Choose to continue with your Bokli account or continue as a guest."}
+          </p>
+
+          <div className="flex gap-3 mt-4 justify-end">
+            <Button
+              onClick={handleContinueBokli}
+              className="bg-gray-800 text-white cursor-pointer"
+            >
+              {locale == "ar"
+                ? "متابعة بحساب بوكلي"
+                : "Continue with Bokli account"}
+            </Button>
+            <Button
+              onClick={handleContinueGuest}
+              className="bg-gray-400 text-white cursor-pointer"
+            >
+              {locale == "ar" ? "متابعة كزائر" : "Continue as Guest"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

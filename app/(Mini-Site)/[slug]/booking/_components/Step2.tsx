@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import "react-phone-number-input/style.css";
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { useAppSelector } from "@/redux/hooks";
 
 interface Step2Props {
   onNext: () => void;
@@ -24,6 +25,7 @@ interface Step2Props {
   service: {
     id: number;
     name: string;
+    service_name: string;
     duration: number;
     price: number;
     description?: string;
@@ -45,7 +47,8 @@ export default function Step2({
   const isRTL = locale === "ar";
   const [method, setMethod] = useState("tap");
   const router = useRouter();
-
+  const { user } = useAppSelector((state) => state.auth);
+  // console.log("user======", user);
   // console.log("service=======", service);
 
   const [formData, setFormData] = useState({
@@ -71,23 +74,25 @@ export default function Step2({
   const handleBooking = async () => {
     const auth = authorize(["User", "Merchant", "Admin"]);
 
-    if (!auth.authorized) {
-      toast.error("Please login to proceed with your booking.");
-      const currentPath = window.location.pathname + window.location.search;
-      router.push(`/user-login?redirect=${encodeURIComponent(currentPath)}`);
-      return;
-    }
+    // if (!auth.authorized) {
+    //   toast.error("Please login to proceed with your booking.");
+    //   const currentPath = window.location.pathname + window.location.search;
+    //   router.push(`/user-login?redirect=${encodeURIComponent(currentPath)}`);
+    //   return;
+    // }
 
-    // Basic Validation
-    if (!formData.customer_name || !formData.email || !formData.phone) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
+    // If user is not logged in, validate customer details
+    if (!user) {
+      if (!formData.customer_name || !formData.email || !formData.phone) {
+        toast.error("Please fill in all required fields.");
+        return;
+      }
 
-    const phoneError = validatePhone(formData.phone);
-    if (phoneError) {
-      toast.error(phoneError);
-      return;
+      const phoneError = validatePhone(formData.phone);
+      if (phoneError) {
+        toast.error(phoneError);
+        return;
+      }
     }
 
     const payload = {
@@ -96,9 +101,9 @@ export default function Step2({
       date: date,
       time: time,
       branch_id: service.branch_id,
-      customer_name: formData.customer_name,
-      email: formData.email,
-      phone: formData.phone,
+      customer_name: user?.name || formData.customer_name,
+      email: user?.email || formData.email,
+      phone: user?.phone || formData.phone,
       special_note: formData.special_note,
       payment_method: method,
     };
@@ -123,56 +128,60 @@ export default function Step2({
     <Card className="rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="rounded-xl border border-border overflow-hidden">
-            <div className="bg-[#F4F6F8] dark:bg-gray-900 px-6 py-4 font-semibold text-sm">
-              {locale == "ar" ? "تفاصيل العميل" : "Customer Details"}
-            </div>
-            <div className="p-6 space-y-5">
-              <div>
-                <Label>
-                  {locale == "ar" ? "الاسم الكامل *" : "Full Name * "}
-                </Label>
-                <Input
-                  className="mt-2"
-                  placeholder={locale == "ar" ? "اسمك" : "Your Name"}
-                  value={formData.customer_name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, customer_name: e.target.value })
-                  }
-                />
+          {!user && (
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div className="bg-[#F4F6F8] dark:bg-gray-900 px-6 py-4 font-semibold text-sm">
+                {locale == "ar" ? "تفاصيل العميل" : "Customer Details"}
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-6 space-y-5">
                 <div>
                   <Label>
-                    {locale == "ar" ? "البريد الإلكتروني *" : "Email * "}
+                    {locale == "ar" ? "الاسم الكامل *" : "Full Name * "}
                   </Label>
                   <Input
-                    type="email"
                     className="mt-2"
-                    placeholder="example@gmail.com"
-                    value={formData.email}
+                    placeholder={locale == "ar" ? "اسمك" : "Your Name"}
+                    value={formData.customer_name}
                     onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
+                      setFormData({
+                        ...formData,
+                        customer_name: e.target.value,
+                      })
                     }
                   />
                 </div>
 
-                {/* Updated Phone Input Section */}
-                <div className="flex flex-col gap-0">
-                  <Label className="text-[14px] font-medium">
-                    {locale === "ar" ? "الهاتف *" : "Phone *"}
-                  </Label>
-                  <div className="phone-input-container">
-                    <PhoneInputWithCountrySelect
-                      international
-                      defaultCountry="SA"
-                      countryCallingCodeEditable={false}
-                      value={formData.phone}
-                      onChange={(value) =>
-                        setFormData({ ...formData, phone: value || "" })
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label>
+                      {locale == "ar" ? "البريد الإلكتروني *" : "Email * "}
+                    </Label>
+                    <Input
+                      type="email"
+                      className="mt-2"
+                      placeholder="example@gmail.com"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
                       }
-                      className="
+                    />
+                  </div>
+
+                  {/* Updated Phone Input Section */}
+                  <div className="flex flex-col gap-0">
+                    <Label className="text-[14px] font-medium">
+                      {locale === "ar" ? "الهاتف *" : "Phone *"}
+                    </Label>
+                    <div className="phone-input-container">
+                      <PhoneInputWithCountrySelect
+                        international
+                        defaultCountry="SA"
+                        countryCallingCodeEditable={false}
+                        value={formData.phone}
+                        onChange={(value) =>
+                          setFormData({ ...formData, phone: value || "" })
+                        }
+                        className="
                       w-full
                       [&_input]:h-9
                       [&_input]:w-full
@@ -187,27 +196,28 @@ export default function Step2({
                       [&_.PhoneInputCountry]:pointer-events-none
                       [&_.PhoneInputCountry]:opacity-70
                       "
-                    />
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <Label>
-                  {" "}
-                  {locale == "ar" ? "ملاحظة خاصة" : "Special Note"}
-                </Label>
-                <Textarea
-                  className="mt-2"
-                  placeholder="Write a note..."
-                  value={formData.special_note}
-                  onChange={(e) =>
-                    setFormData({ ...formData, special_note: e.target.value })
-                  }
-                />
+                <div>
+                  <Label>
+                    {" "}
+                    {locale == "ar" ? "ملاحظة خاصة" : "Special Note"}
+                  </Label>
+                  <Textarea
+                    className="mt-2"
+                    placeholder="Write a note..."
+                    value={formData.special_note}
+                    onChange={(e) =>
+                      setFormData({ ...formData, special_note: e.target.value })
+                    }
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Payment Method & Action Buttons remain the same */}
           <div className="rounded-xl border border-border overflow-hidden">
@@ -264,7 +274,7 @@ export default function Step2({
           <div className="p-5 sm:p-6 space-y-3 text-sm">
             <div className="flex justify-between">
               <span> {locale == "ar" ? "الخدمة:" : "Service:"}</span>
-              <span className="font-medium">{service.name}</span>
+              <span className="font-medium">{service?.service_name}</span>
             </div>
             <div className="flex justify-between">
               <span>

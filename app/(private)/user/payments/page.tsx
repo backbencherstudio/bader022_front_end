@@ -148,7 +148,7 @@ export function RecentTransactionsCard({
                 <TableHead
                   className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}
                 >
-                  {locale === "ar" ? "العميل" : "Customer"}
+                  {locale === "ar" ?"تاجر" : "Merchant"}
                 </TableHead>
                 <TableHead
                   className={`text-muted-foreground ${isRTL ? "text-right pr-8" : "text-left pl-8"}`}

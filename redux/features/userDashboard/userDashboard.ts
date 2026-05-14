@@ -32,9 +32,9 @@ export const dashboardApi = baseApi.injectEndpoints({
     // userDashboardApi.ts
     invoiceDownload: builder.query<Blob, number>({
       query: (id) => ({
-        url: `/admin/booking/invoice/${id}`,
+        url: `/confirm-invoice/${id}`,
         method: "GET",
-        responseHandler: (response:any) => response.blob(), 
+        responseHandler: (response:any) => response.blob(),
       }),
       providesTags: ["UserBooking"],
 

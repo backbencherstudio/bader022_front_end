@@ -57,6 +57,7 @@ type Booking = {
   amount: string;
   booking_date: string;
   status: string;
+  duration: string | number;
 };
 
 type PaginationType = {
@@ -153,6 +154,7 @@ export default function AllBookingHistory() {
     service: b.service_name,
     amountLabel: b.amount,
     dateLabel: b.booking_date,
+    duration: b?.duration,
     status: b.status.toLowerCase() as TxStatus,
   }));
 

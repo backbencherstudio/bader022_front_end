@@ -57,13 +57,13 @@ export function OrderDetailsDialog({
           <h3 className="text-sm font-semibold">{locale=="ar"?"معلومات التاجر":"Merchant Information "}</h3>
           <div className="rounded-xl border border-border px-5 py-4 space-y-3 text-sm">
             <p>
-                {locale=="ar"?"الفرع":"Branch:"}<span className="font-medium">{merchant_info.merchant_name}</span>
+                {locale=="ar"?"الفرع":"Branch:"}<span className="font-medium ml-2">{merchant_info.merchant_name}</span>
             </p>
             <p>
-               {locale=="ar"?"الموقع":"Location:"}<span className="font-medium">{merchant_info.location}</span>
+               {locale=="ar"?"الموقع":"Location:"}<span className="font-medium ml-2">{merchant_info.location}</span>
             </p>
             <p>
-              {locale=="ar"?"الهاتف":"Phone:"} <span className="font-medium">{merchant_info.phone}</span>
+              {locale=="ar"?"الهاتف":"Phone:"} <span className="font-medium ml-2">{merchant_info.phone}</span>
             </p>
           </div>
         </div>

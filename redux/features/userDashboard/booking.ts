@@ -92,6 +92,15 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Bookings"],
     }),
+
+    //  all Branch
+    allPublicBranch: builder.query({
+      query: () => ({
+        url: "/admin/brand/public",
+        method: "GET",
+      }),
+      providesTags: ["Bookings"],
+    }),
   }),
 });
 
@@ -103,4 +112,5 @@ export const {
   usePaymentInformationMutation,
   useSelectStaffQuery,
   useBookingSuccessfullQuery,
+  useAllPublicBranchQuery
 } = dashboardApi;

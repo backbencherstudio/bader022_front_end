@@ -84,16 +84,16 @@ export default function BookingCheckoutStepper() {
   const [bookingId, setBookingId] = useState<string | number>("");
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedBranchId, setSelectedBranchId] = useState<string>("");
   // const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toLocaleDateString("en-CA"),
   );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const { data, isLoading, error } = useBookingServiceQuery(
-    selectedService?.branch_id || "",
+    selectedBranchId,
     // { skip: !selectedService }
   );
-
   // console.log(selectedService);
   // console.log(data);
 
@@ -154,8 +154,9 @@ export default function BookingCheckoutStepper() {
       <div className="mt-6">
         {currentStep === 0 && (
           <Step0
-            selectedService={selectedService}
             setSelectedService={setSelectedService}
+            selectedBranchId={selectedBranchId}
+            setSelectedBranchId={setSelectedBranchId}
             data={data}
             onNext={() => setCurrentStep(1)}
           />

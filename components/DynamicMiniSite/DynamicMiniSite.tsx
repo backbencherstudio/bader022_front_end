@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import MiniSiteFooter from "./MiniSiteFooter";
 import { useI18n } from "../provider/I18nProvider";
+import { FaLocationPin } from "react-icons/fa6";
 
 interface MiniSiteData {
   hero_image?: string;
@@ -49,6 +50,9 @@ interface Service {
   service_name?: string;
   description?: string;
   duration?: string;
+  branch?:{
+    name:string
+  }
 }
 
 interface DynamicMiniSiteProps {
@@ -529,7 +533,7 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                   {/* Image */}
                   <div className="relative h-48 w-full">
                     <Image
-                      src={"/images/mini-site/service1.png"}
+                      src={getImageUrl(item.image) || "/images/mini-site/service1.png"}
                       alt={item?.service_name || "title"}
                       fill
                       className="object-cover"
@@ -548,13 +552,16 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
                         <span>⏱</span>
                         <span>{item?.service_name}</span>
                       </div>
-                      <span className="font-semibold">{item?.duration}</span>
+                      <span className="font-semibold">{item?.duration} min</span>
                     </div>
 
-                    {/* Title */}
+                    <div className="flex items-center justify-between gap-5">                    
+                      {/* Title */}
                     <h3 className="text-lg font-semibold ">
                       {item?.service_name}
                     </h3>
+                    <p className="flex items-center gap-1"><FaLocationPin /> {item?.branch?.name}</p>
+                    </div>
 
                     {/* Description */}
                     <p

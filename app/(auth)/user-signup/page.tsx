@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   FaEye,
@@ -13,6 +13,9 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import Image from "next/image";
+import PhoneInput from "react-phone-number-input";
+// @ts-ignore
+import "react-phone-number-input/style.css";
 
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
@@ -35,6 +38,7 @@ export default function UserSignUpPage() {
   const {
     register,
     handleSubmit,
+      control,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -136,13 +140,65 @@ export default function UserSignUpPage() {
                 isRTL={isRTL}
               />
 
-              <Input
+              {/* <Input
                 label={t("Auth.Signup.phone")}
                 icon={<FaPhoneAlt />}
                 register={register("phone", { required: true })}
                 error={errors.phone && "Phone Number is Required"}
                 isRTL={isRTL}
-              />
+              /> */}
+                    {/* Phone */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {locale=="ar"?"رقم الهاتف":"Phone Number"} *
+                </label>
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{
+                    required: "Phone number is required",
+                    validate: (value) => {
+                      const digits = value?.replace(/\D/g, "") || "";
+                      // must include 966 + more than 9 digits total
+                      if (!digits.startsWith("966")) {
+                        return "Phone number must start with +966";
+                      }
+                      if (digits.length <= 8) {
+                        return "Phone number must be more than 9 digits including 966";
+                      }
+
+                      return true;
+                    },
+                  }}
+                  render={({ field }) => (
+                    <PhoneInput
+                      international
+                      defaultCountry="SA"
+                      countryCallingCodeEditable={false}
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                      className="
+                w-full
+
+                [&_input]:h-11
+                [&_input]:w-full
+                [&_input]:rounded-md
+                [&_input]:border
+                [&_input]:border-gray-300
+                dark:[&_input]:border-gray-600
+                [&_input]:bg-white
+                dark:[&_input]:bg-gray-800
+                [&_input]:px-3
+                [&_.PhoneInputCountry]:pointer-events-none
+                [&_.PhoneInputCountry]:opacity-70
+              "
+                    />
+                  )}
+                />
+                {errors.phone && (
+                  <p className="mt-1 text-sm text-red-500">{errors.phone.message}</p>
+                )}
+              </div>
 
               {/* Password */}
               <div>

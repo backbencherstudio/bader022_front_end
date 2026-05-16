@@ -1,29 +1,35 @@
 import { useI18n } from "@/components/provider/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { getImageUrl } from "@/helper/formatImage";
-import { Clock, Clock1, FileClock } from "lucide-react";
+import { useAllPublicBranchQuery } from "@/redux/features/userDashboard/booking";
 import Image from "next/image";
 import { FaLocationPin } from "react-icons/fa6";
 import { FiClock } from "react-icons/fi";
 
 interface Step0Props {
-  selectedService: any;
   setSelectedService: (service: any) => void;
+  selectedBranchId: string;
+  setSelectedBranchId: (branchId: string) => void;
   data: any;
   onNext: () => void;
 }
 
 export default function Step0({
-  selectedService,
   setSelectedService,
+  selectedBranchId,
+  setSelectedBranchId,
   data,
   onNext,
 }: Step0Props) {
-  // console.log(selectedService);
-  const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
+  const { locale } = useI18n();
 
-  // console.log(selectedService);
+  const { data: BranchData } = useAllPublicBranchQuery({});
+
+  const filteredServices = selectedBranchId
+    ? data?.data?.filter(
+        (service: any) => String(service.branch_id) === selectedBranchId,
+      )
+    : data?.data;
 
   return (
     <div>
@@ -31,12 +37,10 @@ export default function Step0({
         <p> {locale == "ar" ? "تصفية حسب:" : "Filter by:"}</p>
         <select
           className="border p-1 rounded-md px-2 bg-white text-black dark:bg-gray-800 dark:text-white"
-          value={selectedService?.branch_name || ""}
+          value={selectedBranchId}
           onChange={(e) => {
-            const selected = data?.data?.find(
-              (item: any) => item.branch_name === e.target.value,
-            );
-            setSelectedService(selected);
+            setSelectedBranchId(e.target.value);
+            setSelectedService(null);
           }}
         >
           <option
@@ -45,20 +49,20 @@ export default function Step0({
           >
             {locale == "ar" ? "اختر الفرع" : "Select Branch"}
           </option>
-          {data?.data?.map((item: any) => (
+          {BranchData?.data?.map((item: any) => (
             <option
               className="bg-white text-black dark:bg-gray-800 dark:text-white"
               key={item.id}
-              value={item.branch_name}
+              value={String(item.id)}
             >
-              {item.branch_name}
+              {item.name}
             </option>
           ))}
         </select>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4 md:mt-8">
-        {data?.data?.map((service: any) => (
+        {filteredServices?.map((service: any) => (
           <div
             key={service.id}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden"

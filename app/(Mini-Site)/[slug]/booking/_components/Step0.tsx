@@ -80,7 +80,7 @@ export default function Step0({
             value=""
             className="bg-white text-black dark:bg-gray-800 dark:text-white"
           >
-            {locale == "ar" ? "" : "Select Branch"}
+            {locale == "ar" ? "اختر الفرع" : "Select Branch"}
           </option>
           {data?.branches?.map((item: any) => (
             <option

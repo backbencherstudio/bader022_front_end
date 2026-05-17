@@ -10,21 +10,12 @@ import {
   Calendar,
   User,
 } from "lucide-react";
-
-import { useEffect, useState } from "react";
-import { authorize } from "@/lib/auth";
-import { useRouter } from "next/navigation";
-
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const { locale, t } = useI18n();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  // NAV ITEMS (translated)
   const navItems = [
     {
       label: t("User.Sidebar.dashboard"),
@@ -58,27 +49,6 @@ export default function DashboardLayout({
       action: "logout",
     },
   ];
-
-  // useEffect(() => {
-  //   const auth = authorize(["User"]);
-  //   if (!auth.authorized) {
-  //     router.push("/user-login");
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     router.push("/user-login");
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [router]);
-
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
   return (
     <div>
       <div>
@@ -86,8 +56,6 @@ export default function DashboardLayout({
           navItems={navItems}
           footerItems={footerItems as any}
           logoSrc="/images/image 259.png"
-          // title="Car wash"
-          // badgeText="premium"
         />
         <TopBar />
         <div

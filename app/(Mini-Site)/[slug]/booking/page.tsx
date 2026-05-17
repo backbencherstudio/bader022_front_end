@@ -10,6 +10,15 @@ import Step0 from "./_components/Step0";
 import Step1 from "./_components/Step1";
 import Step2 from "./_components/Step2";
 import Step3 from "./_components/Step3";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 type Service = {
   id: number;
@@ -18,6 +27,11 @@ type Service = {
   price: number;
   description?: string;
   service_name: string;
+};
+
+const LANGS = {
+  en: { label: "English", flag: "/images/english_flag.png" },
+  ar: { label: "Arabic", flag: "/images/arabic_flag.png" },
 };
 
 function Stepper({
@@ -67,7 +81,7 @@ function Stepper({
 }
 
 export default function BookingPage() {
-  const { t, locale } = useI18n();
+  const { locale, setLocale, t } = useI18n();
   const isRTL = locale === "ar";
   const params = useParams();
   const domain = params.slug;
@@ -75,8 +89,6 @@ export default function BookingPage() {
     "Select Services",
     "Select Date",
     "Payment Info",
-    // "Card Info",
-    // "Confirmed",
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -85,13 +97,6 @@ export default function BookingPage() {
     new Date().toLocaleDateString("en-CA"),
   );
   const [selectedTime, setSelectedTime] = useState<string>("");
-
-  //   const { data, isLoading, error } = useBookingServiceQuery(
-  //     selectedService?.name || "",
-  //     // { skip: !selectedService }
-  //   );
-
-  // const { data, isLoading } = useMiniSiteByDomainNameQuery(`${domain}`);
   const { data, isLoading } = useMiniSiteByDomainNameQuery({
     domainName: domain as string,
     branch_id: selectedService?.id?.toString(),
@@ -100,7 +105,68 @@ export default function BookingPage() {
   // console.log("selectedService==============", selectedService);
 
   return (
-    <div className="container mx-auto py-8">
+<div>
+        <div className=" mx-auto bg-white z-50 fixed  w-full ">
+        <header className="px-4 md:px-6 py-5 container mx-auto  ">
+          <div
+            className={`flex items-center justify-between ${
+              locale === "ar" ? "flex-row-reverse" : ""
+            }`}
+          >
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src="/images/image 259.png"
+                alt="Logo"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
+            </Link>
+            {/* Right Side */}
+            <div
+              className={`flex items-center gap-3 ${
+                locale === "ar" ? "flex-row-reverse" : ""
+              }`}
+            >
+              {/* Language */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 cursor-pointer">
+                    <Image
+                      src={LANGS[locale].flag}
+                      alt={LANGS[locale].label}
+                      width={22}
+                      height={22}
+                    />
+                    <span className="uppercase">{locale}</span>
+                    <ChevronDown size={14} />
+                  </button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end" className="w-40">
+                  {(Object.keys(LANGS) as Array<"en" | "ar">).map((key) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setLocale(key)}
+                      className="cursor-pointer flex items-center gap-2"
+                    >
+                      <Image
+                        src={LANGS[key].flag}
+                        alt={LANGS[key].label}
+                        width={22}
+                        height={22}
+                      />
+                      <span>{LANGS[key].label}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div className="container mx-auto py-8">
       {/* Stepper */}
       <Stepper steps={steps} currentStep={currentStep + 1} />
 
@@ -166,5 +232,6 @@ export default function BookingPage() {
         )}
       </div>
     </div>
+</div>
   );
 }

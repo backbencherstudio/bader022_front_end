@@ -43,7 +43,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  // console.log(branchData);
+  console.log(user);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -183,13 +183,15 @@ export default function TopBar() {
         </DropdownMenu>
 
         {/* Visit Website */}
-        <Link
-          href={"/"}
-          // onClick={handlelogout}
-          className="hidden md:block bg-[#262626] cursor-pointer text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm"
-        >
-          {t("Topbar.visitWebsite")}
-        </Link>
+        {user?.website_domain && (
+          <Link
+            href={`/${user.website_domain}`}
+            // onClick={handlelogout}
+            className="hidden md:block bg-[#262626] cursor-pointer text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm"
+          >
+            {t("Topbar.visitWebsite")}
+          </Link>
+        )}
 
         {/* Profile Dropdown */}
         <DropdownMenu dir={isRTL ? "rtl" : "ltr"}>

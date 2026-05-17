@@ -10,11 +10,11 @@ import React, {
 import en from "@/messages/en.json";
 import ar from "@/messages/ar.json";
 
-type Locale = "en" | "ar";
+type Locale = "ar" | "en";
 type Messages = typeof en;
 type TranslateParams = Record<string, string | number>;
 
-const MESSAGE_MAP: Record<Locale, Messages> = { en, ar };
+const MESSAGE_MAP: Record<Locale, Messages> = { ar, en };
 
 interface I18nContextType {
   locale: Locale;
@@ -48,13 +48,13 @@ function interpolate(text: string, params?: TranslateParams) {
 /* ------------------ Provider ------------------ */
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
+  const [locale, setLocaleState] = useState<Locale>("ar");
   const [mounted, setMounted] = useState(false);
 
   /** Load locale from localStorage */
   useEffect(() => {
     const stored = localStorage.getItem("locale") as Locale | null;
-    if (stored === "en" || stored === "ar") {
+    if (stored === "ar" || stored === "en") {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocaleState(stored);
     }

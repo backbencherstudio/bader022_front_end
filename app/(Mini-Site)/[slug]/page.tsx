@@ -3,27 +3,31 @@ import DynamicMiniSite from "@/components/DynamicMiniSite/DynamicMiniSite";
 import NotFoundPage from "@/components/NotFoundPage";
 import { useMiniSiteByDomainNameQuery } from "@/redux/features/merchant/miniSiteApi";
 import { Loader } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function DynamicMiniSitePage() {
   const params = useParams();
-  const domain = params.slug;
-
-  // console.log(domain);
+  const router = useRouter();
+  const domain = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
   const { data, isLoading } = useMiniSiteByDomainNameQuery({
     domainName: domain as string,
   });
 
-  // console.log(data);
+  useEffect(() => {
+    if (!isLoading && data?.status === true && data?.data?.is_premium === false) {
+      router.replace(`/${domain}/booking`);
+    }
+  }, [data, domain, isLoading, router]);
 
-  if (isLoading) {
+  if (isLoading || data?.data?.is_premium === false) {
     return <Loader />;
   }
 
   return (
     <div>
-      {data?.status === true ? (
+      {data?.status === true && data?.data?.is_premium === true ? (
         <DynamicMiniSite data={data?.data} />
       ) : (
         <NotFoundPage />

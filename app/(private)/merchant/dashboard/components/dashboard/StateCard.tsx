@@ -33,7 +33,7 @@ const StatCard: React.FC<IStatCard> = ({
       </div>
 
       <div className="flex justify-between pt-6 items-center">
-        <div className="text-3xl font-semibold text-black dark:text-white flex items-center gap-3">
+        <div className="text-2xl font-semibold text-black dark:text-white flex items-center gap-3">
           {Currency && <Currency />}
           {value}
         </div>

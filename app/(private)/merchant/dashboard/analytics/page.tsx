@@ -74,7 +74,7 @@ export default function page() {
     isLoading: isStaffPerformanceLoading,
     isError: isStaffPerformanceError,
   } = useStaffPerformanceQuery({});
-  // console.log('analyticsData:', analyticsData)
+  console.log('analyticsData:', analyticsData)
   // console.log('monthlyRevenueData:', monthlyRevenueData)
   // console.log('weeklyRevenueData:', weeklyRevenueData)
   // console.log('newReturnData:', newReturnData)
@@ -113,7 +113,8 @@ export default function page() {
             <StatCard
               title={locale == "ar" ? "أفضل خدمة" : "Top Service"}
               // value={locale == "ar" ? "قص الشعر" : "Haircut"}
-              value={locale == "ar" ? "" : ""}
+              // value={locale == "ar" ? "" : ""}
+              value={analyticsData?.top_service}
               Icon={Star}
             />
           </div>

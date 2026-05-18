@@ -12,17 +12,19 @@ export const adminApi = baseApi.injectEndpoints({
 
     //  weeklyPaymentCount
     weeklyPaymentCount: builder.query({
-      query: () => ({
+      query: ({ year, month }) => ({
         url: "/admin/weeklyPaymentCount",
         method: "GET",
+        params: { year, month },
       }),
     }),
 
     //  monthlypaymentCount
     monthlypaymentCount: builder.query({
-      query: () => ({
+      query: ({ year, month }) => ({
         url: "/admin/monthlypaymentCount",
         method: "GET",
+        params: { year, month },
       }),
     }),
     //  Merchants
@@ -55,12 +57,6 @@ export const adminApi = baseApi.injectEndpoints({
     }),
 
     //  PaymentHistory
-    // getPaymentHistory: builder.query({
-    //   query: () => ({
-    //     url: `/admin/payment-history/index`,
-    //     method: "GET",
-    //   }),
-    // }),
     getPaymentHistory: builder.query({
       query: ({ search }) => ({
         url: `/admin/payment-history/index?search=${search}`,
@@ -69,6 +65,7 @@ export const adminApi = baseApi.injectEndpoints({
           search,
         },
       }),
+      providesTags: ["Payment"],
     }),
 
     //  SinglePaymentHistory
@@ -77,6 +74,7 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/admin/payment-history/show/${id}`,
         method: "GET",
       }),
+       providesTags: ["Payment"],
     }),
 
     // payment invoice download
@@ -226,15 +224,6 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: ["information"],
     }),
 
-    // updateInformation: builder.mutation({
-    //   query: ({ id, data }) => ({
-    //     url: `/admin/saveinfo`,
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["information"],
-    // }),
-
     //update setting info
     updateInformation: builder.mutation({
       query: (body) => ({
@@ -251,7 +240,16 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/admin/businessTypeAnalytics`,
         method: "GET",
       }),
-      // providesTags: ["information"],
+      providesTags: ["Analytics"],
+    }),
+
+    // Get Notifications 
+    getNotifications: builder.query({
+      query: () => ({
+        url: `/admin/admin-notifications`,
+        method: "GET",
+      }),
+      providesTags: ["Notification"],
     }),
   }),
 });
@@ -279,4 +277,5 @@ export const {
   useUpdateInformationMutation,
   useGetsubcriptionSumaryQuery,
   useGetBuesnessAnalyticsQuery,
+  useGetNotificationsQuery
 } = adminApi;

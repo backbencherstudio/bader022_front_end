@@ -21,12 +21,15 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit, Pencil } from "lucide-react";
 import { useUpdateSubscriptionsByIdMutation } from "@/redux/features/admin/adminApi";
+import { useI18n } from "@/components/provider/I18nProvider";
+import { toast } from "sonner";
 
 type FormValues = {
   packageStatus: string;
 };
 
 export function EditSubscriptionModal({ id, businessName }: { id: string; businessName: string }) {
+  const { locale } = useI18n();
   const [open, setOpen] = useState(false);
   const [updateSubscription, { isLoading }] = useUpdateSubscriptionsByIdMutation();
 
@@ -40,11 +43,12 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
         id,
         data: { status: values.packageStatus },
       }).unwrap();
-
+     toast.success(locale=="ar"?"تم تحديث الاشتراك بنجاح!":"Subscription updated successfully!");
       setOpen(false);
       form.reset();
     } catch (error) {
       // console.error("Update failed:", error);
+      toast.error(locale=="ar"?"فشل التحديث!":"Update failed!");
     }
   }
 
@@ -62,7 +66,7 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
 
       <DialogContent className="rounded-xl">
         <DialogHeader>
-          <DialogTitle>Edit Subscription</DialogTitle>
+          <DialogTitle> {locale=="ar"?"تعديل الاشتراك":"Edit Subscription"}</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -72,7 +76,7 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
               name="packageStatus"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Subscription Status</FormLabel>
+                  <FormLabel> {locale=="ar"?"حالة الاشتراك":"Subscription Status"}</FormLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl className="w-full">
                       <SelectTrigger>
@@ -93,11 +97,12 @@ export function EditSubscriptionModal({ id, businessName }: { id: string; busine
 
             <div className="flex justify-start gap-4 pt-4">
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Updating..." : "Save"}
+                {/* {isLoading ? "Updating..." : "Save"} */}
+                {isLoading ? locale=="ar"?"جارٍ التحديث": "Updating..." : locale=="ar"?"حفظ التغييرات": "Save Changes"}
               </Button>
 
               <Button variant="outline" type="button" onClick={() => setOpen(false)}>
-                Cancel
+                {locale=="ar"?"إلغاء":"Cancel"}
               </Button>
             </div>
           </form>

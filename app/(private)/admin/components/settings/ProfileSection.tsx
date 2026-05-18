@@ -77,7 +77,7 @@ export default function ProfileSection() {
           },
         }),
       );
-      toast("Profile Updated Successfully ");
+      toast(locale=="ar"?"تم تحديث الملف الشخصي بنجاح":"Profile Updated Successfully");
     } catch (error) {
       console.error(error);
     }

@@ -15,7 +15,9 @@ import Pagination from "@/components/reusable/Pagination";
 import { Button } from "@/components/ui/button";
 import { BookingDetailsModal } from "./BookingViewModal";
 import { useLazyGetDownloadInvoiceByIdQuery } from "@/redux/features/merchant/bookingsApi";
+import { useConfirmCancelAppointmentMutation } from "@/redux/features/userDashboard/userDashboard";
 import { useI18n } from "@/components/provider/I18nProvider";
+import { toast } from "sonner";
 
 export type TxStatus =
   | "complete"
@@ -143,11 +145,12 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
     return filtered.slice(start, start + PAGE_SIZE);
   }, [filtered, page]);
 
-  const [getDownloadInvoiceById] = useLazyGetDownloadInvoiceByIdQuery();
+const [getDownloadInvoiceById] = useLazyGetDownloadInvoiceByIdQuery();
+  const [confirmCancel, { isLoading: isCancelling }] = useConfirmCancelAppointmentMutation();
+
   const handleDownload = async (bookingId: string) => {
     try {
       const blob = await getDownloadInvoiceById(bookingId).unwrap();
-
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -155,12 +158,22 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
       document.body.appendChild(link);
       link.click();
       link.remove();
-
       window.URL.revokeObjectURL(url);
     } catch (err) {
       // console.error(err);
     }
   };
+
+   const handleCancel = async (bookingId: string) => {
+     toast.promise(
+       confirmCancel({ booking_id: Number(bookingId) }).unwrap(),
+       {
+         loading: locale=="ar" ? "جاري إلغاء الموعد..." : "Cancelling appointment...",
+         success: (res) => res?.message || (locale=="ar"?"تم إلغاء الموعد بنجاح": "Appointment cancelled successfully"),
+         error: (err) => err?.data?.message || (locale=="ar"?"فشل إلغاء الموعد": "Failed to cancel appointment")
+       }
+     );
+   };
 
   return (
     <Card
@@ -276,6 +289,15 @@ export default function AllBookingHistory({ data }: { data: any[] }) {
                           onClick={() => handleDownload(r.bookingID)}
                         >
                           Download
+                        </Button>
+
+                        <Button
+                          className="cursor-pointer"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleCancel(r.bookingID)}
+                        >
+                          Cancel
                         </Button>
                       </div>
                     </TableCell>

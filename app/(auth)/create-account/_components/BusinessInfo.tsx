@@ -248,11 +248,15 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
             {locale === "ar" ? (
               <>
                 أوافق على{" "}
-                <Link href="/privacy-policy" className="underline font-medium">
+                <Link href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                 className="underline font-medium">
                   سياسة الخصوصية
                 </Link>{" "}
                 و{" "}
-                <Link href="/terms-condition" className="underline font-medium">
+                <Link href="/terms-condition" target="_blank"
+                  rel="noopener noreferrer" className="underline font-medium">
                   الشروط والأحكام
                 </Link>
               </>
@@ -261,6 +265,8 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                 I agree to the{" "}
                 <Link
                   href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline font-medium text-blue-500"
                 >
                   Privacy Policy
@@ -268,6 +274,8 @@ export default function BusinessInfo({ data, onNext, onPrevious }: Step1Props) {
                 and{" "}
                 <Link
                   href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline font-medium text-blue-500"
                 >
                   Terms & Conditions

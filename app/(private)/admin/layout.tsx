@@ -12,9 +12,6 @@ import {
   CreditCard,
   Crown,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { authorize } from "@/lib/auth";
 
 export default function DashboardLayout({
   children,
@@ -22,8 +19,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { locale, t } = useI18n();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   // NAV ITEMS (translated)
   const navItems = [
@@ -69,26 +64,6 @@ export default function DashboardLayout({
       action: "logout",
     },
   ];
-
-  // AUTH CHECK
-  // useEffect(() => {
-  //   const auth = authorize(["Admin"]);
-  //   if (!auth.authorized) router.push("/");
-  // }, []);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     router.push("/login");
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [router]);
-
-  // if (loading) {
-  //   return <p>{t("Common.loading")}</p>;
-  // }
-
   return (
     <div dir={locale === "ar" ? "rtl" : "ltr"}>
       <div>

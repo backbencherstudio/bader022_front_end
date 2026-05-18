@@ -91,7 +91,7 @@ export default function AddBookingModal({
   // Submit booking
   const onSubmit = async (data: any) => {
     if (!data.service || !data.staff || !data.date || !data.time) {
-      toast.error("Please select service, date, time, and staff");
+      toast.error(locale=="ar"?"يرجى اختيار الخدمة والتاريخ والوقت والموظف":"Please select service, date, time, and staff");
       return;
     }
 
@@ -101,7 +101,7 @@ export default function AddBookingModal({
     const branchId = selectedServiceData?.branch_id;
 
     if (!branchId) {
-      toast.error("Selected service branch not found");
+      toast.error(locale=="ar"?"لم يتم العثور على فرع الخدمة المحدد":"Selected service branch not found");
       return;
     }
 
@@ -117,11 +117,11 @@ export default function AddBookingModal({
         phone: data.phone,
         payment_method: "cash",
       }).unwrap();
-      toast.success("Booking created successfully");
+      toast.success(locale=="ar"?"تم إنشاء الحجز بنجاح":"Booking created successfully");
       reset();
       onClose();
     } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to create booking");
+      toast.error(err?.data?.message || locale=="ar"?"فشل إنشاء الحجز":"Failed to create booking");
       onClose();
     }
   };

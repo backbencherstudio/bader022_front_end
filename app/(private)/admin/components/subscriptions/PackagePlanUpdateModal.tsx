@@ -32,6 +32,7 @@ import {
 import { Edit, Pencil } from "lucide-react";
 import { useUpdatePlanByIdMutation } from "@/redux/features/admin/adminApi";
 import { toast } from "sonner";
+import { useI18n } from "@/components/provider/I18nProvider";
 
 type FormValues = {
     name: string;
@@ -49,6 +50,7 @@ export function PackagePlanUpdateModal({
     id: number;
     plan: any;
 }) {
+    const { t, locale } = useI18n();
     const [open, setOpen] = useState(false);
     const [features, setFeatures] = useState<string[]>([]);
     
@@ -68,7 +70,7 @@ export function PackagePlanUpdateModal({
     });
 
     useEffect(() => {
-    if (plan && open) {   // 👈 add open check
+    if (plan && open) {  
         form.reset({
             name: plan.name || "",
             title: plan.title || "",
@@ -100,11 +102,11 @@ export function PackagePlanUpdateModal({
                 data: payload,
             }).unwrap();
 
-            toast.success("Subscription updated successfully!");
+            toast.success(locale=="ar"?"تم تحديث الاشتراك بنجاح!":"Subscription updated successfully!");
             setOpen(false);
         } catch (error) {
             console.error(error);
-            toast.error("Update failed!");
+            toast.error(locale=="ar"?"فشل التحديث!":"Update failed!");
         }
     }
 
@@ -122,7 +124,7 @@ export function PackagePlanUpdateModal({
 
             <DialogContent className="rounded-xl max-w-lg">
                 <DialogHeader>
-                    <DialogTitle>Edit Subscription Plan</DialogTitle>
+                    <DialogTitle>{locale=="ar"?"تعديل خطة الاشتراك":"Edit Subscription Plan"}</DialogTitle>
                 </DialogHeader>
 
                 <Form {...form}>
@@ -136,7 +138,7 @@ export function PackagePlanUpdateModal({
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Plan Name</FormLabel>
+                                    <FormLabel>{locale=="ar"?"اسم الخطة":"Plan Name"}</FormLabel>
 
                                     <Select
                                         value={field.value}
@@ -164,7 +166,7 @@ export function PackagePlanUpdateModal({
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Title</FormLabel>
+                                    <FormLabel>{locale=="ar"?"العنوان":"Title"}</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -178,7 +180,7 @@ export function PackagePlanUpdateModal({
                             name="price"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Price</FormLabel>
+                                    <FormLabel>{locale=="ar"?"السعر":"Price"}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="number"
@@ -198,7 +200,7 @@ export function PackagePlanUpdateModal({
                             name="currency"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Currency</FormLabel>
+                                    <FormLabel>{locale=="ar"?"العملة":"Currency"}</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -212,7 +214,7 @@ export function PackagePlanUpdateModal({
                             name="package"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Package Type</FormLabel>
+                                    <FormLabel> {locale=="ar"?"نوع الباقة":"Package Type"}</FormLabel>
                                     <Select
                                         value={field.value}
                                         onValueChange={field.onChange}
@@ -232,7 +234,7 @@ export function PackagePlanUpdateModal({
                                 </FormItem>
                             )}
                         />
-                        <div>
+                        {/* <div>
                             {features.map((item, index) => (
                                 <Input
                                     key={index}
@@ -254,7 +256,7 @@ export function PackagePlanUpdateModal({
                             >
                                 + Add Feature
                             </Button>
-                        </div>
+                        </div> */}
 
 
                         {/* Status */}
@@ -263,7 +265,7 @@ export function PackagePlanUpdateModal({
                             name="packageStatus"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Status</FormLabel>
+                                    <FormLabel> {locale=="ar"?"الحالة":"Status"}</FormLabel>
                                     <Select
                                         value={field.value}
                                         onValueChange={field.onChange}
@@ -286,7 +288,7 @@ export function PackagePlanUpdateModal({
                         {/* Buttons */}
                         <div className="flex justify-end gap-3 pt-4">
                             <Button type="submit" disabled={isLoading}>
-                                {isLoading ? "Updating..." : "Save Changes"}
+                                {isLoading ? locale=="ar"?"جارٍ التحديث": "Updating..." : locale=="ar"?"حفظ التغييرات": "Save Changes"}
                             </Button>
 
                             <Button
@@ -294,7 +296,7 @@ export function PackagePlanUpdateModal({
                                 type="button"
                                 onClick={() => setOpen(false)}
                             >
-                                Cancel
+                                 {locale=="ar"?"إلغاء":"Cancel"}
                             </Button>
                         </div>
                     </form>

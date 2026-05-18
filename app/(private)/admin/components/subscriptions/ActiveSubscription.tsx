@@ -122,7 +122,7 @@ export default function Packages() {
     plan_type: "",
   });
 
-  console.log(filters);
+  // console.log(filters);
 
   const [page, setPage] = useState(1);
   const pageSize = 10; // You can adjust this value

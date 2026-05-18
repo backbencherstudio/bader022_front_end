@@ -24,6 +24,7 @@ import { logout, setCredentials } from "@/redux/features/auth/authSlice";
 import { useAllBranchQuery } from "@/redux/features/merchant/branchApi";
 import Link from "next/link";
 import { baseApi } from "@/redux/api/baseApi";
+import NotificationDropdown from "@/app/(private)/components/NotificationDropdown";
 
 const LANGS = {
   en: { label: "English", flag: "/images/english_flag.png" },
@@ -141,12 +142,13 @@ export default function TopBar() {
         </button>
 
         {/* Notifications */}
-        <button
+        {/* <button
           aria-label={t("Topbar.notifications")}
           className="p-2 sm:p-2.5 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
           <BellDot className="w-5 h-5 text-black dark:text-white" />
-        </button>
+        </button> */}
+        <NotificationDropdown isRTL={isRTL} />
 
         {/* Language Switch */}
         <DropdownMenu>
@@ -181,6 +183,14 @@ export default function TopBar() {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {user?.role=="Admin" &&(          
+          <Link
+            href={`/`}
+            className="hidden md:block bg-[#262626] cursor-pointer text-white rounded-full py-2 px-4 hover:bg-[#1f1f1f] transition dark:bg-gray-700 hover:dark:bg-gray-600 text-sm"
+          >
+            {t("Topbar.visitWebsite")}
+          </Link>)}
 
         {/* Visit Website */}
         {user?.website_domain && (

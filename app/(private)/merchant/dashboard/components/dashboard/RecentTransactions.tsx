@@ -46,7 +46,7 @@ function StatusPill({ status }: { status: TxStatus }) {
     <span
       className={[
         "inline-flex min-w-33 items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold border",
-        status
+        status === "completed"
           ? "border-emerald-500 bg-emerald-50 text-emerald-700"
           : "border-red-500 bg-red-50 text-red-600",
       ].join(" ")}

@@ -44,7 +44,7 @@ export default function TopBar() {
   const { data: branchData, isLoading } = useAllBranchQuery({});
   const [selectedBranch, setSelectedBranch] = useState<string>("Main Branch");
 
-  console.log(user);
+  // console.log(user);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);

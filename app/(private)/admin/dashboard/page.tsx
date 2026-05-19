@@ -24,8 +24,8 @@ export default function DashboardPage() {
   const [selectedYear, setSelectedYear] = useState<string>(String(currentYear));
   const [selectedMonth, setSelectedMonth] = useState<string>(String(currentMonth));
 
-  console.log(selectedYear);
-  console.log(selectedMonth);
+  // console.log(selectedYear);
+  // console.log(selectedMonth);
   
 
   const { data: weeklyApiData } = useWeeklyPaymentCountQuery({ 

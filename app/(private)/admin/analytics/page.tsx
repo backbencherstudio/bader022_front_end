@@ -46,13 +46,13 @@ export default function Page() {
   // console.log('====================================');
 
   const monthlyRevenueData =
-    monthlyApiData?.map((item: MonthlyPaymentItem) => ({
+    monthlyApiData?.data?.map((item: MonthlyPaymentItem) => ({
       name: item.month,
       revenue: item.revenue,
     })) || [];
 
   const weeklyRevenueData =
-    weeklyApiData?.map((item: WeeklyPaymentItem) => ({
+    weeklyApiData?.data?.map((item: WeeklyPaymentItem) => ({
       name: item.day,
       revenue: item.revenue,
     })) || [];

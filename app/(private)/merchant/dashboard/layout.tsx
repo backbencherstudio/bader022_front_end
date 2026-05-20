@@ -15,8 +15,6 @@ import {
   Calendar,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { authorize } from "@/lib/auth";
 
 export default function DashboardLayout({
   children,
@@ -82,12 +80,6 @@ export default function DashboardLayout({
     },
   ];
 
-  // useEffect(() => {
-  //   const auth = authorize(["Merchant"]);
-  //   if (!auth.authorized) {
-  //     router.push("/");
-  //   }
-  // }, []);
   return (
     <div>
       <div>

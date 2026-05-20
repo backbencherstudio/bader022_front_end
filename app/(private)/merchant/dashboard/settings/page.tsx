@@ -18,6 +18,7 @@ import BusinessSetting from "../components/settings/Bussiness";
 import NotificationSettings from "../components/settings/Notifications";
 import LanguageSettings from "../components/settings/Languages";
 import SupportSettings from "../components/settings/Support";
+import AutoRenew from "../components/settings/AutoRenew";
 import { useAppSelector } from "@/redux/hooks";
 import { useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
@@ -121,6 +122,20 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
             {locale == "ar" ? "فرع" : "Branch"}
           </div>
         </li>
+        <li
+          className={cn(
+            "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+            activeSection === "autorenew"
+              ? "bg-gray-300 text-black"
+              : "text-muted-foreground hover:bg-muted/30",
+          )}
+          onClick={() => setActiveSection("autorenew")}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🔁</span>
+            {locale == "ar" ? "التجديد التلقائي" : "Auto Renew"}
+          </div>
+        </li>
         {/* Tap-key */}
         {/* <li
           className={cn(
@@ -214,6 +229,17 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
             onClick={() => setActiveSection("branch")}
           >
             {locale == "ar" ? "فرع" : "Branch"}
+          </li>
+          <li
+            className={cn(
+              "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
+              activeSection === "autorenew"
+                ? "bg-gray-300 text-black"
+                : "text-muted-foreground hover:bg-muted/30",
+            )}
+            onClick={() => setActiveSection("autorenew")}
+          >
+            {locale == "ar" ? "التجديد التلقائي" : "Auto Renew"}
           </li>
           {/* <li
             className={cn(
@@ -424,6 +450,8 @@ function getActiveSectionContent(activeSection: string, t: any) {
     //   return <MerchantTapkey />;
     case "branch":
       return <BranchSettings />;
+    case "autorenew":
+      return <AutoRenew />;
     case "account":
     default:
       return <AccountSettingsForm />;

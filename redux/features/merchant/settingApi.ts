@@ -44,20 +44,9 @@ export const settingApi = baseApi.injectEndpoints({
       providesTags: ["Setting"],
     }),
    
-  //  createBranch: builder.mutation({
-  //     query: ({ body }) => {
-  //       // console.log("body in adminApi", body);
-  //       return {
-  //         url: "admin/branch/store",
-  //         method: "POST",
-  //         body,
-  //       };
-  //     },
-  //     invalidatesTags: ["Setting"],
-  //   }),
       createBranch: builder.mutation({
       query: ({ body }) => ({
-        url: "admin/branch/store",
+        url: "/admin/branch/store",
         method: "POST",
         body,
       }),
@@ -66,7 +55,7 @@ export const settingApi = baseApi.injectEndpoints({
 
     updateBranch: builder.mutation({
       query: ({ id, body }) => ({
-        url: `admin/branch/update/${id}`,
+        url: `/admin/branch/update/${id}`,
         method: "POST",
         body,
       }),
@@ -75,10 +64,27 @@ export const settingApi = baseApi.injectEndpoints({
 
     deleteBranch: builder.mutation({
       query: (id) => ({
-        url: `admin/branch/delete/${id}`,
+        url: `/admin/branch/delete/${id}`,
         method: "DELETE", 
       }),
       invalidatesTags: ["Setting", "Branch"],
+    }),
+
+    getAutoRenew: builder.query({
+      query: () => ({
+        url: `/admin/mer-dashboard/auto-renew-status`,
+        method: "GET",
+      }),
+      providesTags: ["Setting"],
+    }),
+
+    updateAutoRenew: builder.mutation({
+      query: ({ body }) => ({
+        url: `/admin/mer-dashboard/update-auto-renew`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Setting"],
     }),
 
   }),
@@ -91,5 +97,7 @@ export const {
   useGetMerchantDataShowQuery,
   useCreateBranchMutation,
   useUpdateBranchMutation,
-  useDeleteBranchMutation
+  useDeleteBranchMutation,
+  useGetAutoRenewQuery,
+  useUpdateAutoRenewMutation
 } = settingApi;

@@ -83,6 +83,7 @@ export default function TopBar() {
         "Setting",
         "Reschedule",
         "Branch",
+        "Notification",
       ]),
     );
     router.refresh();

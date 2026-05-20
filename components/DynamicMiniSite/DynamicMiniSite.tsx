@@ -5,6 +5,13 @@ import React from "react";
 import MiniSiteFooter from "./MiniSiteFooter";
 import { useI18n } from "../provider/I18nProvider";
 import { FaLocationPin } from "react-icons/fa6";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "../ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 interface MiniSiteData {
   hero_image?: string;
@@ -65,10 +72,15 @@ interface DynamicMiniSiteProps {
   };
 }
 
+const LANGS = {
+  en: { label: "English", flag: "/images/english_flag.png" },
+  ar: { label: "Arabic", flag: "/images/arabic_flag.png" },
+};
+
 export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
-  const { t, locale } = useI18n();
+  const { t, locale, setLocale } = useI18n();
   const isRTL = locale === "ar";
-  console.log("loggg============", data);
+  // console.log("loggg============", data);
   return (
     <div>
       {/* hero section */}
@@ -95,31 +107,50 @@ export default function DynamicMiniSite({ data }: DynamicMiniSiteProps) {
             }}
           />
 
-          {/* Logo */}
+          {/* Language only — logo removed. Align opposite previous logo position. */}
           <div
-            className={`
-        absolute top-4 sm:top-6 z-20 w-full px-4 sm:px-6 lg:px-10 flex
+            className={`absolute top-4 sm:top-6 z-20 w-full px-4 sm:px-6 lg:px-10 flex
         ${
           data?.global_setting?.logo_position === "center"
-            ? "justify-center"
+            ? "justify-end"
             : data?.global_setting?.logo_position === "right"
-              ? "justify-end"
-              : "justify-start"
+            ? "justify-start"
+            : "justify-end"
         }
       `}
           >
-            <Image
-              src={
-                getImageUrl(data?.global_setting?.branding_logo) ||
-                "/images/yourlogo.png"
-              }
-              alt="Logo"
-              width={120}
-              height={40}
-              className="object-contain w-25 sm:w-30 md:w-35 h-auto"
-              priority
-              unoptimized
-            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 rounded-full border px-3 py-1 text-[16px] text-slate-700 hover:bg-slate-100 cursor-pointer">
+                  <Image
+                    src={LANGS[locale].flag}
+                    alt={LANGS[locale].label}
+                    width={22}
+                    height={22}
+                  />
+                  <span className="uppercase">{locale}</span>
+                  <ChevronDown size={14} />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end" className="w-40">
+                {(Object.keys(LANGS) as Array<"en" | "ar">).map((key) => (
+                  <DropdownMenuItem
+                    key={key}
+                    onClick={() => setLocale(key)}
+                    className="cursor-pointer flex items-center gap-2"
+                  >
+                    <Image
+                      src={LANGS[key].flag}
+                      alt={LANGS[key].label}
+                      width={22}
+                      height={22}
+                    />
+                    <span>{LANGS[key].label}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Content */}

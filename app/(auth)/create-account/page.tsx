@@ -128,7 +128,7 @@ export default function CreateAccountPage() {
         setIsEmail(body.email);
         setIsEmailVerification(true);
         toast.success(
-          locale == "ar" ? "" : "OTP sent to your email successfully",
+          locale == "ar" ? "تم إرسال رمز OTP إلى بريدك الإلكتروني" : "OTP sent to your email successfully",
         );
       }
 

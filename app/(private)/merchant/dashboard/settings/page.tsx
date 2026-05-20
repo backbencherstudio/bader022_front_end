@@ -122,7 +122,7 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
           </div>
         </li>
         {/* Tap-key */}
-        <li
+        {/* <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "tapkey"
@@ -135,7 +135,7 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
             <KeyRound size={18} />
             {t("Admin.AccountSettings.tapKey", "Tap-key")}
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
@@ -215,7 +215,7 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
           >
             {locale == "ar" ? "فرع" : "Branch"}
           </li>
-          <li
+          {/* <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "tapkey"
@@ -229,7 +229,7 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
           >
             <KeyRound size={18} className="inline mr-2" />
             {t("Admin.AccountSettings.tapKey", "Tap-key")}
-          </li>
+          </li> */}
         </ul>
       )}
     </div>
@@ -420,8 +420,8 @@ function getActiveSectionContent(activeSection: string, t: any) {
     //   return <LanguageSettings />;
     case "support":
       return <SupportSettings />;
-    case "tapkey":
-      return <MerchantTapkey />;
+    // case "tapkey":
+    //   return <MerchantTapkey />;
     case "branch":
       return <BranchSettings />;
     case "account":

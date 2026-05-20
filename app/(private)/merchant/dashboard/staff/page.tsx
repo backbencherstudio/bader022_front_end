@@ -57,10 +57,10 @@ export default function StaffPage() {
         }
 
         await createStaff(formData).unwrap();
-        toast.success("Staff created successfully");
+        toast.success( locale == "ar" ? "تم إنشاء الموظف بنجاح" : "Staff created successfully");
         setOpenModal(false);
       } catch (error: any) {
-        toast.error(error?.data?.message || "Failed to create staff");
+        toast.error(error?.data?.message || (locale == "ar" ? "فشل في إنشاء الموظف" : "Failed to create staff"));
       }
     } else {
       // console.log("Edit Staff:", data);
@@ -82,25 +82,25 @@ export default function StaffPage() {
           formData.append("image", data.image[0]);
         }
         await updateStaffById({ id, formData }).unwrap();
-        toast.success("Staff updated successfully");
+        toast.success(locale == "ar" ? "تم تحديث بيانات الموظف بنجاح" : "Staff updated successfully");
         setOpenModal(false);
       } catch (error: any) {
-        toast.error(error?.data?.message || "Failed to updated staff");
+        toast.error(error?.data?.message || (locale == "ar" ? "فشل في تحديث بيانات الموظف" : "Failed to updated staff"));
       }
     }
   };
 
   const handleDelete = (id: string) => {
     toast("Delete Staff Member?", {
-      description: "Are you sure? This action cannot be undone.",
+      description: (locale == "ar" ? "هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء." : "Are you sure? This action cannot be undone."),
       action: {
         label: "Delete",
         onClick: async () => {
           try {
             await toast.promise(deleteStaffById(id).unwrap(), {
               loading: "Deleting staff...",
-              success: "Staff deleted successfully",
-              error: (err) => err?.data?.message || "Delete failed",
+              success: (locale == "ar" ? "تم حذف الموظف بنجاح" : "Staff deleted successfully"),
+              error: (err) => err?.data?.message || (locale == "ar" ? "فشل في حذف الموظف" : "Delete failed"),
             });
           } catch (error) {
             console.error("Delete error:", error);

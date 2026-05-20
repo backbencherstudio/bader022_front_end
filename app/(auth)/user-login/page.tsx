@@ -45,42 +45,6 @@ export default function UserLoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isEmail, setIsEmail] = useState("");
-  // const currentPath = window.location.pathname + window.location.search;
-
-  // console.log(redirect);
-
-  // useEffect(() => {
-  //   const auth = authorize(["User", "Merchant", "Admin"]);
-  //   if (auth.authorized) {
-  //     const role = auth.user?.role;
-  //     const roleRedirectMap: Record<string, string> = {
-  //       Admin: "/admin/dashboard",
-  //       Merchant: "/merchant/dashboard",
-  //       User: "/user/dashboard",
-  //     };
-  //     router.push(roleRedirectMap[role] || "/");
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const auth = authorize(["User", "Merchant", "Admin"]);
-
-  //   if (auth.authorized) {
-  //     const role = auth.user?.role;
-  //     if (redirect) {
-  //       router.replace(redirect);
-  //       return;
-  //     }
-  //     const roleRedirectMap: Record<string, string> = {
-  //       Admin: "/admin/dashboard",
-  //       Merchant: "/merchant/dashboard",
-  //       User: "/user/dashboard",
-  //     };
-
-  //     router.push(roleRedirectMap[role] || "/");
-  //   }
-  // }, []);
-
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login({
@@ -93,7 +57,7 @@ export default function UserLoginPage() {
         setIsEmail(response.email);
         setIsEmailVerification(true);
         toast.success(
-          locale == "ar" ? "" : "OTP sent to your email successfully",
+          locale == "ar" ? "تم إرسال رمز OTP إلى بريدك الإلكتروني" : "OTP sent to your email successfully",
         );
       } else {
         setError(null);

@@ -81,7 +81,7 @@ export default function UserSignUpPage() {
         setIsEmail(data.email);
         setIsEmailVerification(true);
         toast.success(
-          locale == "ar" ? "" : "OTP sent to your email successfully",
+          locale == "ar" ? "تم إرسال رمز OTP إلى بريدك الإلكتروني" : "OTP sent to your email successfully",
         );
       }
     } catch (error: any) {
@@ -147,7 +147,7 @@ export default function UserSignUpPage() {
                 error={errors.phone && "Phone Number is Required"}
                 isRTL={isRTL}
               /> */}
-                    {/* Phone */}
+              {/* Phone */}
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   {locale=="ar"?"رقم الهاتف":"Phone Number"} *
@@ -159,12 +159,12 @@ export default function UserSignUpPage() {
                     required: "Phone number is required",
                     validate: (value) => {
                       const digits = value?.replace(/\D/g, "") || "";
-                      // must include 966 + more than 9 digits total
+                      // must include country code 966 and exactly 9 local digits (total 12 digits)
                       if (!digits.startsWith("966")) {
                         return "Phone number must start with +966";
                       }
-                      if (digits.length <= 8) {
-                        return "Phone number must be more than 9 digits including 966";
+                      if (digits.length !== 12) {
+                        return "Phone number must include +966 and 9 digits ";
                       }
 
                       return true;

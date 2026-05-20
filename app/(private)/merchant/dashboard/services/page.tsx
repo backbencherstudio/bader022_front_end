@@ -82,10 +82,10 @@ export default function ServicesPage() {
           formData.append("image", data.image[0]);
         }
         await createService(formData).unwrap();
-        toast.success("Service created successfully");
+        toast.success(locale == "ar" ? "تم إنشاء الخدمة بنجاح" : "Service created successfully");
         setOpenModal(false);
       } catch (error: any) {
-        toast.error(error?.data?.message || "Failed to create service");
+        toast.error(error?.data?.message || (locale == "ar" ? "فشل في إنشاء الخدمة" : "Failed to create service"));
       }
     } else {
       // console.log("Edit Service:", data);
@@ -104,25 +104,25 @@ export default function ServicesPage() {
           formData.append("image", data.image[0]);
         }
         await updateServiceById({ id, formData }).unwrap();
-        toast.success("Service updated successfully");
+        toast.success(locale == "ar" ? "تم تحديث الخدمة بنجاح" : "Service updated successfully");
         setOpenModal(false);
       } catch (error: any) {
-        toast.error(error?.data?.message || "Failed to updated service");
+        toast.error(error?.data?.message || (locale == "ar" ? "فشل في تحديث الخدمة" : "Failed to updated service"));
       }
     }
   };
 
   const handleDelete = (id: string) => {
-    toast("Delete Staff Member?", {
-      description: "Are you sure? This action cannot be undone.",
+    toast("Delete Service?", {
+      description: (locale == "ar" ? "هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء." : "Are you sure? This action cannot be undone."),
       action: {
         label: "Delete",
         onClick: async () => {
           try {
             await toast.promise(deleteServiceById(id).unwrap(), {
               loading: "Deleting Service...",
-              success: "Service deleted successfully",
-              error: (err) => err?.data?.message || "Delete failed",
+              success: (locale == "ar" ? "تم حذف الخدمة بنجاح" : "Service deleted successfully"),
+              error: (err) => err?.data?.message || (locale == "ar" ? "فشل في حذف الخدمة" : "Delete failed"),
             });
           } catch (error) {
             console.error("Delete error:", error);

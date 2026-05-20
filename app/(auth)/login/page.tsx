@@ -70,7 +70,7 @@ export default function LoginPage() {
         setIsEmail(response.email);
         setIsEmailVerification(true);
         toast.success(
-          locale == "ar" ? "" : "OTP sent to your email successfully",
+          locale == "ar" ? "تم إرسال رمز OTP إلى بريدك الإلكتروني" : "OTP sent to your email successfully",
         );
       } else {
         setError(null);

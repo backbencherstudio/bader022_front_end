@@ -56,7 +56,7 @@ export default function Subscription() {
         if (response?.tap_payment_url) {
           router.push(response.tap_payment_url);
         } else {
-          toast.success("Subscription successful");
+          toast.success( locale == "ar" ? "تم إنشاء الاشتراك بنجاح" : "Subscription successful");
         }
       }
     } catch (error: any) {

@@ -97,12 +97,12 @@ export default function AccountCreation({
             required: "Phone number is required",
             validate: (value) => {
               const digits = value?.replace(/\D/g, "") || "";
-              // must include 966 + more than 9 digits total
+              // must include country code 966 and exactly 9 local digits (total 12 digits)
               if (!digits.startsWith("966")) {
                 return "Phone number must start with +966";
               }
-              if (digits.length <= 8) {
-                return "Phone number must be more than 9 digits including 966";
+              if (digits.length !== 12) {
+                return "Phone number must include +966 and 9 digits";
               }
 
               return true;

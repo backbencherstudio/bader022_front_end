@@ -1,172 +1,7 @@
-// "use client";
-
-// import React from "react";
-// import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
-// import { Card } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import { useI18n } from "@/components/provider/I18nProvider";
-// import { useCreateBranchMutation } from "@/redux/features/merchant/settingApi";
-// import { useRouter } from "next/navigation";
-// import { useAppDispatch } from "@/redux/hooks";
-// import { baseApi } from "@/redux/api/baseApi";
-// import { useAllBranchQuery } from "@/redux/features/merchant/branchApi";
-
-// interface BranchFormData {
-//   name: string;
-//   phone: string;
-//   address: string;
-// }
-
-// export default function BranchSettings() {
-//   const { t, locale } = useI18n();
-//   const isRTL = locale === "ar";
-//   const router = useRouter();
-//   const dispatch = useAppDispatch();
-//   const { data: branchData, isLoading: isBranchLoading } = useAllBranchQuery(
-//     {},
-//   );
-//   const [createBranch, { isLoading }] = useCreateBranchMutation();
-
-//   const form = useForm<BranchFormData>({
-//     defaultValues: {
-//       name: "",
-//       phone: "",
-//       address: "",
-//     },
-//   });
-
-//   const onSubmit = async (data: BranchFormData) => {
-//     try {
-//       const response = await createBranch({
-//         body: {
-//           name: data.name,
-//           phone: data.phone,
-//           address: data.address,
-//         },
-//       }).unwrap();
-
-//       //   console.log("response==", response);
-
-//       toast.success(
-//         locale == "ar" ? "تم إنشاء الفرع بنجاح" : "Branch Created successfully",
-//       );
-//       dispatch(baseApi.util.invalidateTags(["Branch", "Setting"]));
-//       router.refresh();
-//       form.reset();
-//     } catch (error: any) {
-//       // console.log(error);
-//       toast.error(
-//         error?.data?.message,
-//         // locale == "ar" ? "فشل في إنشاء الفرع" : "Failed to Create branch",
-//       );
-//     }
-//   };
-
-//   return (
-//     <div className="flex flex-col gap-8 p-6 w-full">
-//       {/* Branch Settings Section */}
-//       <Card className="rounded-xl p-8 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">
-//         <h3 className="text-[18px] font-semibold">
-//           {locale == "ar" ? "إنشاء فرع" : "Branch Create"}
-//         </h3>
-
-//         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-//           {/* Branch Name */}
-//           <div>
-//             <label className="text-[14px] font-medium">
-//               {locale == "ar" ? "اسم الفرع" : "Branch Name"}
-//             </label>
-//             <Input
-//               type="text"
-//               placeholder={
-//                 locale == "ar" ? "أدخل اسم الفرع" : "Enter branch name"
-//               }
-//               {...form.register("name", {
-//                 required: locale == "ar" ? "الاسم مطلوب" : "Name is required",
-//               })}
-//               className="w-full py-5 mt-2"
-//             />
-//             {form.formState.errors.name && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {form.formState.errors.name.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* Branch Phone */}
-//           <div>
-//             <label className="text-[14px] font-medium">
-//               {locale == "ar" ? "رقم الهاتف" : "Phone Number"}
-//             </label>
-//             <Input
-//               type="text"
-//               placeholder={
-//                 locale == "ar" ? "أدخل رقم الهاتف" : "Enter phone number"
-//               }
-//               {...form.register("phone", {
-//                 required:
-//                   locale == "ar" ? "رقم الهاتف مطلوب" : "Phone is required",
-//               })}
-//               className="w-full py-5 mt-2"
-//             />
-//             {form.formState.errors.phone && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {form.formState.errors.phone.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* Branch Address */}
-//           <div>
-//             <label className="text-[14px] font-medium">
-//               {locale == "ar" ? "العنوان" : "Address"}
-//             </label>
-//             <Input
-//               type="text"
-//               placeholder={
-//                 locale == "ar" ? "أدخل عنوان الفرع" : "Enter branch address"
-//               }
-//               {...form.register("address", {
-//                 required:
-//                   locale == "ar" ? "العنوان مطلوب" : "Address is required",
-//               })}
-//               className="w-full py-5 mt-2"
-//             />
-//             {form.formState.errors.address && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {form.formState.errors.address.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* Submit */}
-//           <div className="flex justify-end">
-//             <Button
-//               className="cursor-pointer"
-//               type="submit"
-//               disabled={isLoading}
-//             >
-//               {isLoading
-//                 ? locale == "ar"
-//                   ? "جاري الحفظ..."
-//                   : "Saving..."
-//                 : locale == "ar"
-//                   ? "حفظ التغييرات"
-//                   : "Save Changes"}
-//             </Button>
-//           </div>
-//         </form>
-//       </Card>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -197,6 +32,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Trash2, Plus } from "lucide-react";
+import PhoneInput from "react-phone-number-input";
+// @ts-ignore
+import "react-phone-number-input/style.css";
 
 interface BranchFormData {
   id?: string;
@@ -307,14 +145,15 @@ export default function BranchSettings() {
               </DialogTitle>
             </DialogHeader>
             <form
-              onSubmit={form.handleSubmit(onCreateSubmit)}
-              className="space-y-4"
-            >
-              <BranchFields
-                register={form.register}
-                errors={form.formState.errors}
-                locale={locale}
-              />
+                onSubmit={form.handleSubmit(onCreateSubmit)}
+                className="space-y-4"
+              >
+                <BranchFields
+                  register={form.register}
+                  control={form.control}
+                  errors={form.formState.errors}
+                  locale={locale}
+                />
               <Button type="submit" className="w-full" disabled={isCreating}>
                 {isCreating ? "..." : locale === "ar" ? "حفظ" : "Save"}
               </Button>
@@ -383,6 +222,7 @@ export default function BranchSettings() {
           >
             <BranchFields
               register={editForm.register}
+              control={editForm.control}
               errors={editForm.formState.errors}
               locale={locale}
             />
@@ -425,7 +265,7 @@ export default function BranchSettings() {
 }
 
 // Reusable fields component to keep code clean
-function BranchFields({ register, errors, locale }: any) {
+function BranchFields({ register, control, errors, locale }: any) {
   return (
     <>
       <div>
@@ -438,7 +278,40 @@ function BranchFields({ register, errors, locale }: any) {
         <label className="text-sm font-medium">
           {locale === "ar" ? "رقم الهاتف" : "Phone"}
         </label>
-        <Input {...register("phone", { required: true })} className="mt-1" />
+        {control ? (
+          <Controller
+            name="phone"
+            control={control}
+            rules={{
+              required: locale === "ar" ? "رقم الهاتف مطلوب" : "Phone number is required",
+              validate: (value: any) => {
+                const digits = value?.replace(/\D/g, "") || "";
+                if (!digits.startsWith("966")) {
+                  return locale === "ar" ? "يجب أن يبدأ رقم الهاتف ب +966" : "Phone number must start with +966";
+                }
+                if (digits.length !== 12) {
+                  return locale === "ar" ? "يجب أن يحتوي رقم الهاتف على 966 و9 أرقام محلية)" : "Phone number must include +966 and 9 digits";
+                }
+                return true;
+              },
+            }}
+            render={({ field }) => (
+              <PhoneInput
+                international
+                defaultCountry="SA"
+                countryCallingCodeEditable={false}
+                value={field.value || ""}
+                onChange={field.onChange}
+                className={`w-full [&_input]:h-11 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-800 [&_input]:px-3 [&_.PhoneInputCountry]:pointer-events-none [&_.PhoneInputCountry]:opacity-70 mt-1`}
+              />
+            )}
+          />
+        ) : (
+          <Input {...register("phone", { required: true })} className="mt-1" />
+        )}
+        {errors?.phone && (
+          <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+        )}
       </div>
       <div>
         <label className="text-sm font-medium">

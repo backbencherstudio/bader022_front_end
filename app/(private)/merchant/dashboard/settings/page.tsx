@@ -122,7 +122,7 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
             {locale == "ar" ? "فرع" : "Branch"}
           </div>
         </li>
-        <li
+        {/* <li
           className={cn(
             "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
             activeSection === "autorenew"
@@ -135,7 +135,7 @@ function Sidebar({ activeSection, setActiveSection, t }: any) {
             <span className="text-lg">🔁</span>
             {locale == "ar" ? "التجديد التلقائي" : "Auto Renew"}
           </div>
-        </li>
+        </li> */}
         {/* Tap-key */}
         {/* <li
           className={cn(
@@ -230,7 +230,7 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
           >
             {locale == "ar" ? "فرع" : "Branch"}
           </li>
-          <li
+          {/* <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
               activeSection === "autorenew"
@@ -240,7 +240,7 @@ function MobileSidebar({ activeSection, setActiveSection, t }: any) {
             onClick={() => setActiveSection("autorenew")}
           >
             {locale == "ar" ? "التجديد التلقائي" : "Auto Renew"}
-          </li>
+          </li> */}
           {/* <li
             className={cn(
               "py-3 px-4 rounded-lg cursor-pointer text-sm font-semibold",
